@@ -94,7 +94,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void onError(String result) {
-
+            ToastUtils.makeText(context,result);
         }
     };
 
