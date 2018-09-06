@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="40dp"
+    android:layout_height="wrap_content"
+    android:background="@color/app_main_default">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_sign_in_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7.21"
+            android:textColor="@color/text_sign_color"
+            android:textSize="12dp"
+            android:layout_centerInParent="true"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp">
+            <ImageView
+                android:id="@+id/iv_sign_in_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/sign_in_yes"/>
+            <View
+                android:id="@+id/v_vip_left"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true"
+                android:background="@color/text_green"
+                android:layout_toLeftOf="@+id/iv_sign_in_state"
+                android:visibility="visible"/>
+            <View
+                android:id="@+id/v_vip_right"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_centerInParent="true"
+                android:background="@color/text_green"
+                android:layout_toRightOf="@+id/iv_sign_in_state"
+                android:visibility="visible"/>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

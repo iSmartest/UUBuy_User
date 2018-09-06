@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_main_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_base" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_commodity_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/image_item_conner_style"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="211dp"
+                    android:layout_height="211dp"
+                    android:layout_marginTop="30dp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginRight="27dp"
+                    android:layout_marginTop="16dp">
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_commodity_des"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_commodity_banner"
+                android:layout_margin="5dp"
+                android:background="@drawable/image_item_conner_style"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_commodity_brand_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="枝纯"
+                    android:textColor="@color/text_main_color"
+                    android:textSize="23dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_toRightOf="@+id/tv_commodity_brand_name"
+                    android:background="@drawable/shape_red_surplus_background"
+                    android:gravity="center"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:text="60%"
+                    android:textColor="@color/app_main_default"
+                    android:textSize="17dp" />
+
+                <TextView
+                    android:id="@+id/tv_commodity_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/tv_commodity_brand_name"
+                    android:text="吮指甜心 水果胡萝卜"
+                    android:textColor="@color/text_main_color"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/tv_commodity_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_below="@+id/tv_commodity_name"
+                    android:text="优选产地，安徽砀山，“零食化”蔬菜概念产品，科学加工，开袋即食，拇指般大小，感受自然的甜美，好吃又健康！"
+                    android:textColor="@color/text_main_color"
+                    android:textSize="17dp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_uu_price_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_commodity_des"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UU价格: "
+                        android:textColor="@color/text_main_color"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13dp"
+                        android:text="179.00"
+                        android:textColor="@color/sign_in_red"
+                        android:textSize="17dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tv_commodity_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_uu_price_title"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="促  销: "
+                        android:textColor="@color/text_main_color"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13dp"
+                        android:text="条件：购买1件及以上，赠完即止） 此价格不与套装优惠同时享受"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tv_store_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_commodity_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="地  址: "
+                        android:textColor="@color/text_main_color"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13dp"
+                        android:text="北京市海淀区上地信息路家乐福超市3楼店"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/rl_commodity_des"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/tv_commodity_compare"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:text="精品比较"
+                    android:textColor="@color/app_main_default"
+                    android:textSize="19dp"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    android:background="@drawable/shape_background_sure"/>
+
+                <TextView
+                    android:id="@+id/tv_commodity_reserve"
+                    android:layout_width="120dp"
+                    android:layout_height="40dp"
+                    android:text="立即预订"
+                    android:textColor="@color/app_main_default"
+                    android:textSize="19dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="40dp"
+                    android:visibility="visible"
+                    android:background="@drawable/shape_background_sure"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

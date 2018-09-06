@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/app_main_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_base"/>
+    <include layout="@layout/v_horizontal_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/app_main_default">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="头像"
+            android:layout_weight="1"
+            android:textColor="@color/text_main_color"
+            android:textSize="17dp" />
+
+        <com.ifree.uu.uubuy.custom.rounded.RoundedImageView
+            android:id="@+id/ri_my_icon_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/my_head_portrait"
+            app:is_oval="true"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/right_in"/>
+    </LinearLayout>
+
+    <include layout="@layout/v_horizontal_line" />
+
+    <LinearLayout
+        android:id="@+id/ll_nick_name"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/app_main_default">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="昵称"
+            android:textColor="@color/text_main_color"
+            android:textSize="17dp" />
+        <TextView
+            android:id="@+id/text_personal_information_nick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text=" "
+            android:gravity="center|right"
+            android:layout_weight="1"
+            android:textColor="@color/edit_hint_color"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/right_in"/>
+    </LinearLayout>
+
+    <include layout="@layout/v_horizontal_line" />
+
+    <LinearLayout
+        android:id="@+id/ll_sex"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/app_main_default">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="性别"
+            android:textColor="@color/text_main_color"
+            android:textSize="17dp" />
+        <TextView
+            android:id="@+id/text_personal_information_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text=" "
+            android:gravity="center|right"
+            android:layout_weight="1"
+            android:textColor="@color/edit_hint_color"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/right_in"/>
+    </LinearLayout>
+
+    <include layout="@layout/v_horizontal_line" />
+
+    <LinearLayout
+        android:id="@+id/ll_birthday"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/app_main_default">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="出生日期"
+            android:textColor="@color/text_main_color"
+            android:textSize="17dp" />
+        <TextView
+            android:id="@+id/text_personal_information_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text=" "
+            android:gravity="center|right"
+            android:layout_weight="1"
+            android:textColor="@color/edit_hint_color"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/right_in"/>
+    </LinearLayout>
+
+    <include layout="@layout/v_horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/app_main_default">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="身份证号"
+            android:textColor="@color/text_main_color"
+            android:textSize="17dp" />
+        <TextView
+            android:id="@+id/text_personal_information_id_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text=" "
+            android:gravity="center|right"
+            android:layout_weight="1"
+            android:textColor="@color/edit_hint_color"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/right_in"/>
+    </LinearLayout>
+
+    <include layout="@layout/v_horizontal_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/app_main_default">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="地址"
+            android:textColor="@color/text_main_color"
+            android:textSize="17dp" />
+        <TextView
+            android:id="@+id/text_personal_information_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text=" "
+            android:gravity="center|right"
+            android:layout_weight="1"
+            android:textColor="@color/edit_hint_color"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/right_in"/>
+    </LinearLayout>
+
+</LinearLayout>

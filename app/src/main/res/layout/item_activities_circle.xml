@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="6dp"
+    android:layout_marginRight="6dp"
+    android:layout_marginTop="6dp"
+    android:background="@drawable/image_item_conner_style">
+
+    <com.ifree.uu.uubuy.custom.swipeLayout.SwipeLayout
+        android:id="@+id/sl_market"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--内容区域-->
+        <include layout="@layout/layout_content"/>
+
+        <!--删除区域-->
+        <include layout="@layout/delete_but_layout"/>
+
+    </com.ifree.uu.uubuy.custom.swipeLayout.SwipeLayout>
+
+    <com.ifree.uu.uubuy.custom.swipeLayout.SwipeLayout
+        android:id="@+id/sl_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--内容区域-->
+        <include layout="@layout/layout_store_content"/>
+
+        <!--删除区域-->
+        <include layout="@layout/delete_store_but_layout"/>
+
+    </com.ifree.uu.uubuy.custom.swipeLayout.SwipeLayout>
+
+    <com.ifree.uu.uubuy.custom.swipeLayout.SwipeLayout
+        android:id="@+id/sl_commodity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--内容区域-->
+        <include layout="@layout/layout_commodity_content"/>
+
+        <!--删除区域-->
+        <include layout="@layout/delete_commodity_but_layout"/>
+
+    </com.ifree.uu.uubuy.custom.swipeLayout.SwipeLayout>
+
+</RelativeLayout>
+

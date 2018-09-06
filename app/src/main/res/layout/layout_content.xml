@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_activities_market"
+    android:layout_width="match_parent"
+    android:layout_height="187dp"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_activities_circle_name"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:paddingLeft="15dp"
+        android:gravity="center|left"
+        android:text="物美超市"
+        android:textColor="@color/text_main_color"
+        android:textSize="17dp" />
+    <include layout="@layout/v_horizontal_line"/>
+
+    <ImageView
+        android:id="@+id/iv_activities_circle_icon"
+        android:layout_width="match_parent"
+        android:layout_height="123dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/timg" />
+</LinearLayout>

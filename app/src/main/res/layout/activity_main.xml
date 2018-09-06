@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_main_background"
+    android:clipToPadding="true"
+    android:orientation="vertical"
+    tools:context=".ui.activity.MainActivity">
+    <include layout="@layout/activity_base"/>
+    <FrameLayout
+        android:id="@+id/linear_main_layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.85">
+    </FrameLayout>
+
+    <include layout="@layout/v_horizontal_line" />
+
+    <RadioGroup
+        android:id="@+id/main_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/app_main_default"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/iv_main_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+            android:drawableTop="@drawable/app_main_home_selector"
+            android:gravity="center"/>
+
+        <RadioButton
+            android:id="@+id/iv_main_around"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/app_main_around_selector"
+            android:gravity="center"/>
+
+        <RadioButton
+            android:id="@+id/iv_main_activities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/app_main_activities_selector"
+            android:gravity="center"/>
+
+        <RadioButton
+            android:id="@+id/iv_main_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/app_main_order_selector"
+            android:gravity="center"/>
+
+        <RadioButton
+            android:id="@+id/iv_main_mine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/app_main_mine_selector"
+            android:gravity="center"/>
+    </RadioGroup>
+</LinearLayout>
+

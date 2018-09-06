@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">UUBuy</string>
+
+    <string name="loading_icon">加载中图</string>
+    <string name="loading">加载中</string>
+    <string name="notifyTitle">提示</string>
+    <string name="notifyMsg">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
+    <string name="city_name">北京</string>
+    <string name="take_photo">拍摄</string>
+    <string name="local_album">本地相册</string>
+    <string name="nick_name">修改昵称</string>
+    <string name="edit_nick_name">输入昵称</string>
+    <string name="error_input_phone">请输入正确的手机号码</string>
+    <string name="error_input_pwd_fail_info_tips">请输入6-20位英文字母或数字</string>
+    <string name="error_input_verification">请输入验证码</string>
+    <string name="error_input_verification_fail_info">验证码错误:验证码由6位数字组成</string>
+    <string name="registered_direct_login">已注册直接登录>></string>
+    <string name="unknown">未知</string>
+
+
+</resources>
