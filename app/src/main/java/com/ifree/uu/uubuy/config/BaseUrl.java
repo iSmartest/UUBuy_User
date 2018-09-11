@@ -27,6 +27,8 @@ public class BaseUrl {
     public static final String CITY_INFO = "getCityInfo";
     //首页
     public static final String HOME_INFO = "getHomeInfo?";
+    //商场（第一级）
+    public static final String CLASSIFY_LIST_INFO = "getClassifyListInfo?";
     //周围
     public static final String AROUND_INFO = "getAroundInfo?";
     //生活圈
@@ -35,9 +37,16 @@ public class BaseUrl {
     public static final String ORDER_INFO = "getOrderInfo?";
     //我的
     public static final String MINE_INFO = "getMineInfo?";
+    //编辑个人资料
+    public static final String MODIFY_USER_INFO = "modifyUserInfo?";
     //用户成长页面
     public static final String GROUP_INFO = "getGroupInfo?";
-
+    //签到
+    public static final String SIGN_IN = "getSignIn?";
+    //领券中心
+    public static final String COUPON_CENTER = "getCouponInfo?";
+    //我的优惠券
+    public static final String MY_COUPON = "getMyCouponInfo?";
     //消息
     public static final String MESSAGE_INFO = "getMeassage?";
 }

@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.uitls;
 
 import android.content.Context;
+import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -20,6 +21,13 @@ public class GlideImageLoader extends ImageLoader {
     }
 
     public static void imageLoader(Context context, String image, ImageView imageView){
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.mipmap.ic_launcher);
+        requestOptions.error(R.mipmap.ic_launcher);
+        Glide.with(context).load(image).apply(requestOptions).into(imageView);
+    }
+
+    public static void imageLoader(Context context, Uri image, ImageView imageView){
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.mipmap.ic_launcher);
         requestOptions.error(R.mipmap.ic_launcher);

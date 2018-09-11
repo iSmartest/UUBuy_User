@@ -150,10 +150,10 @@ public class ForgetPwdActivity extends BaseActivity{
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getResult());
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
                 return;
             }
-            ToastUtils.makeText(context,mUserInfoEntity.getResult());
+            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
             finish();
         }
 
@@ -173,7 +173,7 @@ public class ForgetPwdActivity extends BaseActivity{
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getResult());
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
                 return;
             }
             mCode = mUserInfoEntity.getData().getCode();

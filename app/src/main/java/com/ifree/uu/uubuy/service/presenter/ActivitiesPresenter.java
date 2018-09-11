@@ -3,7 +3,9 @@ package com.ifree.uu.uubuy.service.presenter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
@@ -80,6 +82,8 @@ public class ActivitiesPresenter implements Presenter {
                         dialog.dismiss();
                         if (mActivitiesEntity != null){
                             mActivitiesView.onSuccess(mActivitiesEntity);
+                            Log.i("TAG", "onActivities: " + new Gson().toJson(mActivitiesEntity));
+
                         }
 
                     }

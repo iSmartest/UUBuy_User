@@ -7,4 +7,5 @@ package com.ifree.uu.uubuy.service.view;
  * Description:
  */
 public interface View {
+
 }

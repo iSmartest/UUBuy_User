@@ -30,7 +30,7 @@ public class MessageActivity extends BaseActivity {
     ViewPager viewpager;
     private List<Fragment> fragmentList = new ArrayList<>();
     private List<String> tabList = new ArrayList<>();
-    private String[] strings = {"通知","活动"};
+    private String[] strings = {"通知","消息","活动"};
     @Override
     protected int getLayoutId() {
         return R.layout.activity_message;

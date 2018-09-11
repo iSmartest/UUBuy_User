@@ -7,6 +7,8 @@ import com.ifree.uu.uubuy.service.RetrofitService;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.service.entity.CouponEntity;
+import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.service.entity.GroupEntity;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.entity.MessageEntity;
@@ -14,6 +16,8 @@ import com.ifree.uu.uubuy.service.entity.MineEntity;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import rx.Observable;
 
 /**
@@ -30,8 +34,8 @@ public class DataManager {
         this.mRetrofitService = RetrofitHelper.getInstance(context).getServer();
     }
 
-    public Observable<UserInfoEntity> getSearchSendCode(String userPhone,String type){
-        return mRetrofitService.getSearchSendCode(userPhone,type);
+    public Observable<UserInfoEntity> getSearchSendCode(String userPhone,String codeType){
+        return mRetrofitService.getSearchSendCode(userPhone,codeType);
     }
 
     public Observable<UserInfoEntity> getSearchRegister(String userPhone,String password,String code){
@@ -62,6 +66,10 @@ public class DataManager {
         return mRetrofitService.getSearchHomes(longitude,latitude,townAdCode,page,uid);
     }
 
+    public Observable<FirstClassifyEntity> getSearchClassifyListInfo(String longitude, String latitude, String townAdCode, String adTypeId, String type, String menuId, int page, String uid){
+        return mRetrofitService.getSearchClassifyListInfo(longitude,latitude,townAdCode,adTypeId,type,menuId,page,uid);
+    }
+
     public Observable<AroundEntity> getSearchArounds(String longitude, String latitude, String townAdCode, int page, String uid){
         return mRetrofitService.getSearchArounds(longitude,latitude,townAdCode,page,uid);
     }
@@ -77,9 +85,27 @@ public class DataManager {
     public Observable<MineEntity> getSearchMineInfos(String longitude, String latitude, String townAdCode, int page, String uid){
         return mRetrofitService.getSearchMineInfos(longitude,latitude,townAdCode,page,uid);
     }
+    public Observable<UserInfoEntity> getSearchModifyUserIconInfo(String uid,MultipartBody.Part body){
+        return mRetrofitService.getSearchModifyUserIconInfo(uid,body);
+    }
+    public Observable<UserInfoEntity> getSearchModifyUserInfo(String uid, String userSex, String userName, String userBirthday, String userIdCartNumber, String userAddress){
+        return mRetrofitService.getSearchModifyUserInfo(uid,userSex,userName,userBirthday,userIdCartNumber,userAddress);
+    }
 
     public Observable<GroupEntity> getSearchGroupInfos(String uid){
         return mRetrofitService.getSearchGroupInfos(uid);
+    }
+
+    public Observable<UserInfoEntity> getSearchSignIns(String uid){
+        return mRetrofitService.getSearchSignIns(uid);
+    }
+
+    public Observable<CouponEntity> getSearchCouponCenter(String uid,String businessId,String couponType,String longitude,String latitude,String townAdCode,int page){
+        return mRetrofitService.getSearchCouponCenter(uid,businessId,couponType,longitude,latitude,townAdCode,page);
+    }
+
+    public Observable<CouponEntity> getSearchMyCoupon(String uid,String businessId,String couponType,String longitude,String latitude,String townAdCode,int page){
+        return mRetrofitService.getSearchMyCoupon(uid,businessId,couponType,longitude,latitude,townAdCode,page);
     }
 
     public Observable<MessageEntity> getSearchMessages(String uid, String type, int page){

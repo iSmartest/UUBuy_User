@@ -28,10 +28,10 @@ import butterknife.ButterKnife;
 public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.ActivitiesViewHolder>{
 
     private Context context;
-    private List<ActivitiesEntity.ActivitiesList> mList;
+    private List<ActivitiesEntity.DataBean.ActivitiesList> mList;
     private String  activitiesType;
 
-    public ActivitiesAdapter(Context context, List<ActivitiesEntity.ActivitiesList> mList, String activitiesType) {
+    public ActivitiesAdapter(Context context, List<ActivitiesEntity.DataBean.ActivitiesList> mList, String activitiesType) {
         this.context = context;
         this.mList = mList;
         this.activitiesType = activitiesType;

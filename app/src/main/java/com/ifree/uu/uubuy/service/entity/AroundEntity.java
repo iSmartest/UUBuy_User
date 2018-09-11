@@ -9,81 +9,93 @@ import java.util.List;
  * Description:
  */
 public class AroundEntity {
-    private String result;
+    private String msg;
     private String resultCode;
-    private List<ActivitiesList> activitiesList;
-    public static class ActivitiesList{
-        private String activitiesId;
-        private String activitiesPic;
-        private String activitiesName;
-        private String activitiesTime;
-        private String activitiesAdAddress;
-        private String activitiesType;
-        private String type;
+    private DataBean data;
+    public static class DataBean{
+        private List<ActivitiesList> activityList;
+        public static class ActivitiesList{
+            private String activitiesId;
+            private String activitiesPic;
+            private String activitiesName;
+            private String activitiesTime;
+            private String activitiesAdAddress;
+            private String activitiesType;
+            private String type;
 
-        public String getActivitiesId() {
-            return activitiesId;
+            public String getActivitiesId() {
+                return activitiesId;
+            }
+
+            public void setActivitiesId(String activitiesId) {
+                this.activitiesId = activitiesId;
+            }
+
+            public String getActivitiesPic() {
+                return activitiesPic;
+            }
+
+            public void setActivitiesPic(String activitiesPic) {
+                this.activitiesPic = activitiesPic;
+            }
+
+            public String getActivitiesName() {
+                return activitiesName;
+            }
+
+            public void setActivitiesName(String activitiesName) {
+                this.activitiesName = activitiesName;
+            }
+
+            public String getActivitiesTime() {
+                return activitiesTime;
+            }
+
+            public void setActivitiesTime(String activitiesTime) {
+                this.activitiesTime = activitiesTime;
+            }
+
+            public String getActivitiesAdAddress() {
+                return activitiesAdAddress;
+            }
+
+            public void setActivitiesAdAddress(String activitiesAdAddress) {
+                this.activitiesAdAddress = activitiesAdAddress;
+            }
+
+            public String getActivitiesType() {
+                return activitiesType;
+            }
+
+            public void setActivitiesType(String activitiesType) {
+                this.activitiesType = activitiesType;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
         }
 
-        public void setActivitiesId(String activitiesId) {
-            this.activitiesId = activitiesId;
+        public List<ActivitiesList> getActivityList() {
+            return activityList;
         }
 
-        public String getActivitiesPic() {
-            return activitiesPic;
-        }
-
-        public void setActivitiesPic(String activitiesPic) {
-            this.activitiesPic = activitiesPic;
-        }
-
-        public String getActivitiesName() {
-            return activitiesName;
-        }
-
-        public void setActivitiesName(String activitiesName) {
-            this.activitiesName = activitiesName;
-        }
-
-        public String getActivitiesTime() {
-            return activitiesTime;
-        }
-
-        public void setActivitiesTime(String activitiesTime) {
-            this.activitiesTime = activitiesTime;
-        }
-
-        public String getActivitiesAdAddress() {
-            return activitiesAdAddress;
-        }
-
-        public void setActivitiesAdAddress(String activitiesAdAddress) {
-            this.activitiesAdAddress = activitiesAdAddress;
-        }
-
-        public String getActivitiesType() {
-            return activitiesType;
-        }
-
-        public void setActivitiesType(String activitiesType) {
-            this.activitiesType = activitiesType;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
+        public void setActivityList(List<ActivitiesList> activityList) {
+            this.activityList = activityList;
         }
     }
 
-    public String getResult() {
-        return result;
+
+    public String getMsg() {
+        return msg;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public String getResultCode() {
@@ -94,11 +106,11 @@ public class AroundEntity {
         this.resultCode = resultCode;
     }
 
-    public List<ActivitiesList> getActivitiesList() {
-        return activitiesList;
+    public DataBean getData() {
+        return data;
     }
 
-    public void setActivitiesList(List<ActivitiesList> activitiesList) {
-        this.activitiesList = activitiesList;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 }

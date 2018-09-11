@@ -4,9 +4,12 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
+import com.ifree.uu.uubuy.service.presenter.MyCouponPresenter;
+import com.ifree.uu.uubuy.service.view.CouponView;
 import com.ifree.uu.uubuy.ui.adapter.CouponAdapter;
 import com.ifree.uu.uubuy.ui.adapter.HomeAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
+import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -22,13 +25,14 @@ import butterknife.BindView;
  * Description:
  */
 public class NotUsedFragment extends BaseFragment {
-
+    private MyCouponPresenter mMyCouponPresenter;
     @BindView(R.id.xr_coupon)
     XRecyclerView xRecyclerView;
     private int page = 1;
     private CouponAdapter mAdapter;
-    private List<CouponEntity.CouponList> mList = new ArrayList<>();
+    private List<CouponEntity.DataBean.CouponList> mList = new ArrayList<>();
     private String couponType = "0";
+    private String businessId = "";
     @Override
     protected int getLayout() {
         return R.layout.fragment_coupon;
@@ -36,6 +40,7 @@ public class NotUsedFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        mMyCouponPresenter = new MyCouponPresenter(context);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);
@@ -64,12 +69,32 @@ public class NotUsedFragment extends BaseFragment {
 
         mAdapter = new CouponAdapter(context,mList,couponType);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
-
     }
 
     @Override
     protected void initData() {
-
+        mMyCouponPresenter.onCreate();
+        mMyCouponPresenter.attachView(mCouponView);
+        mMyCouponPresenter.getSearchMyCoupon(uid,businessId,couponType,longitude,latitude,townAdCode,page,"加载中...");
     }
+
+    private CouponView mCouponView = new CouponView() {
+        @Override
+        public void onSuccess(CouponEntity mCouponEntity) {
+            if (mCouponEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mCouponEntity.getMsg());
+                return;
+            }
+            List<CouponEntity.DataBean.CouponList> couponLists = mCouponEntity.getData().getCouponList();
+            if (couponLists != null && !couponLists.isEmpty()){
+                mList.addAll(couponLists);
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context,result);
+        }
+    };
 }

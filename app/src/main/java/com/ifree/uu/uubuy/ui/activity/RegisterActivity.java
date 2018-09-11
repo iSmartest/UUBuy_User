@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -116,29 +117,28 @@ public class RegisterActivity extends BaseActivity {
                     ToastUtils.makeText(context, "两次输入密码不一致");
                     return;
                 }
-                passWordLogin(userPhone,password);
+                passWordLogin(userPhone,password,inviteCode);
                 break;
             case R.id.text_register_go_login:
-                MyApplication.openActivity(RegisterActivity.this,LoginActivity.class);
                 finish();
                 break;
         }
     }
 
-    private void passWordLogin(String userPhone, String password) {
+    private void passWordLogin(String userPhone, String password,String inviteCode) {
         mRegisterPresenter.onCreate();
         mRegisterPresenter.attachView(mRegisterView);
-        mRegisterPresenter.getSearchRegister(userPhone,password,mCode,"提交中...");
+        mRegisterPresenter.getSearchRegister(userPhone,password,inviteCode,"提交中...");
     }
 
     private UserInfoView mRegisterView = new UserInfoView() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getResult());
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
                 return;
             }
-            ToastUtils.makeText(context,mUserInfoEntity.getResult());
+            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
             finish();
         }
 
@@ -159,10 +159,11 @@ public class RegisterActivity extends BaseActivity {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getResult());
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
                 return;
             }
             mCode = mUserInfoEntity.getData().getCode();
+            Log.i("TAG", "onSuccess: " + mCode);
         }
 
         @Override

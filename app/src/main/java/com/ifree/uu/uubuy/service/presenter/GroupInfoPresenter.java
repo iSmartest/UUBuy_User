@@ -3,7 +3,9 @@ package com.ifree.uu.uubuy.service.presenter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.GroupEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
@@ -22,6 +24,7 @@ import rx.subscriptions.CompositeSubscription;
  * Description:
  */
 public class GroupInfoPresenter implements Presenter {
+
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
@@ -69,12 +72,14 @@ public class GroupInfoPresenter implements Presenter {
         dialog.show();
         mCompositeSubscription.add(manager.getSearchGroupInfos(uid)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<GroupEntity>() {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<GroupEntity>() {
                     @Override
                     public void onCompleted() {
                         dialog.dismiss();
                         if (mGroupEntity != null) {
                             mGroupInfoView.onSuccess(mGroupEntity);
+                            Log.i("TAG", "onCompleted: " + new Gson().toJson(mGroupEntity));
                         }
                     }
 
@@ -82,6 +87,7 @@ public class GroupInfoPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
+                        Log.i("TAG", "onCompleted: " + e.getMessage());
                         mGroupInfoView.onError("请求失败！！");
                     }
 

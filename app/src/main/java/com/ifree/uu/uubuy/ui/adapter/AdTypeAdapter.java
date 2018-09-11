@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ import butterknife.ButterKnife;
  */
 public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeViewHolder>{
     private Context context;
-    private List<HomeEntity.AdTypeList> mAdTypeList;
-    public AdTypeAdapter(Context context, List<HomeEntity.AdTypeList> mAdTypeList) {
+    private List<HomeEntity.DataBean.AdTypeList> mAdTypeList;
+    public AdTypeAdapter(Context context, List<HomeEntity.DataBean.AdTypeList> mAdTypeList) {
         this.context = context;
         this.mAdTypeList = mAdTypeList;
     }
@@ -41,12 +42,14 @@ public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeView
 
     @Override
     public void onBindViewHolder(@NonNull AdTypeViewHolder holder, int position) {
-//        HomeEntity.AdTypeList mList = mAdTypeList.get(position);
+        HomeEntity.DataBean.AdTypeList mList = mAdTypeList.get(position);
+        holder.mName.setText(mList.getAdTypeTitle());
+        GlideImageLoader.imageLoader(context,mList.getAdTypeIcon(),holder.icon);
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return mAdTypeList == null ? 6 : mAdTypeList.size();
     }
 
     public class AdTypeViewHolder extends RecyclerView.ViewHolder{

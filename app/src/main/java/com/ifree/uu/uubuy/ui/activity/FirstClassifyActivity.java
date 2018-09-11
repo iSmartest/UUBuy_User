@@ -1,17 +1,21 @@
 package com.ifree.uu.uubuy.ui.activity;
 
-import android.app.Activity;
-import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ListView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
-import com.ifree.uu.uubuy.service.entity.MenuClassifyEntity;
+import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
+import com.ifree.uu.uubuy.service.presenter.FirstClassifyPresenter;
+import com.ifree.uu.uubuy.service.view.FirstClassifyView;
 import com.ifree.uu.uubuy.ui.adapter.FirstClassifyAdapter;
 import com.ifree.uu.uubuy.ui.adapter.FirstMenuAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -27,41 +31,52 @@ import butterknife.BindView;
  * Description:
  */
 public class FirstClassifyActivity extends BaseActivity {
+    private FirstClassifyPresenter mFirstClassifyPresenter;
     @BindView(R.id.rc_menu)
-    RecyclerView rc_menu;
+    ListView rc_menu;
     @BindView(R.id.xr_market)
     XRecyclerView xRecyclerView;
+    private View headerView;
     private FirstMenuAdapter mFirstMenuAdapter;
     private FirstClassifyAdapter mAdapter;
-    private List<MenuClassifyEntity.FirstMenuList> mMenuList = new ArrayList<>();
+    private List<FirstClassifyEntity.DataBean.MenuList> mMenuList;
+    private List<FirstClassifyEntity.DataBean.FristActivitiesList> mList;
     private int page = 1;
+    private String adTypeId;
+    private String type;
+    private String title;
+    private String menuId = "";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_first_classify;
     }
 
     @Override
-    protected void loadData() {
-
-    }
-
-    @Override
     protected void initView() {
         hideBack(5);
         setTitleText("综合商场");
+        mMenuList = new ArrayList<>();
+        mList = new ArrayList<>();
+        adTypeId = getIntent().getStringExtra("adTypeId");
+        type = getIntent().getStringExtra("type");
+        title = getIntent().getStringExtra("title");
+        headerView = LayoutInflater.from(context).inflate(R.layout.header_menu,null);
+        if (headerView != null){
+            rc_menu.addHeaderView(headerView);
+        }
+        
+        mFirstClassifyPresenter = new FirstClassifyPresenter(context);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);
-        rc_menu.setLayoutManager(new LinearLayoutManager(context));
         xRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         xRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         xRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
                 page = 1;
-//                mList.clear();
+                mList.clear();
                 mAdapter.notifyDataSetChanged();
                 loadData();
                 xRecyclerView.refreshComplete();
@@ -79,9 +94,8 @@ public class FirstClassifyActivity extends BaseActivity {
 
         mAdapter = new FirstClassifyAdapter(context);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
 
-        mFirstMenuAdapter = new FirstMenuAdapter(context,mMenuList);
+        mFirstMenuAdapter = new FirstMenuAdapter(context,mMenuList,type);
         rc_menu.setAdapter(mFirstMenuAdapter);
 
         xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
@@ -96,4 +110,40 @@ public class FirstClassifyActivity extends BaseActivity {
             }
         });
     }
+
+
+    @Override
+    protected void loadData() {
+        mFirstClassifyPresenter.onCreate();
+        mFirstClassifyPresenter.attachView(mFirstClassifyView);
+        mFirstClassifyPresenter.getSearchClassifyListInfo(longitude,latitude,townAdCode,adTypeId,type,menuId,page,uid,"加载中...");
+    }
+
+    private FirstClassifyView mFirstClassifyView = new FirstClassifyView() {
+        @Override
+        public void onSuccess(FirstClassifyEntity mFirstClassifyEntity) {
+            if (mFirstClassifyEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mFirstClassifyEntity.getMsg());
+                return;
+            }
+            List<FirstClassifyEntity.DataBean.MenuList> menuLists = mFirstClassifyEntity.getData().getMenuList();
+            if (menuLists != null && !menuLists.isEmpty()){
+                if (mMenuList.isEmpty()){
+                    mMenuList.addAll(menuLists);
+                    mFirstMenuAdapter.notifyDataSetChanged();
+                }
+            }
+            List<FirstClassifyEntity.DataBean.FristActivitiesList> fristActivitiesLists = mFirstClassifyEntity.getData().getFristActivitiesList();
+            if (fristActivitiesLists != null && !fristActivitiesLists.isEmpty()){
+                mList.addAll(fristActivitiesLists);
+                mAdapter.notifyDataSetChanged();
+            }
+
+        }
+
+        @Override
+        public void onError(String result) {
+
+        }
+    };
 }

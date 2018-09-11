@@ -3,7 +3,9 @@ package com.ifree.uu.uubuy.service.presenter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.MessageEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
@@ -69,14 +71,16 @@ public class MessagePresenter implements Presenter {
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext, mContent);
         dialog.show();
         mCompositeSubscription.add(manager.getSearchMessages(uid, type, page)
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MessageEntity>() {
                     @Override
                     public void onCompleted() {
                         dialog.dismiss();
+                        Log.i("TAG", "onCompleted: " + new Gson().toJson(mMessageEntity));
                         if (mMessageEntity != null) {
                             mMessageView.onSuccess(mMessageEntity);
+                            Log.i("TAG", "onCompleted: " + new Gson().toJson(mMessageEntity));
                         }
                     }
 

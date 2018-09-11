@@ -62,10 +62,10 @@ public class SendCodePresenter implements Presenter {
     public void attachIncomingIntent(Intent intent) {
 
     }
-    public void getSearchSendCode(String userPhone,String type,String mContent){
+    public void getSearchSendCode(String userPhone,String codeType,String mContent){
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext,mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchSendCode(userPhone,type)
+        mCompositeSubscription.add(manager.getSearchSendCode(userPhone,codeType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserInfoEntity>() {

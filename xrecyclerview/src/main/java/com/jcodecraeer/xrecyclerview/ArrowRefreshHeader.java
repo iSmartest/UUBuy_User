@@ -249,8 +249,6 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
             ct = (int) ((time.getTime() - lastTime) / 1000);
         }
         lastTime = time.getTime();
-        Log.e("TAG = ", currentTime + "");
-        Log.e("TAG = ", time.getTime() + "");
         if (ct == 0) {
             return "刚刚";
         }

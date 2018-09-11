@@ -8,6 +8,7 @@
     <uses-permission android:name="com.ifree.uu.uubuy.permission.JPUSH_MESSAGE" />
     <!-- 请求网络 -->
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <!-- Normal Permissions 不需要运行时注册 -->
     <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -322,7 +323,7 @@
         <!--Android 7.0相机调用-->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.ifree.uu.uubuy.fileprovider"
+            android:authorities="com.ifree.coupon_uu.uubuy.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

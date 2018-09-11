@@ -22,6 +22,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.ui.activity.CheckPermissionsActivity;
 import com.ifree.uu.uubuy.uitls.AppManager;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StatusBarUtil;
 
 import java.util.Objects;
@@ -40,6 +41,10 @@ public abstract class BaseActivity extends CheckPermissionsActivity{
     protected Context context;
     private BaseFragment lastFragment;
     public static boolean anInt = true;
+    protected String latitude;
+    protected String longitude;
+    protected String townAdCode;
+    protected String uid;
     @BindView(R.id.lay_bg)
     RelativeLayout lay_bg;
     @BindView(R.id.ly_base_left)
@@ -81,6 +86,10 @@ public abstract class BaseActivity extends CheckPermissionsActivity{
         StatusBarUtil.transparencyBar(this); //设置状态栏全透明
         StatusBarUtil.StatusBarLightMode(this); //设置白底黑字
         AppManager.addActivity(this);
+        latitude = SPUtil.getString(context,"latitude");
+        longitude = SPUtil.getString(context,"longitude");
+        townAdCode = SPUtil.getString(context,"townAdCode");
+        uid = SPUtil.getString(context,"uid");
         initView();//实例化
         loadData();//加载数据
     }

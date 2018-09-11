@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ import butterknife.ButterKnife;
  */
 public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADViewHolder>{
     private Context context;
-    private List<HomeEntity.CityADList> mCityADList;
-    public CityADAdapter(Context context, List<HomeEntity.CityADList> mCityADList) {
+    private List<HomeEntity.DataBean.CityADList> mCityADList;
+    public CityADAdapter(Context context, List<HomeEntity.DataBean.CityADList> mCityADList) {
         this.context = context;
         this.mCityADList = mCityADList;
     }
@@ -41,12 +42,15 @@ public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADVi
 
     @Override
     public void onBindViewHolder(@NonNull CityADADViewHolder holder, int position) {
-
+        HomeEntity.DataBean.CityADList cityADList = mCityADList.get(position);
+        holder.name.setText(cityADList.getCityADName());
+        holder.time.setText(cityADList.getCityADStartTime() + "—" + cityADList.getCityADEndTime());
+        GlideImageLoader.imageLoader(context,cityADList.getCityADPic(),holder.icon);
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return mCityADList == null ? 4 : mCityADList.size();
     }
 
     public class CityADADViewHolder extends RecyclerView.ViewHolder{

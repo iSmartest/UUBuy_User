@@ -9,40 +9,83 @@ import java.util.List;
  * Description:
  */
 public class GroupEntity {
-    private String result;
+    private String msg;
     private String resultCode;
-    private String userGrowthValue;
-    private String isUserInfo;
+    private DataBean data;
+    public static class DataBean {
+        private String userGrowthValue;
+        private String isUserInfo;
+        private String share;
+        private List<SignInList> signInList;
 
-    private List<SignInList> signInList;
+        public class SignInList {
+            private String date;
+            private String isSignIn;
 
-    public class SignInList {
-        private long date;
-        private String isSignIn;
+            public String getDate() {
+                return date;
+            }
 
-        public long getDate() {
-            return date;
+            public void setDate(String date) {
+                this.date = date;
+            }
+
+            public String getIsSignIn() {
+                return isSignIn;
+            }
+
+            public void setIsSignIn(String isSignIn) {
+                this.isSignIn = isSignIn;
+            }
         }
 
-        public void setDate(long date) {
-            this.date = date;
+        public String getUserGrowthValue() {
+            return userGrowthValue;
         }
 
-        public String getIsSignIn() {
-            return isSignIn;
+        public void setUserGrowthValue(String userGrowthValue) {
+            this.userGrowthValue = userGrowthValue;
         }
 
-        public void setIsSignIn(String isSignIn) {
-            this.isSignIn = isSignIn;
+        public String getIsUserInfo() {
+            return isUserInfo;
+        }
+
+        public String getShare() {
+            return share;
+        }
+
+        public void setShare(String share) {
+            this.share = share;
+        }
+
+        public void setIsUserInfo(String isUserInfo) {
+            this.isUserInfo = isUserInfo;
+        }
+
+        public List<SignInList> getSignInList() {
+            return signInList;
+        }
+
+        public void setSignInList(List<SignInList> signInList) {
+            this.signInList = signInList;
         }
     }
 
-    public String getResult() {
-        return result;
+    public DataBean getData() {
+        return data;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setData(DataBean data) {
+        this.data = data;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public String getResultCode() {
@@ -53,27 +96,5 @@ public class GroupEntity {
         this.resultCode = resultCode;
     }
 
-    public String getUserGrowthValue() {
-        return userGrowthValue;
-    }
 
-    public void setUserGrowthValue(String userGrowthValue) {
-        this.userGrowthValue = userGrowthValue;
-    }
-
-    public String getIsUserInfo() {
-        return isUserInfo;
-    }
-
-    public void setIsUserInfo(String isUserInfo) {
-        this.isUserInfo = isUserInfo;
-    }
-
-    public List<SignInList> getSignInList() {
-        return signInList;
-    }
-
-    public void setSignInList(List<SignInList> signInList) {
-        this.signInList = signInList;
-    }
 }

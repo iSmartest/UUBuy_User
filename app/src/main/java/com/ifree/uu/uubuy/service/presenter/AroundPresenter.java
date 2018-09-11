@@ -3,7 +3,9 @@ package com.ifree.uu.uubuy.service.presenter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
@@ -79,6 +81,7 @@ public class AroundPresenter implements Presenter {
                         dialog.dismiss();
                         if (mAroundEntity != null){
                             mAroundView.onSuccess(mAroundEntity);
+                            Log.i("TAG", "onAround: " + new Gson().toJson(mAroundEntity));
                         }
                     }
 

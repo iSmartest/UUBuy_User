@@ -4,6 +4,8 @@ import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.service.entity.CouponEntity;
+import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.service.entity.GroupEntity;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.entity.MessageEntity;
@@ -11,7 +13,12 @@ import com.ifree.uu.uubuy.service.entity.MineEntity;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -24,7 +31,7 @@ import rx.Observable;
 public interface RetrofitService {
     @GET(BaseUrl.SEND_CODE)
     Observable<UserInfoEntity> getSearchSendCode(@Query("userPhone") String userPhone,
-                                                 @Query("type") String type);
+                                                 @Query("codeType") String codeType);
 
     @GET(BaseUrl.USER_REGISTER)
     Observable<UserInfoEntity> getSearchRegister(@Query("userPhone") String userPhone,
@@ -61,6 +68,16 @@ public interface RetrofitService {
                                           @Query("page") int page,
                                           @Query("uid") String uid);
 
+    @GET(BaseUrl.CLASSIFY_LIST_INFO)
+    Observable<FirstClassifyEntity> getSearchClassifyListInfo(@Query("longitude") String longitude,
+                                                              @Query("latitude") String latitude,
+                                                              @Query("townAdCode") String townAdCode,
+                                                              @Query("adTypeId") String adTypeId,
+                                                              @Query("type") String type,
+                                                              @Query("menuId") String menuId,
+                                                              @Query("page") int page,
+                                                              @Query("uid") String uid);
+
     @GET(BaseUrl.AROUND_INFO)
     Observable<AroundEntity> getSearchArounds(@Query("longitude") String longitude,
                                               @Query("latitude") String latitude,
@@ -88,8 +105,43 @@ public interface RetrofitService {
                                               @Query("page") int page,
                                               @Query("uid") String uid);
 
+    @Multipart
+    @POST(BaseUrl.MODIFY_USER_INFO)
+    Observable<UserInfoEntity> getSearchModifyUserIconInfo(@Query("uid") String uid,
+                                                           @Part MultipartBody.Part body);
+
+
+    @GET(BaseUrl.MODIFY_USER_INFO)
+    Observable<UserInfoEntity> getSearchModifyUserInfo(@Query("uid") String uid,
+                                                       @Query("userSex") String userSex,
+                                                       @Query("userName") String userName,
+                                                       @Query("userBirthday") String userBirthday,
+                                                       @Query("userIdCartNumber") String userIdCartNumber,
+                                                       @Query("userAddress") String userAddress);
+
     @GET(BaseUrl.GROUP_INFO)
     Observable<GroupEntity> getSearchGroupInfos(@Query("uid") String uid);
+
+    @GET(BaseUrl.SIGN_IN)
+    Observable<UserInfoEntity> getSearchSignIns(@Query("uid") String uid);
+
+    @GET(BaseUrl.COUPON_CENTER)
+    Observable<CouponEntity> getSearchCouponCenter(@Query("uid") String uid,
+                                                   @Query("businessId") String businessId,
+                                                   @Query("couponType") String couponType,
+                                                   @Query("longitude") String longitude,
+                                                   @Query("latitude") String latitude,
+                                                   @Query("townAdCode") String townAdCode,
+                                                   @Query("page") int page);
+
+    @GET(BaseUrl.MY_COUPON)
+    Observable<CouponEntity> getSearchMyCoupon(@Query("uid") String uid,
+                                               @Query("businessId") String businessId,
+                                               @Query("couponType") String couponType,
+                                               @Query("longitude") String longitude,
+                                               @Query("latitude") String latitude,
+                                               @Query("townAdCode") String townAdCode,
+                                               @Query("page") int page);
 
     @GET(BaseUrl.MESSAGE_INFO)
     Observable<MessageEntity> getSearchMessages(@Query("uid") String uid,

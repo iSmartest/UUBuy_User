@@ -25,10 +25,10 @@ import butterknife.ButterKnife;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder>{
 
     private Context context;
-    private List<MessageEntity.MessageList> mList;
+    private List<MessageEntity.DataBean.NotifyList> mList;
     private String type;
 
-    public MessageAdapter(Context context, List<MessageEntity.MessageList> mList,String type) {
+    public MessageAdapter(Context context, List<MessageEntity.DataBean.NotifyList> mList, String type) {
         this.context = context;
         this.mList = mList;
         this.type = type;
@@ -44,19 +44,37 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-
+        MessageEntity.DataBean.NotifyList messageList = mList.get(position);
         if (type.equals("0")){
             holder.mSendTime.setVisibility(View.GONE);
             holder.mState.setVisibility(View.GONE);
+            holder.mTime.setText(messageList.getMessageSendTime());
+        }else if (type.equals("1")){
+            holder.mSendTime.setVisibility(View.GONE);
+            holder.mState.setVisibility(View.GONE);
+            holder.mTime.setText(messageList.getMessageSendTime());
         }else {
             holder.mSendTime.setVisibility(View.VISIBLE);
             holder.mState.setVisibility(View.VISIBLE);
+            switch (messageList.getMessageType()){
+                case "0":
+                    holder.mState.setText("活动开始");
+                    break;
+                case "1":
+                    holder.mState.setText("活动结束");
+                    break;
+            }
+            holder.mSendTime.setText(messageList.getMessageSendTime());
+            holder.mTime.setText(messageList.getMessageTime());
         }
+
+        holder.mContent.setText(messageList.getMessageContent());
+
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mList == null ? 0 : mList.size();
     }
 
     public class MessageViewHolder extends RecyclerView.ViewHolder{

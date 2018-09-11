@@ -2,9 +2,14 @@ package com.ifree.uu.uubuy.ui.activity;
 
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -16,6 +21,12 @@ import butterknife.OnClick;
  * Description:
  */
 public class MySettingActivity extends BaseActivity {
+    @BindView(R.id.my_iconImgview)
+    RoundedImageView mIcon;
+    @BindView(R.id.my_icon_Name)
+    TextView mName;
+    @BindView(R.id.myPhones)
+    TextView mPhone;
     @BindView(R.id.ll_account_security)
     LinearLayout mSecurity;
     @BindView(R.id.ll_binding_phone)
@@ -25,13 +36,14 @@ public class MySettingActivity extends BaseActivity {
     @BindView(R.id.ll_feedback)
     LinearLayout mFeedBack;
     @BindView(R.id.linear_my_setting_clear_cache)
-    LinearLayout mClearCache;
+    RelativeLayout mClearCache;
     @BindView(R.id.ll_share)
     LinearLayout mShare;
     @BindView(R.id.linear_my_setting_update)
     LinearLayout mUpdata;
     @BindView(R.id.text_my_setting_log_out)
-    LinearLayout mLogOut;
+    TextView mLogOut;
+    private String userPhone,userIcon,userName;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_setting;
@@ -39,7 +51,12 @@ public class MySettingActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-
+        userName = SPUtil.getString(context,"userName");
+        userIcon = SPUtil.getString(context,"userIcon");
+        userPhone = SPUtil.getString(context,"userPhone");
+        GlideImageLoader.imageLoader(context,userIcon,mIcon);
+        mName.setText(userName);
+        mPhone.setText("账户：" + userPhone);
     }
 
     @Override
@@ -77,5 +94,4 @@ public class MySettingActivity extends BaseActivity {
                 break;
         }
     }
-
 }

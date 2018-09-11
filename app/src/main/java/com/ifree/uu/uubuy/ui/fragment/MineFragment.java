@@ -27,6 +27,7 @@ import com.ifree.uu.uubuy.ui.activity.PlayVIPActivity;
 import com.ifree.uu.uubuy.ui.adapter.HomeAdapter;
 import com.ifree.uu.uubuy.ui.adapter.MineAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -54,7 +55,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private View headView;
     int page = 1;
     private MineAdapter mAdapter;
-    private List<MineEntity.RecommendactivitiesList> mList = new ArrayList<>();
+    private List<MineEntity.DataBean.RecommendactivitiesList> mList = new ArrayList<>();
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -94,13 +95,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         headView.findViewById(R.id.tv_mine_get_coupon_center).setOnClickListener(this);
         mGoLogin = headView.findViewById(R.id.tv_go_login);
         mGoLogin.setOnClickListener(this);
-        if (uid.isEmpty()){
-            mUserLogin.setVisibility(View.GONE);
-            mGoLogin.setVisibility(View.VISIBLE);
-        }else {
-            mUserLogin.setVisibility(View.VISIBLE);
-            mGoLogin.setVisibility(View.GONE);
-        }
         if (headView != null) xRecyclerView.addHeaderView(headView);
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -124,12 +118,17 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         mAdapter = new MineAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
-
     }
 
     @Override
     protected void initData() {
+        if (uid.isEmpty()){
+            mUserLogin.setVisibility(View.GONE);
+            mGoLogin.setVisibility(View.VISIBLE);
+        }else {
+            mUserLogin.setVisibility(View.VISIBLE);
+            mGoLogin.setVisibility(View.GONE);
+        }
         mineInfoPresenter.onCreate();
         mineInfoPresenter.attachView(mMineInfoView);
         mineInfoPresenter.getSearchMineInfo(longitude, latitude, townAdCode, page, uid, "加载中...");
@@ -139,13 +138,27 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         @Override
         public void onSuccess(MineEntity mMineEntity) {
 
-            if (mMineEntity.equals("1")) {
-                ToastUtils.makeText(context, mMineEntity.getResultCode());
+            if (mMineEntity.getResultCode().equals("1")) {
+                ToastUtils.makeText(context, mMineEntity.getMsg());
                 return;
             }
-
-            List<MineEntity.RecommendactivitiesList> recommendactivitiesLists = mMineEntity.getRecommendactivitiesList();
-            if (recommendactivitiesLists != null && !recommendactivitiesLists.isEmpty() && recommendactivitiesLists.size() > 0) {
+            mUserName.setText(mMineEntity.getData().getUserName());
+            SPUtil.putString(context,"userName",mMineEntity.getData().getUserName());
+            SPUtil.putString(context,"isPhone",mMineEntity.getData().getUserBindPhone());
+            SPUtil.putString(context,"userAddress",mMineEntity.getData().getUserAddress());
+            SPUtil.putString(context,"userBirthday",mMineEntity.getData().getUserBirthday());
+            SPUtil.putString(context,"userIcon",mMineEntity.getData().getUserIcon());
+            SPUtil.putString(context,"userIdCard",mMineEntity.getData().getUserIdcard());
+            SPUtil.putString(context,"userPhone",mMineEntity.getData().getUserPhone());
+            SPUtil.putString(context,"userSex",mMineEntity.getData().getUserSex());
+            mConpouNum.setText(mMineEntity.getData().getUserCoupon() + "张");
+            mGrownValue.setText(mMineEntity.getData().getUserGrowthValue() + "/" + mMineEntity.getData().getMedalTotalValue());
+            grown_bar.setMax(Integer.parseInt(mMineEntity.getData().getMedalTotalValue()));
+            grown_bar.setProgress(Integer.parseInt(mMineEntity.getData().getUserGrowthValue()));
+            GlideImageLoader.imageLoader(context,mMineEntity.getData().getUserIcon(),mIcon);
+            mIntegralNum.setText(mMineEntity.getData().getUserIntegral() + "分");
+            List<MineEntity.DataBean.RecommendactivitiesList> recommendactivitiesLists = mMineEntity.getData().getRecommendactivitiesList();
+            if (recommendactivitiesLists != null && !recommendactivitiesLists.isEmpty()) {
                 mList.addAll(recommendactivitiesLists);
                 mAdapter.notifyDataSetChanged();
             }
@@ -188,7 +201,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         public void onReceive(Context context, final Intent intent) {
             //接到广播通知后刷新数据源
             uid = SPUtil.getString(context,"uid");
-
+            initData();
         }
     };
 }

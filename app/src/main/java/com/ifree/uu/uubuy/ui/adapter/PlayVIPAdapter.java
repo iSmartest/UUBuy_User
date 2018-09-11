@@ -2,10 +2,13 @@ package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.GroupEntity;
@@ -23,8 +26,9 @@ import butterknife.ButterKnife;
  */
 public class PlayVIPAdapter extends RecyclerView.Adapter<PlayVIPAdapter.PlayVIPViewHolder>{
     private Context context;
-    private List<GroupEntity.SignInList> mList;
-    public PlayVIPAdapter(Context context, List<GroupEntity.SignInList> mList) {
+    private List<GroupEntity.DataBean.SignInList> mList;
+
+    public PlayVIPAdapter(Context context, List<GroupEntity.DataBean.SignInList> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -39,6 +43,7 @@ public class PlayVIPAdapter extends RecyclerView.Adapter<PlayVIPAdapter.PlayVIPV
 
     @Override
     public void onBindViewHolder(@NonNull PlayVIPViewHolder holder, int position) {
+        GroupEntity.DataBean.SignInList signInList = mList.get(position);
         if (position == 0){
             holder.vLeft.setVisibility(View.GONE);
         }else if (position == 6){
@@ -47,11 +52,23 @@ public class PlayVIPAdapter extends RecyclerView.Adapter<PlayVIPAdapter.PlayVIPV
             holder.vLeft.setVisibility(View.VISIBLE);
             holder.vRight.setVisibility(View.VISIBLE);
         }
+        holder.mDate.setText(signInList.getDate());
+        switch (signInList.getIsSignIn()){
+            case "0":
+                holder.ivStare.setImageResource(R.drawable.sign_in_no);
+//                holder.vLeft.setBackgroundColor(ContextCompat.getColor(context, R.color.edit_hint_color));
+                break;
+            case "1":
+                holder.ivStare.setImageResource(R.drawable.sign_in_yes);
+//                holder.vLeft.setBackgroundColor(ContextCompat.getColor(context, R.color.text_green));
+                break;
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return 7;
+        return mList == null ? 7 : mList.size();
     }
 
     public class PlayVIPViewHolder extends RecyclerView.ViewHolder{
@@ -59,6 +76,10 @@ public class PlayVIPAdapter extends RecyclerView.Adapter<PlayVIPAdapter.PlayVIPV
         View vLeft;
         @BindView(R.id.v_vip_right)
         View vRight;
+        @BindView(R.id.tv_sign_in_date)
+        TextView mDate;
+        @BindView(R.id.iv_sign_in_state)
+        ImageView ivStare;
         public PlayVIPViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

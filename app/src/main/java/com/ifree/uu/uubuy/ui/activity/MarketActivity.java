@@ -65,6 +65,7 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
         if (headView != null) xRecyclerView.addHeaderView(headView);
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
+
             public void onRefresh() {
                 new Handler().postDelayed(new Runnable() {
                     public void run() {

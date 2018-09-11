@@ -2,6 +2,8 @@ package com.ifree.uu.uubuy.ui.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,20 +22,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.dialog.EditContentDialog;
+import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.service.presenter.ModifyUserInfoPresenter;
+import com.ifree.uu.uubuy.service.view.UserInfoView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.PhotoUtil;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * Author: 小火
@@ -42,6 +57,7 @@ import butterknife.OnClick;
  * Description:
  */
 public class MyPersonalInformationActivity extends BaseActivity {
+    private ModifyUserInfoPresenter mModifyUserInfoPresenter;
     @BindView(R.id.ri_my_icon_img)
     RoundedImageView mUserIcon;
     @BindView(R.id.ll_nick_name)
@@ -56,7 +72,10 @@ public class MyPersonalInformationActivity extends BaseActivity {
     LinearLayout llBirthday;
     @BindView(R.id.text_personal_information_birthday)
     TextView mBirthday;
-
+    @BindView(R.id.text_personal_information_id_cart)
+    TextView mIdCart;
+    @BindView(R.id.text_personal_information_address)
+    TextView mAddress;
     private AlertDialog builder; //底部弹出菜单
     private static final int CODE_GALLERY_REQUEST = 0xa0;
     private static final int CODE_CAMERA_REQUEST = 0xa1;
@@ -66,26 +85,48 @@ public class MyPersonalInformationActivity extends BaseActivity {
     private File fileUri = new File(Environment.getExternalStorageDirectory().getPath() + "/photo.jpg");
     private File fileCropUri = new File(Environment.getExternalStorageDirectory().getPath() + "/crop_photo.jpg");
     private Uri imageUri,cropImageUri;
-
+    private String uid,userName,userAddress,userBirthday,userIcon,userIdCard,userSex;
     private EditContentDialog dialog;
+    private final int DATE_DIALOG = 1;
+    private int mYear, mMonth, mDay;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_personal_information;
     }
 
-
     @Override
     protected void initView() {
         hideBack(5);
         setTitleText("个人中心");
+        mModifyUserInfoPresenter = new ModifyUserInfoPresenter(context);
+        uid = SPUtil.getString(context,"uid");
+        userName = SPUtil.getString(context,"userName");
+        userAddress = SPUtil.getString(context,"userAddress");
+        userBirthday = SPUtil.getString(context,"userBirthday");
+        userIcon = SPUtil.getString(context,"userIcon");
+        userIdCard = SPUtil.getString(context,"userIdCard");
+        userSex = SPUtil.getString(context,"userSex");
     }
 
 
     @Override
     protected void loadData() {
-
+        mNickName.setText(userName);
+        if (userSex.equals("0")){
+            mSex.setText("男");
+        }else {
+            mSex.setText("女");
+        }
+        mBirthday.setText(userBirthday);
+        mIdCart.setText(userIdCard);
+        mAddress.setText(userAddress);
+        GlideImageLoader.imageLoader(context,userIcon,mUserIcon);
+        final Calendar ca = Calendar.getInstance();
+        mYear = ca.get(Calendar.YEAR);
+        mMonth = ca.get(Calendar.MONTH);
+        mDay = ca.get(Calendar.DAY_OF_MONTH);
     }
-    @OnClick({R.id.ri_my_icon_img, R.id.ll_nick_name, R.id.ll_sex, R.id.ll_birthday})
+    @OnClick({R.id.ri_my_icon_img, R.id.ll_nick_name, R.id.ll_sex, R.id.ll_birthday,R.id.text_personal_information_id_cart,R.id.text_personal_information_address})
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.ri_my_icon_img:
@@ -96,6 +137,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
                     @Override
                     public void sure(String nickName) {
                         mNickName.setText(nickName);
+                        submitModifyUserInfo();
                         dialog.dismiss();
                     }
                 });
@@ -108,21 +150,72 @@ public class MyPersonalInformationActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mSex.setText("男");
-//                                userSex = "0";
+                                userSex = "0";
+                                submitModifyUserInfo();
                             }
                         }).setNegativeButton("女", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mSex.setText("女");
-//                        userSex = "1";
+                        userSex = "1";
+                        submitModifyUserInfo();
                     }
                 }).show();
                 break;
             case R.id.ll_birthday:
-
+                showDialog(DATE_DIALOG);
+                break;
+            case R.id.text_personal_information_id_cart:
+                dialog = new EditContentDialog(context, R.string.id_cart, new EditContentDialog.OnSureBtnClickListener() {
+                    @Override
+                    public void sure(String idCart) {
+                        mIdCart.setText(idCart);
+                        userIdCard = idCart;
+                        submitModifyUserInfo();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setEditText(R.string.edit_id_cart,false);
+                dialog.show();
+                break;
+            case R.id.text_personal_information_address:
+                dialog = new EditContentDialog(context, R.string.user_address, new EditContentDialog.OnSureBtnClickListener() {
+                    @Override
+                    public void sure(String address) {
+                        mAddress.setText(address);
+                        userAddress = address;
+                        submitModifyUserInfo();
+                        dialog.dismiss();
+                    }
+                });
+                dialog.setEditText(R.string.edit_user_address,false);
+                dialog.show();
                 break;
         }
     }
+
+    private void submitModifyUserInfo() {
+        mModifyUserInfoPresenter.onCreate();
+        mModifyUserInfoPresenter.attachView(mModifyUserInfoView);
+        mModifyUserInfoPresenter.getSearchModifyUserInfo(uid,userSex,userName,userBirthday,userIdCard,userAddress,"提交中...");
+    }
+
+
+    private UserInfoView mModifyUserInfoView = new UserInfoView() {
+        @Override
+        public void onSuccess(UserInfoEntity mUserInfoEntity) {
+            if (mUserInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                return;
+            }
+            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context,result);
+        }
+    };
     private void showChoosePicDialog() {
         builder = new AlertDialog.Builder(context, R.style.Dialog).create(); // 先得到构造器
         builder.show();
@@ -192,7 +285,6 @@ public class MyPersonalInformationActivity extends BaseActivity {
         } else {
             PhotoUtil.openPic(this, CODE_GALLERY_REQUEST);
         }
-
     }
 
 
@@ -249,23 +341,83 @@ public class MyPersonalInformationActivity extends BaseActivity {
                     }
                     break;
                 case CODE_RESULT_REQUEST:
-                    Bitmap bitmap = PhotoUtil.getBitmapFromUri(cropImageUri, this);
+                    Bitmap bitmap = PhotoUtil.getBitmapFromUri(cropImageUri, context);
                     if (bitmap != null) {
-                        showImages(bitmap);
+                        showImages(bitmap,cropImageUri);
                     }
                     break;
             }
         }
     }
 
-    private void showImages(Bitmap bitmap) {
+    private void showImages(Bitmap bitmap,Uri cropImageUri) {
         mUserIcon.setImageBitmap(bitmap);
-//        mPicture = ImageUtil.bitmaptoString(bitmap);
+//        GlideImageLoader.imageLoader(context,cropImageUri,mUserIcon);
+        submitModifyUserIconInfo(cropImageUri);
     }
+
+    private void submitModifyUserIconInfo(Uri cropImageUri) {
+        File file = null;
+        try {
+            file = new File(new URI(cropImageUri.toString()));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("userIconFile", file.getName(), requestBody);
+
+        mModifyUserInfoPresenter.onCreate();
+        mModifyUserInfoPresenter.attachView(mModifyUserIconInfoView);
+        mModifyUserInfoPresenter.getSearchModifyUserIconInfo(uid,body,"提交中...");
+    }
+
+    private UserInfoView mModifyUserIconInfoView = new UserInfoView() {
+        @Override
+        public void onSuccess(UserInfoEntity mUserInfoEntity) {
+            if (mUserInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                return;
+            }
+            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context,result);
+        }
+    };
 
     //检查设备是否存在SDCard的工具方法
     private static boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
         return state.equals(Environment.MEDIA_MOUNTED);
     }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_DIALOG:
+                return new DatePickerDialog(this, mdateListener, mYear, mMonth, mDay);
+        }
+        return null;
+    }
+
+    public void display() {
+        mBirthday.setText(new StringBuffer().append(mYear).append("-").append(mMonth + 1).append("-").append(mDay).append(" "));
+        userBirthday = mBirthday.getText().toString().trim();
+        submitModifyUserInfo();
+    }
+
+    private DatePickerDialog.OnDateSetListener mdateListener = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            mYear = year;
+            mMonth = monthOfYear;
+            mDay = dayOfMonth;
+            display();
+        }
+    };
 }

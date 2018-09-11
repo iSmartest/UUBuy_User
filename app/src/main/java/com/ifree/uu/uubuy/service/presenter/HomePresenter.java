@@ -3,7 +3,9 @@ package com.ifree.uu.uubuy.service.presenter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.view.View;
@@ -79,6 +81,7 @@ public class HomePresenter implements Presenter {
                         dialog.dismiss();
                         if (mHomeEntity != null){
                             mHomeView.onSuccess(mHomeEntity);
+                            Log.i("TAG", "onCompleted: " + new Gson().toJson(mHomeEntity));
                         }
                     }
 

@@ -6,11 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.custom.MyListView;
-import com.ifree.uu.uubuy.service.entity.MenuClassifyEntity;
+import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 
 import java.util.List;
 
@@ -23,65 +24,72 @@ import butterknife.ButterKnife;
  * Created by 2018/8/23.
  * Description:
  */
-public class FirstMenuAdapter extends RecyclerView.Adapter<FirstMenuAdapter.FirstMenuViewHolder>{
-
+public class FirstMenuAdapter extends BaseAdapter{
     private Context context;
-    private List<MenuClassifyEntity.FirstMenuList> mMenuList;
-    private boolean open;
-    public FirstMenuAdapter(Context context, List<MenuClassifyEntity.FirstMenuList> mMenuList) {
+    private List<FirstClassifyEntity.DataBean.MenuList> mMenuList;
+    private String type;
+    public FirstMenuAdapter(Context context, List<FirstClassifyEntity.DataBean.MenuList> mMenuList,String type) {
         this.context = context;
         this.mMenuList = mMenuList;
-    }
-
-    @NonNull
-    @Override
-    public FirstMenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_first_menu,parent,false);
-        FirstMenuViewHolder viewHolder = new FirstMenuViewHolder(view);
-        return viewHolder;
+        this.type = type;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final FirstMenuViewHolder holder, int position) {
-//        final MenuClassifyEntity.FirstMenuList firstMenuList = mMenuList.get(position);
-        holder.name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (open){
-                    holder.secondClassify.setVisibility(View.GONE);
-                    open = false;
-                }else {
-                    holder.secondClassify.setVisibility(View.VISIBLE);
-                    open = true;
+    public int getCount() {
+        return mMenuList == null ? 0 : mMenuList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return mMenuList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final FirstMenuViewHolder viewHolder;
+        final FirstClassifyEntity.DataBean.MenuList menuList = mMenuList.get(position);
+        if (convertView != null) {
+            viewHolder = (FirstMenuViewHolder) convertView.getTag();
+        } else {
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_first_menu,parent,false);
+            viewHolder = new FirstMenuViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        }
+        if (type.equals("6")){
+            viewHolder.name.setText(menuList.getMenuNameInfo());
+            viewHolder.name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (type.equals("6")){
+                        if(menuList.isOpen()){
+                            viewHolder.secondClassify.setVisibility(View.GONE);
+                            menuList.setOpen(false);
+                        }else{
+                            viewHolder.secondClassify.setVisibility(View.VISIBLE);
+                            menuList.setOpen(true);
+                        }
+                    }
                 }
-
-//                if(firstMenuList.isOpen()){
-//                    holder.secondClassify.setVisibility(View.GONE);
-//                    firstMenuList.setOpen(false);
-//                }else{
-//                    holder.secondClassify.setVisibility(View.VISIBLE);
-//                    firstMenuList.setOpen(true);
-//                }
-            }
-        });
-        SecondClassifyAdapter secondClassifyAdapter = new SecondClassifyAdapter(context);
-        holder.secondClassify.setAdapter(secondClassifyAdapter);
-
+            });
+        }else {
+            viewHolder.name.setText(menuList.getMenuName());
+        }
+        SecondClassifyAdapter secondClassifyAdapter = new SecondClassifyAdapter(context,menuList.getSecondList());
+        viewHolder.secondClassify.setAdapter(secondClassifyAdapter);
+        return convertView;
     }
 
-    @Override
-    public int getItemCount() {
-        return 10;
-    }
-
-    public class FirstMenuViewHolder extends RecyclerView.ViewHolder{
-
+    public class FirstMenuViewHolder{
         @BindView(R.id.tv_first_classify_name)
         TextView name;
         @BindView(R.id.second_menu_classify)
         MyListView secondClassify;
         public FirstMenuViewHolder(View itemView) {
-            super(itemView);
             ButterKnife.bind(this,itemView);
         }
     }

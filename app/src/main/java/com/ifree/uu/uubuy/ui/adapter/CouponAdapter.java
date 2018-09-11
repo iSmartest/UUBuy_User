@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
@@ -24,9 +25,9 @@ import butterknife.ButterKnife;
 public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponViewHolder>{
 
     private Context context;
-    private List<CouponEntity.CouponList> mList;
+    private List<CouponEntity.DataBean.CouponList> mList;
     private String couponType;
-    public CouponAdapter(Context context, List<CouponEntity.CouponList> mList,String couponType) {
+    public CouponAdapter(Context context, List<CouponEntity.DataBean.CouponList> mList,String couponType) {
         this.context = context;
         this.mList = mList;
         this.couponType = couponType;
@@ -42,6 +43,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
 
     @Override
     public void onBindViewHolder(@NonNull CouponViewHolder holder, int position) {
+        CouponEntity.DataBean.CouponList couponList = mList.get(position);
         switch (couponType){
             case "0":
                 holder.linearLayout.setBackgroundResource(R.drawable.coupon_uu);
@@ -53,16 +55,33 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
                 holder.linearLayout.setBackgroundResource(R.drawable.coupon_used_background);
                 break;
         }
+
+        holder.mReducePrice.setText(couponList.getCouponReducePrice());
+        holder.mAllPrice.setText("单笔" + couponList.getCondition());
+        holder.mTime.setText("有效时间" + couponList.getSecuritiesTimeZone());
+        holder.mStore.setText(couponList.getMsName());
+        holder.mType.setText(couponList.getType());
+
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mList == null ? 0 : mList.size();
     }
 
     public static class CouponViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.ll_item_coupon_background)
         LinearLayout linearLayout;
+        @BindView(R.id.tv_coupon_reduce_price)
+        TextView mReducePrice;
+        @BindView(R.id.tv_coupon_all_price)
+        TextView mAllPrice;
+        @BindView(R.id.tv_coupon_type)
+        TextView mType;
+        @BindView(R.id.tv_coupon_time)
+        TextView mTime;
+        @BindView(R.id.tv_coupon_for_store)
+        TextView mStore;
         public CouponViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

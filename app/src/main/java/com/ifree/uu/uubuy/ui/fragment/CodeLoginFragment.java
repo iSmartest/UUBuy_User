@@ -136,7 +136,7 @@ public class CodeLoginFragment extends BaseFragment {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getResult());
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
                 return;
             }
             mCode = mUserInfoEntity.getData().getCode();
@@ -153,7 +153,7 @@ public class CodeLoginFragment extends BaseFragment {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getResult());
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
                 return;
             }
             SPUtil.putString(context,"uid",mUserInfoEntity.getData().getUid());

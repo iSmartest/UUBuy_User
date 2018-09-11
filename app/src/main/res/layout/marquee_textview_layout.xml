@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:flipInterval="5000"
-        android:padding="8dp">
+        android:flipInterval="5000">
     </ViewFlipper>
 </LinearLayout>

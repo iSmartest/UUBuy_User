@@ -12,6 +12,11 @@
     <string name="local_album">本地相册</string>
     <string name="nick_name">修改昵称</string>
     <string name="edit_nick_name">输入昵称</string>
+    <string name="id_cart">身份证号</string>
+    <string name="edit_id_cart">输入身份证号</string>
+    <string name="user_address">编辑地址</string>
+    <string name="edit_user_address">输入地址</string>
+
     <string name="error_input_phone">请输入正确的手机号码</string>
     <string name="error_input_pwd_fail_info_tips">请输入6-20位英文字母或数字</string>
     <string name="error_input_verification">请输入验证码</string>

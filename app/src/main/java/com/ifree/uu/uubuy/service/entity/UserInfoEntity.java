@@ -7,12 +7,12 @@ package com.ifree.uu.uubuy.service.entity;
  * Description:
  */
 public class UserInfoEntity {
-    private String result;
+    private String msg;
     private String resultCode;
     private DataBean data;
     public static class DataBean{
         private String code;//验证码
-        private String uid; //用户ID
+        private String id; //用户ID
         private String isPhone;//0未绑定1绑定过
         private String nickName; //返回服务器上的昵称
         private String userIcon;  //返回服务器上的用户头像
@@ -26,11 +26,11 @@ public class UserInfoEntity {
         }
 
         public String getUid() {
-            return uid;
+            return id;
         }
 
         public void setUid(String uid) {
-            this.uid = uid;
+            this.id = uid;
         }
 
         public String getIsPhone() {
@@ -58,12 +58,12 @@ public class UserInfoEntity {
         }
     }
 
-    public String getResult() {
-        return result;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public String getResultCode() {

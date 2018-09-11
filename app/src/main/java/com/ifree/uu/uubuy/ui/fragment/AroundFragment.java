@@ -31,7 +31,7 @@ public class AroundFragment extends BaseFragment {
     @BindView(R.id.xr_around)
     XRecyclerView xRecyclerView;
     private int page = 1;
-    private List<AroundEntity.ActivitiesList> mList = new ArrayList<>();
+    private List<AroundEntity.DataBean.ActivitiesList> mList = new ArrayList<>();
     private AroundAdapter mAdapter;
     @Override
     protected int getLayout() {
@@ -68,7 +68,6 @@ public class AroundFragment extends BaseFragment {
         });
         mAdapter = new AroundAdapter(context,mList);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
     }
 
     @Override
@@ -80,11 +79,11 @@ public class AroundFragment extends BaseFragment {
     private AroundView mAroundView = new AroundView() {
         @Override
         public void onSuccess(AroundEntity mAroundEntity) {
-            if (mAroundEntity.getResult().equals("1")){
-                ToastUtils.makeText(context,mAroundEntity.getResultCode());
+            if (mAroundEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mAroundEntity.getMsg());
                 return;
             }
-            List<AroundEntity.ActivitiesList> activitiesLists = mAroundEntity.getActivitiesList();
+            List<AroundEntity.DataBean.ActivitiesList> activitiesLists = mAroundEntity.getData().getActivityList();
             if (activitiesLists != null && !activitiesLists.isEmpty() && activitiesLists.size() > 0){
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();

@@ -30,7 +30,7 @@ public class MessageListFragment extends BaseFragment {
     XRecyclerView xRecyclerView;
     private String type;
     private int page = 1;
-    private List<MessageEntity.MessageList> mList = new ArrayList<>();
+    private List<MessageEntity.DataBean.NotifyList> mList;
     private MessageAdapter mAdapter;
     @Override
     protected int getLayout() {
@@ -39,6 +39,7 @@ public class MessageListFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        mList = new ArrayList<>();
         messagePresenter = new MessagePresenter(context);
         type = getArguments().getString("type");
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
@@ -68,7 +69,7 @@ public class MessageListFragment extends BaseFragment {
         });
         mAdapter = new MessageAdapter(context,mList,type);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
+
     }
 
     @Override
@@ -81,14 +82,14 @@ public class MessageListFragment extends BaseFragment {
     private MessageView mMessageView = new MessageView() {
         @Override
         public void onSuccess(MessageEntity mMessageEntity) {
-            if (mMessageEntity.getResult().equals("1")){
-                ToastUtils.makeText(context,mMessageEntity.getResultCode());
+            if (mMessageEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mMessageEntity.getMsg());
                 return;
             }
 
-            List<MessageEntity.MessageList> messageLists = mMessageEntity.getMessageList();
-            if (messageLists != null && !messageLists.isEmpty() && messageLists.size() > 0){
-                mList.addAll(messageLists);
+            List<MessageEntity.DataBean.NotifyList> notifyLists = mMessageEntity.getData().getNotifyList();
+            if (notifyLists != null && !notifyLists.isEmpty()){
+                mList.addAll(notifyLists);
                 mAdapter.notifyDataSetChanged();
             }
         }

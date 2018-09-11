@@ -3,7 +3,9 @@ package com.ifree.uu.uubuy.service.presenter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.MineEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
@@ -27,9 +29,11 @@ public class MineInfoPresenter implements Presenter {
     private Context mContext;
     private MineInfoView mMineInfoView;
     private MineEntity mMineEntity;
-    public MineInfoPresenter(Context mContext){
+
+    public MineInfoPresenter(Context mContext) {
         this.mContext = mContext;
     }
+
     @Override
     public void onCreate() {
         manager = new DataManager(mContext);
@@ -43,7 +47,7 @@ public class MineInfoPresenter implements Presenter {
 
     @Override
     public void onStop() {
-        if (mCompositeSubscription.hasSubscriptions()){
+        if (mCompositeSubscription.hasSubscriptions()) {
             mCompositeSubscription.unsubscribe();
         }
     }
@@ -63,18 +67,19 @@ public class MineInfoPresenter implements Presenter {
 
     }
 
-    public void getSearchMineInfo(String longitude, String latitude, String townAdCode, int page,String uid,String mContent){
-        final Dialog dialog = ProgressDialog.createLoadingDialog(mContext,mContent);
+    public void getSearchMineInfo(String longitude, String latitude, String townAdCode, int page, String uid, String mContent) {
+        final Dialog dialog = ProgressDialog.createLoadingDialog(mContext, mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchMineInfos(longitude,latitude,townAdCode,page,uid)
-                .observeOn(Schedulers.io())
+        mCompositeSubscription.add(manager.getSearchMineInfos(longitude, latitude, townAdCode, page, uid)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MineEntity>() {
                     @Override
                     public void onCompleted() {
                         dialog.dismiss();
-                        if (mMineEntity != null){
+                        if (mMineEntity != null) {
                             mMineInfoView.onSuccess(mMineEntity);
+                            Log.i("TAG", "onCompleted: " + new Gson().toJson(mMineEntity));
                         }
                     }
 

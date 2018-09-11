@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
 
@@ -26,8 +27,8 @@ import butterknife.ButterKnife;
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder>{
 
     private Context context;
-    private List<HomeEntity.ActivitiesList> mList;
-    public HomeAdapter(Context context, List<HomeEntity.ActivitiesList> mList) {
+    private List<HomeEntity.DataBean.ActivitiesList> mList;
+    public HomeAdapter(Context context, List<HomeEntity.DataBean.ActivitiesList> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -42,12 +43,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
-
+        HomeEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
+        holder.address.setText(activitiesList.getActivitiesAdAddress());
+        holder.name.setText(activitiesList.getActivitiesName());
+        holder.time.setText("活动时间：" + activitiesList.getActivitiesTime());
+        GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mList == null ? 10 : mList.size();
     }
 
     public class HomeViewHolder extends RecyclerView.ViewHolder{

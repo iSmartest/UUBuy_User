@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
 
@@ -27,9 +28,9 @@ import butterknife.ButterKnife;
 public class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.AroundViewHolder>{
 
     private Context context;
-    private List<AroundEntity.ActivitiesList> mList;
+    private List<AroundEntity.DataBean.ActivitiesList> mList;
 
-    public AroundAdapter(Context context, List<AroundEntity.ActivitiesList> mList) {
+    public AroundAdapter(Context context, List<AroundEntity.DataBean.ActivitiesList> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -44,12 +45,16 @@ public class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.AroundView
 
     @Override
     public void onBindViewHolder(@NonNull AroundViewHolder holder, int position) {
-
+        AroundEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
+        holder.name.setText(activitiesList.getActivitiesName());
+        holder.time.setText("活动时间：" + activitiesList.getActivitiesTime());
+        holder.address.setText("活动地点：" + activitiesList.getActivitiesAdAddress());
+        GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mList == null ? 0 : mList.size();
     }
 
     public class AroundViewHolder extends RecyclerView.ViewHolder{

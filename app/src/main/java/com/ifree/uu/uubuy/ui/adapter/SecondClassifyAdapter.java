@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,29 +23,31 @@ import butterknife.ButterKnife;
  */
 public class SecondClassifyAdapter extends BaseAdapter {
     private Context context;
-
-    public SecondClassifyAdapter(Context context) {
+    private List<FirstClassifyEntity.DataBean.MenuList.SecondList> mList;
+    public SecondClassifyAdapter(Context context, List<FirstClassifyEntity.DataBean.MenuList.SecondList> mList) {
         this.context = context;
+        this.mList = mList;
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return mList == null ? 0 : mList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         SecondClassifyViewHolder viewHolder;
+        FirstClassifyEntity.DataBean.MenuList.SecondList secondList = mList.get(position);
         if (convertView != null) {
             viewHolder = (SecondClassifyViewHolder) convertView.getTag();
         } else {
@@ -50,8 +55,7 @@ public class SecondClassifyAdapter extends BaseAdapter {
             viewHolder = new SecondClassifyViewHolder(convertView);
             convertView.setTag(viewHolder);
         }
-
-        viewHolder.mName.setText("追不上我吧");
+        viewHolder.mName.setText(secondList.getMenuName());
         return convertView;
     }
 

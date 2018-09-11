@@ -34,6 +34,8 @@ public class GaoDeLocationListener {
         locationClient.setLocationOption(locationOption);
         // 设置定位监听
         locationClient.setLocationListener(locationListener);
+
+        startLocation();
     }
     /**
      * 默认的定位参数
@@ -46,7 +48,7 @@ public class GaoDeLocationListener {
         mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);//可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
         mOption.setGpsFirst(false);//可选，设置是否gps优先，只在高精度模式下有效。默认关闭
         mOption.setHttpTimeOut(30000);//可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
-        mOption.setInterval(2000);//可选，设置定位间隔。默认为2秒
+        mOption.setInterval(20000);//可选，设置定位间隔。默认为2秒
         mOption.setNeedAddress(true);//可选，设置是否返回逆地理地址信息。默认是true
         mOption.setOnceLocation(false);//可选，设置是否单次定位。默认是false
         mOption.setOnceLocationLatest(false);//可选，设置是否等待wifi刷新，默认为false.如果设置为true,会自动变为单次定位，持续定位时不要使用
@@ -75,22 +77,19 @@ public class GaoDeLocationListener {
                     SPUtil.putString(context, "latitude", location.getLatitude() + "");
                     SPUtil.putString(context, "longitude", location.getLongitude() + "");
                     onQuestResultListener.success(location.getCity());
-                    Log.i("TAG", "定位成功" + "\n" +"定位类型: " + location.getLocationType() + "\n"
-                    +"经    度    : " + location.getLongitude() + "\n"+"纬    度    : " + location.getLatitude() + "\n"
-                    +"精    度    : " + location.getAccuracy() + "米" + "\n"+"提供者    : " + location.getProvider() + "\n"
-                    +"速    度    : " + location.getSpeed() + "米/秒" + "\n"+"角    度    : " + location.getBearing() + "\n"
-                    + "星    数    : " + location.getSatellites() + "\n" +"国    家    : " + location.getCountry() + "\n"
-                    +"省            : " + location.getProvince() + "\n"+"市            : " + location.getCity() + "\n"
-                    +"城市编码 : " + location.getCityCode() + "\n"+"区            : " + location.getDistrict() + "\n"
-                            +"区域 码   : " + location.getAdCode() + "\n"+"地    址    : " + location.getAddress() + "\n"
-                    +"兴趣点    : " + location.getPoiName() + "\n");
-                    stopLocation();
+//                    Log.i("TAG", "定位成功" + "\n" +"定位类型: " + location.getLocationType() + "\n"
+//                    +"经    度    : " + location.getLongitude() + "\n"+"纬    度    : " + location.getLatitude() + "\n"
+//                    +"精    度    : " + location.getAccuracy() + "米" + "\n"+"提供者    : " + location.getProvider() + "\n"
+//                    +"速    度    : " + location.getSpeed() + "米/秒" + "\n"+"角    度    : " + location.getBearing() + "\n"
+//                    + "星    数    : " + location.getSatellites() + "\n" +"国    家    : " + location.getCountry() + "\n"
+//                    +"省            : " + location.getProvince() + "\n"+"市            : " + location.getCity() + "\n"
+//                    +"城市编码 : " + location.getCityCode() + "\n"+"区            : " + location.getDistrict() + "\n"
+//                            +"区域 码   : " + location.getAdCode() + "\n"+"地    址    : " + location.getAddress() + "\n"
+//                    +"兴趣点    : " + location.getPoiName() + "\n");
                 } else {
-                    startLocation();
                     onQuestResultListener.error("北京");
                 }
             } else {
-                startLocation();
                 onQuestResultListener.error("北京");
             }
         }

@@ -40,7 +40,7 @@ public class ActivitiesFragment extends BaseFragment {
     XRecyclerView xRecyclerView;
     private int page = 1;
     private ColorStateList csl1,csl2;
-    private List<ActivitiesEntity.ActivitiesList> mList = new ArrayList<>();
+    private List<ActivitiesEntity.DataBean.ActivitiesList> mList = new ArrayList<>();
     private ActivitiesAdapter mAdapter;
     private String activitiesType = "0";
     @Override
@@ -81,7 +81,6 @@ public class ActivitiesFragment extends BaseFragment {
         });
         mAdapter = new ActivitiesAdapter(context,mList,activitiesType);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
     }
 
     @Override
@@ -94,11 +93,11 @@ public class ActivitiesFragment extends BaseFragment {
     private ActivitiesView mActivitiesView = new ActivitiesView() {
         @Override
         public void onSuccess(ActivitiesEntity mActivitiesEntity) {
-            if (mActivitiesEntity.getResult().equals("1")){
-                ToastUtils.makeText(context,mActivitiesEntity.getResultCode());
+            if (mActivitiesEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mActivitiesEntity.getMsg());
                 return;
             }
-            List<ActivitiesEntity.ActivitiesList> activitiesLists = mActivitiesEntity.getActivitiesList();
+            List<ActivitiesEntity.DataBean.ActivitiesList> activitiesLists = mActivitiesEntity.getData().getActivitiesList();
             if (activitiesLists != null && !activitiesLists.isEmpty() && activitiesLists.size() > 0){
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();

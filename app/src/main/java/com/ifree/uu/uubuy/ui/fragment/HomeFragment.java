@@ -16,6 +16,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.custom.ImageSlideshow;
 import com.ifree.uu.uubuy.custom.MarqueeTextView;
+import com.ifree.uu.uubuy.listener.MarqueeTextViewClickListener;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.presenter.HomePresenter;
@@ -54,12 +55,12 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
     private Banner mSlideshow;
     private View headView;
     int page = 1;
-    private List<HomeEntity.ActivitiesList> mList = new ArrayList<>();
-    private List<HomeEntity.BannerList> mBannerList = new ArrayList<>();
-    private List<HomeEntity.AdTypeList> mAdTypeList = new ArrayList<>();
-    private List<HomeEntity.UURecommendNotice> mNotice = new ArrayList<>();
-    private List<HomeEntity.CityADList> mCityADList = new ArrayList<>();
-    private List<HomeEntity.RotateADList> mRotateADList = new ArrayList<>();
+    private List<HomeEntity.DataBean.ActivitiesList> mList = new ArrayList<>();
+    private List<HomeEntity.DataBean.BannerList> mBannerList = new ArrayList<>();
+    private List<HomeEntity.DataBean.AdTypeList> mAdTypeList = new ArrayList<>();
+    private List<HomeEntity.DataBean.UURecommendNotice> mNotice = new ArrayList<>();
+    private List<HomeEntity.DataBean.CityADList> mCityADList = new ArrayList<>();
+    private List<HomeEntity.DataBean.RotateADList> mRotateADList = new ArrayList<>();
     private HomeAdapter mAdapter;
     private AdTypeAdapter adTypeAdapter;
     private CityADAdapter cityADAdapter;
@@ -108,7 +109,6 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
 
         mAdapter = new HomeAdapter(context,mList);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
 
         adTypeAdapter = new AdTypeAdapter(context,mAdTypeList);
         rc_type.setAdapter(adTypeAdapter);
@@ -116,15 +116,19 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
         cityADAdapter = new CityADAdapter(context,mCityADList);
         rc_city_ad.setAdapter(cityADAdapter);
 
-        rc_type.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
+        rc_type.addOnItemTouchListener(new RecyclerItemTouchListener(rc_type) {
             @Override
-            public void onItemClick(RecyclerView.ViewHolder vh) {
-//                int position = vh.getAdapterPosition();
-//                if (position < 0 | position >= mAdTypeList.size()){
-//                    return;
-//                }
-               MyApplication.openActivity(context,FirstClassifyActivity.class);
-
+             public void onItemClick(RecyclerView.ViewHolder vh) {
+                int position = vh.getAdapterPosition();
+                if (position < 0 | position >= mAdTypeList.size()){
+                    return;
+                }
+                Log.i("TAG", "onItemClick: " + position);
+                Bundle bundle = new Bundle();
+                bundle.putString("adTypeId",mAdTypeList.get(position).getAdTypeId());
+                bundle.putString("type",mAdTypeList.get(position).getType());
+                bundle.putString("title",mAdTypeList.get(position).getAdTypeTitle());
+                MyApplication.openActivity(context,FirstClassifyActivity.class,bundle);
             }
         });
 
@@ -140,57 +144,55 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
     private HomeView mHomeView = new HomeView() {
         @Override
         public void onSuccess(HomeEntity mHomeEntity) {
-            if (mHomeEntity.getResult().equals("1")){
-                ToastUtils.makeText(context,mHomeEntity.getResultCode());
+            if (mHomeEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mHomeEntity.getMsg());
                 return;
             }
 
-            List<HomeEntity.BannerList> bannerLists = mHomeEntity.getBannerList();
-            if (bannerLists != null && !bannerLists.isEmpty() && bannerLists.size() > 0){
+            List<HomeEntity.DataBean.BannerList> bannerLists = mHomeEntity.getData().getBannerList();
+            if (bannerLists != null && !bannerLists.isEmpty()){
                 if (mBannerList.size() == 0){
                     mBannerList.addAll(bannerLists);
                     initTopViewData(mBannerList);
                 }
             }
 
-            List<HomeEntity.AdTypeList> adTypeLists = mHomeEntity.getAdTypeList();
-            if (adTypeLists != null && !adTypeLists.isEmpty() && adTypeLists.size() > 0){
+            List<HomeEntity.DataBean.AdTypeList> adTypeLists = mHomeEntity.getData().getAdTypeList();
+            if (adTypeLists != null && !adTypeLists.isEmpty()){
                 if (mAdTypeList.size() == 0){
                     mAdTypeList.addAll(adTypeLists);
                     adTypeAdapter.notifyDataSetChanged();
                 }
             }
 
-            List<HomeEntity.UURecommendNotice> uuRecommendNotices = mHomeEntity.getUuRecommendNotice();
-            if (uuRecommendNotices != null && !uuRecommendNotices.isEmpty() && uuRecommendNotices.size() > 0){
+            List<HomeEntity.DataBean.UURecommendNotice> uuRecommendNotices = mHomeEntity.getData().getUuRecommendNotice();
+            if (uuRecommendNotices != null && !uuRecommendNotices.isEmpty()){
                 if (mNotice.size() == 0){
                     mNotice.addAll(uuRecommendNotices);
                     initSetNotice(mNotice);
                 }
             }
 
-            List<HomeEntity.CityADList> cityADLists = mHomeEntity.getCityADList();
-            if (cityADLists != null && !cityADLists.isEmpty() && cityADLists.size() > 0){
+            List<HomeEntity.DataBean.CityADList> cityADLists = mHomeEntity.getData().getCityADList();
+            if (cityADLists != null && !cityADLists.isEmpty()){
                 if (mCityADList.size() == 0){
                     mCityADList.addAll(cityADLists);
                     cityADAdapter.notifyDataSetChanged();
                 }
             }
 
-            List<HomeEntity.RotateADList> rotateADLists = mHomeEntity.getRotateADList();
-            if (rotateADLists != null && !rotateADLists.isEmpty() && rotateADLists.size() > 0){
+            List<HomeEntity.DataBean.RotateADList> rotateADLists = mHomeEntity.getData().getRotateADList();
+            if (rotateADLists != null && !rotateADLists.isEmpty()){
                 if (mRotateADList.size() == 0){
                     mRotateADList.addAll(rotateADLists);
                     initRotateViewData(mRotateADList);
                 }
             }
-            List<HomeEntity.ActivitiesList> activitiesLists = mHomeEntity.getActivitiesList();
-            if (activitiesLists != null && !activitiesLists.isEmpty() && activitiesLists.size() > 0){
+            List<HomeEntity.DataBean.ActivitiesList> activitiesLists = mHomeEntity.getData().getActivitiesList();
+            if (activitiesLists != null && !activitiesLists.isEmpty()){
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();
             }
-
-
         }
         @Override
         public void onError(String result) {
@@ -199,7 +201,7 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
     };
 
 
-    private void initTopViewData(final List<HomeEntity.BannerList> mBannerList) {
+    private void initTopViewData(final List<HomeEntity.DataBean.BannerList> mBannerList) {
         for (int i = 0; i < mBannerList.size(); i++) {
             imageSlideshow.addImageTitle(mBannerList.get(i).getBannerPic());
         }
@@ -215,19 +217,21 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
         imageSlideshow.commit();
     }
 
-    private void initSetNotice(List<HomeEntity.UURecommendNotice> messageLists) {
+    private void initSetNotice(List<HomeEntity.DataBean.UURecommendNotice> messageLists) {
         List<String> textArrays = new ArrayList<>();
         for (int i = 0; i < messageLists.size(); i++) {
             textArrays.add(messageLists.get(i).getUuRecommentContent());
         }
-//        marqueeTv.setTextArraysAndClickListener(context, textArrays, position -> {
-//            Bundle bundle = new Bundle();
-//
-//            MyApplication.openActivity(context, WebDetailsActivity.class, bundle);
-//        });
+        marqueeTv.setTextArraysAndClickListener(context, textArrays, new MarqueeTextViewClickListener() {
+            @Override
+            public void onClick(int position) {
+                Bundle bundle = new Bundle();
+//                MyApplication.openActivity(context, WebDetailsActivity.class, bundle);
+            }
+        });
     }
 
-    private void initRotateViewData(List<HomeEntity.RotateADList> rotateADLists) {
+    private void initRotateViewData(List<HomeEntity.DataBean.RotateADList> rotateADLists) {
         List<String> imag = new ArrayList<>();
         for (int i = 0; i < rotateADLists.size(); i++) {
             imag.add(rotateADLists.get(i).getRotateADIcon());
@@ -248,6 +252,4 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
         super.onDestroy();
         mHomePresenter.onStop();
     }
-
-
 }
