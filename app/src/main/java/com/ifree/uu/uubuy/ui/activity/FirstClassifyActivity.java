@@ -64,7 +64,7 @@ public class FirstClassifyActivity extends BaseActivity {
         if (headerView != null){
             rc_menu.addHeaderView(headerView);
         }
-        
+
         mFirstClassifyPresenter = new FirstClassifyPresenter(context);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
