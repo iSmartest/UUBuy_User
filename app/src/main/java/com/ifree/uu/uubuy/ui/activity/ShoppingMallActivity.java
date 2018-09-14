@@ -26,15 +26,15 @@ import butterknife.OnClick;
  * Author: 小火
  * Email:1403241630@qq.com
  * Created by 2018/8/25.
- * Description:
+ * Description:商场
  */
-public class MarketOrStoreActivity extends BaseActivity implements View.OnClickListener {
+public class ShoppingMallActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.xr_market_store)
     XRecyclerView xRecyclerView;
     private View headView;
     private int page = 1;
     private MarketOrStoreAdapter mAdapter;
-    private List<SecondActivitiesEntity.SecondActivitiesList> mList = new ArrayList<>();
+    private List<SecondActivitiesEntity.DataBean.SecondActivitiesList> mList = new ArrayList<>();
     @Override
     protected int getLayoutId() {
         return R.layout.activity_market_store;

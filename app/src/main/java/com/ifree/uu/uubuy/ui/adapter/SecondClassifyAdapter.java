@@ -24,11 +24,14 @@ import butterknife.ButterKnife;
 public class SecondClassifyAdapter extends BaseAdapter {
     private Context context;
     private List<FirstClassifyEntity.DataBean.MenuList.SecondList> mList;
+    private secondMenuListener mListener;
     public SecondClassifyAdapter(Context context, List<FirstClassifyEntity.DataBean.MenuList.SecondList> mList) {
         this.context = context;
         this.mList = mList;
     }
-
+    public void setSecondMenuListener(secondMenuListener mListener){
+        this.mListener = mListener;
+    }
     @Override
     public int getCount() {
         return mList == null ? 0 : mList.size();
@@ -45,7 +48,7 @@ public class SecondClassifyAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         SecondClassifyViewHolder viewHolder;
         FirstClassifyEntity.DataBean.MenuList.SecondList secondList = mList.get(position);
         if (convertView != null) {
@@ -56,6 +59,12 @@ public class SecondClassifyAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         }
         viewHolder.mName.setText(secondList.getMenuName());
+        viewHolder.mName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onSecondMenu(position);
+            }
+        });
         return convertView;
     }
 
@@ -65,5 +74,9 @@ public class SecondClassifyAdapter extends BaseAdapter {
         public SecondClassifyViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface secondMenuListener{
+        void onSecondMenu(int position);
     }
 }

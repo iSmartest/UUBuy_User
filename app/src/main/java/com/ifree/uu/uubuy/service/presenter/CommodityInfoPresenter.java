@@ -7,12 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.service.entity.HomeEntity;
-import com.ifree.uu.uubuy.service.view.View;
-
-
+import com.ifree.uu.uubuy.service.entity.CommodityInfoEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.HomeView;
+import com.ifree.uu.uubuy.service.view.CommodityInfoView;
+import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -22,20 +20,19 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Author: 小火
  * Email:1403241630@qq.com
- * Created by 2018/8/13.
+ * Created by 2018/8/22.
  * Description:
  */
-public class HomePresenter implements Presenter {
-
+public class CommodityInfoPresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private HomeView mHomeView;
-    private HomeEntity mHomeEntity;
-    public HomePresenter(Context mContext){
+    private CommodityInfoEntity mCommodityInfoEntity;
+    private CommodityInfoView mCommodityInfoView;
+
+    public CommodityInfoPresenter(Context mContext){
         this.mContext = mContext;
     }
-
     @Override
     public void onCreate() {
         manager = new DataManager(mContext);
@@ -61,7 +58,7 @@ public class HomePresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mHomeView = (HomeView) view;
+        mCommodityInfoView = (CommodityInfoView) view;
     }
 
     @Override
@@ -69,19 +66,19 @@ public class HomePresenter implements Presenter {
 
     }
 
-    public void getSearchHomes(String longitude, String latitude, String townAdCode, int page,String mContent){
-        final Dialog dialog = ProgressDialog.createLoadingDialog(mContext,mContent);
+    public void getSearchCommodityInfo( String commodityId, String type, String uid, String mContent) {
+        final Dialog dialog = ProgressDialog.createLoadingDialog(mContext, mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchHomes(longitude,latitude,townAdCode,page)
+        mCompositeSubscription.add(manager.getSearchCommodityInfo(commodityId,type,uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HomeEntity>() {
+                .subscribe(new Observer<CommodityInfoEntity >() {
                     @Override
                     public void onCompleted() {
                         dialog.dismiss();
-                        if (mHomeEntity != null){
-                            mHomeView.onSuccess(mHomeEntity);
-                            Log.i("TAG", "onCompleted: " + new Gson().toJson(mHomeEntity));
+                        if (mCommodityInfoEntity != null) {
+                            mCommodityInfoView.onSuccess(mCommodityInfoEntity);
+                            Log.i("TAG", "onFirst: " + new Gson().toJson(mCommodityInfoEntity));
                         }
                     }
 
@@ -89,15 +86,15 @@ public class HomePresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mHomeView.onError("请求失败！！");
+                        mCommodityInfoView.onError("请求失败！！");
                     }
 
                     @Override
-                    public void onNext(HomeEntity homeEntity) {
-                        mHomeEntity = homeEntity;
+                    public void onNext(CommodityInfoEntity  CommodityInfoEntity) {
+                        mCommodityInfoEntity = CommodityInfoEntity;
                     }
-                })
-        );
+                }));
+
     }
 
 }

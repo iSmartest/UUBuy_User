@@ -12,9 +12,10 @@
         android:background="@drawable/image_item_conner_style"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp">
+        android:layout_marginTop="4dp">
 
         <TextView
+            android:id="@+id/tv_market_or_store_name"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="奥特莱斯上地店"
@@ -26,12 +27,14 @@
         <include layout="@layout/v_horizontal_line"/>
 
         <ImageView
+            android:id="@+id/iv_activities_picture"
             android:layout_width="match_parent"
             android:layout_height="123dp"
             android:src="@drawable/timg"
             android:scaleType="centerCrop"/>
 
         <TextView
+            android:id="@+id/tv_activities_time"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:text="活动时间2018-08-01——2018-08-03"

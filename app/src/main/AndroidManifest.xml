@@ -115,7 +115,12 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
 
-        <activity android:name=".ui.activity.MarketOrStoreActivity"
+        <activity android:name=".ui.activity.ShoppingMallActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
+        <activity android:name=".ui.activity.BrandActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>

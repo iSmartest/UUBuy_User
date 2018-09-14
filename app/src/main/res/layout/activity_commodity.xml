@@ -26,11 +26,13 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/iv_commodity_picture"
                     android:layout_width="211dp"
                     android:layout_height="211dp"
                     android:layout_marginTop="30dp" />
 
                 <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rc_picture"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginBottom="5dp"
@@ -59,6 +61,7 @@
                     android:textSize="23dp" />
 
                 <TextView
+                    android:id="@+id/tv_commodity_surplus_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="13dp"
@@ -83,7 +86,7 @@
                 <TextView
                     android:id="@+id/tv_commodity_des"
                     android:layout_width="match_parent"
-                    android:layout_height="72dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_commodity_name"
                     android:text="优选产地，安徽砀山，“零食化”蔬菜概念产品，科学加工，开袋即食，拇指般大小，感受自然的甜美，好吃又健康！"
                     android:textColor="@color/text_main_color"
@@ -105,6 +108,7 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/tv_present_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
@@ -154,6 +158,7 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/tv_store_commodity_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
@@ -196,7 +201,6 @@
                     android:visibility="visible"
                     android:background="@drawable/shape_background_sure"/>
             </LinearLayout>
-
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

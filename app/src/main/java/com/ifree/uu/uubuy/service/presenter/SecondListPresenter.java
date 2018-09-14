@@ -7,12 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.service.entity.HomeEntity;
-import com.ifree.uu.uubuy.service.view.View;
-
-
+import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.HomeView;
+import com.ifree.uu.uubuy.service.view.SecondListView;
+import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -22,17 +20,17 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Author: 小火
  * Email:1403241630@qq.com
- * Created by 2018/8/13.
+ * Created by 2018/8/22.
  * Description:
  */
-public class HomePresenter implements Presenter {
-
+public class SecondListPresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private HomeView mHomeView;
-    private HomeEntity mHomeEntity;
-    public HomePresenter(Context mContext){
+    private SecondActivitiesEntity mSecondListEntity;
+    private SecondListView mSecondListView;
+
+    public SecondListPresenter(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -61,7 +59,7 @@ public class HomePresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mHomeView = (HomeView) view;
+        mSecondListView = (SecondListView) view;
     }
 
     @Override
@@ -69,19 +67,19 @@ public class HomePresenter implements Presenter {
 
     }
 
-    public void getSearchHomes(String longitude, String latitude, String townAdCode, int page,String mContent){
-        final Dialog dialog = ProgressDialog.createLoadingDialog(mContext,mContent);
+    public void getSearchSecondListInfo(String fristActivitiesId, int page, String uid, String fristActivitiesType,String classify, String mContent) {
+        final Dialog dialog = ProgressDialog.createLoadingDialog(mContext, mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchHomes(longitude,latitude,townAdCode,page)
+        mCompositeSubscription.add(manager.getSearchSecondListInfo(fristActivitiesId, page, uid,fristActivitiesType,classify)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HomeEntity>() {
+                .subscribe(new Observer<SecondActivitiesEntity>() {
                     @Override
                     public void onCompleted() {
                         dialog.dismiss();
-                        if (mHomeEntity != null){
-                            mHomeView.onSuccess(mHomeEntity);
-                            Log.i("TAG", "onCompleted: " + new Gson().toJson(mHomeEntity));
+                        if (mSecondListEntity != null) {
+                            mSecondListView.onSuccess(mSecondListEntity);
+                            Log.i("TAG", "onFirst: " + new Gson().toJson(mSecondListEntity));
                         }
                     }
 
@@ -89,15 +87,14 @@ public class HomePresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mHomeView.onError("请求失败！！");
+                        mSecondListView.onError("请求失败！！");
                     }
 
                     @Override
-                    public void onNext(HomeEntity homeEntity) {
-                        mHomeEntity = homeEntity;
+                    public void onNext(SecondActivitiesEntity secondListEntity) {
+                        mSecondListEntity = secondListEntity;
                     }
-                })
-        );
+                }));
     }
 
 }

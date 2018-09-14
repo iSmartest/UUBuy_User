@@ -31,8 +31,8 @@ import butterknife.ButterKnife;
 public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.MarketViewHolder>{
 
     private Context context;
-    private List<SecondActivitiesEntity.MarketCommodityList> mList;
-    public MarketAdapter(Context context, List<SecondActivitiesEntity.MarketCommodityList> mList) {
+    private List<SecondActivitiesEntity.DataBean.MarketCommodityList> mList;
+    public MarketAdapter(Context context, List<SecondActivitiesEntity.DataBean.MarketCommodityList> mList) {
         this.context = context;
         this.mList = mList;
     }

@@ -1,10 +1,14 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.content.res.ColorStateList;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
@@ -30,13 +34,14 @@ import butterknife.BindView;
  * Created by 2018/8/23.
  * Description:
  */
-public class FirstClassifyActivity extends BaseActivity {
+public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdapter.firstMenuListener {
     private FirstClassifyPresenter mFirstClassifyPresenter;
     @BindView(R.id.rc_menu)
     ListView rc_menu;
     @BindView(R.id.xr_market)
     XRecyclerView xRecyclerView;
     private View headerView;
+    private TextView mheadItem;
     private FirstMenuAdapter mFirstMenuAdapter;
     private FirstClassifyAdapter mAdapter;
     private List<FirstClassifyEntity.DataBean.MenuList> mMenuList;
@@ -46,6 +51,7 @@ public class FirstClassifyActivity extends BaseActivity {
     private String type;
     private String title;
     private String menuId = "";
+    private ColorStateList csl1,csl2;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_first_classify;
@@ -57,10 +63,21 @@ public class FirstClassifyActivity extends BaseActivity {
         setTitleText("综合商场");
         mMenuList = new ArrayList<>();
         mList = new ArrayList<>();
+        csl1 = context.getResources().getColorStateList(R.color.text_subtitle_color);
+        csl2 = context.getResources().getColorStateList(R.color.text_green);
         adTypeId = getIntent().getStringExtra("adTypeId");
         type = getIntent().getStringExtra("type");
         title = getIntent().getStringExtra("title");
         headerView = LayoutInflater.from(context).inflate(R.layout.header_menu,null);
+        mheadItem = headerView.findViewById(R.id.tv_first_item_menu_name);
+        mheadItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menuId = "";
+//                mheadItem.setTextColor(csl2);
+                xRecyclerView.setRefreshing(true);
+            }
+        });
         if (headerView != null){
             rc_menu.addHeaderView(headerView);
         }
@@ -92,21 +109,48 @@ public class FirstClassifyActivity extends BaseActivity {
             }
         });
 
-        mAdapter = new FirstClassifyAdapter(context);
+        mAdapter = new FirstClassifyAdapter(context,mList);
         xRecyclerView.setAdapter(mAdapter);
 
         mFirstMenuAdapter = new FirstMenuAdapter(context,mMenuList,type);
+        mFirstMenuAdapter.setFirstMenuListener(this);
         rc_menu.setAdapter(mFirstMenuAdapter);
 
+        rc_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                menuId = mMenuList.get(position-1).getMenuId();
+                xRecyclerView.setRefreshing(true);
+//                mheadItem.setTextColor(csl1);
+            }
+        });
         xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
-//                int position = vh.getAdapterPosition();
-//                if (position < 0 | position >= mAdTypeList.size()){
-//                    return;
-//                }
-//                MyApplication.openActivity(context,MarketActivity.class);
-                MyApplication.openActivity(context,MarketOrStoreActivity.class);
+                int position = vh.getAdapterPosition()-1;
+                if (position < 0 | position >= mList.size()){
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString("fristActivitiesId",mList.get(position).getFristActivitiesId());
+                bundle.putString("fristActivitiesType",mList.get(position).getFristActivitiesType());
+                bundle.putString("fristActivitiesName",mList.get(position).getFristActivitiesName());
+                switch (mList.get(position).getFristActivitiesType()){// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
+                    case "1":
+                        MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+                        break;
+                    case "2"://超市，类型：专柜、商品
+                        MyApplication.openActivity(context,MarketActivity.class,bundle);
+                        break;
+                    case "3":
+
+                        break;
+                    case "4":
+                    case "5":
+                    case "6":
+                        MyApplication.openActivity(context,BrandActivity.class,bundle);
+                        break;
+                }
             }
         });
     }
@@ -128,7 +172,7 @@ public class FirstClassifyActivity extends BaseActivity {
             }
             List<FirstClassifyEntity.DataBean.MenuList> menuLists = mFirstClassifyEntity.getData().getMenuList();
             if (menuLists != null && !menuLists.isEmpty()){
-                if (mMenuList.isEmpty()){
+                if (mMenuList.size() == 0){
                     mMenuList.addAll(menuLists);
                     mFirstMenuAdapter.notifyDataSetChanged();
                 }
@@ -138,12 +182,18 @@ public class FirstClassifyActivity extends BaseActivity {
                 mList.addAll(fristActivitiesLists);
                 mAdapter.notifyDataSetChanged();
             }
-
         }
 
         @Override
         public void onError(String result) {
-
+            ToastUtils.makeText(context,result);
         }
     };
+
+    @Override
+    public void onFirstMenu(int position,int i) {
+        menuId = mMenuList.get(position).getSecondList().get(i).getMenuId();
+        xRecyclerView.setRefreshing(true);
+//        mheadItem.setTextColor(csl1);
+    }
 }

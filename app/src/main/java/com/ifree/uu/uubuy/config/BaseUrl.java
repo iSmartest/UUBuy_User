@@ -10,7 +10,7 @@ public class BaseUrl {
     //服务器地址
 //    public static final String HTTP = "http://101.200.60.12:8080/robot-manager-web/";//网络
 
-    public static final String HTTP = "http://192.168.1.6:8083/app/";//本地
+    public static final String HTTP = "http://192.168.1.5:8083/app/";//本地
     //获取验证码
     public static final String SEND_CODE = "sendCode";
     //注册
@@ -29,6 +29,12 @@ public class BaseUrl {
     public static final String HOME_INFO = "getHomeInfo?";
     //商场（第一级）
     public static final String CLASSIFY_LIST_INFO = "getClassifyListInfo?";
+    //店铺（第二级）
+    public static final String SECOND_LIST_INFO = "getSecondActivitiesListInfo?";
+    //商品（第三级）
+    public static final String COMMODITY_LIST_INFO = "getCommodityListInfo?";
+    //商品详情（）
+    public static final String COMMODITY_INFO = "getReserveCommodityInfo?";
     //周围
     public static final String AROUND_INFO = "getAroundInfo?";
     //生活圈

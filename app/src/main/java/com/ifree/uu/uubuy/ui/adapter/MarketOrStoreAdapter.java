@@ -22,9 +22,9 @@ import butterknife.ButterKnife;
  */
 public class MarketOrStoreAdapter extends RecyclerView.Adapter<MarketOrStoreAdapter.MarketOrStoreViewHolder> {
     private Context context;
-    private List<SecondActivitiesEntity.SecondActivitiesList> mList;
+    private List<SecondActivitiesEntity.DataBean.SecondActivitiesList> mList;
 
-    public MarketOrStoreAdapter(Context context, List<SecondActivitiesEntity.SecondActivitiesList> mList) {
+    public MarketOrStoreAdapter(Context context, List<SecondActivitiesEntity.DataBean.SecondActivitiesList> mList) {
         this.context = context;
         this.mList = mList;
     }

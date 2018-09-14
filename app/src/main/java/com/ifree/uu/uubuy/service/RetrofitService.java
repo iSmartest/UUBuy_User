@@ -4,6 +4,8 @@ import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.service.entity.CommodityInfoEntity;
+import com.ifree.uu.uubuy.service.entity.CommodityListEntity;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
 import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.service.entity.GroupEntity;
@@ -11,10 +13,10 @@ import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.entity.MessageEntity;
 import com.ifree.uu.uubuy.service.entity.MineEntity;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
+import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -65,8 +67,7 @@ public interface RetrofitService {
     Observable<HomeEntity> getSearchHomes(@Query("longitude") String longitude,
                                           @Query("latitude") String latitude,
                                           @Query("townAdCode") String townAdCode,
-                                          @Query("page") int page,
-                                          @Query("uid") String uid);
+                                          @Query("page") int page);
 
     @GET(BaseUrl.CLASSIFY_LIST_INFO)
     Observable<FirstClassifyEntity> getSearchClassifyListInfo(@Query("longitude") String longitude,
@@ -77,6 +78,23 @@ public interface RetrofitService {
                                                               @Query("menuId") String menuId,
                                                               @Query("page") int page,
                                                               @Query("uid") String uid);
+
+    @GET(BaseUrl.COMMODITY_LIST_INFO)
+    Observable<CommodityListEntity> getSearchCommodityListInfo(@Query("storeId") String storeId,
+                                                               @Query("page") int page,
+                                                               @Query("uid") String uid);
+
+    @GET(BaseUrl.COMMODITY_INFO)
+    Observable<CommodityInfoEntity> getSearchCommodityInfo(@Query("commodityId") String commodityId,
+                                                               @Query("type") String type,
+                                                               @Query("uid") String uid);
+
+    @GET(BaseUrl.SECOND_LIST_INFO)
+    Observable<SecondActivitiesEntity> getSearchSecondListInfo(@Query("fristActivitiesId") String fristActivitiesId,
+                                                               @Query("page") int page,
+                                                               @Query("uid") String uid,
+                                                               @Query("fristActivitiesType") String fristActivitiesType,
+                                                               @Query("classify") String classify);
 
     @GET(BaseUrl.AROUND_INFO)
     Observable<AroundEntity> getSearchArounds(@Query("longitude") String longitude,

@@ -72,15 +72,11 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mList == null ? 0 : mList.size();
     }
 
     public class ActivitiesViewHolder extends RecyclerView.ViewHolder{
 
-        @BindView(R.id.iv_activities_circle_icon)
-        ImageView icon;
-        @BindView(R.id.tv_activities_circle_name)
-        TextView name;
         @BindView(R.id.sl_market)
         SwipeLayout sl_market;
         @BindView(R.id.sl_store)

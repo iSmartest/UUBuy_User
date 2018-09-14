@@ -28,6 +28,10 @@ public class FirstMenuAdapter extends BaseAdapter{
     private Context context;
     private List<FirstClassifyEntity.DataBean.MenuList> mMenuList;
     private String type;
+    private firstMenuListener mListener;
+    public void setFirstMenuListener(firstMenuListener mListener){
+        this.mListener = mListener;
+    }
     public FirstMenuAdapter(Context context, List<FirstClassifyEntity.DataBean.MenuList> mMenuList,String type) {
         this.context = context;
         this.mMenuList = mMenuList;
@@ -50,7 +54,7 @@ public class FirstMenuAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final FirstMenuViewHolder viewHolder;
         final FirstClassifyEntity.DataBean.MenuList menuList = mMenuList.get(position);
         if (convertView != null) {
@@ -80,6 +84,12 @@ public class FirstMenuAdapter extends BaseAdapter{
             viewHolder.name.setText(menuList.getMenuName());
         }
         SecondClassifyAdapter secondClassifyAdapter = new SecondClassifyAdapter(context,menuList.getSecondList());
+        secondClassifyAdapter.setSecondMenuListener(new SecondClassifyAdapter.secondMenuListener() {
+            @Override
+            public void onSecondMenu(int i) {
+                mListener.onFirstMenu(position,i);
+            }
+        });
         viewHolder.secondClassify.setAdapter(secondClassifyAdapter);
         return convertView;
     }
@@ -92,5 +102,8 @@ public class FirstMenuAdapter extends BaseAdapter{
         public FirstMenuViewHolder(View itemView) {
             ButterKnife.bind(this,itemView);
         }
+    }
+    public interface firstMenuListener{
+        void onFirstMenu(int position,int i);
     }
 }

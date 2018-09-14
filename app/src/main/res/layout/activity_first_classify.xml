@@ -15,7 +15,8 @@
         <ListView
             android:id="@+id/rc_menu"
             android:layout_width="90dp"
-            android:layout_height="wrap_content">
+            android:scrollbars="none"
+            android:layout_height="match_parent">
         </ListView>
         <View
             android:layout_width="0.5dp"

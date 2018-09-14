@@ -7,6 +7,8 @@ import com.ifree.uu.uubuy.service.RetrofitService;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.service.entity.CommodityInfoEntity;
+import com.ifree.uu.uubuy.service.entity.CommodityListEntity;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
 import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.service.entity.GroupEntity;
@@ -14,10 +16,10 @@ import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.entity.MessageEntity;
 import com.ifree.uu.uubuy.service.entity.MineEntity;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
+import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import rx.Observable;
 
 /**
@@ -62,12 +64,22 @@ public class DataManager {
         return mRetrofitService.getSearchCityInfo();
     }
 
-    public Observable<HomeEntity> getSearchHomes(String longitude, String latitude, String townAdCode, int page, String uid){
-        return mRetrofitService.getSearchHomes(longitude,latitude,townAdCode,page,uid);
+    public Observable<HomeEntity> getSearchHomes(String longitude, String latitude, String townAdCode, int page){
+        return mRetrofitService.getSearchHomes(longitude,latitude,townAdCode,page);
     }
 
     public Observable<FirstClassifyEntity> getSearchClassifyListInfo(String longitude, String latitude, String townAdCode, String adTypeId, String type, String menuId, int page, String uid){
         return mRetrofitService.getSearchClassifyListInfo(longitude,latitude,townAdCode,adTypeId,type,menuId,page,uid);
+    }
+
+    public Observable<CommodityListEntity> getSearchCommodityListInfo(String storeId, int page, String uid){
+        return mRetrofitService.getSearchCommodityListInfo(storeId,page,uid);
+    }
+    public Observable<CommodityInfoEntity> getSearchCommodityInfo(String commodityId, String type, String uid){
+        return mRetrofitService.getSearchCommodityInfo(commodityId,type,uid);
+    }
+    public Observable<SecondActivitiesEntity> getSearchSecondListInfo(String fristActivitiesId, int page, String uid,String fristActivitiesType,String classify){
+        return mRetrofitService.getSearchSecondListInfo(fristActivitiesId,page,uid,fristActivitiesType,classify);
     }
 
     public Observable<AroundEntity> getSearchArounds(String longitude, String latitude, String townAdCode, int page, String uid){

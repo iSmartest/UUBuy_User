@@ -21,7 +21,10 @@ import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.presenter.HomePresenter;
 import com.ifree.uu.uubuy.service.view.HomeView;
+import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.FirstClassifyActivity;
+import com.ifree.uu.uubuy.ui.activity.MarketActivity;
+import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
 import com.ifree.uu.uubuy.ui.adapter.AdTypeAdapter;
 import com.ifree.uu.uubuy.ui.adapter.CityADAdapter;
 import com.ifree.uu.uubuy.ui.adapter.HomeAdapter;
@@ -94,16 +97,12 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 initData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 initData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
 
@@ -132,18 +131,48 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
             }
         });
 
+        xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
+            @Override
+            public void onItemClick(RecyclerView.ViewHolder vh) {
+                int position = vh.getAdapterPosition()-2;
+                if (position < 0 | position >= mAdTypeList.size()){
+                    return;
+                }
+//                switch (mList.get(position).getType()){// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
+//                    case "1":
+//                        MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+//                        break;
+//                    case "2"://超市，类型：专柜、商品
+//                        MyApplication.openActivity(context,MarketActivity.class,bundle);
+//                        break;
+//                    case "3":
+//
+//                        break;
+//                    case "4":
+//                    case "5":
+//                    case "6":
+//                        MyApplication.openActivity(context,BrandActivity.class,bundle);
+//                        break;
+//                }
+            }
+        });
     }
 
     @Override
     protected void initData() {
         mHomePresenter.onCreate();
         mHomePresenter.attachView(mHomeView);
-        mHomePresenter.getSearchHomes(longitude,latitude,townAdCode,page,uid,"加载中...");
+        mHomePresenter.getSearchHomes(longitude,latitude,townAdCode,page,"加载中...");
     }
 
     private HomeView mHomeView = new HomeView() {
         @Override
         public void onSuccess(HomeEntity mHomeEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mHomeEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mHomeEntity.getMsg());
                 return;
@@ -192,11 +221,19 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
             if (activitiesLists != null && !activitiesLists.isEmpty()){
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();
+                if (activitiesLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
         }
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 
