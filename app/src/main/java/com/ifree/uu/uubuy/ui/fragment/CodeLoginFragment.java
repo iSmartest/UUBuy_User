@@ -47,6 +47,7 @@ public class CodeLoginFragment extends BaseFragment {
     @BindView(R.id.tv_forget_password)
     TextView mForgetPassword;
     private String mCode ="";
+    private String sessionId = "";
     private LoginCompleteListener completeListener;
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -103,12 +104,12 @@ public class CodeLoginFragment extends BaseFragment {
                     ToastUtils.makeText(context, "验证码不能为空");
                     return;
                 }
-                //验证验证码是否正确
-                if (!inviteCode.equals(mCode)) {
-                    ToastUtils.makeText(context, "验证码不正确");
-                    return;
-                }
-                codeLogin(userPhone,mCode);
+//                //验证验证码是否正确
+//                if (!inviteCode.equals(mCode)) {
+//                    ToastUtils.makeText(context, "验证码不正确");
+//                    return;
+//                }
+                codeLogin(userPhone,inviteCode);
                 break;
             case R.id.tv_go_register:
                 MyApplication.openActivity(context,RegisterActivity.class);
@@ -122,7 +123,7 @@ public class CodeLoginFragment extends BaseFragment {
     private void codeLogin(String userPhone, String mCode) {
         mCodeLoginPresenter.onCreate();
         mCodeLoginPresenter.attachView(mCodeLoginView);
-        mCodeLoginPresenter.getSearchPhoneCodeLogin(userPhone,mCode,"登录中...");
+        mCodeLoginPresenter.getSearchPhoneCodeLogin(userPhone,mCode,sessionId,"登录中...");
     }
 
 
@@ -140,7 +141,7 @@ public class CodeLoginFragment extends BaseFragment {
                 return;
             }
             mCode = mUserInfoEntity.getData().getCode();
-
+            sessionId = mUserInfoEntity.getData().getSessionId();
         }
 
         @Override

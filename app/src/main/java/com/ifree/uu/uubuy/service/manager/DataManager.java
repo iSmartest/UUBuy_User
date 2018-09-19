@@ -56,8 +56,8 @@ public class DataManager {
         return mRetrofitService.getSearchForgetPassword(userPhone,password,code);
     }
 
-    public Observable<UserInfoEntity> getSearchPhoneCodeLogin(String userPhone,String code){
-        return mRetrofitService.getSearchPhoneCodeLogin(userPhone,code);
+    public Observable<UserInfoEntity> getSearchPhoneCodeLogin(String userPhone,String code,String sessionId){
+        return mRetrofitService.getSearchPhoneCodeLogin(userPhone,code,sessionId);
     }
 
     public Observable<UserInfoEntity> getSearchPassWordLogin(String userPhone,String password){

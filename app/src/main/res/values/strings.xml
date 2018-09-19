@@ -16,13 +16,16 @@
     <string name="edit_id_cart">输入身份证号</string>
     <string name="user_address">编辑地址</string>
     <string name="edit_user_address">输入地址</string>
-
+    <string name="make_cancel">取消</string>
+    <string name="make_sure">确定</string>
     <string name="error_input_phone">请输入正确的手机号码</string>
     <string name="error_input_pwd_fail_info_tips">请输入6-20位英文字母或数字</string>
     <string name="error_input_verification">请输入验证码</string>
     <string name="error_input_verification_fail_info">验证码错误:验证码由6位数字组成</string>
     <string name="registered_direct_login">已注册直接登录>></string>
     <string name="unknown">未知</string>
+    <string name="log_out">确定退出登录吗?</string>
+    <string name="sure_to_do_sth">您确定要%s吗？</string>
 
 
 </resources>

@@ -37,7 +37,7 @@ public class BindingPhoneActivity extends BaseActivity {
     @BindView(R.id.edit_bind_password)
     EditText mBindPassword;
     @BindView(R.id.tv_bind_sure)
-    EditText mBindSure;
+    TextView mBindSure;
     private String mCode ="";
     private String sessionId = "";
     @Override

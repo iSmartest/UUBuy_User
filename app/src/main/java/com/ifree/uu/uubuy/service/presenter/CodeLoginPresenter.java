@@ -62,10 +62,10 @@ public class CodeLoginPresenter implements Presenter {
     public void attachIncomingIntent(Intent intent) {
 
     }
-    public void getSearchPhoneCodeLogin(String userPhone,String code,String mContent){
+    public void getSearchPhoneCodeLogin(String userPhone,String code,String sessionId,String mContent){
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext,mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchPhoneCodeLogin(userPhone,code)
+        mCompositeSubscription.add(manager.getSearchPhoneCodeLogin(userPhone,code,sessionId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserInfoEntity>() {

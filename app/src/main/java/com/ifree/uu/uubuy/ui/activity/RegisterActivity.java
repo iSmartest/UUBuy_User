@@ -96,11 +96,11 @@ public class RegisterActivity extends BaseActivity {
                     ToastUtils.makeText(context, "验证码不能为空");
                     return;
                 }
-                //验证验证码是否正确
-                if (!inviteCode.equals(mCode)) {
-                    ToastUtils.makeText(context, "验证码不正确");
-                    return;
-                }
+//                //验证验证码是否正确
+//                if (!inviteCode.equals(mCode)) {
+//                    ToastUtils.makeText(context, "验证码不正确");
+//                    return;
+//                }
                 //验证密码不能为空
                 String password = mRegisterPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(password)) {
@@ -165,7 +165,7 @@ public class RegisterActivity extends BaseActivity {
             }
             mCode = mUserInfoEntity.getData().getCode();
             sessionId = mUserInfoEntity.getData().getSessionId();
-            Log.i("TAG", "onSuccess: " + mCode);
+            Log.i("TAG", "onSuccess: " + mCode + sessionId);
         }
 
         @Override

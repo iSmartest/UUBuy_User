@@ -60,7 +60,8 @@ public interface RetrofitService {
 
     @GET(BaseUrl.SEND_CODE_LOGIN)
     Observable<UserInfoEntity> getSearchPhoneCodeLogin(@Query("userPhone") String userPhone,
-                                                       @Query("code") String code);
+                                                       @Query("code") String code,
+                                                       @Query("sessionId") String sessionId);
 
     @GET(BaseUrl.USER_PASSWORD_LOGIN)
     Observable<UserInfoEntity> getSearchPassWordLogin(@Query("userPhone") String userPhone,
