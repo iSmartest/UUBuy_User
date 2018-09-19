@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
+import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.service.presenter.OperationOrderPresenter;
+import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.ui.activity.CommodityReserveActivity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.SPUtil;
+import com.ifree.uu.uubuy.uitls.ToastUtils;
 
 import java.util.List;
 
@@ -25,12 +34,14 @@ import butterknife.ButterKnife;
  */
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder>{
     private Context context;
-    private List<OrderEntity.OrderInfoList> mList;
+    private List<OrderEntity.DataBean.OrderInfoList> mList;
     private String orderState;
-    public OrderAdapter(Context context, List<OrderEntity.OrderInfoList> mList, String orderState) {
+    private OperationOrderPresenter mOperationOrderPresenter;
+    public OrderAdapter(Context context, List<OrderEntity.DataBean.OrderInfoList> mList, String orderState) {
         this.context = context;
         this.mList = mList;
         this.orderState = orderState;
+        mOperationOrderPresenter = new OperationOrderPresenter(context);
     }
 
     public void setType(String orderState) {
@@ -48,34 +59,105 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
+        final OrderEntity.DataBean.OrderInfoList orderInfoList = mList.get(position);
         switch (orderState){
             case "0":
-                holder.orderState.setText("已预定");
+                holder.orderDelete.setVisibility(View.GONE);
                 holder.commodityAgain.setText("取消预定");
+                holder.commodityAgain.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        submitOperationOrder(orderInfoList.getOrderId(),"0");
+                    }
+                });
                 break;
             case "1":
-                holder.orderState.setText("已完成");
-                holder.commodityAgain.setText("删除订单");
+                holder.orderDelete.setVisibility(View.VISIBLE);
+                holder.commodityAgain.setText("再次下单");
+                holder.commodityAgain.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("commodityIcon",orderInfoList.getCommodityIcon());
+                        bundle.putString("commodityName",orderInfoList.getCommodityDec());
+                        bundle.putString("commodityBrandName",orderInfoList.getCommodityTitle());
+                        bundle.putString("commodityPrice",orderInfoList.getCommodityPresentPrice());
+                        bundle.putString("commodityAddress",orderInfoList.getStoreAddress());
+                        bundle.putString("commodityId",orderInfoList.getCommodityid());
+                        bundle.putString("commodityType",orderInfoList.getType());
+                        bundle.putString("shopId",orderInfoList.getShopId());
+                        MyApplication.openActivity(context,CommodityReserveActivity.class,bundle);
+                    }
+                });
                 break;
             case "2":
-                holder.orderState.setText("已取消");
-                holder.commodityAgain.setText("再次下单");
+                holder.orderDelete.setVisibility(View.VISIBLE);
+                holder.commodityAgain.setText("恢复预订");
+                holder.commodityAgain.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        submitOperationOrder(orderInfoList.getOrderId(),"2");
+                    }
+                });
                 break;
         }
+        holder.orderId.setText("订单号" + orderInfoList.getOrderId());
+        holder.commodityName.setText(orderInfoList.getCommodityTitle());
+        switch (orderInfoList.getIsOver()){
+            case "0":
+                holder.isOver.setVisibility(View.VISIBLE);
+                break;
+            case "1":
+                holder.isOver.setVisibility(View.GONE);
+                break;
+        }
+        GlideImageLoader.imageLoader(context,orderInfoList.getCommodityIcon(),holder.commodityIcon);
+        holder.commodityDec.setText(orderInfoList.getCommodityDec());
+        holder.commodityPrice.setText("￥" + orderInfoList.getCommodityPresentPrice());
+        holder.commodityAddress.setText(orderInfoList.getStoreAddress());
+        holder.orderTime.setText("下单时间：" + orderInfoList.getOrderTime());
+        holder.orderDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitOperationOrder(orderInfoList.getOrderId(),"1");
+            }
+        });
     }
 
+    private void submitOperationOrder(String orderId, String type) {
+        String uid = SPUtil.getString(context,"uid");
+        mOperationOrderPresenter.onCreate();
+        mOperationOrderPresenter.attachView(mOperationOrderView);
+        mOperationOrderPresenter.getSubmitOperationOrder(orderId,type,uid,"提交中...");
+    }
+
+    private UserInfoView mOperationOrderView = new UserInfoView() {
+        @Override
+        public void onSuccess(UserInfoEntity mUserInfoEntity) {
+            if (mUserInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                return;
+            }
+            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context,result);
+        }
+    };
     @Override
     public int getItemCount() {
-        return 10;
+        return mList == null ? 0 : mList.size();
     }
-
 
 
     public class OrderViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.tv_order_orderId)
         TextView orderId;
-        @BindView(R.id.tv_order_orderState)
-        TextView orderState;
+        @BindView(R.id.tv_order_delete)
+        TextView orderDelete;
         @BindView(R.id.tv_order_commodity_name)
         TextView commodityName;
         @BindView(R.id.tv_order_commodity_is_over)
@@ -86,6 +168,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         TextView commodityDec;
         @BindView(R.id.tv_order_commodity_price)
         TextView commodityPrice;
+        @BindView(R.id.tv_order_time)
+        TextView orderTime;
         @BindView(R.id.tv_order_store_address)
         TextView commodityAddress;
         @BindView(R.id.tv_order_again)

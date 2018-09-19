@@ -45,6 +45,7 @@ public abstract class BaseActivity extends CheckPermissionsActivity{
     protected String longitude;
     protected String townAdCode;
     protected String uid;
+    protected String address;
     @BindView(R.id.lay_bg)
     RelativeLayout lay_bg;
     @BindView(R.id.ly_base_left)
@@ -89,6 +90,7 @@ public abstract class BaseActivity extends CheckPermissionsActivity{
         latitude = SPUtil.getString(context,"latitude");
         longitude = SPUtil.getString(context,"longitude");
         townAdCode = SPUtil.getString(context,"townAdCode");
+        address = SPUtil.getString(context,"address");
         uid = SPUtil.getString(context,"uid");
         initView();//实例化
         loadData();//加载数据
@@ -297,6 +299,16 @@ public abstract class BaseActivity extends CheckPermissionsActivity{
                 mRestartLocation.setVisibility(View.GONE);
                 mRightText.setVisibility(View.GONE);
                 mQuestion.setVisibility(View.VISIBLE);
+                break;
+                case 8://返回键、搜索
+                mLeft.setVisibility(View.VISIBLE);
+                ivBack.setVisibility(View.VISIBLE);
+                mLocation.setVisibility(View.GONE);
+                mCenter.setVisibility(View.VISIBLE);
+                mTitleText.setVisibility(View.GONE);
+                mBaseSearch.setVisibility(View.VISIBLE);
+                mRight.setVisibility(View.GONE);
+
                 break;
         }
     }

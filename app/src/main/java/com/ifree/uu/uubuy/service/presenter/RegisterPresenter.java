@@ -62,10 +62,10 @@ public class RegisterPresenter implements Presenter {
     public void attachIncomingIntent(Intent intent) {
 
     }
-    public void getSearchRegister(String userPhone,String password,String code,String mContent){
+    public void getSearchRegister(String userPhone,String password,String code,String sessionId,String mContent){
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext,mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchRegister(userPhone,password,code)
+        mCompositeSubscription.add(manager.getSearchRegister(userPhone,password,code,sessionId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserInfoEntity>() {

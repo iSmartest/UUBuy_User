@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_main_default">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp">
+        <ImageView
+            android:id="@+id/iv_car_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+        <TextView
+            android:id="@+id/tv_car_point"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:gravity="center_vertical"
+            android:background="@color/translucent"
+            android:textColor="@color/app_main_default"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_car_dec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textSize="14dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_main_color"/>
+
+</LinearLayout>

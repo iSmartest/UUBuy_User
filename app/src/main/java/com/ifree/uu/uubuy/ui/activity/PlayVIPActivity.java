@@ -17,15 +17,9 @@ import com.ifree.uu.uubuy.service.view.GroupInfoView;
 import com.ifree.uu.uubuy.service.view.UserInfoView;
 import com.ifree.uu.uubuy.ui.adapter.PlayVIPAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.ui.fragment.ActivitiesFragment;
-import com.ifree.uu.uubuy.ui.fragment.AroundFragment;
-import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
-import com.ifree.uu.uubuy.ui.fragment.MineFragment;
-import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
-import com.tencent.connect.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;

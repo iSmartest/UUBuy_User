@@ -73,13 +73,6 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:visibility="visible">
-                <ImageView
-                    android:id="@+id/iv_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|right"
-                    android:src="@drawable/base_search"
-                    android:layout_marginRight="4dp"/>
                 <EditText
                     android:id="@+id/edt_a_key_search"
                     android:textSize="14sp"
@@ -92,7 +85,13 @@
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:background="@null"/>
-
+                <ImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|right"
+                    android:src="@drawable/base_search"
+                    android:layout_marginRight="4dp"/>
             </LinearLayout>
         </LinearLayout>
 

@@ -1,20 +1,30 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
+import com.ifree.uu.uubuy.service.entity.CommodityListEntity;
+import com.ifree.uu.uubuy.service.presenter.CommodityPresenter;
+import com.ifree.uu.uubuy.service.view.CommodityListView;
 import com.ifree.uu.uubuy.ui.adapter.MarketOrStoreAdapter;
 import com.ifree.uu.uubuy.ui.adapter.StoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,26 +36,31 @@ import butterknife.OnClick;
  * Description:
  */
 public class StoreActivity extends BaseActivity implements View.OnClickListener {
+    private CommodityPresenter mCommodityPresenter;
     @BindView(R.id.xr_store)
     XRecyclerView xRecyclerView;
     private View headView;
     private int page = 1;
     private StoreAdapter mAdapter;
+    private List<CommodityListEntity.DataBean.CommodityList> mList = new ArrayList<>();
+    private String fristActivitiesName;
+    private String storeId;
+    private String fristActivitiesType;
+    private TextView mStoreName,mStoreTime;
+    private ImageView mStorePicture;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_store;
     }
 
     @Override
-    protected void loadData() {
-
-    }
-
-    @Override
     protected void initView() {
-
         hideBack(5);
-        setTitleText("特步店");
+        fristActivitiesName = getIntent().getStringExtra("fristActivitiesName");
+        storeId = getIntent().getStringExtra("fristActivitiesId");
+        fristActivitiesType = getIntent().getStringExtra("fristActivitiesType");
+        setTitleText(fristActivitiesName);
+        mCommodityPresenter = new CommodityPresenter(context);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);
@@ -54,22 +69,19 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
         xRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallPulse);
         xRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
         headView = LayoutInflater.from(context).inflate(R.layout.header_store, null);
-        headView.findViewById(R.id.ll_store_activities).setOnClickListener(this);
-        headView.findViewById(R.id.tv_store_share).setOnClickListener(this);
+        mStoreName = headView.findViewById(R.id.tv_store_name);
+        mStoreTime = headView.findViewById(R.id.tv_store_time);
+        mStorePicture = headView.findViewById(R.id.iv_store_picture);
+
         if (headView != null) xRecyclerView.addHeaderView(headView);
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-                        page = 1;
-//                        mList.clear();
-                        mAdapter.notifyDataSetChanged();
-                        loadData();
-                        xRecyclerView.refreshComplete();
-                    }
-
-                }, 2000);
+                page = 1;
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
+                loadData();
+                xRecyclerView.refreshComplete();
             }
 
             @Override
@@ -82,19 +94,53 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
-//        mAdapter = new MarketOrStoreAdapter(context, mList);
+        mAdapter = new StoreAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
-
         xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
-                int position = vh.getAdapterPosition() - 1;
-//                MyApplication.openActivity(context,CommodityActivity.class);
-                MyApplication.openActivity(context, StoreActivity.class);
+                int position = vh.getAdapterPosition() - 2;
+                if (position < 0 | position >= mList.size()) {
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString("commodityId",mList.get(position).getCommodityId());
+                bundle.putString("type", mList.get(position).getType());
+                bundle.putString("commodityIcon", mList.get(position).getCommodityPic());
+                MyApplication.openActivity(context, CommodityActivity.class, bundle);
             }
         });
     }
+
+    @Override
+    protected void loadData() {
+        mCommodityPresenter.onCreate();
+        mCommodityPresenter.attachView(mCommodityListView);
+        mCommodityPresenter.getSearchCommodityListInfo(storeId, page, "1", "加载中...");
+    }
+
+    private CommodityListView mCommodityListView = new CommodityListView() {
+        @Override
+        public void onSuccess(CommodityListEntity mCommodityListEntity) {
+            if (mCommodityListEntity.getResultCode().equals("1")) {
+                ToastUtils.makeText(context, mCommodityListEntity.getMsg());
+                return;
+            }
+            List<CommodityListEntity.DataBean.CommodityList> commodityLists = mCommodityListEntity.getData().getCommodityList();
+            if (commodityLists != null && !commodityLists.isEmpty()) {
+                mList.addAll(commodityLists);
+                mAdapter.notifyDataSetChanged();
+            }
+            mStoreName.setText(mCommodityListEntity.getData().getStoreName());
+            mStoreTime.setText(mCommodityListEntity.getData().getStoreTime());
+            GlideImageLoader.imageLoader(context, mCommodityListEntity.getData().getStorePic(), mStorePicture);
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context, result);
+        }
+    };
 
     @OnClick({R.id.tv_base_rightText})
     public void onViewClicked() {
@@ -104,12 +150,9 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_store_activities:
-                MyApplication.openActivity(context, ActivitiesDetailsActivity.class);
-                break;
-            case R.id.tv_store_share:
-                ToastUtils.makeText(context, "你点击分享");
-                break;
+
+//                MyApplication.openActivity(context, ActivitiesDetailsActivity.class);
+
         }
     }
 

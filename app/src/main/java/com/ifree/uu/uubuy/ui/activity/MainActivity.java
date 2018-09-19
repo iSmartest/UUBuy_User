@@ -1,13 +1,19 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
@@ -25,6 +31,8 @@ import butterknife.OnClick;
 
 
 public class MainActivity extends BaseActivity {
+    @BindView(R.id.edt_a_key_search)
+    TextView keyWord;
     @BindView(R.id.iv_main_home)
     RadioButton mHome;
     @BindView(R.id.iv_main_around)
@@ -59,50 +67,77 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        changeFragment(HomeFragment.class,R.id.linear_main_layout_content,true,null,true);
+        changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, true);
         initLocation();
         hideBack(1);
+        keyWord.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH){
+                    if (TextUtils.isEmpty(keyWord.getText().toString().trim())){
+                        ToastUtils.makeText(context,"请输入搜索内容");
+                    }else {
+                        String mKeyWord = keyWord.getText().toString().trim();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("keyWord",mKeyWord);
+                        MyApplication.openActivity(context, SearchActivity.class,bundle);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
     @OnClick({R.id.iv_main_home, R.id.iv_main_around, R.id.iv_main_activities, R.id.iv_main_order, R.id.iv_main_mine
-            , R.id.ly_base_location,R.id.ly_restart_location, R.id.iv_base_message,R.id.iv_base_setting})
+            , R.id.ly_base_location, R.id.ly_restart_location, R.id.iv_base_message, R.id.iv_base_setting,R.id.iv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_main_home:
-                changeFragment(HomeFragment.class,R.id.linear_main_layout_content,true,null,false);
+                changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, false);
                 hideBack(1);
                 break;
             case R.id.iv_main_around:
-                changeFragment(AroundFragment.class,R.id.linear_main_layout_content,true,null,false);
+                changeFragment(AroundFragment.class, R.id.linear_main_layout_content, true, null, false);
                 hideBack(2);
                 break;
             case R.id.iv_main_activities:
-                changeFragment(ActivitiesFragment.class,R.id.linear_main_layout_content,true,null,false);
+                changeFragment(ActivitiesFragment.class, R.id.linear_main_layout_content, true, null, false);
                 hideBack(3);
                 setTitleText("活动圈");
                 break;
             case R.id.iv_main_order:
-                changeFragment(OrderFragment.class,R.id.linear_main_layout_content,true,null,false);
+                changeFragment(OrderFragment.class, R.id.linear_main_layout_content, true, null, false);
                 hideBack(3);
                 setTitleText("订单");
                 break;
             case R.id.iv_main_mine:
-                changeFragment(MineFragment.class,R.id.linear_main_layout_content,true,null,false);
+                changeFragment(MineFragment.class, R.id.linear_main_layout_content, true, null, false);
                 hideBack(4);
                 break;
             case R.id.ly_base_location:
-                MyApplication.openActivity(context,SelectHotCityActivity.class);
-                ToastUtils.makeText(context,"选择城市页面");
+                MyApplication.openActivity(context, SelectHotCityActivity.class);
+                ToastUtils.makeText(context, "选择城市页面");
                 break;
             case R.id.ly_restart_location:
                 initLocation();
                 break;
             case R.id.iv_base_message:
-                MyApplication.openActivity(context,MessageActivity.class);
+                MyApplication.openActivity(context, MessageActivity.class);
                 break;
             case R.id.iv_base_setting:
-                MyApplication.openActivity(context,MySettingActivity.class);
+                MyApplication.openActivity(context, MySettingActivity.class);
+                break;
+            case R.id.iv_search:
+                String mKeyWord = keyWord.getText().toString().trim();
+                if (mKeyWord.isEmpty()){
+                    ToastUtils.makeText(context,"请输入搜索内容");
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString("keyWord",mKeyWord);
+                MyApplication.openActivity(context, SearchActivity.class,bundle);
                 break;
         }
     }
@@ -127,7 +162,7 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void initLocation(){
+    private void initLocation() {
         GaoDeLocationListener gaoDeLocationListener = new GaoDeLocationListener(context, new GaoDeLocationListener.OnQuestResultListener() {
             @Override
             public void success(String result) {

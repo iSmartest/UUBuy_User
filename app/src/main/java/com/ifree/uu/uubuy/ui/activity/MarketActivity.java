@@ -1,8 +1,11 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
@@ -11,6 +14,7 @@ import com.ifree.uu.uubuy.service.presenter.SecondListPresenter;
 import com.ifree.uu.uubuy.service.view.SecondListView;
 import com.ifree.uu.uubuy.ui.adapter.MarketAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -37,16 +41,18 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
     private List<SecondActivitiesEntity.DataBean.MarketCommodityList> mList = new ArrayList<>();
     private String fristActivitiesId;
     private String fristActivitiesType;
+    private String fristActivitiesName;
+    private TextView mName,mTime;
+    private ImageView mPicture;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_market;
     }
 
-
     @Override
     protected void initView() {
         hideBack(6);
-        setTitleText("综合商场");
+        setTitleText("综合超市");
         setRightText("收藏");
         fristActivitiesId = getIntent().getStringExtra("fristActivitiesId");
         fristActivitiesType = getIntent().getStringExtra("fristActivitiesType");
@@ -61,6 +67,9 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
         headView = LayoutInflater.from(context).inflate(R.layout.header_market, null);
         headView.findViewById(R.id.ll_market_activities).setOnClickListener(this);
         headView.findViewById(R.id.tv_market_share).setOnClickListener(this);
+        mName = headView.findViewById(R.id.tv_market_name);
+        mPicture = headView.findViewById(R.id.tv_market_picture);
+        mTime = headView.findViewById(R.id.tv_market_time);
         if (headView != null) xRecyclerView.addHeaderView(headView);
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -82,7 +91,7 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
             }
         });
 
-        mAdapter = new MarketAdapter(context, mList);
+        mAdapter = new MarketAdapter(context,mList,fristActivitiesId);
         xRecyclerView.setAdapter(mAdapter);
     }
 
@@ -105,6 +114,10 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
                 mList.addAll(marketCommodityLists);
                 mAdapter.notifyDataSetChanged();
             }
+            fristActivitiesName = mSecondListEntity.getData().getMarketInfo().getMarketName();
+            mName.setText(fristActivitiesName);
+            mTime.setText(mSecondListEntity.getData().getMarketInfo().getActivitiesTime());
+            GlideImageLoader.imageLoader(context,mSecondListEntity.getData().getMarketInfo().getActivitiesPic(),mPicture);
         }
 
         @Override
@@ -122,7 +135,11 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_market_activities:
-                MyApplication.openActivity(context,ActivitiesDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("marketId",fristActivitiesId);
+                bundle.putString("marketName",fristActivitiesName);
+                bundle.putString("type",fristActivitiesType);
+                MyApplication.openActivity(context,ActivitiesDetailsActivity.class,bundle);
                 break;
             case R.id.tv_market_share:
                 ToastUtils.makeText(context,"你点击分享");

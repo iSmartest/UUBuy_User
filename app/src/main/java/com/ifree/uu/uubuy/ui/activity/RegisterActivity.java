@@ -44,6 +44,7 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.text_register_go_login)
     TextView mGoLogin;
     private String mCode ="";
+    private String sessionId = "";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_register;
@@ -128,7 +129,7 @@ public class RegisterActivity extends BaseActivity {
     private void passWordLogin(String userPhone, String password,String inviteCode) {
         mRegisterPresenter.onCreate();
         mRegisterPresenter.attachView(mRegisterView);
-        mRegisterPresenter.getSearchRegister(userPhone,password,inviteCode,"提交中...");
+        mRegisterPresenter.getSearchRegister(userPhone,password,inviteCode,sessionId,"提交中...");
     }
 
     private UserInfoView mRegisterView = new UserInfoView() {
@@ -163,6 +164,7 @@ public class RegisterActivity extends BaseActivity {
                 return;
             }
             mCode = mUserInfoEntity.getData().getCode();
+            sessionId = mUserInfoEntity.getData().getSessionId();
             Log.i("TAG", "onSuccess: " + mCode);
         }
 

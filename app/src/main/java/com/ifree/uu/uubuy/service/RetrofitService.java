@@ -2,17 +2,22 @@ package com.ifree.uu.uubuy.service;
 
 import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
+import com.ifree.uu.uubuy.service.entity.ActivitiesDetailsEntity;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.service.entity.CommodityInfoEntity;
 import com.ifree.uu.uubuy.service.entity.CommodityListEntity;
+import com.ifree.uu.uubuy.service.entity.CompareCommodityEntity;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
 import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.service.entity.GroupEntity;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.entity.MessageEntity;
 import com.ifree.uu.uubuy.service.entity.MineEntity;
+import com.ifree.uu.uubuy.service.entity.MoreEntity;
+import com.ifree.uu.uubuy.service.entity.MyFootPrintEntity;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
+import com.ifree.uu.uubuy.service.entity.SearchEntity;
 import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 
@@ -38,7 +43,15 @@ public interface RetrofitService {
     @GET(BaseUrl.USER_REGISTER)
     Observable<UserInfoEntity> getSearchRegister(@Query("userPhone") String userPhone,
                                                  @Query("password") String password,
-                                                 @Query("code") String code);
+                                                 @Query("code") String code,
+                                                 @Query("sessionId") String sessionId);
+
+    @GET(BaseUrl.USER_REGISTER)
+    Observable<UserInfoEntity> getSearchBindPhone(@Query("userPhone") String userPhone,
+                                                 @Query("userPassword") String password,
+                                                 @Query("code") String code,
+                                                 @Query("sessionId") String sessionId,
+                                                  @Query("uid") String uid);
 
     @GET(BaseUrl.FORGET_PASSWORD)
     Observable<UserInfoEntity> getSearchForgetPassword(@Query("userPhone") String userPhone,
@@ -63,6 +76,15 @@ public interface RetrofitService {
     Observable<CityInfoEntity> getSearchCityInfo();
 
 
+    @GET(BaseUrl.SEARCH_INFO)
+    Observable<SearchEntity> getSearchInfo(@Query("longitude") String longitude,
+                                           @Query("latitude") String latitude,
+                                           @Query("townAdCode") String townAdCode,
+                                           @Query("page") int page,
+                                           @Query("keyWord") String keyWord,
+                                           @Query("uid") String uid,
+                                           @Query("searchType") String searchType);
+
     @GET(BaseUrl.HOME_INFO)
     Observable<HomeEntity> getSearchHomes(@Query("longitude") String longitude,
                                           @Query("latitude") String latitude,
@@ -84,17 +106,28 @@ public interface RetrofitService {
                                                                @Query("page") int page,
                                                                @Query("uid") String uid);
 
+    @GET(BaseUrl.MORE_LIST_INFO)
+    Observable<MoreEntity> getSearchMoreListInfo(@Query("classfyId") String classifyId,
+                                                 @Query("type") String type,
+                                                 @Query("menuId") String menuId,
+                                                 @Query("uid") String uid,
+                                                 @Query("page") int page);
+
     @GET(BaseUrl.COMMODITY_INFO)
     Observable<CommodityInfoEntity> getSearchCommodityInfo(@Query("commodityId") String commodityId,
-                                                               @Query("type") String type,
-                                                               @Query("uid") String uid);
+                                                           @Query("type") String type,
+                                                           @Query("uid") String uid);
+
+    @GET(BaseUrl.COPARE_INFO)
+    Observable<CompareCommodityEntity> getSearchCompareInfo(@Query("commodityId") String commodityId,
+                                                            @Query("page") int page);
 
     @GET(BaseUrl.SECOND_LIST_INFO)
     Observable<SecondActivitiesEntity> getSearchSecondListInfo(@Query("fristActivitiesId") String fristActivitiesId,
                                                                @Query("page") int page,
                                                                @Query("uid") String uid,
                                                                @Query("fristActivitiesType") String fristActivitiesType,
-                                                               @Query("classify") String classify);
+                                                               @Query("classfy") String classify);
 
     @GET(BaseUrl.AROUND_INFO)
     Observable<AroundEntity> getSearchArounds(@Query("longitude") String longitude,
@@ -111,10 +144,22 @@ public interface RetrofitService {
                                                      @Query("uid") String uid,
                                                      @Query("activitiesType") String activitiesType);
 
+    @GET(BaseUrl.SUBMIT_RESERVE_INFO)
+    Observable<UserInfoEntity> getSubmitReserveInfo(@Query("commodityId") String commodityId,
+                                                    @Query("type") String type,
+                                                    @Query("count") String count,
+                                                    @Query("shopId") String shopId,
+                                                    @Query("uid") String uid);
+
     @GET(BaseUrl.ORDER_INFO)
     Observable<OrderEntity> getSearchOrders(@Query("orderState") String orderState,
                                             @Query("page") int page,
                                             @Query("uid") String uid);
+
+    @GET(BaseUrl.SUBNIT_OPERATION_ORDER)
+    Observable<UserInfoEntity> getSubmitOperationOrder(@Query("orderId") String orderId,
+                                                       @Query("type") String type,
+                                                       @Query("uid") String uid);
 
     @GET(BaseUrl.MINE_INFO)
     Observable<MineEntity> getSearchMineInfos(@Query("longitude") String longitude,
@@ -165,4 +210,20 @@ public interface RetrofitService {
     Observable<MessageEntity> getSearchMessages(@Query("uid") String uid,
                                                 @Query("type") String type,
                                                 @Query("page") int page);
+
+    @GET(BaseUrl.FOOT_PRINT)
+    Observable<MyFootPrintEntity> getSearchMyFootPrint(@Query("uid") String uid,
+                                                       @Query("page") int page);
+
+    @GET(BaseUrl.ACTIVITIES_INFO)
+    Observable<ActivitiesDetailsEntity> getSearchActivitiesInfo(@Query("uid") String uid,
+                                                                @Query("marketId") String marketId);
+
+    @GET(BaseUrl.SIGN_UP)
+    Observable<UserInfoEntity> getSearchActivitiesSignUp(@Query("uid") String uid,
+                                                         @Query("marketId") String marketId,
+                                                         @Query("name") String name,
+                                                         @Query("phone") String phone,
+                                                         @Query("idCard") String idCard,
+                                                         @Query("type") String type);
 }

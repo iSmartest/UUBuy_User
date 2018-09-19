@@ -143,7 +143,7 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
                         MyApplication.openActivity(context,MarketActivity.class,bundle);
                         break;
                     case "3":
-
+                        MyApplication.openActivity(context,FurnitureMarketActivity.class,bundle);
                         break;
                     case "4":
                     case "5":

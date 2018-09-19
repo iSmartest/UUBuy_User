@@ -4,7 +4,9 @@ package com.ifree.uu.uubuy.service.presenter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
@@ -70,7 +72,7 @@ public class OrderPresenter implements Presenter {
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext,mContent);
         dialog.show();
         mCompositeSubscription.add(manager.getSearchOrders(orderState,page,uid)
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<OrderEntity>() {
                     @Override
@@ -78,6 +80,7 @@ public class OrderPresenter implements Presenter {
                         dialog.dismiss();
                         if (mOrderEntity != null){
                             mOrderView.onSuccess(mOrderEntity);
+                            Log.i("TAG", "Order: " + new Gson().toJson(mOrderEntity));
                         }
                     }
 

@@ -13,16 +13,47 @@ public class SecondActivitiesEntity {
     private String resultCode;
     private DataBean data;
     public static class DataBean{
-        private String bandStorePic;
-        private String fristActivitiesName;
-        private String fristActivitiesPic;
-        private String fristActivitiesTime;
-        private String fristActivitiesAdAddress;
-        private String fristActivitiesIsCollection;
-        private List<SecondActivitiesList> secondActivitiesList;
-        private List<MarketCommodityList> marketCommodityList;
+        private MarketInfo marketInfo;
         private List<BandCommodityList> bandCommodityList;
-        public static class SecondActivitiesList{
+        private List<MarketCommodityList> marketCommodityList;
+        public static class MarketInfo{
+            private String activitiesAddress;
+            private String activitiesPic;
+            private String activitiesTime;
+            private String isCollection;
+            private String isOver;
+            private String marketId;
+            private String marketName;
+
+            public String getActivitiesAddress() {
+                return activitiesAddress;
+            }
+
+            public String getActivitiesPic() {
+                return activitiesPic;
+            }
+
+            public String getActivitiesTime() {
+                return activitiesTime;
+            }
+
+            public String getIsCollection() {
+                return isCollection;
+            }
+
+            public String getIsOver() {
+                return isOver;
+            }
+
+            public String getMarketId() {
+                return marketId;
+            }
+
+            public String getMarketName() {
+                return marketName;
+            }
+        }
+        public static class BandCommodityList{
             private String secondActivitiesId;
             private String secondActivitiesName;
             private String secondActivitiesPic;
@@ -66,6 +97,7 @@ public class SecondActivitiesEntity {
         }
         public static class MarketCommodityList{
             private String commodityTitle;
+            private String classfyId;
             private List<CommodityList> commodityList;
             public static class CommodityList{
                 private String commodityId;
@@ -119,73 +151,27 @@ public class SecondActivitiesEntity {
                 return commodityTitle;
             }
 
+            public String getClassfyId() {
+                return classfyId;
+            }
+
             public List<CommodityList> getCommodityList() {
                 return commodityList;
             }
         }
-        public static class BandCommodityList{
-            private String commodityId;//用于跳转到具体活动
-            private String commodityName; //商品名称
-            private String commodityPic;//商品图片
-            private String commodityDes;//商品描述
-            private String commodityType;//1可预订商品2不可商品
 
-            public String getCommodityId() {
-                return commodityId;
-            }
-
-            public String getCommodityName() {
-                return commodityName;
-            }
-
-            public String getCommodityPic() {
-                return commodityPic;
-            }
-
-            public String getCommodityDes() {
-                return commodityDes;
-            }
-
-            public String getCommodityType() {
-                return commodityType;
-            }
+        public MarketInfo getMarketInfo() {
+            return marketInfo;
         }
 
-        public String getBandStorePic() {
-            return bandStorePic;
-        }
-
-        public String getFristActivitiesName() {
-            return fristActivitiesName;
-        }
-
-        public String getFristActivitiesPic() {
-            return fristActivitiesPic;
-        }
-
-        public String getFristActivitiesTime() {
-            return fristActivitiesTime;
-        }
-
-        public String getFristActivitiesAdAddress() {
-            return fristActivitiesAdAddress;
-        }
-
-        public String getFristActivitiesIsCollection() {
-            return fristActivitiesIsCollection;
-        }
-
-        public List<SecondActivitiesList> getSecondActivitiesList() {
-            return secondActivitiesList;
+        public List<BandCommodityList> getBandCommodityList() {
+            return bandCommodityList;
         }
 
         public List<MarketCommodityList> getMarketCommodityList() {
             return marketCommodityList;
         }
 
-        public List<BandCommodityList> getBandCommodityList() {
-            return bandCommodityList;
-        }
     }
 
     public String getMsg() {

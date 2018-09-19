@@ -1,17 +1,25 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
+import com.ifree.uu.uubuy.ui.activity.StoreActivity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,8 +32,11 @@ import butterknife.ButterKnife;
  */
 public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyGridViewHolder> {
     private Context context;
-    public MyGridAdapter(Context context) {
+    private List<SecondActivitiesEntity.DataBean.MarketCommodityList.CommodityList> commodityList;
+
+    public MyGridAdapter(Context context, List<SecondActivitiesEntity.DataBean.MarketCommodityList.CommodityList> commodityList) {
         this.context = context;
+        this.commodityList = commodityList;
     }
 
     @NonNull
@@ -38,34 +49,57 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyGridView
 
     @Override
     public void onBindViewHolder(@NonNull MyGridViewHolder viewHolder, int position) {
-        if (position == 0 && position == 2 && position == 4){
-            viewHolder.rl_store.setVisibility(View.VISIBLE);
-            viewHolder.ll_commodity.setVisibility(View.GONE);
-            viewHolder.mType.setText("专柜");
-        }else {
-            viewHolder.rl_store.setVisibility(View.GONE);
-            viewHolder.ll_commodity.setVisibility(View.VISIBLE);
-            viewHolder.mType.setText("自营");
+        final SecondActivitiesEntity.DataBean.MarketCommodityList.CommodityList mList = commodityList.get(position);
+        GlideImageLoader.imageLoader(context,mList.getCommodityPic(),viewHolder.mPicture);
+        switch (mList.getCommodityType()){
+            case "0":
+                viewHolder.rl_store.setVisibility(View.VISIBLE);
+                viewHolder.ll_commodity.setVisibility(View.GONE);
+                viewHolder.mType.setText("专柜");
+                viewHolder.mStoreName.setText(mList.getCommodityName());
+                viewHolder.mStoreDescent.setText(mList.getCommodityDescent());
+                viewHolder.mStoreTime.setText(mList.getCommodityTime());
+                break;
+            case "1":
+                viewHolder.rl_store.setVisibility(View.GONE);
+                viewHolder.ll_commodity.setVisibility(View.VISIBLE);
+                viewHolder.mType.setText("自营");
+                viewHolder.mCommodityName.setText(mList.getCommodityName());
+                viewHolder.mCommodityDec.setText(mList.getCommodityDec());
+                viewHolder.mCommodityNowPrice.setText(mList.getCommodityNowPrice());
+                viewHolder.mCommodityOriginalPrice.setText(mList.getCommodityOriginalPrice());
+                break;
         }
     }
 
     @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
     public int getItemCount() {
-        return 6;
+        return commodityList == null ? 0 : commodityList.size();
     }
 
-    class MyGridViewHolder extends RecyclerView.ViewHolder{
-       @BindView(R.id.rl_store)
+    class MyGridViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_store_or_commodity_picture)
+        ImageView mPicture;
+        @BindView(R.id.rl_store)
         RelativeLayout rl_store;
-       @BindView(R.id.ll_commodity)
+        @BindView(R.id.tv_store_name)
+        TextView mStoreName;
+        @BindView(R.id.tv_store_descent)
+        TextView mStoreDescent;
+        @BindView(R.id.tv_store_time)
+        TextView mStoreTime;
+        @BindView(R.id.ll_commodity)
         LinearLayout ll_commodity;
-       @BindView(R.id.tv_item_type)
-       TextView mType;
+        @BindView(R.id.tv_commodity_name)
+        TextView mCommodityName;
+        @BindView(R.id.tv_commodity_dec)
+        TextView mCommodityDec;
+        @BindView(R.id.tv_commodity_now_price)
+        TextView mCommodityNowPrice;
+        @BindView(R.id.tv_commodity_original_price)
+        TextView mCommodityOriginalPrice;
+        @BindView(R.id.tv_item_type)
+        TextView mType;
 
         public MyGridViewHolder(View itemView) {
             super(itemView);

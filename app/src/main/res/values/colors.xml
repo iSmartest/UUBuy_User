@@ -16,6 +16,7 @@
     <color name="toast_background">#FF8E8E93</color>
     <color name="divider_color">#EEEEEE</color>
     <color name="text_green">#ff23BF9C</color>
+    <color name="text_light_green">#ff50e3c2</color>
     <color name="text_blue">#FF3AA7FF</color>
     <color name="silver_medal">#FFF5A623</color>
     <color name="frame_search_background">#FFEEEEEE</color>

@@ -1,23 +1,23 @@
 package com.ifree.uu.uubuy.ui.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.graphics.Palette;
-import android.util.Log;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.github.florent37.glidepalette.BitmapPalette;
-import com.github.florent37.glidepalette.GlidePalette;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.service.entity.ActivitiesDetailsEntity;
+import com.ifree.uu.uubuy.service.presenter.ActivitiesDetailsPresenter;
+import com.ifree.uu.uubuy.service.view.ActivitiesDetailsView;
+import com.ifree.uu.uubuy.ui.adapter.ActivitiesDetailsAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
-
+import java.util.ArrayList;
+import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -28,40 +28,35 @@ import butterknife.OnClick;
  * Description:
  */
 public class ActivitiesDetailsActivity extends BaseActivity {
-    private String url = "http://wap.jnsbyk.com/uploads/allimg/160808/10-160PQ210031X.jpg";
-    @BindView(R.id.ll_activities_background)
-    RelativeLayout mBackground;
+    private ActivitiesDetailsPresenter mActivitiesDetailsPresenter;
     @BindView(R.id.iv_activities_dec_picture)
     ImageView mPicture;
+    @BindView(R.id.re_market_coupon)
+    RecyclerView recyclerView;
+    @BindView(R.id.tv_activities_dec)
+    TextView tvDec;
     @BindView(R.id.tv_enter_for_activities)
     TextView tvEnter;
-    private String rgb;
+    private String marketId,marketName,type;
+    private List<ActivitiesDetailsEntity.DataBean.CouponList> mList = new ArrayList<>();
+    private ActivitiesDetailsAdapter mAdapter;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_activities_details;
-    }
-    @Override
-    protected void loadData() {
-        Glide.with(this).load(url).listener(GlidePalette.with(url)
-                .use(GlidePalette.Profile.VIBRANT_LIGHT)
-                .crossfade(true)
-                .intoCallBack(new BitmapPalette.CallBack() {
-                    @Override
-                    public void onPaletteLoaded(@Nullable Palette palette) {
-                        Palette.Swatch vibrant = palette.getVibrantSwatch();
-                        rgb = changeColor(vibrant.getRgb());
-                        mBackground.setBackgroundColor(Color.parseColor(rgb));
-                    }
-                })
-        ).into(mPicture);
-
     }
 
     @Override
     protected void initView() {
         hideBack(6);
-        setTitleText("奥德莱斯上地店");
         setRightText("收藏");
+        marketId = getIntent().getStringExtra("marketId");
+        marketName = getIntent().getStringExtra("marketName");
+        type = getIntent().getStringExtra("type");
+        setTitleText(marketName);
+        mActivitiesDetailsPresenter = new ActivitiesDetailsPresenter(context);
+        recyclerView.setLayoutManager(new GridLayoutManager(context,3));
+        mAdapter = new ActivitiesDetailsAdapter(context,mList);
+        recyclerView.setAdapter(mAdapter);
     }
     @OnClick({R.id.tv_base_rightText,R.id.tv_enter_for_activities})
     public void onViewClicked(View view) {
@@ -71,29 +66,40 @@ public class ActivitiesDetailsActivity extends BaseActivity {
                 break;
             case R.id.tv_enter_for_activities:
                 Bundle bundle = new Bundle();
-                bundle.putString("color",rgb);
+                bundle.putString("marketId",marketId);
+                bundle.putString("type",type);
                 MyApplication.openActivity(context,EnterForActivitiesActivity.class,bundle);
                 break;
         }
-
     }
 
-    private String changeColor(int rgb) {
-        int rgbR = (rgb & 0xff0000) >> 16;
-        int rgbG = (rgb & 0xff00) >> 8;
-        int rgbB = (rgb & 0xff);
-        String r = checkColorValue(rgbR);
-        String g = checkColorValue(rgbG);
-        String b = checkColorValue(rgbB);
-        String str = "#26"+r+g+b;
-        return str;
+    @Override
+    protected void loadData() {
+        mActivitiesDetailsPresenter.onCreate();
+        mActivitiesDetailsPresenter.attachView(mActivitiesDetailsView);
+        mActivitiesDetailsPresenter.getSearchActivitiesInfo("116",marketId,"加载中...");
     }
-    private String checkColorValue(int value){
-        String str = "";
-        if(value<16){
-            str ="0" + Integer.toHexString(value);
-            return str;
+
+    private ActivitiesDetailsView mActivitiesDetailsView = new ActivitiesDetailsView() {
+
+        @Override
+        public void onSuccess(ActivitiesDetailsEntity mActivitiesDetailsEntity) {
+            if (mActivitiesDetailsEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mActivitiesDetailsEntity.getMsg());
+                return;
+            }
+            List<ActivitiesDetailsEntity.DataBean.CouponList> couponLists = mActivitiesDetailsEntity.getData().getCouponList();
+            if (couponLists != null && !couponLists.isEmpty()){
+                mList.addAll(couponLists);
+                mAdapter.notifyDataSetChanged();
+            }
+            GlideImageLoader.imageLoader(context,mActivitiesDetailsEntity.getData().getActivitiesPic(),mPicture);
+            tvDec.setText(mActivitiesDetailsEntity.getData().getActivitiesDes());
         }
-        return Integer.toHexString(value);
-    }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context,result);
+        }
+    };
 }

@@ -9,16 +9,146 @@ import java.util.List;
  * Description:
  */
 public class OrderEntity {
-    private String result;
+    private String msg;
     private String resultCode;
-    private List<OrderInfoList> orderInfoList;
+    private DataBean data;
+    public static class DataBean{
+        private List<OrderInfoList> orderInfoList;
+        public static class OrderInfoList{
+            private String orderId;
+            private String orderState;
+            private String commodityid;
+            private String commodityTitle;
+            private String commodityIcon;
+            private String commodityDec;
+            private String commodityNum;
+            private String commodityPresentPrice;
+            private String orderTime;
+            private String isOver;
+            private String storeAddress;
+            private String type;
+            private String shopId;
 
-    public String getResult() {
-        return result;
+            public String getOrderId() {
+                return orderId;
+            }
+
+            public void setOrderId(String orderId) {
+                this.orderId = orderId;
+            }
+
+            public String getOrderState() {
+                return orderState;
+            }
+
+            public void setOrderState(String orderState) {
+                this.orderState = orderState;
+            }
+
+            public String getCommodityid() {
+                return commodityid;
+            }
+
+            public void setCommodityid(String commodityid) {
+                this.commodityid = commodityid;
+            }
+
+            public String getCommodityTitle() {
+                return commodityTitle;
+            }
+
+            public void setCommodityTitle(String commodityTitle) {
+                this.commodityTitle = commodityTitle;
+            }
+
+            public String getCommodityIcon() {
+                return commodityIcon;
+            }
+
+            public void setCommodityIcon(String commodityIcon) {
+                this.commodityIcon = commodityIcon;
+            }
+
+            public String getCommodityDec() {
+                return commodityDec;
+            }
+
+            public void setCommodityDec(String commodityDec) {
+                this.commodityDec = commodityDec;
+            }
+
+            public String getCommodityNum() {
+                return commodityNum;
+            }
+
+            public void setCommodityNum(String commodityNum) {
+                this.commodityNum = commodityNum;
+            }
+
+            public String getCommodityPresentPrice() {
+                return commodityPresentPrice;
+            }
+
+            public void setCommodityPresentPrice(String commodityPresentPrice) {
+                this.commodityPresentPrice = commodityPresentPrice;
+            }
+
+            public String getOrderTime() {
+                return orderTime;
+            }
+
+            public void setOrderTime(String orderTime) {
+                this.orderTime = orderTime;
+            }
+
+            public String getIsOver() {
+                return isOver;
+            }
+
+            public void setIsOver(String isOver) {
+                this.isOver = isOver;
+            }
+
+            public String getStoreAddress() {
+                return storeAddress;
+            }
+
+            public void setStoreAddress(String storeAddress) {
+                this.storeAddress = storeAddress;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getShopId() {
+                return shopId;
+            }
+
+            public void setShopId(String shopId) {
+                this.shopId = shopId;
+            }
+        }
+
+        public List<OrderInfoList> getOrderInfoList() {
+            return orderInfoList;
+        }
+
+        public void setOrderInfoList(List<OrderInfoList> orderInfoList) {
+            this.orderInfoList = orderInfoList;
+        }
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public String getResultCode() {
@@ -29,113 +159,13 @@ public class OrderEntity {
         this.resultCode = resultCode;
     }
 
-    public List<OrderInfoList> getOrderInfoList() {
-        return orderInfoList;
+    public DataBean getData() {
+        return data;
     }
 
-    public void setOrderInfoList(List<OrderInfoList> orderInfoList) {
-        this.orderInfoList = orderInfoList;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
-    public static class OrderInfoList{
-        private String orderId;
-        private String orderState;
-        private String commodityid;
-        private String commodityTitle;
-        private String commodityIcon;
-        private String commodityDec;
-        private String commodityNum;
-        private String commodityPresentPrice;
-        private String orderTime;
-        private String isOver;
-        private String storeAddress;
 
-        public String getOrderId() {
-            return orderId;
-        }
-
-        public void setOrderId(String orderId) {
-            this.orderId = orderId;
-        }
-
-        public String getOrderState() {
-            return orderState;
-        }
-
-        public void setOrderState(String orderState) {
-            this.orderState = orderState;
-        }
-
-        public String getCommodityid() {
-            return commodityid;
-        }
-
-        public void setCommodityid(String commodityid) {
-            this.commodityid = commodityid;
-        }
-
-        public String getCommodityTitle() {
-            return commodityTitle;
-        }
-
-        public void setCommodityTitle(String commodityTitle) {
-            this.commodityTitle = commodityTitle;
-        }
-
-        public String getCommodityIcon() {
-            return commodityIcon;
-        }
-
-        public void setCommodityIcon(String commodityIcon) {
-            this.commodityIcon = commodityIcon;
-        }
-
-        public String getCommodityDec() {
-            return commodityDec;
-        }
-
-        public void setCommodityDec(String commodityDec) {
-            this.commodityDec = commodityDec;
-        }
-
-        public String getCommodityNum() {
-            return commodityNum;
-        }
-
-        public void setCommodityNum(String commodityNum) {
-            this.commodityNum = commodityNum;
-        }
-
-        public String getCommodityPresentPrice() {
-            return commodityPresentPrice;
-        }
-
-        public void setCommodityPresentPrice(String commodityPresentPrice) {
-            this.commodityPresentPrice = commodityPresentPrice;
-        }
-
-        public String getOrderTime() {
-            return orderTime;
-        }
-
-        public void setOrderTime(String orderTime) {
-            this.orderTime = orderTime;
-        }
-
-        public String getIsOver() {
-            return isOver;
-        }
-
-        public void setIsOver(String isOver) {
-            this.isOver = isOver;
-        }
-
-        public String getStoreAddress() {
-            return storeAddress;
-        }
-
-        public void setStoreAddress(String storeAddress) {
-            this.storeAddress = storeAddress;
-        }
-    }
 }

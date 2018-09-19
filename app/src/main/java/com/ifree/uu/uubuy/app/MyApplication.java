@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.multidex.MultiDex;
 
 import com.ifree.uu.uubuy.uitls.CrashHandler;
 import com.ifree.uu.uubuy.uitls.DensityUtils;
@@ -41,7 +42,11 @@ public class MyApplication extends Application {
         CrashHandler catchExcep = new CrashHandler(this);
         Thread.setDefaultUncaughtExceptionHandler(catchExcep);
     }
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
+    }
     public static Context getContext(){
         return CONTEXT;
     }

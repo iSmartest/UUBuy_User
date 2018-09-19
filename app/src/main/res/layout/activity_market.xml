@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_main_background">
+    android:background="@color/app_main_background"
+    android:orientation="vertical">
 
-    <include layout="@layout/activity_base"/>
+    <include layout="@layout/activity_base" />
+
+    <include layout="@layout/v_horizontal_line" />
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:descendantFocusability="blocksDescendants"
         android:id="@+id/xr_market"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:descendantFocusability="blocksDescendants">
 
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
 

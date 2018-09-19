@@ -5,7 +5,6 @@
     android:layout_height="115dp"
     android:layout_marginLeft="3dp"
     android:layout_marginRight="3dp"
-    android:layout_marginTop="6dp"
     android:background="@color/app_main_background">
     
     <LinearLayout
@@ -29,7 +28,7 @@
             android:orientation="vertical"
             android:paddingLeft="9dp"
             android:layout_below="@+id/tv_store_or_commodity_picture"
-            android:visibility="gone">
+            android:visibility="visible">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,6 +43,7 @@
                     android:textColor="@color/text_main_color"
                     android:textSize="10dp" />
                 <TextView
+                    android:id="@+id/tv_store_descent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="5.5折"
@@ -53,11 +53,13 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_store_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="8月7号-8月10号"
                 android:textColor="@color/text_main_color"
                 android:textSize="10dp"
+
                 android:layout_alignParentBottom="true"/>
         </RelativeLayout>
 
@@ -69,7 +71,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="9dp"
             android:layout_below="@+id/tv_store_or_commodity_picture"
-            android:visibility="visible">
+            android:visibility="gone">
         <TextView
             android:id="@+id/tv_commodity_name"
             android:layout_width="wrap_content"
@@ -91,6 +93,7 @@
                 android:orientation="horizontal"
                 android:layout_weight="1">
                 <TextView
+                    android:id="@+id/tv_commodity_now_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥90"
@@ -98,6 +101,7 @@
                     android:textSize="13dp"
                     />
                 <TextView
+                    android:id="@+id/tv_commodity_original_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="￥100"

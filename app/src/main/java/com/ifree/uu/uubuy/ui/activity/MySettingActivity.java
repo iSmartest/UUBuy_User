@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -72,7 +73,7 @@ public class MySettingActivity extends BaseActivity {
 
                 break;
             case R.id.ll_binding_phone:
-
+                MyApplication.openActivity(context,BindingPhoneActivity.class);
                 break;
             case R.id.ll_common_question:
 

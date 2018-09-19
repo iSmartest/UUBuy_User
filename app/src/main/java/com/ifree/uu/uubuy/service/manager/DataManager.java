@@ -5,17 +5,22 @@ import android.content.Context;
 import com.ifree.uu.uubuy.service.RetrofitHelper;
 import com.ifree.uu.uubuy.service.RetrofitService;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
+import com.ifree.uu.uubuy.service.entity.ActivitiesDetailsEntity;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.service.entity.CommodityInfoEntity;
 import com.ifree.uu.uubuy.service.entity.CommodityListEntity;
+import com.ifree.uu.uubuy.service.entity.CompareCommodityEntity;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
 import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.service.entity.GroupEntity;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.entity.MessageEntity;
 import com.ifree.uu.uubuy.service.entity.MineEntity;
+import com.ifree.uu.uubuy.service.entity.MoreEntity;
+import com.ifree.uu.uubuy.service.entity.MyFootPrintEntity;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
+import com.ifree.uu.uubuy.service.entity.SearchEntity;
 import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 
@@ -40,8 +45,11 @@ public class DataManager {
         return mRetrofitService.getSearchSendCode(userPhone,codeType);
     }
 
-    public Observable<UserInfoEntity> getSearchRegister(String userPhone,String password,String code){
-        return mRetrofitService.getSearchRegister(userPhone,password,code);
+    public Observable<UserInfoEntity> getSearchRegister(String userPhone,String password,String code,String sessionId){
+        return mRetrofitService.getSearchRegister(userPhone,password,code,sessionId);
+    }
+    public Observable<UserInfoEntity> getSearchBindPhone(String userPhone,String password,String code,String sessionId,String uid){
+        return mRetrofitService.getSearchBindPhone(userPhone,password,code,sessionId,uid);
     }
 
     public Observable<UserInfoEntity> getSearchForgetPassword(String userPhone,String password,String code){
@@ -64,6 +72,10 @@ public class DataManager {
         return mRetrofitService.getSearchCityInfo();
     }
 
+    public Observable<SearchEntity> getSearchInfo(String longitude, String latitude, String townAdCode, int page, String keyWord, String uid, String searchType){
+        return mRetrofitService.getSearchInfo(longitude,latitude,townAdCode,page,keyWord,uid,searchType);
+    }
+
     public Observable<HomeEntity> getSearchHomes(String longitude, String latitude, String townAdCode, int page){
         return mRetrofitService.getSearchHomes(longitude,latitude,townAdCode,page);
     }
@@ -75,8 +87,16 @@ public class DataManager {
     public Observable<CommodityListEntity> getSearchCommodityListInfo(String storeId, int page, String uid){
         return mRetrofitService.getSearchCommodityListInfo(storeId,page,uid);
     }
+
+    public Observable<MoreEntity> getSearchMoreListInfo(String classifyId, String type, String menuId, String uid,int page){
+        return mRetrofitService.getSearchMoreListInfo(classifyId,type,menuId,uid,page);
+    }
     public Observable<CommodityInfoEntity> getSearchCommodityInfo(String commodityId, String type, String uid){
         return mRetrofitService.getSearchCommodityInfo(commodityId,type,uid);
+    }
+
+    public Observable<CompareCommodityEntity> getSearchCompareInfo(String commodityId, int page){
+        return mRetrofitService.getSearchCompareInfo(commodityId,page);
     }
     public Observable<SecondActivitiesEntity> getSearchSecondListInfo(String fristActivitiesId, int page, String uid,String fristActivitiesType,String classify){
         return mRetrofitService.getSearchSecondListInfo(fristActivitiesId,page,uid,fristActivitiesType,classify);
@@ -90,8 +110,16 @@ public class DataManager {
         return mRetrofitService.getSearchActivities(longitude,latitude,townAdCode,page,uid,activitiesType);
     }
 
+    public Observable<UserInfoEntity> getSubmitReserveInfo(String commodityId,String type,String count,String shopId,String uid){
+        return mRetrofitService.getSubmitReserveInfo(commodityId,type,count,shopId,uid);
+    }
+
     public Observable<OrderEntity> getSearchOrders(String orderState,int page,String uid){
         return mRetrofitService.getSearchOrders(orderState,page,uid);
+    }
+
+    public Observable<UserInfoEntity> getSubmitOperationOrder(String orderId,String type,String uid){
+        return mRetrofitService.getSubmitOperationOrder(orderId,type,uid);
     }
 
     public Observable<MineEntity> getSearchMineInfos(String longitude, String latitude, String townAdCode, int page, String uid){
@@ -122,6 +150,18 @@ public class DataManager {
 
     public Observable<MessageEntity> getSearchMessages(String uid, String type, int page){
             return mRetrofitService.getSearchMessages(uid,type,page);
+        }
+
+    public Observable<MyFootPrintEntity> getSearchMyFootPrint(String uid, int page){
+            return mRetrofitService.getSearchMyFootPrint(uid,page);
+        }
+
+    public Observable<ActivitiesDetailsEntity> getSearchActivitiesInfo(String uid, String marketId){
+            return mRetrofitService.getSearchActivitiesInfo(uid,marketId);
+        }
+
+    public Observable<UserInfoEntity> getSearchActivitiesSignUp(String uid, String marketId,String name,String phone,String idCard,String type){
+            return mRetrofitService.getSearchActivitiesSignUp(uid,marketId,name,phone,idCard,type);
         }
 
 

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
@@ -42,6 +43,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     @BindView(R.id.xr_brand)
     XRecyclerView xRecyclerView;
     private ImageView mIcon;
+    private TextView mAddress;
     private View headView;
     private int page = 1;
     private String fristActivitiesName;
@@ -73,6 +75,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
         xRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
         headView = LayoutInflater.from(context).inflate(R.layout.header_brand, null);
         mIcon = headView.findViewById(R.id.iv_activities_picture);
+        mAddress = headView.findViewById(R.id.tv_brand_store_address);
         mIcon.setOnClickListener(this);
         headView.findViewById(R.id.tv_brand_coupon).setOnClickListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);
@@ -98,7 +101,6 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
 
         mAdapter = new BrandAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
-
         xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
@@ -107,19 +109,33 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
                     return;
                 }
                 Bundle bundle = new Bundle();
-                bundle.putString("commodityId",mList.get(position).getCommodityId());
-                bundle.putString("type", mList.get(position).getType());
-                MyApplication.openActivity(context, CommodityActivity.class, bundle);
+                switch (mList.get(position).getType()){
+                    case "4":
+                        bundle.putString("commodityId",mList.get(position).getCommodityId());
+                        bundle.putString("type", mList.get(position).getType());
+                        MyApplication.openActivity(context, CarCommodityActivity.class, bundle);
+                        break;
+                    case "5":
+                        bundle.putString("commodityId",mList.get(position).getCommodityId());
+                        bundle.putString("type", mList.get(position).getType());
+                        MyApplication.openActivity(context, CommodityActivity.class, bundle);
+                        break;
+                    case "6":
+                        bundle.putString("marketId",mList.get(position).getCommodityId());
+                        bundle.putString("type", mList.get(position).getType());
+                        bundle.putString("marketName", mList.get(position).getCommodityName());
+                        MyApplication.openActivity(context, ActivitiesDetailsActivity.class, bundle);
+                        break;
+                }
             }
         });
     }
-
 
     @Override
     protected void loadData() {
         mCommodityPresenter.onCreate();
         mCommodityPresenter.attachView(mCommodityListView);
-        mCommodityPresenter.getSearchCommodityListInfo(storeId, page, "1", "加载中...");
+        mCommodityPresenter.getSearchCommodityListInfo(storeId, page, uid, "加载中...");
     }
 
     private CommodityListView mCommodityListView = new CommodityListView() {
@@ -134,6 +150,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
                 mList.addAll(commodityLists);
                 mAdapter.notifyDataSetChanged();
             }
+            mAddress.setText(mCommodityListEntity.getData().getStoreAddress());
             GlideImageLoader.imageLoader(context, mCommodityListEntity.getData().getStorePic(), mIcon);
         }
 
@@ -151,9 +168,6 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_activities_picture:
-                MyApplication.openActivity(context, ActivitiesDetailsActivity.class);
-                break;
             case R.id.tv_brand_coupon:
                 MyApplication.openActivity(context, CouponCenterActivity.class);
                 break;

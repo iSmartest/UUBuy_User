@@ -6,12 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -22,9 +26,9 @@ import butterknife.ButterKnife;
  */
 public class MarketOrStoreAdapter extends RecyclerView.Adapter<MarketOrStoreAdapter.MarketOrStoreViewHolder> {
     private Context context;
-    private List<SecondActivitiesEntity.DataBean.SecondActivitiesList> mList;
+    private List<SecondActivitiesEntity.DataBean.BandCommodityList> mList;
 
-    public MarketOrStoreAdapter(Context context, List<SecondActivitiesEntity.DataBean.SecondActivitiesList> mList) {
+    public MarketOrStoreAdapter(Context context, List<SecondActivitiesEntity.DataBean.BandCommodityList> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -39,16 +43,24 @@ public class MarketOrStoreAdapter extends RecyclerView.Adapter<MarketOrStoreAdap
 
     @Override
     public void onBindViewHolder(@NonNull MarketOrStoreViewHolder holder, int position) {
-
+        SecondActivitiesEntity.DataBean.BandCommodityList sList = mList.get(position);
+        holder.mName.setText(sList.getSecondActivitiesName());
+        holder.mContent.setText(sList.getSecondActivitiesAdAddress());
+        GlideImageLoader.imageLoader(context,sList.getSecondActivitiesPic(),holder.mPicture);
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mList == null ? 0 : mList.size();
     }
 
     static class MarketOrStoreViewHolder extends RecyclerView.ViewHolder {
-
+        @BindView(R.id.iv_picture)
+        ImageView mPicture;
+        @BindView(R.id.tv_name)
+        TextView mName;
+        @BindView(R.id.tv_content)
+        TextView mContent;
         public MarketOrStoreViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

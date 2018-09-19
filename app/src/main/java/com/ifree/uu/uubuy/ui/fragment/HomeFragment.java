@@ -23,8 +23,10 @@ import com.ifree.uu.uubuy.service.presenter.HomePresenter;
 import com.ifree.uu.uubuy.service.view.HomeView;
 import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.FirstClassifyActivity;
+import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
 import com.ifree.uu.uubuy.ui.activity.MarketActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
+import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.ui.adapter.AdTypeAdapter;
 import com.ifree.uu.uubuy.ui.adapter.CityADAdapter;
 import com.ifree.uu.uubuy.ui.adapter.HomeAdapter;
@@ -135,25 +137,107 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
                 int position = vh.getAdapterPosition()-2;
-                if (position < 0 | position >= mAdTypeList.size()){
+                if (position < 0 | position >= mList.size()){
                     return;
                 }
-//                switch (mList.get(position).getType()){// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
-//                    case "1":
-//                        MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
-//                        break;
-//                    case "2"://超市，类型：专柜、商品
-//                        MyApplication.openActivity(context,MarketActivity.class,bundle);
-//                        break;
-//                    case "3":
-//
-//                        break;
-//                    case "4":
-//                    case "5":
-//                    case "6":
-//                        MyApplication.openActivity(context,BrandActivity.class,bundle);
-//                        break;
-//                }
+                Bundle bundle = new Bundle();
+                bundle.putString("fristActivitiesId",mList.get(position).getActivitiesId());
+                bundle.putString("fristActivitiesType",mList.get(position).getType());
+                bundle.putString("fristActivitiesName",mList.get(position).getActivitiesName());
+                switch (mList.get(position).getType()){// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
+                    case "1":
+                        if (mList.get(position).getActivitiesType().equals("1")){
+                            MyApplication.openActivity(context, StoreActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+                        }
+                        break;
+                    case "2"://超市
+                        if (mList.get(position).getActivitiesType().equals("1")){
+                            MyApplication.openActivity(context, StoreActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,MarketActivity.class,bundle);
+                        }
+                        break;
+                    case "3":
+                        if (mList.get(position).getActivitiesType().equals("1")){
+                            MyApplication.openActivity(context, StoreActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,FurnitureMarketActivity.class,bundle);
+                        }
+                        break;
+                    case "4":
+                        if (mList.get(position).getActivitiesType().equals("1")){
+                            MyApplication.openActivity(context, BrandActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+                        }
+                        break;
+                    case "5":
+                        if (mList.get(position).getActivitiesType().equals("1")){
+                            MyApplication.openActivity(context, BrandActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+                        }
+                        break;
+                    case "6":
+                        MyApplication.openActivity(context,BrandActivity.class,bundle);
+                        break;
+                }
+            }
+        });
+
+        rc_city_ad.addOnItemTouchListener(new RecyclerItemTouchListener(rc_city_ad) {
+            @Override
+            public void onItemClick(RecyclerView.ViewHolder vh) {
+                int position = vh.getAdapterPosition();
+                if (position < 0 | position >= mList.size()){
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString("fristActivitiesId",mCityADList.get(position).getCityADId());
+                bundle.putString("fristActivitiesType",mCityADList.get(position).getType());
+                bundle.putString("fristActivitiesName",mCityADList.get(position).getCityADName());
+                switch (mCityADList.get(position).getType()){// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
+                    case "1":
+                        if (mCityADList.get(position).getCityADType().equals("1")){
+                            MyApplication.openActivity(context, StoreActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+                        }
+                        break;
+                    case "2"://超市
+                        if (mCityADList.get(position).getCityADType().equals("1")){
+                            MyApplication.openActivity(context, StoreActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,MarketActivity.class,bundle);
+                        }
+                        break;
+                    case "3":
+                        if (mCityADList.get(position).getCityADType().equals("1")){
+                            MyApplication.openActivity(context, StoreActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,FurnitureMarketActivity.class,bundle);
+                        }
+                        break;
+                    case "4":
+                        if (mCityADList.get(position).getCityADType().equals("1")){
+                            MyApplication.openActivity(context, BrandActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+                        }
+                        break;
+                    case "5":
+                        if (mCityADList.get(position).getCityADType().equals("1")){
+                            MyApplication.openActivity(context, BrandActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+                        }
+                        break;
+                    case "6":
+                        MyApplication.openActivity(context,BrandActivity.class,bundle);
+                        break;
+                }
             }
         });
     }

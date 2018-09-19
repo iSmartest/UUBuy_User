@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_main_background">
+
+    <TextView
+        android:id="@+id/tv_foot_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textColor="@color/text_main_color"
+        android:textSize="14dp"/>
+
+    <com.ifree.uu.uubuy.custom.MyListView
+        android:id="@+id/list_foot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.ifree.uu.uubuy.custom.MyListView>
+</LinearLayout>

@@ -42,7 +42,7 @@ public class OrderFragment extends BaseFragment {
     private int page = 1;
     private ColorStateList csl1,csl2;
     private String orderState = "0";
-    private List<OrderEntity.OrderInfoList> mList = new ArrayList<>();
+    private List<OrderEntity.DataBean.OrderInfoList> mList = new ArrayList<>();
     private OrderAdapter mAdapter;
     @Override
     protected int getLayout() {
@@ -82,24 +82,23 @@ public class OrderFragment extends BaseFragment {
         });
         mAdapter = new OrderAdapter(context,mList,orderState);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
     }
 
     @Override
     protected void initData() {
         orderPresenter.onCreate();
         orderPresenter.attachView(mOrderView);
-        orderPresenter.getSearchOrders(orderState,page,uid,"加载中...");
+        orderPresenter.getSearchOrders(orderState,page,"1","加载中...");
     }
 
     private OrderView mOrderView = new OrderView() {
         @Override
         public void onSuccess(OrderEntity mOrderEntity) {
-            if (mOrderEntity.getResult().equals("1")){
+            if (mOrderEntity.getMsg().equals("1")){
                 ToastUtils.makeText(context,mOrderEntity.getResultCode());
                 return;
             }
-            List<OrderEntity.OrderInfoList> orderInfoList = mOrderEntity.getOrderInfoList();
+            List<OrderEntity.DataBean.OrderInfoList> orderInfoList = mOrderEntity.getData().getOrderInfoList();
             if (orderInfoList != null && !orderInfoList.isEmpty() && orderInfoList.size() > 0){
                 mList.addAll(orderInfoList);
                 mAdapter.notifyDataSetChanged();

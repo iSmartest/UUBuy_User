@@ -10,7 +10,7 @@ public class BaseUrl {
     //服务器地址
 //    public static final String HTTP = "http://101.200.60.12:8080/robot-manager-web/";//网络
 
-    public static final String HTTP = "http://192.168.1.5:8083/app/";//本地
+    public static final String HTTP = "http://192.168.0.103:8080/app/";//本地
     //获取验证码
     public static final String SEND_CODE = "sendCode";
     //注册
@@ -25,22 +25,34 @@ public class BaseUrl {
     public static final String THIRD_LOGIN = "thirdLogin";
     //获取开通城市
     public static final String CITY_INFO = "getCityInfo";
+    //搜索
+    public static final String SEARCH_INFO = "getSearchInfo?";
     //首页
     public static final String HOME_INFO = "getHomeInfo?";
     //商场（第一级）
     public static final String CLASSIFY_LIST_INFO = "getClassifyListInfo?";
+    //商场（第一级）
+    public static final String ACTIVITIES_INFO = "activityDetail?";
     //店铺（第二级）
     public static final String SECOND_LIST_INFO = "getSecondActivitiesListInfo?";
     //商品（第三级）
     public static final String COMMODITY_LIST_INFO = "getCommodityListInfo?";
+    //更多
+    public static final String MORE_LIST_INFO = "superMarketProductDetail?";
     //商品详情（）
     public static final String COMMODITY_INFO = "getReserveCommodityInfo?";
+    //同类竞品
+    public static final String COPARE_INFO = "tongLeiCompare ?";
     //周围
     public static final String AROUND_INFO = "getAroundInfo?";
     //生活圈
     public static final String ACTIVITIES_CIRCLE_INFO = "getActivitiesCircleInfo?";
+    //提交预订
+    public static final String SUBMIT_RESERVE_INFO = "submitReserveInfo?";
     //订单
     public static final String ORDER_INFO = "getOrderInfo?";
+    //订单取消、删除、重新下单
+    public static final String SUBNIT_OPERATION_ORDER = "getSubmitOperationOrder?";
     //我的
     public static final String MINE_INFO = "getMineInfo?";
     //编辑个人资料
@@ -55,4 +67,8 @@ public class BaseUrl {
     public static final String MY_COUPON = "getMyCouponInfo?";
     //消息
     public static final String MESSAGE_INFO = "getMeassage?";
+    //足迹
+    public static final String FOOT_PRINT = "getMyFootprint?";
+    //活动报名
+    public static final String SIGN_UP = "marketSignUp?";
 }

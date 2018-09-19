@@ -1,5 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,7 @@ import butterknife.OnClick;
  * Description:
  */
 public class CommodityActivity extends BaseActivity {
+
     private CommodityInfoPresenter mCommodityInfoPresenter;
     @BindView(R.id.tv_commodity_compare)
     TextView mCompare;
@@ -52,7 +55,8 @@ public class CommodityActivity extends BaseActivity {
     ImageView mCommodityPicture;
     @BindView(R.id.rc_picture)
     RecyclerView mRecyclerView;
-    private String commodityId,type;
+    private String commodityId,type,commodityType,commodityIcon,commodityBrandName,
+            commodityName,commodityPrice,commodityAddress,shopId;
     private List<String> mList = new ArrayList<>();
     private CommodityInfoAdapter mAdapter;
     @Override
@@ -62,10 +66,11 @@ public class CommodityActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        hideBack(6);
+        hideBack(5);
         setTitleText("商品详情");
         commodityId = getIntent().getStringExtra("commodityId");
         type = getIntent().getStringExtra("type");
+        commodityIcon = getIntent().getStringExtra("commodityIcon");
         if (type.equals("3")){
             mCompare.setVisibility(View.VISIBLE);
         }else {
@@ -93,7 +98,6 @@ public class CommodityActivity extends BaseActivity {
         mCommodityInfoPresenter.onCreate();
         mCommodityInfoPresenter.attachView(mCommodityInfoView);
         mCommodityInfoPresenter.getSearchCommodityInfo(commodityId,type,"1","加载中...");
-        GlideImageLoader.imageLoader(context,mPicture.get(0),mCommodityPicture);
     }
 
     private CommodityInfoView mCommodityInfoView = new CommodityInfoView() {
@@ -105,14 +109,23 @@ public class CommodityActivity extends BaseActivity {
             }
             List<String> mPicture = mCommodityInfoEntity.getData().getBannerPic();
             if (mPicture != null && !mPicture.isEmpty()){
+                mList.clear();
                 mList.addAll(mPicture);
+                mAdapter.notifyDataSetChanged();
+                GlideImageLoader.imageLoader(context,mPicture.get(0),mCommodityPicture);
             }
-            mBrandName.setText(mCommodityInfoEntity.getData().getCommodityBrandName());
+            commodityBrandName = mCommodityInfoEntity.getData().getCommodityBrandName();
+            mBrandName.setText(commodityBrandName);
             mSurplusNum.setText(mCommodityInfoEntity.getData().getCommoditySurplusNum() + "%");
-            mCommodityName.setText(mCommodityInfoEntity.getData().getCommodityName());
+            commodityName = mCommodityInfoEntity.getData().getCommodityName();
+            mCommodityName.setText(commodityName);
             mCommodityDes.setText(mCommodityInfoEntity.getData().getCommodityDes());
-            mPresentPrice.setText(mCommodityInfoEntity.getData().getCommodityPresentPrice());
-            mAddress.setText(mCommodityInfoEntity.getData().getActivitiesStoreAddress());
+            commodityPrice = mCommodityInfoEntity.getData().getCommodityPresentPrice();
+            mPresentPrice.setText(commodityPrice);
+            commodityAddress = mCommodityInfoEntity.getData().getActivitiesStoreAddress();
+            mAddress.setText(commodityAddress);
+            commodityType = mCommodityInfoEntity.getData().getType();
+            shopId = mCommodityInfoEntity.getData().getCommodityShopId();
         }
 
         @Override
@@ -124,14 +137,36 @@ public class CommodityActivity extends BaseActivity {
 
     @OnClick({R.id.tv_commodity_compare,R.id.tv_commodity_reserve})
     public void onClickView(View view){
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.tv_commodity_compare:
-
+                bundle.putString("commodityId",commodityId);
+                MyApplication.openActivityForResult(CommodityActivity.this,CommodityCompareActivity.class,bundle,1001);
                 break;
             case R.id.tv_commodity_reserve:
-                MyApplication.openActivity(context,CommodityReserveActivity.class);
+                bundle.putString("commodityIcon",commodityIcon);
+                bundle.putString("commodityName",commodityName);
+                bundle.putString("commodityBrandName",commodityBrandName);
+                bundle.putString("commodityPrice",commodityPrice);
+                bundle.putString("commodityAddress",commodityAddress);
+                bundle.putString("commodityId",commodityId);
+                bundle.putString("commodityType",commodityType);
+                bundle.putString("shopId",shopId);
+                MyApplication.openActivity(context,CommodityReserveActivity.class,bundle);
                 break;
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001 ){
+            if ( resultCode == 1002){
+                commodityId = data.getStringExtra("commodityId");
+                type = data.getStringExtra("type");
+                commodityIcon = data.getStringExtra("commodityIcon");
+                loadData();
+            }
+        }
+    }
 }

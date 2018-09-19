@@ -105,12 +105,27 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
 
+        <activity android:name=".ui.activity.SearchActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
         <activity android:name=".ui.activity.FirstClassifyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
 
         <activity android:name=".ui.activity.MarketActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
+        <activity android:name=".ui.activity.FurnitureMarketActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
+        <activity android:name=".ui.activity.MoreActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
@@ -131,6 +146,16 @@
             android:configChanges="orientation"/>
 
         <activity android:name=".ui.activity.CommodityActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
+        <activity android:name=".ui.activity.CommodityCompareActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
+        <activity android:name=".ui.activity.CarCommodityActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
@@ -180,6 +205,11 @@
             android:configChanges="orientation"/>
 
         <activity android:name=".ui.activity.MySettingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
+        <activity android:name=".ui.activity.BindingPhoneActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
