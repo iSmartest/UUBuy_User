@@ -47,8 +47,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        hideBack(6);
-        setRightText("收藏");
+        hideBack(5);
         marketId = getIntent().getStringExtra("marketId");
         marketName = getIntent().getStringExtra("marketName");
         type = getIntent().getStringExtra("type");
@@ -62,7 +61,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.tv_base_rightText:
-                ToastUtils.makeText(context,"你点击了收藏");
+//                ToastUtils.makeText(context,"你点击了收藏");
                 break;
             case R.id.tv_enter_for_activities:
                 Bundle bundle = new Bundle();
@@ -95,6 +94,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
             }
             GlideImageLoader.imageLoader(context,mActivitiesDetailsEntity.getData().getActivitiesPic(),mPicture);
             tvDec.setText(mActivitiesDetailsEntity.getData().getActivitiesDes());
+
         }
 
         @Override

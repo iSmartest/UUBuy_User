@@ -63,6 +63,8 @@ public class BaseUrl {
     public static final String SIGN_IN = "getSignIn?";
     //领券中心
     public static final String COUPON_CENTER = "getCouponInfo?";
+    //领取优惠券
+    public static final String GET_COUPON = "getCoupon?";
     //我的优惠券
     public static final String MY_COUPON = "getMyCouponInfo?";
     //消息

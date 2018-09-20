@@ -13,8 +13,11 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
+import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.service.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.service.presenter.SecondListPresenter;
 import com.ifree.uu.uubuy.service.view.SecondListView;
+import com.ifree.uu.uubuy.service.view.UserInfoView;
 import com.ifree.uu.uubuy.ui.adapter.MarketOrStoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -36,6 +39,7 @@ import butterknife.OnClick;
  */
 public class ShoppingMallActivity extends BaseActivity implements View.OnClickListener {
     private SecondListPresenter mSecondListPresenter;
+    private CollectionPresenter mCollectionPresenter;
     @BindView(R.id.xr_market_store)
     XRecyclerView xRecyclerView;
     private View headView;
@@ -45,6 +49,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private String fristActivitiesId;
     private String fristActivitiesType;
     private String fristActivitiesName;
+    private String isCollection = "0";
     private TextView mName,mTime;
     private ImageView mPicture;
     @Override
@@ -57,6 +62,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         hideBack(6);
         setTitleText("综合商场");
         setRightText("收藏");
+        mCollectionPresenter = new CollectionPresenter(context);
         fristActivitiesId = getIntent().getStringExtra("fristActivitiesId");
         fristActivitiesType = getIntent().getStringExtra("fristActivitiesType");
         mSecondListPresenter = new SecondListPresenter(context);
@@ -135,6 +141,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             mName.setText(fristActivitiesName);
             mTime.setText(mSecondListEntity.getData().getMarketInfo().getActivitiesTime());
             GlideImageLoader.imageLoader(context,mSecondListEntity.getData().getMarketInfo().getActivitiesPic(),mPicture);
+            isCollection = mSecondListEntity.getData().getMarketInfo().getIsCollection();
+            if (isCollection.equals("0")){
+                setRightText("收藏");
+            }else {
+                setRightText("取消收藏");
+            }
         }
 
         @Override
@@ -146,9 +158,36 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     @OnClick({R.id.tv_base_rightText})
     public void onViewClicked() {
-        ToastUtils.makeText(context, "收藏");
+        mCollectionPresenter.onCreate();
+        mCollectionPresenter.attachView(mCollectionView);
+        if (isCollection.equals("0")){
+            mCollectionPresenter.getSubmitIsCollection(uid,fristActivitiesId,"0","0","处理中...");
+        }else {
+            mCollectionPresenter.getSubmitIsCollection(uid,fristActivitiesId,"0","1","处理中...");
+        }
+
     }
 
+    private UserInfoView mCollectionView = new UserInfoView() {
+        @Override
+        public void onSuccess(UserInfoEntity mUserInfoEntity) {
+            if (mUserInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                return;
+            }
+            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            if (isCollection.equals("0")){
+                setRightText("取消收藏");
+            }else {
+                setRightText("收藏");
+            }
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context,result);
+        }
+    };
 
     @Override
     public void onClick(View v) {

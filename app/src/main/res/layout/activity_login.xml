@@ -172,15 +172,15 @@
                 android:id="@+id/iv_wx_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/login_wx" />
+                android:src="@drawable/login_wx"
+                android:layout_marginRight="30dp"/>
 
             <ImageView
                 android:id="@+id/iv_qq_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/login_qq" />
+                android:src="@drawable/login_qq"
+                android:layout_marginLeft="30dp"/>
         </LinearLayout>
     </LinearLayout>
 

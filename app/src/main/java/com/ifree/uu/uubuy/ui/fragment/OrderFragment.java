@@ -84,7 +84,7 @@ public class OrderFragment extends BaseFragment {
     protected void initData() {
         orderPresenter.onCreate();
         orderPresenter.attachView(mOrderView);
-        orderPresenter.getSearchOrders(orderState,page,"1","加载中...");
+        orderPresenter.getSearchOrders(orderState,page,uid,"加载中...");
     }
 
     private OrderView mOrderView = new OrderView() {

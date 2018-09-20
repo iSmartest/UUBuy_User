@@ -117,7 +117,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     @OnClick({R.id.tv_go_register, R.id.tv_password_login, R.id.tv_code_login, R.id.tv_login,
-            R.id.tv_send_verification_code,R.id.tv_password_forget_password})
+            R.id.tv_send_verification_code,R.id.tv_password_forget_password,R.id.iv_wx_login
+    ,R.id.iv_qq_login})
     public void onViewClicked(View view) {
         String userPhone = mUserPhone.getText().toString().trim();//电话号码
         switch (view.getId()) {

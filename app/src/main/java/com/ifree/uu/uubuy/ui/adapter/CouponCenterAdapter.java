@@ -11,6 +11,11 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
+import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.service.presenter.GetCouponPresenter;
+import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.uitls.SPUtil;
+import com.ifree.uu.uubuy.uitls.ToastUtils;
 
 import java.util.List;
 
@@ -29,11 +34,12 @@ public class CouponCenterAdapter extends RecyclerView.Adapter<CouponCenterAdapte
     private Context context;
     private List<CouponEntity.DataBean.CouponList> mList;
     private String couponType;
-
+    private GetCouponPresenter mGetCouponPresenter;
     public CouponCenterAdapter(Context context, List<CouponEntity.DataBean.CouponList> mList, String couponType) {
         this.context = context;
         this.mList = mList;
         this.couponType = couponType;
+        mGetCouponPresenter = new GetCouponPresenter(context);
     }
 
     @NonNull
@@ -46,7 +52,7 @@ public class CouponCenterAdapter extends RecyclerView.Adapter<CouponCenterAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CouponViewHolder holder, int position) {
-        CouponEntity.DataBean.CouponList couponList = mList.get(position);
+        final CouponEntity.DataBean.CouponList couponList = mList.get(position);
         switch (couponType){
             case "0":
                 holder.linearLayout.setBackgroundResource(R.drawable.coupon_uu);
@@ -63,8 +69,33 @@ public class CouponCenterAdapter extends RecyclerView.Adapter<CouponCenterAdapte
         holder.mTime.setText("有效时间" + couponList.getSecuritiesTimeZone());
         holder.mStore.setText(couponList.getMsName());
         holder.mType.setText(couponList.getType());
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uid = SPUtil.getString(context,"uid");
+                mGetCouponPresenter.onCreate();
+                mGetCouponPresenter.attachView(mGetCouponView);
+                mGetCouponPresenter.getCoupon(uid,couponList.getCouponId(),"领取中...");
+            }
+        });
     }
 
+    private UserInfoView mGetCouponView = new UserInfoView() {
+        @Override
+        public void onSuccess(UserInfoEntity mUserInfoEntity) {
+            if (mUserInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                return;
+            }
+            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context,result);
+        }
+    };
     @Override
     public int getItemCount() {
         return mList == null ? 0 : mList.size();

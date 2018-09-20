@@ -71,6 +71,7 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
         mStoreName = headView.findViewById(R.id.tv_store_name);
         mStoreTime = headView.findViewById(R.id.tv_store_time);
         mStorePicture = headView.findViewById(R.id.iv_store_picture);
+        headView.findViewById(R.id.tv_brand_coupon).setOnClickListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -157,9 +158,11 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-//                MyApplication.openActivity(context, ActivitiesDetailsActivity.class);
-
+            case R.id.tv_brand_coupon:
+                Bundle bundle = new Bundle();
+                bundle.putString("storeId",storeId);
+                MyApplication.openActivity(context, StoreCouponActivity.class,bundle);
+                break;
         }
     }
 

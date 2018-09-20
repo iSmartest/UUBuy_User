@@ -176,7 +176,9 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_brand_coupon:
-                MyApplication.openActivity(context, CouponCenterActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("storeId",storeId);
+                MyApplication.openActivity(context, StoreCouponActivity.class,bundle);
                 break;
         }
     }

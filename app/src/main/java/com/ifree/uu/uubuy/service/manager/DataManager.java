@@ -149,6 +149,10 @@ public class DataManager {
         return mRetrofitService.getSearchCouponCenter(uid, businessId, couponType, longitude, latitude, townAdCode, page);
     }
 
+    public Observable<UserInfoEntity> getCoupon(String uid, String couponId) {
+        return mRetrofitService.getCoupon(uid, couponId);
+    }
+
     public Observable<CouponEntity> getSearchMyCoupon(String uid, String businessId, String couponType, String longitude, String latitude, String townAdCode, int page) {
         return mRetrofitService.getSearchMyCoupon(uid, businessId, couponType, longitude, latitude, townAdCode, page);
     }

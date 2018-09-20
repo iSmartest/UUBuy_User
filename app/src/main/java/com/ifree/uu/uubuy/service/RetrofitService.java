@@ -198,6 +198,10 @@ public interface RetrofitService {
                                                    @Query("townAdCode") String townAdCode,
                                                    @Query("page") int page);
 
+    @POST(BaseUrl.GET_COUPON)
+    Observable<UserInfoEntity> getCoupon(@Query("uid") String uid,
+                                       @Query("couponId") String businessId);
+
     @POST(BaseUrl.MY_COUPON)
     Observable<CouponEntity> getSearchMyCoupon(@Query("uid") String uid,
                                                @Query("businessId") String businessId,

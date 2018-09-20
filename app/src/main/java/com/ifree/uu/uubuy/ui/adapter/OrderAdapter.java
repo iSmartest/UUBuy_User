@@ -125,10 +125,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     }
 
     private void submitOperationOrder(String orderId, String type) {
-        String uid = SPUtil.getString(context,"uid");
+        String uid = SPUtil.getString(context,"uid");;
         mOperationOrderPresenter.onCreate();
         mOperationOrderPresenter.attachView(mOperationOrderView);
-        mOperationOrderPresenter.getSubmitOperationOrder(orderId,type,"142","提交中...");
+        mOperationOrderPresenter.getSubmitOperationOrder(orderId,type,uid,"提交中...");
     }
 
     private UserInfoView mOperationOrderView = new UserInfoView() {
