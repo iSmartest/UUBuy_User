@@ -58,16 +58,12 @@ public class CommodityCompareActivity extends BaseActivity{
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 loadData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 loadData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
 
@@ -101,6 +97,11 @@ public class CommodityCompareActivity extends BaseActivity{
     private CompareView mCompareView = new CompareView() {
         @Override
         public void onSuccess(CompareCommodityEntity mCompareCommodityEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mCompareCommodityEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mCompareCommodityEntity.getMsg());
                 return;
@@ -109,12 +110,20 @@ public class CommodityCompareActivity extends BaseActivity{
             if (commodityLists != null && !commodityLists.isEmpty()){
                 mList.addAll(commodityLists);
                 mAdapter.notifyDataSetChanged();
+                if (commodityLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
         }
 
         @Override
         public void onError(String result) {
-
+            ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 }

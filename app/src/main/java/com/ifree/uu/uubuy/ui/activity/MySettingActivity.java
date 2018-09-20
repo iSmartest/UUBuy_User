@@ -93,7 +93,7 @@ public class MySettingActivity extends BaseActivity {
                 MyApplication.openActivity(context,KnowledgeActivity.class);
                 break;
             case R.id.ll_feedback:
-
+                MyApplication.openActivity(context,FeedbackActivity.class);
                 break;
             case R.id.linear_my_setting_clear_cache:
                 new Thread(new clearCache()).start();
@@ -111,7 +111,7 @@ public class MySettingActivity extends BaseActivity {
                         SPUtil.putString(context, "uid", "");//用户ID
                         SPUtil.putString(context, "isPhone", "");//手机号码
                         ToastUtils.makeText(context, "已安全退出账号");
-                        AppManager.finishAllActivity();
+                        finish();
                         MyApplication.openActivity(context, LoginActivity.class);
                     }
                 });

@@ -73,16 +73,12 @@ public class MoreActivity extends BaseActivity {
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 loadData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 loadData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
         mAdapter = new MoreAdapter(context,mList,type);
@@ -100,6 +96,11 @@ public class MoreActivity extends BaseActivity {
     private MoreView mMoreView = new MoreView() {
         @Override
         public void onSuccess(MoreEntity mMoreEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mMoreEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mMoreEntity.getMsg());
                 return;
@@ -108,12 +109,20 @@ public class MoreActivity extends BaseActivity {
             if (commodityLists != null && !commodityLists.isEmpty()){
                 mList.addAll(commodityLists);
                 mAdapter.notifyDataSetChanged();
+                if (commodityLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
     @OnClick({R.id.tv_more_commodity,R.id.tv_more_store})

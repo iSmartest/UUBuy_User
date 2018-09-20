@@ -24,7 +24,6 @@ import com.ifree.uu.uubuy.ui.activity.MyCouponActivity;
 import com.ifree.uu.uubuy.ui.activity.MyFootprintActivity;
 import com.ifree.uu.uubuy.ui.activity.MyPersonalInformationActivity;
 import com.ifree.uu.uubuy.ui.activity.PlayVIPActivity;
-import com.ifree.uu.uubuy.ui.adapter.HomeAdapter;
 import com.ifree.uu.uubuy.ui.adapter.MineAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -103,16 +102,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 initData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page++;
                 initData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
 
@@ -137,7 +132,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private MineInfoView mMineInfoView = new MineInfoView() {
         @Override
         public void onSuccess(MineEntity mMineEntity) {
-
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mMineEntity.getResultCode().equals("1")) {
                 ToastUtils.makeText(context, mMineEntity.getMsg());
                 return;
@@ -161,12 +160,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             if (recommendactivitiesLists != null && !recommendactivitiesLists.isEmpty()) {
                 mList.addAll(recommendactivitiesLists);
                 mAdapter.notifyDataSetChanged();
+                if (recommendactivitiesLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context, result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 

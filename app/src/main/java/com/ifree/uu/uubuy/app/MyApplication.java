@@ -34,8 +34,8 @@ public class MyApplication extends Application {
         UMShareAPI.get(this);
         JPushInterface.setDebugMode(true);//如果时正式版就改成false
         JPushInterface.init(this);
-        PlatformConfig.setWeixin("wxf2e7a3ba30d356a2","e3ef710774f9306eac83324a8a82e18c");
-        PlatformConfig.setQQZone("1106503568","IfX37v9duWew5JBQ");
+        PlatformConfig.setWeixin("wx70539901dcad8e3d","e97ee6fac5e3d9e9da31b02450273f55");
+        PlatformConfig.setQQZone("1107863232","GLfhGhsWkLDSGpC2");
         myApplication = this;
         //崩溃错误日志写入本地文档
         DensityUtils.setDensity(this);

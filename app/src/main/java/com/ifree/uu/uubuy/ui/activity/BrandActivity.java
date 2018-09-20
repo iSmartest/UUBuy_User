@@ -17,9 +17,7 @@ import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.presenter.CommodityPresenter;
 import com.ifree.uu.uubuy.service.presenter.SecondListPresenter;
 import com.ifree.uu.uubuy.service.view.CommodityListView;
-import com.ifree.uu.uubuy.service.view.SecondListView;
 import com.ifree.uu.uubuy.ui.adapter.BrandAdapter;
-import com.ifree.uu.uubuy.ui.adapter.MarketOrStoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
@@ -86,16 +84,12 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 loadData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page++;
                 loadData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
 
@@ -141,6 +135,11 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     private CommodityListView mCommodityListView = new CommodityListView() {
         @Override
         public void onSuccess(CommodityListEntity mCommodityListEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mCommodityListEntity.getResultCode().equals("1")) {
                 ToastUtils.makeText(context, mCommodityListEntity.getMsg());
                 return;
@@ -149,6 +148,9 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             if (commodityLists != null && !commodityLists.isEmpty()) {
                 mList.addAll(commodityLists);
                 mAdapter.notifyDataSetChanged();
+                if (commodityLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
             mAddress.setText(mCommodityListEntity.getData().getStoreAddress());
             GlideImageLoader.imageLoader(context, mCommodityListEntity.getData().getStorePic(), mIcon);
@@ -157,6 +159,11 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context, result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 

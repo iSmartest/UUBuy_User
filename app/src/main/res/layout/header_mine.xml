@@ -231,7 +231,7 @@
         android:background="@color/app_main_default"
         android:gravity="center_vertical"
         android:paddingLeft="15dp"
-        android:text="推荐活动"
+        android:text="已报名活动"
         android:textColor="@color/text_main_color"
         android:textSize="17dp" />
 </LinearLayout>

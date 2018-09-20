@@ -358,7 +358,7 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
             imag.add(rotateADLists.get(i).getRotateADIcon());
         }
         mSlideshow.setImages(imag)
-                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+                .setBannerStyle(BannerConfig.NOT_INDICATOR)
                 .setImageLoader(new GlideImageLoader())
                 .start();
     }

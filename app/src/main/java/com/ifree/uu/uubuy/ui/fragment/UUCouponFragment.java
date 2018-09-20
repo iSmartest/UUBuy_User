@@ -6,7 +6,6 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
 import com.ifree.uu.uubuy.service.presenter.CouponCenterPresenter;
 import com.ifree.uu.uubuy.service.view.CouponView;
-import com.ifree.uu.uubuy.ui.adapter.CouponAdapter;
 import com.ifree.uu.uubuy.ui.adapter.CouponCenterAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
@@ -55,16 +54,12 @@ public class UUCouponFragment extends BaseFragment {
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 initData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 initData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
 
@@ -83,6 +78,11 @@ public class UUCouponFragment extends BaseFragment {
     private CouponView mCouponView = new CouponView() {
         @Override
         public void onSuccess(CouponEntity mCouponEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mCouponEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mCouponEntity.getMsg());
                 return;
@@ -91,12 +91,20 @@ public class UUCouponFragment extends BaseFragment {
             if (couponLists != null && !couponLists.isEmpty()){
                 mList.addAll(couponLists);
                 mAdapter.notifyDataSetChanged();
+                if (couponLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 }

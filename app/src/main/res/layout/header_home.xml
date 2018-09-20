@@ -8,7 +8,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="167dp"
-        android:background="@color/colorAccent">
+        android:background="@color/translucent">
         <com.ifree.uu.uubuy.custom.ImageSlideshow
             android:id="@+id/img_home_gallery"
             android:layout_width="match_parent"
@@ -81,14 +81,13 @@
         <com.youth.banner.Banner
             android:id="@+id/img_rotate_gallery"
             android:layout_width="match_parent"
-            android:layout_height="61dp"
+            android:layout_height="70dp"
             app:indicator_height="7dp"
             app:indicator_margin="3dp"
             app:indicator_width="7dp"
             android:background="@color/colorPrimary"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginTop="5dp"/>
     </LinearLayout>
 </RelativeLayout>

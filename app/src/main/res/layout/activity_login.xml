@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_main_default">
@@ -9,108 +8,192 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <include layout="@layout/activity_base" />
 
-        <include layout="@layout/activity_base"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="20dp"
+            android:src="@mipmap/ic_launcher"/>
 
-        <RelativeLayout
+        <EditText
+            android:id="@+id/edit_user_phone"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/colorAccent">
-            <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+
+            android:background="@color/divider_color"
+            android:gravity="center_vertical"
+            android:hint="输入手机号"
+            android:inputType="phone"
+            android:paddingLeft="20dp"
+            android:textColor="@color/text_main_color"
+            android:textColorHint="@color/text_sign_color"
+            android:textSize="13dp" />
+
+
+        <EditText
+            android:id="@+id/edit_user_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/divider_color"
+            android:gravity="center_vertical"
+            android:hint="输入密码"
+            android:paddingLeft="20dp"
+            android:textColor="@color/text_main_color"
+            android:textColorHint="@color/text_sign_color"
+            android:textSize="13dp" />
+
+        <LinearLayout
+            android:id="@+id/ll_code_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/divider_color"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/tv_edit_verification_code"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="输入验证码"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="@color/text_main_color"
+                android:textColorHint="@color/text_sign_color"
+                android:textSize="13dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="28dp"
+                android:background="#D8D8D8" />
+
+            <TextView
+                android:id="@+id/tv_send_verification_code"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="发送验证码"
+                android:textColor="@color/text_sign_color"
+                android:textSize="13dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_login_style"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="@color/text_main_color"
+            android:textSize="19dp" />
+
+        <TextView
+            android:id="@+id/tv_go_register"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/shape_login_style"
+            android:gravity="center"
+            android:text="注册"
+            android:textColor="@color/text_main_color"
+            android:textSize="19dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_code_login"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignParentBottom="true">
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:text="验证码登录"
+                android:textColor="@color/text_sign_color"
+                android:textSize="13dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/tv_code_login"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="验证码登录"
-                        android:gravity="center"
-                        android:textColor="@color/text_green"
-                        android:textSize="17dp"
-                        android:visibility="visible" />
-                    <ImageView
-                        android:id="@+id/iv_code_select"
-                        android:layout_width="wrap_content"
-                        android:layout_height="12dp"
-                        android:src="@drawable/indicator_login"/>
-                </LinearLayout>
+            <TextView
+                android:id="@+id/tv_password_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:text="密码登录"
+                android:textColor="@color/text_sign_color"
+                android:textSize="13dp"
+                android:visibility="gone" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/tv_password_login"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="密码登录"
-                        android:gravity="center"
-                        android:textColor="@color/app_main_default"
-                        android:textSize="17dp"
-                        android:visibility="visible" />
-                    <ImageView
-                        android:id="@+id/iv_password_select"
-                        android:layout_width="wrap_content"
-                        android:layout_height="12dp"
-                        android:src="@drawable/indicator_login"
-                        android:visibility="invisible"/>
-                </LinearLayout>
+            <TextView
+                android:id="@+id/tv_password_forget_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center|right"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:text="找回密码"
+                android:textColor="@color/text_sign_color"
+                android:textSize="13dp" />
+        </LinearLayout>
 
-               <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/tv_third_login"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="第三方登录"
-                        android:gravity="center"
-                        android:textColor="@color/app_main_default"
-                        android:textSize="17dp"
-                        android:visibility="visible" />
-                    <ImageView
-                        android:id="@+id/iv_third_select"
-                        android:layout_width="wrap_content"
-                        android:layout_height="12dp"
-                        android:src="@drawable/indicator_login"
-                        android:visibility="invisible"/>
-                </LinearLayout>
-
-            </LinearLayout>
-        </RelativeLayout>
-        <com.ifree.uu.uubuy.custom.LazyViewPager
-            android:id="@+id/vPager"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.85"
-            android:flipInterval="30"
-            android:paddingTop="40dp"
-            android:persistentDrawingCache="animation" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_wx_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/login_wx" />
+
+            <ImageView
+                android:id="@+id/iv_qq_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/login_qq" />
+        </LinearLayout>
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:gravity="center"
-        android:layout_marginTop="6dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp">
 
         <CheckBox
             android:id="@+id/ck_register"
@@ -131,4 +214,6 @@
             android:textColor="@color/text_green"
             android:textSize="12sp" />
     </LinearLayout>
+
+
 </RelativeLayout>

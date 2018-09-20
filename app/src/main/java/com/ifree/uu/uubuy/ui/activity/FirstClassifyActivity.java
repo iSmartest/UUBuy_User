@@ -60,7 +60,6 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
     @Override
     protected void initView() {
         hideBack(5);
-        setTitleText("综合商场");
         mMenuList = new ArrayList<>();
         mList = new ArrayList<>();
         csl1 = context.getResources().getColorStateList(R.color.text_subtitle_color);
@@ -68,14 +67,17 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
         adTypeId = getIntent().getStringExtra("adTypeId");
         type = getIntent().getStringExtra("type");
         title = getIntent().getStringExtra("title");
+        setTitleText(title);
         headerView = LayoutInflater.from(context).inflate(R.layout.header_menu,null);
         mheadItem = headerView.findViewById(R.id.tv_first_item_menu_name);
+        mheadItem.setText(title);
         mheadItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 menuId = "";
-//                mheadItem.setTextColor(csl2);
                 xRecyclerView.setRefreshing(true);
+                mheadItem.setTextColor(csl2);
+                mFirstMenuAdapter.setDefSelect(-1);
             }
         });
         if (headerView != null){
@@ -119,9 +121,10 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
         rc_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mheadItem.setTextColor(csl1);
                 menuId = mMenuList.get(position-1).getMenuId();
                 xRecyclerView.setRefreshing(true);
-//                mheadItem.setTextColor(csl1);
+                mFirstMenuAdapter.setDefSelect(position-1);
             }
         });
         xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
@@ -194,6 +197,5 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
     public void onFirstMenu(int position,int i) {
         menuId = mMenuList.get(position).getSecondList().get(i).getMenuId();
         xRecyclerView.setRefreshing(true);
-//        mheadItem.setTextColor(csl1);
     }
 }

@@ -209,6 +209,11 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
 
+        <activity android:name=".ui.activity.FeedbackActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
         <activity android:name=".ui.activity.BindingPhoneActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
@@ -230,7 +235,7 @@
         <!--友盟-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5a2b5fb2f29d981c70000473" >
+            android:value="5b7e4f29f29d987782000064" >
         </meta-data>
         <!--微信 QQ登录、分享-->
         <activity
@@ -252,7 +257,6 @@
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
 

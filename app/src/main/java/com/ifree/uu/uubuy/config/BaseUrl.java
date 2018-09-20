@@ -52,7 +52,7 @@ public class BaseUrl {
     //订单
     public static final String ORDER_INFO = "getOrderInfo?";
     //订单取消、删除、重新下单
-    public static final String SUBNIT_OPERATION_ORDER = "getSubmitOperationOrder?";
+    public static final String SUBNIT_OPERATION_ORDER = "getOperationOrder?";
     //我的
     public static final String MINE_INFO = "getMineInfo?";
     //编辑个人资料
@@ -71,4 +71,8 @@ public class BaseUrl {
     public static final String FOOT_PRINT = "getMyFootprint?";
     //活动报名
     public static final String SIGN_UP = "marketSignUp?";
+    //收藏、取消收藏
+    public static final String SUBMIT_IS_COLLECTION = "submitIsCollection?";
+    //意见反馈
+    public static final String FEEDBACK = "submitIsCollection?";
 }

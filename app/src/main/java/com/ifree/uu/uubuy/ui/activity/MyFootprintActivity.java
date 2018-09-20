@@ -59,16 +59,12 @@ public class MyFootprintActivity extends BaseActivity {
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 loadData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 loadData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
 
@@ -88,6 +84,11 @@ public class MyFootprintActivity extends BaseActivity {
     private MyFootPrintView mMyFootPrintView = new MyFootPrintView() {
         @Override
         public void onSuccess(MyFootPrintEntity mMyFootPrintEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mMyFootPrintEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mMyFootPrintEntity.getMsg());
                 return;
@@ -97,6 +98,9 @@ public class MyFootprintActivity extends BaseActivity {
                 iv_foot.setVisibility(View.GONE);
                 mList.addAll(footprintLists);
                 mAdapter.notifyDataSetChanged();
+                if (footprintLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }else {
                 iv_foot.setVisibility(View.VISIBLE);
             }
@@ -106,6 +110,11 @@ public class MyFootprintActivity extends BaseActivity {
         public void onError(String result) {
             ToastUtils.makeText(context,result);
             iv_foot.setVisibility(View.VISIBLE);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 

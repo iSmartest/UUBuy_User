@@ -100,16 +100,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 loadData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 loadData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
 
@@ -165,6 +161,11 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private SearchView mSearchView = new SearchView() {
         @Override
         public void onSuccess(SearchEntity mSearchEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mSearchEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mSearchEntity.getMsg());
                 return;
@@ -173,12 +174,20 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             if (activitiesLists != null && !activitiesLists.isEmpty()){
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();
+                if (activitiesLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 

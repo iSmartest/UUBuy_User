@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -137,6 +138,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
                     @Override
                     public void sure(String nickName) {
                         mNickName.setText(nickName);
+                        userName = nickName;
                         submitModifyUserInfo();
                         dialog.dismiss();
                     }
@@ -209,6 +211,9 @@ public class MyPersonalInformationActivity extends BaseActivity {
                 return;
             }
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            Intent intent = new Intent();
+            intent.setAction("com.ifree.uu.mine.changed");
+            getApplicationContext().sendBroadcast(intent);
         }
 
         @Override
@@ -380,6 +385,9 @@ public class MyPersonalInformationActivity extends BaseActivity {
                 return;
             }
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            Intent intent = new Intent();
+            intent.setAction("com.ifree.uu.mine.changed");
+            getApplicationContext().sendBroadcast(intent);
         }
 
         @Override

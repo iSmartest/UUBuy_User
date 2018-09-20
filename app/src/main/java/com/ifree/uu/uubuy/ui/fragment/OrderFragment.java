@@ -68,16 +68,12 @@ public class OrderFragment extends BaseFragment {
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 initData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 initData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
         mAdapter = new OrderAdapter(context,mList,orderState);
@@ -94,6 +90,11 @@ public class OrderFragment extends BaseFragment {
     private OrderView mOrderView = new OrderView() {
         @Override
         public void onSuccess(OrderEntity mOrderEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mOrderEntity.getMsg().equals("1")){
                 ToastUtils.makeText(context,mOrderEntity.getResultCode());
                 return;
@@ -102,12 +103,20 @@ public class OrderFragment extends BaseFragment {
             if (orderInfoList != null && !orderInfoList.isEmpty() && orderInfoList.size() > 0){
                 mList.addAll(orderInfoList);
                 mAdapter.notifyDataSetChanged();
+                if (orderInfoList.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 

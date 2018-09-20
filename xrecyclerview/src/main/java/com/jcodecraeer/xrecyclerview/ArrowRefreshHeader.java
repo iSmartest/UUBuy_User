@@ -84,6 +84,7 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
         mRotateDownAnim.setFillAfter(true);
 
         mHeaderTimeView = (TextView) findViewById(R.id.last_refresh_time);
+        mHeaderTimeView.setVisibility(GONE);//刷新时间
         measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mMeasuredHeight = getMeasuredHeight();
         mHeaderTimeView.setText("");//第一次进入设置时间为空
@@ -121,7 +122,7 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
 
         switch (state) {
             case STATE_NORMAL:
-                mHeaderTimeView.setText(friendlyTime(new Date()));
+//                mHeaderTimeView.setText(friendlyTime(new Date()));
                 if (mState == STATE_RELEASE_TO_REFRESH) {
                     mArrowImageView.startAnimation(mRotateDownAnim);
                 }

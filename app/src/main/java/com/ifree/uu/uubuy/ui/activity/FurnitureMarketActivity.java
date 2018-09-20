@@ -90,16 +90,12 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 loadData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page++;
                 loadData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
 
@@ -131,6 +127,11 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
     private SecondListView mSecondListView = new SecondListView() {
         @Override
         public void onSuccess(SecondActivitiesEntity mSecondListEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mSecondListEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mSecondListEntity.getMsg());
                 return;
@@ -139,6 +140,9 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
             if (secondActivitiesList != null && !secondActivitiesList.isEmpty()){
                 mList.addAll(secondActivitiesList);
                 mAdapter.notifyDataSetChanged();
+                if (secondActivitiesList.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
             fristActivitiesName = mSecondListEntity.getData().getMarketInfo().getMarketName();
             mName.setText(fristActivitiesName);
@@ -149,6 +153,11 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 

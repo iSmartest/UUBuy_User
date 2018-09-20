@@ -67,16 +67,12 @@ public class ActivitiesFragment extends BaseFragment {
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 initData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 initData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
         mAdapter = new ActivitiesAdapter(context,mList,activitiesType);
@@ -93,6 +89,11 @@ public class ActivitiesFragment extends BaseFragment {
     private ActivitiesView mActivitiesView = new ActivitiesView() {
         @Override
         public void onSuccess(ActivitiesEntity mActivitiesEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mActivitiesEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mActivitiesEntity.getMsg());
                 return;
@@ -101,12 +102,20 @@ public class ActivitiesFragment extends BaseFragment {
             if (activitiesLists != null && !activitiesLists.isEmpty() && activitiesLists.size() > 0){
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();
+                if (activitiesLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 

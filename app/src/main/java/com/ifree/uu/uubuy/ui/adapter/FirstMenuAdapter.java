@@ -1,6 +1,8 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ public class FirstMenuAdapter extends BaseAdapter{
     private List<FirstClassifyEntity.DataBean.MenuList> mMenuList;
     private String type;
     private firstMenuListener mListener;
+    private int defItem = -1;//声明默认选中的项
     public void setFirstMenuListener(firstMenuListener mListener){
         this.mListener = mListener;
     }
@@ -52,6 +55,12 @@ public class FirstMenuAdapter extends BaseAdapter{
     public long getItemId(int position) {
         return position;
     }
+
+    public void setDefSelect(int position) {
+        this.defItem = position;
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -91,7 +100,24 @@ public class FirstMenuAdapter extends BaseAdapter{
             }
         });
         viewHolder.secondClassify.setAdapter(secondClassifyAdapter);
+        disposalView(position,convertView);
         return convertView;
+    }
+    private void disposalView(int position, View convertView) {
+        Resources resource = context.getResources();
+        ColorStateList csl1 = resource.getColorStateList(R.color.text_subtitle_color);
+        ColorStateList csl2 = resource.getColorStateList(R.color.text_green);
+        if (defItem == -1){
+            convertView.setBackgroundResource(R.color.app_main_default);
+            FirstMenuViewHolder viewHolder = (FirstMenuViewHolder) convertView.getTag();
+            viewHolder.name.setTextColor(csl1);
+        }else if (position == defItem){
+            FirstMenuViewHolder viewHolder = (FirstMenuViewHolder) convertView.getTag();
+            viewHolder.name.setTextColor(csl2);
+        }else {
+            FirstMenuViewHolder viewHolder = (FirstMenuViewHolder) convertView.getTag();
+            viewHolder.name.setTextColor(csl1);
+        }
     }
 
     public class FirstMenuViewHolder{
