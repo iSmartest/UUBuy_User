@@ -276,7 +276,6 @@ public class ImageSlideshow extends FrameLayout {
 
             }
 
-
             @Override
             public void onPageSelected(int position) {
                 // 遍历一遍子View，设置相应的背景。

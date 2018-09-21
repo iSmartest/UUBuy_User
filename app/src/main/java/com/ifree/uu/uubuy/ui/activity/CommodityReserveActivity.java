@@ -50,6 +50,7 @@ public class CommodityReserveActivity extends BaseActivity {
     LinearLayout mAdd;
     @BindView(R.id.tv_commodity_reserve)
     TextView mReserve;
+    private String mPhone,mName;
     private String commodityId,commodityIcon,commodityBrandName,commodityName,commodityPrice,
             commodityAddress,type,shopId;
 
@@ -72,6 +73,10 @@ public class CommodityReserveActivity extends BaseActivity {
         commodityAddress = getIntent().getStringExtra("commodityAddress");
         type = getIntent().getStringExtra("commodityType");
         shopId = getIntent().getStringExtra("shopId");
+        mPhone = SPUtil.getString(context,"userPhone");
+        mName = SPUtil.getString(context,"userName");
+        userName.setText(mName);
+        userPhone.setText(mPhone);
     }
 
     @Override

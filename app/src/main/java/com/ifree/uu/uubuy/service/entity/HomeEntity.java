@@ -13,7 +13,6 @@ public class HomeEntity {
     private String resultCode;
     private DataBean data;
     public static class DataBean{
-        private List<String> hotSearch;
         private List<BannerList> bannerList;
         private List<AdTypeList> adTypeList;
         private List<UURecommendNotice> uuRecommendNotice;
@@ -296,13 +295,6 @@ public class HomeEntity {
             public void setType(String type) {
                 this.type = type;
             }
-        }
-        public List<String> getHotSearch() {
-            return hotSearch;
-        }
-
-        public void setHotSearch(List<String> hotSearch) {
-            this.hotSearch = hotSearch;
         }
 
         public List<BannerList> getBannerList() {

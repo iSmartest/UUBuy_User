@@ -15,6 +15,7 @@ import com.ifree.uu.uubuy.service.entity.CouponEntity;
 import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.service.entity.GroupEntity;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
+import com.ifree.uu.uubuy.service.entity.HotKeyWordEntity;
 import com.ifree.uu.uubuy.service.entity.MessageEntity;
 import com.ifree.uu.uubuy.service.entity.MineEntity;
 import com.ifree.uu.uubuy.service.entity.MoreEntity;
@@ -78,6 +79,10 @@ public class DataManager {
 
     public Observable<CityInfoEntity> getSearchCityInfo() {
         return mRetrofitService.getSearchCityInfo();
+    }
+
+    public Observable<HotKeyWordEntity> getSearchHotKeyword() {
+        return mRetrofitService.getSearchHotKeyword();
     }
 
     public Observable<SearchEntity> getSearchInfo(String longitude, String latitude, String townAdCode, int page, String keyWord, String uid, String searchType) {
@@ -178,6 +183,10 @@ public class DataManager {
 
     public Observable<UserInfoEntity> getSearchActivitiesSignUp(String uid, String marketId, String name, String phone, String idCard, String type) {
         return mRetrofitService.getSearchActivitiesSignUp(uid, marketId, name, phone, idCard, type);
+    }
+
+    public Observable<UserInfoEntity> getSearchCancelSignUp(String uid, String marketId, String type) {
+        return mRetrofitService.getSearchCancelSignUp(uid, marketId, type);
     }
 
     public Observable<UserInfoEntity> getSubmitIsCollection(String uid, String activitiesId, String type, String isCollection) {

@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -112,6 +113,9 @@ public class MySettingActivity extends BaseActivity {
                         SPUtil.putString(context, "isPhone", "");//手机号码
                         ToastUtils.makeText(context, "已安全退出账号");
                         finish();
+                        Intent intent = new Intent();
+                        intent.setAction("com.ifree.uu.mine.changed");
+                        getApplicationContext().sendBroadcast(intent);
                         MyApplication.openActivity(context, LoginActivity.class);
                     }
                 });

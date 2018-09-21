@@ -1,21 +1,19 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.config.Constant;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.ui.fragment.ActivitiesFragment;
@@ -24,6 +22,7 @@ import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
 import com.ifree.uu.uubuy.ui.fragment.MineFragment;
 import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
 import com.ifree.uu.uubuy.uitls.AppManager;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 
 import butterknife.BindView;
@@ -31,8 +30,10 @@ import butterknife.OnClick;
 
 
 public class MainActivity extends BaseActivity {
+    @BindView(R.id.ly_base_search)
+    LinearLayout mBaseSearch;
     @BindView(R.id.edt_a_key_search)
-    TextView keyWord;
+    EditText keyWord;
     @BindView(R.id.iv_main_home)
     RadioButton mHome;
     @BindView(R.id.iv_main_around)
@@ -62,7 +63,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-
+        keyWord.setCursorVisible(false);
+        keyWord.setFocusable(false);
+        keyWord.setFocusableInTouchMode(false);
     }
 
     @Override
@@ -70,28 +73,11 @@ public class MainActivity extends BaseActivity {
         changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, true);
         initLocation();
         hideBack(1);
-        keyWord.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH){
-                    if (TextUtils.isEmpty(keyWord.getText().toString().trim())){
-                        ToastUtils.makeText(context,"请输入搜索内容");
-                    }else {
-                        String mKeyWord = keyWord.getText().toString().trim();
-                        Bundle bundle = new Bundle();
-                        bundle.putString("keyWord",mKeyWord);
-                        MyApplication.openActivity(context, SearchActivity.class,bundle);
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
 
     @OnClick({R.id.iv_main_home, R.id.iv_main_around, R.id.iv_main_activities, R.id.iv_main_order, R.id.iv_main_mine
-            , R.id.ly_base_location, R.id.ly_restart_location, R.id.iv_base_message, R.id.iv_base_setting,R.id.iv_search})
+            , R.id.ly_base_location, R.id.ly_restart_location, R.id.iv_base_message, R.id.iv_base_setting, R.id.ly_base_search,R.id.edt_a_key_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_main_home:
@@ -129,15 +115,11 @@ public class MainActivity extends BaseActivity {
             case R.id.iv_base_setting:
                 MyApplication.openActivity(context, MySettingActivity.class);
                 break;
-            case R.id.iv_search:
-                String mKeyWord = keyWord.getText().toString().trim();
-                if (mKeyWord.isEmpty()){
-                    ToastUtils.makeText(context,"请输入搜索内容");
-                    return;
-                }
-                Bundle bundle = new Bundle();
-                bundle.putString("keyWord",mKeyWord);
-                MyApplication.openActivity(context, SearchActivity.class,bundle);
+            case R.id.ly_base_search:
+                MyApplication.openActivity(context, SearchActivity.class);
+                break;
+            case R.id.edt_a_key_search:
+                MyApplication.openActivity(context, SearchActivity.class);
                 break;
         }
     }

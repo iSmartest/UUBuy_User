@@ -18,9 +18,15 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.custom.flowTagLayout.FlowTagLayout;
+import com.ifree.uu.uubuy.custom.flowTagLayout.OnTagSelectListener;
+import com.ifree.uu.uubuy.service.entity.HotKeyWordEntity;
 import com.ifree.uu.uubuy.service.entity.SearchEntity;
+import com.ifree.uu.uubuy.service.presenter.HotKeywordPresenter;
 import com.ifree.uu.uubuy.service.presenter.SearchPresenter;
+import com.ifree.uu.uubuy.service.view.HotKeyWordView;
 import com.ifree.uu.uubuy.service.view.SearchView;
+import com.ifree.uu.uubuy.ui.adapter.FlowTagAdapter;
 import com.ifree.uu.uubuy.ui.adapter.SearchAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.ui.fragment.ActivitiesFragment;
@@ -28,6 +34,7 @@ import com.ifree.uu.uubuy.ui.fragment.AroundFragment;
 import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
 import com.ifree.uu.uubuy.ui.fragment.MineFragment;
 import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -46,6 +53,7 @@ import butterknife.OnClick;
  */
 public class SearchActivity extends BaseActivity implements View.OnClickListener {
     private SearchPresenter mSearchPresenter;
+    private HotKeywordPresenter mHotKeywordPresenter;
     @BindView(R.id.iv_search)
     ImageView ivSearch;
     @BindView(R.id.edt_a_key_search)
@@ -54,6 +62,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     XRecyclerView xRecyclerView;
     private LinearLayout ll_hot_word,ll_search_style;
     private TextView mAll,mMarket,mStore,mCommodity;
+    private FlowTagLayout mFlavor;
     private int page = 1;
     private View headView;
     private List<SearchEntity.DataBean.ActivitiesList> mList = new ArrayList<>();
@@ -61,6 +70,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private String searchType = "0";
     private String keyWord;
     private ColorStateList csl1,csl2;
+    private List<String> hotSearch = new ArrayList<>();
+    private FlowTagAdapter<String> mFlavorAdapter;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_search;
@@ -69,12 +80,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void initView() {
         hideBack(8);
+        hotSearch = SPUtil.getList(context,"hotSearch");
         keyWord = getIntent().getStringExtra("keyWord");
         edtKeyword.setText(keyWord);
         Resources resource = context.getResources();
         csl1 = resource.getColorStateList(R.color.text_green);
         csl2 = resource.getColorStateList(R.color.text_main_color);
         mSearchPresenter = new SearchPresenter(context);
+        mHotKeywordPresenter = new HotKeywordPresenter(context);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);
@@ -82,6 +95,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         xRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         xRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
         headView = LayoutInflater.from(context).inflate(R.layout.header_search,null);
+        mFlavor = headView.findViewById(R.id.tf_flavor);
+        mFlavor.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
+        mFlavorAdapter = new FlowTagAdapter<>(context);
+        mFlavor.setAdapter(mFlavorAdapter);
         ll_hot_word = headView.findViewById(R.id.ll_hot_word);
         ll_search_style = headView.findViewById(R.id.ll_search_style);
         mAll = headView.findViewById(R.id.tv_search_all);
@@ -99,19 +116,18 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 page = 1;
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
-                loadData();
+                search();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
-                loadData();
+                search();
             }
         });
 
         mAdapter = new SearchAdapter(context,mList,searchType);
         xRecyclerView.setAdapter(mAdapter);
-
         edtKeyword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -149,15 +165,60 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 }
             }
         });
+
+        mFlavor.setOnTagSelectListener(new OnTagSelectListener() {
+            @Override
+            public void onItemSelect(FlowTagLayout parent, List<Integer> selectedList) {
+                if (selectedList != null && selectedList.size() > 0) {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i : selectedList) {
+                        sb.append(parent.getAdapter().getItem(i));
+                    }
+                    keyWord = sb.toString();
+                    edtKeyword.setText(keyWord);
+                    xRecyclerView.setRefreshing(true);
+                } else {
+                    keyWord = "";
+                    edtKeyword.setText(keyWord);
+                }
+            }
+        });
+    }
+
+    private void search() {
+        mSearchPresenter.onCreate();
+        mSearchPresenter.attachView(mSearchView);
+        mSearchPresenter.getSearchInfo(longitude,latitude,townAdCode,page,keyWord,uid,searchType,"搜索中...");
     }
 
     @Override
     protected void loadData() {
-        mSearchPresenter.onCreate();
-        mSearchPresenter.attachView(mSearchView);
-        mSearchPresenter.getSearchInfo(longitude,latitude,townAdCode,page,keyWord,uid,searchType,"搜索中...");
+        mHotKeywordPresenter.onCreate();
+        mHotKeywordPresenter.attachView(mHotKeywordView);
+        mHotKeywordPresenter.getSearchHotKeyword("获取中...");
 
     }
+
+    private HotKeyWordView mHotKeywordView = new HotKeyWordView() {
+        @Override
+        public void onSuccess(HotKeyWordEntity mHotKeyWordEntity) {
+            if (mHotKeyWordEntity.getData().equals("1")){
+                ToastUtils.makeText(context,mHotKeyWordEntity.getMsg());
+                return;
+            }
+            if (mHotKeyWordEntity.getData().getKeywordList() != null && !mHotKeyWordEntity.getData().getKeywordList().isEmpty()){
+                hotSearch.addAll(mHotKeyWordEntity.getData().getKeywordList());
+                mFlavorAdapter.onlyAddAll(hotSearch);
+
+            }
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context,result);
+        }
+    };
+
     private SearchView mSearchView = new SearchView() {
         @Override
         public void onSuccess(SearchEntity mSearchEntity) {

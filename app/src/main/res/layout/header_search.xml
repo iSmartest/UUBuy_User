@@ -30,7 +30,10 @@
             android:textStyle="bold"
             android:paddingLeft="8dp"
             android:textColor="@color/text_main_color"/>
-
+        <com.ifree.uu.uubuy.custom.flowTagLayout.FlowTagLayout
+            android:id="@+id/tf_flavor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <include layout="@layout/v_horizontal_line"/>
@@ -43,7 +46,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@color/app_main_default"
-        android:padding="15dp">
+        android:padding="15dp"
+        android:visibility="gone">
         <TextView
             android:id="@+id/tv_search_all"
             android:layout_width="match_parent"

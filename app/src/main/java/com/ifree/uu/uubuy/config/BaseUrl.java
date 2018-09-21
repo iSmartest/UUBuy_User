@@ -8,9 +8,11 @@ package com.ifree.uu.uubuy.config;
  */
 public class BaseUrl {
     //服务器地址
-//    public static final String HTTP = "http://101.200.60.12:8080/robot-manager-web/";//网络
+    public static final String HTTP = "http://101.200.60.12:8080/uugo-user/app/";//网络
 
-    public static final String HTTP = "http://192.168.1.8:8080/app/";//本地
+//    public static final String HTTP = "http://192.168.1.8:8080/app/";//本地
+    //图片地址
+    public static final String IMAGE_HTTP = "http://101.200.60.12:8080/uugo-manager";
     //获取验证码
     public static final String SEND_CODE = "sendCode";
     //注册
@@ -33,6 +35,8 @@ public class BaseUrl {
     public static final String CITY_INFO = "getCityInfo";
     //搜索
     public static final String SEARCH_INFO = "getSearchInfo?";
+    //热词
+    public static final String HOT_KEY_WORD = "hotKeyword?";
     //首页
     public static final String HOME_INFO = "getHomeInfo?";
     //商场（第一级）
@@ -79,6 +83,8 @@ public class BaseUrl {
     public static final String FOOT_PRINT = "getMyFootprint?";
     //活动报名
     public static final String SIGN_UP = "marketSignUp?";
+    //活动报名
+    public static final String CANCEL_SIGN_UP = "cancelMarketSignUp?";
     //收藏、取消收藏
     public static final String SUBMIT_IS_COLLECTION = "submitIsCollection?";
     //意见反馈

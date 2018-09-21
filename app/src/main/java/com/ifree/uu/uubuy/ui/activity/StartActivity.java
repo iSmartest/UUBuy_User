@@ -50,11 +50,12 @@ public class StartActivity extends AppCompatActivity {
             IsFirst = SPUtil.getBoolean(StartActivity.this, Constant.FIRST_COME, true);
             if (IsFirst) {
                 startActivity(new Intent(StartActivity.this,
-                        MainActivity.class));
+                        GuideActivity.class));
                 SPUtil.putBoolean(StartActivity.this, Constant.FIRST_COME, false);
                 finish();
             } else {
-                MyApplication.openActivity(StartActivity.this, MainActivity.class);
+                startActivity(new Intent(StartActivity.this,
+                        MainActivity.class));
                 finish();
             }
         }
@@ -85,5 +86,4 @@ public class StartActivity extends AppCompatActivity {
         super.onBackPressed();
         mHandler.removeCallbacks(goToMainActivity);//移除回调
     }
-
 }

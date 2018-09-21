@@ -78,7 +78,7 @@ public class MyFootprintActivity extends BaseActivity {
     protected void loadData() {
         mMyFootPrintPresenter.onCreate();
         mMyFootPrintPresenter.attachView(mMyFootPrintView);
-        mMyFootPrintPresenter.getSearchMyFootPrint("116",page,"加载中...");
+        mMyFootPrintPresenter.getSearchMyFootPrint(uid,page,"加载中...");
     }
 
     private MyFootPrintView mMyFootPrintView = new MyFootPrintView() {

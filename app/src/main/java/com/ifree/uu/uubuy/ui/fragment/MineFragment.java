@@ -5,7 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,9 +17,11 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
+import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.MineEntity;
 import com.ifree.uu.uubuy.service.presenter.MineInfoPresenter;
 import com.ifree.uu.uubuy.service.view.MineInfoView;
+import com.ifree.uu.uubuy.ui.activity.ActivitiesDetailsActivity;
 import com.ifree.uu.uubuy.ui.activity.CouponCenterActivity;
 import com.ifree.uu.uubuy.ui.activity.LoginActivity;
 import com.ifree.uu.uubuy.ui.activity.MyCouponActivity;
@@ -113,6 +117,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         mAdapter = new MineAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
+        xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
+            @Override
+            public void onItemClick(RecyclerView.ViewHolder vh) {
+                int position = vh.getAdapterPosition()-2;
+                if (position < 0 | position >= mList.size()){
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putString("marketId",mList.get(position).getActivitiesId());
+                bundle.putString("marketName",mList.get(position).getActivitiesName());
+                bundle.putString("type",mList.get(position).getType());
+                MyApplication.openActivity(context,ActivitiesDetailsActivity.class,bundle);
+            }
+        });
     }
 
     @Override
@@ -120,7 +138,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         if (uid.isEmpty()){
             mUserLogin.setVisibility(View.GONE);
             mGoLogin.setVisibility(View.VISIBLE);
-        }else {
+        }else{
             mUserLogin.setVisibility(View.VISIBLE);
             mGoLogin.setVisibility(View.GONE);
         }
@@ -141,6 +159,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 ToastUtils.makeText(context, mMineEntity.getMsg());
                 return;
             }
+
             mUserName.setText(mMineEntity.getData().getUserName());
             SPUtil.putString(context,"userName",mMineEntity.getData().getUserName());
             SPUtil.putString(context,"isPhone",mMineEntity.getData().getUserBindPhone());
