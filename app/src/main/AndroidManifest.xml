@@ -209,6 +209,21 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
 
+        <activity android:name=".ui.activity.AccountSecurityActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
+        <activity android:name=".ui.activity.ModifyPhoneActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
+        <activity android:name=".ui.activity.ModifyPasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+
         <activity android:name=".ui.activity.FeedbackActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"

@@ -48,13 +48,20 @@ public class DataManager {
     public Observable<UserInfoEntity> getSearchRegister(String userPhone, String password, String code, String sessionId) {
         return mRetrofitService.getSearchRegister(userPhone, password, code, sessionId);
     }
-
-    public Observable<UserInfoEntity> getSearchBindPhone(String userPhone, String password, String code, String sessionId, String uid) {
-        return mRetrofitService.getSearchBindPhone(userPhone, password, code, sessionId, uid);
+    public Observable<UserInfoEntity> getSearchModifyPhone(String userPhone, String password, String code, String sessionId,String uid) {
+        return mRetrofitService.getSearchModifyPhone(userPhone, password, code, sessionId,uid);
     }
 
-    public Observable<UserInfoEntity> getSearchForgetPassword(String userPhone, String password, String code) {
-        return mRetrofitService.getSearchForgetPassword(userPhone, password, code);
+    public Observable<UserInfoEntity> getSearchModifyPassword(String userPhone, String oldPassword, String newPassword, String code, String sessionId,String uid) {
+        return mRetrofitService.getSearchModifyPassword(userPhone, oldPassword, newPassword,code, sessionId,uid);
+    }
+
+    public Observable<UserInfoEntity> getSearchBindPhone(String userPhone, String password, String code, String sessionId, String uid, String type) {
+        return mRetrofitService.getSearchBindPhone(userPhone, password, code, sessionId, uid, type);
+    }
+
+    public Observable<UserInfoEntity> getSearchForgetPassword(String userPhone, String password, String code, String sessionId) {
+        return mRetrofitService.getSearchForgetPassword(userPhone, password, code, sessionId);
     }
 
     public Observable<UserInfoEntity> getSearchPhoneCodeLogin(String userPhone, String code, String sessionId) {

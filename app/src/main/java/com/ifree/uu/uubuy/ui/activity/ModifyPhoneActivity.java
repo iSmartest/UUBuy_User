@@ -8,11 +8,10 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.service.presenter.BindPhonePresenter;
+import com.ifree.uu.uubuy.service.presenter.ModifyPhonePresenter;
 import com.ifree.uu.uubuy.service.presenter.SendCodePresenter;
 import com.ifree.uu.uubuy.service.view.UserInfoView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StringUtils;
 import com.ifree.uu.uubuy.uitls.TimerUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
@@ -23,99 +22,104 @@ import butterknife.OnClick;
 /**
  * Author：小火
  * Email：1403241630@qq.com
- * Created by 2018/9/19 0019
+ * Created by 2018/9/21 0021
  * Description:
  */
-public class BindingPhoneActivity extends BaseActivity {
+public class ModifyPhoneActivity extends BaseActivity {
     private SendCodePresenter mSendCodePresenter;
-    private BindPhonePresenter mBindPhonePresenter;
-    @BindView(R.id.edit_bind_phone)
-    EditText mBindPhone;
-    @BindView(R.id.edit_bind_code)
-    EditText mBindCode;
-    @BindView(R.id.tv_bind_code)
-    TextView mSendCode;
-    @BindView(R.id.edit_bind_password)
-    EditText mBindPassword;
-    @BindView(R.id.tv_bind_sure)
-    TextView mBindSure;
-    private String mCode ="";
+    private ModifyPhonePresenter mModifyPhonePresenter;
+    @BindView(R.id.edit_modify_old_phone)
+    EditText mOldPhone;
+    @BindView(R.id.edit_modify_new_phone)
+    EditText mNewPhone;
+    @BindView(R.id.edit_modify_phone_code)
+    EditText mPhoneCode;
+    @BindView(R.id.tv_modify_phone_code)
+    TextView mSendPhoneCode;
+    @BindView(R.id.edit_modify_phone_password)
+    EditText mPassword;
+    @BindView(R.id.tv_modify_phone_sure)
+    TextView mSure;
     private String sessionId = "";
+    private String mCode ="";
+
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_binding_phone;
+        return R.layout.activity_modify_phone;
     }
 
     @Override
     protected void loadData() {
-
+        mSendCodePresenter = new SendCodePresenter(context);
+        mModifyPhonePresenter = new ModifyPhonePresenter(context);
     }
 
     @Override
     protected void initView() {
         hideBack(5);
-        setTitleText("绑定手机号");
-        mSendCodePresenter = new SendCodePresenter(context);
-        mBindPhonePresenter = new BindPhonePresenter(context);
+        setTitleText("更换手机号");
     }
 
-    @OnClick({R.id.tv_bind_code,R.id.tv_bind_sure})
-    public void onClickView(View view) {
-        String userPhone = mBindPhone.getText().toString().trim();//电话号码
-        switch (view.getId()) {
-            case R.id.tv_bind_code:
+    @OnClick({R.id.tv_modify_phone_code,R.id.tv_modify_phone_sure})
+    public void onClickView(View view){
+        String userPhone = mNewPhone.getText().toString().trim();//电话号码
+        String oldPhone = mOldPhone.getText().toString().trim();//电话号码
+        switch (view.getId()){
+            case R.id.tv_modify_phone_code:
                 //验证电话号码不能为空
-                if (TextUtils.isEmpty(userPhone)) {
-                    ToastUtils.makeText(context, "请输入手机号！");
+                if (TextUtils.isEmpty(userPhone)){
+                    ToastUtils.makeText(context,"请输入新手机号！");
                     return;
                 }
                 //验证手机号是否正确
-                if (!StringUtils.isMatchesPhone(userPhone)) {
-                    ToastUtils.makeText(context, "你输入的手机号格式不正确");
+                if (!StringUtils.isMatchesPhone(userPhone)){
+                    ToastUtils.makeText(context,"你输入的新手机号格式不正确");
                     return;
                 }
-                TimerUtil mTimerUtil = new TimerUtil(mSendCode);
+                TimerUtil mTimerUtil = new TimerUtil(mSendPhoneCode);
                 mTimerUtil.timers();
                 sendSMS(userPhone);
                 break;
-            case R.id.tv_bind_sure:
+            case R.id.tv_modify_phone_sure:
+                if (TextUtils.isEmpty(oldPhone)) {
+                    ToastUtils.makeText(context, "原手机号不能为空");
+                    return;
+                }
+                if (!StringUtils.isMatchesPhone(oldPhone)) {
+                    ToastUtils.makeText(context, "原手机号不正确，请核对后重新输入");
+                    return;
+                }
                 if (TextUtils.isEmpty(userPhone)) {
-                    ToastUtils.makeText(context, "电话号码不能为空");
+                    ToastUtils.makeText(context, "新手机号不能为空");
                     return;
                 }
                 if (!StringUtils.isMatchesPhone(userPhone)) {
-                    ToastUtils.makeText(context, "电话号码不正确，请核对后重新输入");
+                    ToastUtils.makeText(context, "新手机号不正确，请核对后重新输入");
                     return;
                 }
-                String inviteCode = mBindCode.getText().toString().trim();
-                if (TextUtils.isEmpty(inviteCode)) {
+                
+                String inviteCode = mPhoneCode.getText().toString().trim();
+                if (TextUtils.isEmpty(inviteCode)){
                     ToastUtils.makeText(context, "验证码不能为空");
                     return;
                 }
-//                //验证验证码是否正确
-//                if (!inviteCode.equals(mCode)) {
-//                    ToastUtils.makeText(context, "验证码不正确");
-//                    return;
-//                }
-                //验证密码不能为空
-                String password = mBindPassword.getText().toString().trim();
+                String password = mPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(password)) {
                     ToastUtils.makeText(context, "密码不能为空");
                     return;
                 }
-                sure(userPhone, password, inviteCode);
+                modifyPhone(userPhone,password,inviteCode);
                 break;
         }
     }
 
-    private void sure(String userPhone, String password, String inviteCode) {
-        String type = SPUtil.getString(context,"thirdType");
-        mBindPhonePresenter.onCreate();
-        mBindPhonePresenter.attachView(mBindPhoneView);
-        mBindPhonePresenter.getSearchBindPhone(userPhone,password,inviteCode,sessionId,uid,type,"绑定中...");
+    private void modifyPhone(String userPhone, String password, String inviteCode) {
+        mModifyPhonePresenter.onCreate();
+        mModifyPhonePresenter.attachView(mModifyPhoneView);
+        mModifyPhonePresenter.getSearchModifyPhone(userPhone,password,inviteCode,sessionId,uid,"更改中...");
     }
 
-    private UserInfoView mBindPhoneView = new UserInfoView() {
+    private UserInfoView mModifyPhoneView = new UserInfoView() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
@@ -123,10 +127,7 @@ public class BindingPhoneActivity extends BaseActivity {
                 return;
             }
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
-            SPUtil.putString(context, "isPhone", "1");
-            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getUid());
             finish();
-            Log.i("TAG", "onSuccess: " + mCode);
         }
 
         @Override
@@ -135,11 +136,10 @@ public class BindingPhoneActivity extends BaseActivity {
         }
     };
 
-
     private void sendSMS(String userPhone) {
         mSendCodePresenter.onCreate();
         mSendCodePresenter.attachView(mSendCodeView);
-        mSendCodePresenter.getSearchSendCode(userPhone,"5","获取中...");
+        mSendCodePresenter.getSearchSendCode(userPhone,"7","获取中...");
     }
 
     private UserInfoView mSendCodeView = new UserInfoView() {
@@ -151,7 +151,7 @@ public class BindingPhoneActivity extends BaseActivity {
             }
             mCode = mUserInfoEntity.getData().getCode();
             sessionId = mUserInfoEntity.getData().getSessionId();
-            Log.i("TAG", "onSuccess: " + mCode);
+            Log.i("TAG", "onSuccess: " + mCode + sessionId);
         }
 
         @Override
@@ -159,4 +159,5 @@ public class BindingPhoneActivity extends BaseActivity {
             ToastUtils.makeText(context,result);
         }
     };
+
 }

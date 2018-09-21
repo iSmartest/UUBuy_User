@@ -19,6 +19,8 @@
     <color name="text_light_green">#ff50e3c2</color>
     <color name="text_blue">#FF3AA7FF</color>
     <color name="silver_medal">#FFF5A623</color>
+    <color name="coupon_color">#FFFF9145</color>
+
     <color name="frame_search_background">#FFEEEEEE</color>
     <color name="title_color">#030303</color>
     <color name="edit_hint_color">#b3b3b3</color>

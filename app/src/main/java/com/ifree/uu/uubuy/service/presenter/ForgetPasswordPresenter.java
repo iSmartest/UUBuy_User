@@ -62,10 +62,10 @@ public class ForgetPasswordPresenter implements Presenter {
     public void attachIncomingIntent(Intent intent) {
 
     }
-    public void getSearchForgetPassword(String userPhone,String password,String code,String mContent){
+    public void getSearchForgetPassword(String userPhone,String password,String code,String sessionId,String mContent){
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext,mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchForgetPassword(userPhone,password,code)
+        mCompositeSubscription.add(manager.getSearchForgetPassword(userPhone,password,code,sessionId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserInfoEntity>() {

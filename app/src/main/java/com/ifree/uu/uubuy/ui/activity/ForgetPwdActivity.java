@@ -57,6 +57,8 @@ public class ForgetPwdActivity extends BaseActivity{
     @BindView(R.id.tv_forget_sure)
     TextView mSure;
     private String mCode ="";
+    private String sessionId = "";
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_forget_password;
@@ -109,10 +111,10 @@ public class ForgetPwdActivity extends BaseActivity{
                     return;
                 }
                 //验证验证码是否正确
-                if (!passPin.equals(mCode)) {
-                    ToastUtils.makeText(context, "验证码不正确");
-                    return;
-                }
+//                if (!passPin.equals(mCode)) {
+//                    ToastUtils.makeText(context, "验证码不正确");
+//                    return;
+//                }
                 //验证密码不能为空
                 String password = mForgetPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(password)) {
@@ -135,15 +137,15 @@ public class ForgetPwdActivity extends BaseActivity{
                     ToastUtils.makeText(context, "密码格式不正确，请核对后重新输入");
                     return;
                 }
-                findPassword(userPhone, password);
+                findPassword(userPhone, password,passPin);
                 break;
         }
     }
 
-    private void findPassword(String userPhone, String password) {
+    private void findPassword(String userPhone, String password,String code) {
         mForgetPasswordPresenter.onCreate();
         mForgetPasswordPresenter.attachView(mForgetPasswordView);
-        mForgetPasswordPresenter.getSearchForgetPassword(userPhone,password,mCode,"提交中...");
+        mForgetPasswordPresenter.getSearchForgetPassword(userPhone,password,code,sessionId,"提交中...");
     }
 
     private UserInfoView mForgetPasswordView = new UserInfoView() {
@@ -177,6 +179,7 @@ public class ForgetPwdActivity extends BaseActivity{
                 return;
             }
             mCode = mUserInfoEntity.getData().getCode();
+            sessionId = mUserInfoEntity.getData().getSessionId();
         }
 
         @Override

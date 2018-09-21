@@ -1,15 +1,18 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.SubmitReservePresenter;
 import com.ifree.uu.uubuy.service.view.SubmitReserveView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 
 import butterknife.BindView;
@@ -19,7 +22,7 @@ import butterknife.OnClick;
  * Author: 小火
  * Email:1403241630@qq.com
  * Created by 2018/8/28.
- * Description:
+ * Description: 商品预订
  */
 public class CommodityReserveActivity extends BaseActivity {
     private SubmitReservePresenter mSubmitReservePresenter;
@@ -100,6 +103,15 @@ public class CommodityReserveActivity extends BaseActivity {
                 mNum.setText("" + temp);
                 break;
             case R.id.tv_commodity_reserve:
+                if (TextUtils.isEmpty(uid)){
+                    ToastUtils.makeText(context,"用户未登录，请登录");
+                    return;
+                }
+                if (SPUtil.getString(context,"isPhone").equals("0")){
+                    ToastUtils.makeText(context,"请绑定手机号");
+                    MyApplication.openActivity(context,BindingPhoneActivity.class);
+                    return;
+                }
                 submitReserve();
                 break;
         }

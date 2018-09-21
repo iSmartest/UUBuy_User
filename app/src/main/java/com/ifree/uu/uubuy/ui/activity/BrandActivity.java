@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,9 +15,12 @@ import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.CommodityListEntity;
 import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
+import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.service.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.service.presenter.CommodityPresenter;
 import com.ifree.uu.uubuy.service.presenter.SecondListPresenter;
 import com.ifree.uu.uubuy.service.view.CommodityListView;
+import com.ifree.uu.uubuy.service.view.UserInfoView;
 import com.ifree.uu.uubuy.ui.adapter.BrandAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -38,6 +42,7 @@ import butterknife.OnClick;
  */
 public class BrandActivity extends BaseActivity implements View.OnClickListener {
     private CommodityPresenter mCommodityPresenter;
+    private CollectionPresenter mCollectionPresenter;
     @BindView(R.id.xr_brand)
     XRecyclerView xRecyclerView;
     private ImageView mIcon;
@@ -49,6 +54,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     private String fristActivitiesType;
     private BrandAdapter mAdapter;
     private List<CommodityListEntity.DataBean.CommodityList> mList = new ArrayList<>();
+    private String isCollection = "0";
 
     @Override
     protected int getLayoutId() {
@@ -59,6 +65,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     protected void initView() {
         hideBack(6);
         setRightText("收藏");
+        mCollectionPresenter = new CollectionPresenter(context);
         fristActivitiesName = getIntent().getStringExtra("fristActivitiesName");
         storeId = getIntent().getStringExtra("fristActivitiesId");
         fristActivitiesType = getIntent().getStringExtra("fristActivitiesType");
@@ -154,6 +161,12 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             }
             mAddress.setText(mCommodityListEntity.getData().getStoreAddress());
             GlideImageLoader.imageLoader(context, mCommodityListEntity.getData().getStorePic(), mIcon);
+            isCollection = mCommodityListEntity.getData().getIsCollection();
+            if (isCollection.equals("0")){
+                setRightText("收藏");
+            }else {
+                setRightText("取消收藏");
+            }
         }
 
         @Override
@@ -169,8 +182,41 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
 
     @OnClick({R.id.tv_base_rightText})
     public void onViewClicked() {
-        ToastUtils.makeText(context, "收藏");
+        if (TextUtils.isEmpty(uid)){
+            ToastUtils.makeText(context,"用户未登录，请登录");
+            return;
+        }
+        mCollectionPresenter.onCreate();
+        mCollectionPresenter.attachView(mCollectionView);
+        if (isCollection.equals("0")){
+            mCollectionPresenter.getSubmitIsCollection(uid,storeId,"1","0","处理中...");
+        }else {
+            mCollectionPresenter.getSubmitIsCollection(uid,storeId,"1","1","处理中...");
+        }
     }
+
+
+    private UserInfoView mCollectionView = new UserInfoView() {
+        @Override
+        public void onSuccess(UserInfoEntity mUserInfoEntity) {
+            if (mUserInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                return;
+            }
+            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            if (isCollection.equals("0")){
+                setRightText("取消收藏");
+            }else {
+                setRightText("收藏");
+            }
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context,result);
+        }
+    };
+
 
     @Override
     public void onClick(View v) {

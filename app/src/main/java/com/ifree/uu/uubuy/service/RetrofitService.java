@@ -21,6 +21,7 @@ import com.ifree.uu.uubuy.service.entity.SearchEntity;
 import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 
+import butterknife.BindView;
 import okhttp3.MultipartBody;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -46,17 +47,34 @@ public interface RetrofitService {
                                                  @Query("code") String code,
                                                  @Query("sessionId") String sessionId);
 
-    @POST(BaseUrl.USER_REGISTER)
+    @POST(BaseUrl.BIND_PHONE)
     Observable<UserInfoEntity> getSearchBindPhone(@Query("userPhone") String userPhone,
                                                   @Query("userPassword") String password,
                                                   @Query("code") String code,
                                                   @Query("sessionId") String sessionId,
-                                                  @Query("uid") String uid);
+                                                  @Query("uid") String uid,
+                                                  @Query("type") String type);
+
+    @POST(BaseUrl.MODIFY_PHONE)
+    Observable<UserInfoEntity> getSearchModifyPhone(@Query("newphone") String newphone,
+                                                    @Query("userPassword") String userPassword,
+                                                    @Query("code") String code,
+                                                    @Query("sessionId") String sessionId,
+                                                    @Query("uid") String uid);
+
+    @POST(BaseUrl.MODIFY_PASSWORD)
+    Observable<UserInfoEntity> getSearchModifyPassword(@Query("userPhone") String userPhone,
+                                                       @Query("oldPassword") String oldPassword,
+                                                       @Query("newPassword") String newPassword,
+                                                       @Query("code") String code,
+                                                       @Query("sessionId") String sessionId,
+                                                       @Query("uid") String uid);
 
     @POST(BaseUrl.FORGET_PASSWORD)
     Observable<UserInfoEntity> getSearchForgetPassword(@Query("userPhone") String userPhone,
                                                        @Query("password") String password,
-                                                       @Query("code") String code);
+                                                       @Query("code") String code,
+                                                       @Query("sessionId") String sessionId);
 
     @POST(BaseUrl.SEND_CODE_LOGIN)
     Observable<UserInfoEntity> getSearchPhoneCodeLogin(@Query("userPhone") String userPhone,
@@ -200,7 +218,7 @@ public interface RetrofitService {
 
     @POST(BaseUrl.GET_COUPON)
     Observable<UserInfoEntity> getCoupon(@Query("uid") String uid,
-                                       @Query("couponId") String businessId);
+                                         @Query("couponId") String businessId);
 
     @POST(BaseUrl.MY_COUPON)
     Observable<CouponEntity> getSearchMyCoupon(@Query("uid") String uid,

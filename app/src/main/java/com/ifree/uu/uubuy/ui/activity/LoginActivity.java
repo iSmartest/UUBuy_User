@@ -364,6 +364,7 @@ public class LoginActivity extends BaseActivity {
             SPUtil.putString(context, "isPhone", mUserInfoEntity.getData().getIsPhone());
             SPUtil.putString(context, "nickName", mUserInfoEntity.getData().getNickName());
             SPUtil.putString(context, "userIcon", mUserInfoEntity.getData().getUserIcon());
+            SPUtil.putString(context, "thirdType", type);
             Intent intent = new Intent();
             intent.setAction("com.ifree.uu.mine.changed");
             getApplicationContext().sendBroadcast(intent);

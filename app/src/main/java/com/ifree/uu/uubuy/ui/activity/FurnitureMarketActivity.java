@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,8 +15,11 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
+import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.service.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.service.presenter.SecondListPresenter;
 import com.ifree.uu.uubuy.service.view.SecondListView;
+import com.ifree.uu.uubuy.service.view.UserInfoView;
 import com.ifree.uu.uubuy.ui.adapter.MarketOrStoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -37,6 +41,7 @@ import butterknife.OnClick;
  */
 public class FurnitureMarketActivity extends BaseActivity implements View.OnClickListener {
     private SecondListPresenter mSecondListPresenter;
+    private CollectionPresenter mCollectionPresenter;
     @BindView(R.id.xr_furniture_market_store)
     XRecyclerView xRecyclerView;
     @BindView(R.id.tv_furniture_store)
@@ -54,6 +59,8 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
     private ImageView mPicture;
     private ColorStateList csl1,csl2;
     private String classify = "0";
+    private String isCollection = "0";
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_furniture_market_store;
@@ -63,6 +70,7 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
     protected void initView() {
         hideBack(6);
         setRightText("收藏");
+        mCollectionPresenter = new CollectionPresenter(context);
         Resources resource = context.getResources();
         csl1 = resource.getColorStateList(R.color.text_green);
         csl2 = resource.getColorStateList(R.color.title_color);
@@ -121,7 +129,7 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
     protected void loadData() {
         mSecondListPresenter.onCreate();
         mSecondListPresenter.attachView(mSecondListView);
-        mSecondListPresenter.getSearchSecondListInfo(fristActivitiesId,page,"116",fristActivitiesType,classify,"加载中...");
+        mSecondListPresenter.getSearchSecondListInfo(fristActivitiesId,page,uid,fristActivitiesType,classify,"加载中...");
     }
 
     private SecondListView mSecondListView = new SecondListView() {
@@ -148,6 +156,12 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
             mName.setText(fristActivitiesName);
             mTime.setText(mSecondListEntity.getData().getMarketInfo().getActivitiesTime());
             GlideImageLoader.imageLoader(context,mSecondListEntity.getData().getMarketInfo().getActivitiesPic(),mPicture);
+            isCollection = mSecondListEntity.getData().getMarketInfo().getIsCollection();
+            if (isCollection.equals("0")){
+                setRightText("收藏");
+            }else {
+                setRightText("取消收藏");
+            }
         }
 
         @Override
@@ -166,7 +180,17 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.tv_base_rightText:
-                ToastUtils.makeText(context, "收藏");
+                if (TextUtils.isEmpty(uid)){
+                    ToastUtils.makeText(context,"用户未登录，请登录");
+                    return;
+                }
+                mCollectionPresenter.onCreate();
+                mCollectionPresenter.attachView(mCollectionView);
+                if (isCollection.equals("0")){
+                    mCollectionPresenter.getSubmitIsCollection(uid,fristActivitiesId,"0","0","处理中...");
+                }else {
+                    mCollectionPresenter.getSubmitIsCollection(uid,fristActivitiesId,"0","1","处理中...");
+                }
                 break;
             case R.id.tv_furniture_store:
                 mFurniture.setTextColor(csl1);
@@ -183,6 +207,28 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
         }
 
     }
+
+
+    private UserInfoView mCollectionView = new UserInfoView() {
+        @Override
+        public void onSuccess(UserInfoEntity mUserInfoEntity) {
+            if (mUserInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                return;
+            }
+            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            if (isCollection.equals("0")){
+                setRightText("取消收藏");
+            }else {
+                setRightText("收藏");
+            }
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context,result);
+        }
+    };
 
 
     @Override

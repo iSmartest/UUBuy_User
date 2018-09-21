@@ -8,10 +8,10 @@
     <include layout="@layout/activity_base"/>
 
     <EditText
-        android:id="@+id/edit_bind_phone"
+        android:id="@+id/edit_modify_old_phone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="输入手机号"
+        android:hint="输入旧手机号"
         android:textColorHint="@color/text_sign_color"
         android:textColor="@color/text_main_color"
         android:textSize="13dp"
@@ -20,6 +20,23 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="70dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:background="@color/app_main_default"/>
+
+    <EditText
+        android:id="@+id/edit_modify_new_phone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="输入新手机号"
+        android:textColorHint="@color/text_sign_color"
+        android:textColor="@color/text_main_color"
+        android:textSize="13dp"
+        android:inputType="phone"
+        android:maxLength="11"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
         android:background="@color/app_main_default"/>
@@ -33,7 +50,7 @@
         android:layout_marginTop="18dp"
         android:gravity="center">
         <EditText
-            android:id="@+id/edit_bind_code"
+            android:id="@+id/edit_modify_phone_code"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:hint="输入验证码"
@@ -52,7 +69,7 @@
             android:layout_height="28dp"
             android:background="#D8D8D8"/>
         <TextView
-            android:id="@+id/tv_bind_code"
+            android:id="@+id/tv_modify_phone_code"
             android:layout_width="wrap_content"
             android:layout_height="19dp"
             android:text="发送验证码"
@@ -63,7 +80,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/edit_bind_password"
+        android:id="@+id/edit_modify_phone_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="输入密码"
@@ -77,13 +94,14 @@
         android:paddingLeft="20dp"
         android:layout_marginTop="18dp"
         android:background="@color/app_main_default"/>
+
     <TextView
-        android:id="@+id/tv_bind_sure"
+        android:id="@+id/tv_modify_phone_sure"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="确定"
         android:textColor="@color/app_main_default"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="100dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:textSize="19dp"

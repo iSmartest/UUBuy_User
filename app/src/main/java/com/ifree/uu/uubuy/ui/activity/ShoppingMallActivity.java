@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -87,16 +88,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 loadData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page++;
                 loadData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
 
@@ -128,6 +125,11 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private SecondListView mSecondListView = new SecondListView() {
         @Override
         public void onSuccess(SecondActivitiesEntity mSecondListEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mSecondListEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mSecondListEntity.getMsg());
                 return;
@@ -136,6 +138,9 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             if (secondActivitiesList != null && !secondActivitiesList.isEmpty()){
                 mList.addAll(secondActivitiesList);
                 mAdapter.notifyDataSetChanged();
+                if (secondActivitiesList.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
             fristActivitiesName = mSecondListEntity.getData().getMarketInfo().getMarketName();
             mName.setText(fristActivitiesName);
@@ -152,12 +157,21 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 
 
     @OnClick({R.id.tv_base_rightText})
     public void onViewClicked() {
+        if (TextUtils.isEmpty(uid)){
+            ToastUtils.makeText(context,"用户未登录，请登录");
+            return;
+        }
         mCollectionPresenter.onCreate();
         mCollectionPresenter.attachView(mCollectionView);
         if (isCollection.equals("0")){
@@ -165,7 +179,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }else {
             mCollectionPresenter.getSubmitIsCollection(uid,fristActivitiesId,"0","1","处理中...");
         }
-
     }
 
     private UserInfoView mCollectionView = new UserInfoView() {

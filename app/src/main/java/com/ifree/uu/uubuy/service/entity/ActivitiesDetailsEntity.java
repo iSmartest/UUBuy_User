@@ -29,20 +29,41 @@ public class ActivitiesDetailsEntity {
                 return isUse;
             }
 
+            public void setIsUse(String isUse) {
+                this.isUse = isUse;
+            }
+
             public String getCouponType() {
                 return couponType;
+            }
+
+
+            public void setCouponType(String couponType) {
+                this.couponType = couponType;
             }
 
             public String getCouponCondition() {
                 return couponCondition;
             }
 
+            public void setCouponCondition(String couponCondition) {
+                this.couponCondition = couponCondition;
+            }
+
             public String getCouponId() {
                 return couponId;
             }
 
+            public void setCouponId(String couponId) {
+                this.couponId = couponId;
+            }
+
             public String getCouponValue() {
                 return couponValue;
+            }
+
+            public void setCouponValue(String couponValue) {
+                this.couponValue = couponValue;
             }
         }
 

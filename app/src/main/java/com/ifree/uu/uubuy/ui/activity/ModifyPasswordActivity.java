@@ -1,18 +1,16 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.service.presenter.BindPhonePresenter;
+import com.ifree.uu.uubuy.service.presenter.ModifyPasswordPresenter;
 import com.ifree.uu.uubuy.service.presenter.SendCodePresenter;
 import com.ifree.uu.uubuy.service.view.UserInfoView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StringUtils;
 import com.ifree.uu.uubuy.uitls.TimerUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
@@ -23,62 +21,63 @@ import butterknife.OnClick;
 /**
  * Author：小火
  * Email：1403241630@qq.com
- * Created by 2018/9/19 0019
+ * Created by 2018/9/21 0021
  * Description:
  */
-public class BindingPhoneActivity extends BaseActivity {
+public class ModifyPasswordActivity extends BaseActivity {
     private SendCodePresenter mSendCodePresenter;
-    private BindPhonePresenter mBindPhonePresenter;
-    @BindView(R.id.edit_bind_phone)
-    EditText mBindPhone;
-    @BindView(R.id.edit_bind_code)
-    EditText mBindCode;
-    @BindView(R.id.tv_bind_code)
+    private ModifyPasswordPresenter mModifyPasswordPresenter;
+    @BindView(R.id.edit_modify_password_phone)
+    EditText mPhone;
+    @BindView(R.id.edit_modify_password_code)
+    EditText mEditCode;
+    @BindView(R.id.tv_modify_password_code)
     TextView mSendCode;
-    @BindView(R.id.edit_bind_password)
-    EditText mBindPassword;
-    @BindView(R.id.tv_bind_sure)
-    TextView mBindSure;
-    private String mCode ="";
+    @BindView(R.id.edit_modify_old_password)
+    TextView mOldPassword;
+    @BindView(R.id.edit_modify_new_password)
+    TextView mNewPassword;
+    @BindView(R.id.tv_modify_sure)
+    TextView mSure;
+    private String mCode = "";
     private String sessionId = "";
+
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_binding_phone;
-    }
-
-    @Override
-    protected void loadData() {
-
+        return R.layout.activity_modify_password;
     }
 
     @Override
     protected void initView() {
         hideBack(5);
-        setTitleText("绑定手机号");
-        mSendCodePresenter = new SendCodePresenter(context);
-        mBindPhonePresenter = new BindPhonePresenter(context);
+        setTitleText("更改登录密码");
     }
 
-    @OnClick({R.id.tv_bind_code,R.id.tv_bind_sure})
-    public void onClickView(View view) {
-        String userPhone = mBindPhone.getText().toString().trim();//电话号码
-        switch (view.getId()) {
-            case R.id.tv_bind_code:
-                //验证电话号码不能为空
+    @Override
+    protected void loadData() {
+        mSendCodePresenter = new SendCodePresenter(context);
+        mModifyPasswordPresenter = new ModifyPasswordPresenter(context);
+    }
+
+    @OnClick({R.id.edit_modify_password_code, R.id.tv_modify_sure})
+    public void onClickView(View v) {
+        String userPhone = mPhone.getText().toString().trim();//电话号码
+        switch (v.getId()) {
+            case R.id.edit_modify_password_code:
                 if (TextUtils.isEmpty(userPhone)) {
-                    ToastUtils.makeText(context, "请输入手机号！");
+                    ToastUtils.makeText(context, "电话号码不能为空");
                     return;
                 }
-                //验证手机号是否正确
+                //验证电话号码是否正确
                 if (!StringUtils.isMatchesPhone(userPhone)) {
-                    ToastUtils.makeText(context, "你输入的手机号格式不正确");
+                    ToastUtils.makeText(context, "电话号码不正确，请核对后重新输入");
                     return;
                 }
                 TimerUtil mTimerUtil = new TimerUtil(mSendCode);
                 mTimerUtil.timers();
                 sendSMS(userPhone);
                 break;
-            case R.id.tv_bind_sure:
+            case R.id.tv_modify_sure:
                 if (TextUtils.isEmpty(userPhone)) {
                     ToastUtils.makeText(context, "电话号码不能为空");
                     return;
@@ -87,35 +86,34 @@ public class BindingPhoneActivity extends BaseActivity {
                     ToastUtils.makeText(context, "电话号码不正确，请核对后重新输入");
                     return;
                 }
-                String inviteCode = mBindCode.getText().toString().trim();
+                String inviteCode = mEditCode.getText().toString().trim();
                 if (TextUtils.isEmpty(inviteCode)) {
                     ToastUtils.makeText(context, "验证码不能为空");
                     return;
                 }
-//                //验证验证码是否正确
-//                if (!inviteCode.equals(mCode)) {
-//                    ToastUtils.makeText(context, "验证码不正确");
-//                    return;
-//                }
-                //验证密码不能为空
-                String password = mBindPassword.getText().toString().trim();
-                if (TextUtils.isEmpty(password)) {
-                    ToastUtils.makeText(context, "密码不能为空");
+                String oldPassword = mOldPassword.getText().toString().trim();
+                String newPassword = mNewPassword.getText().toString().trim();
+                if (TextUtils.isEmpty(oldPassword)) {
+                    ToastUtils.makeText(context, "请输入原密码！");
                     return;
                 }
-                sure(userPhone, password, inviteCode);
+                if (TextUtils.isEmpty(newPassword)) {
+                    ToastUtils.makeText(context, "请输入新密码！");
+                    return;
+                }
+                modifyPassword(userPhone,inviteCode,oldPassword,newPassword);
                 break;
         }
     }
 
-    private void sure(String userPhone, String password, String inviteCode) {
-        String type = SPUtil.getString(context,"thirdType");
-        mBindPhonePresenter.onCreate();
-        mBindPhonePresenter.attachView(mBindPhoneView);
-        mBindPhonePresenter.getSearchBindPhone(userPhone,password,inviteCode,sessionId,uid,type,"绑定中...");
+    private void modifyPassword(String userPhone, String inviteCode, String oldPassword, String newPassword) {
+        mModifyPasswordPresenter.onCreate();
+        mModifyPasswordPresenter.attachView(mModifyPasswordView);
+        mModifyPasswordPresenter.getSearchModifyPassword(userPhone,oldPassword,newPassword,inviteCode,sessionId,uid,"更改中...");
+
     }
 
-    private UserInfoView mBindPhoneView = new UserInfoView() {
+    private UserInfoView mModifyPasswordView = new UserInfoView() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
@@ -123,10 +121,6 @@ public class BindingPhoneActivity extends BaseActivity {
                 return;
             }
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
-            SPUtil.putString(context, "isPhone", "1");
-            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getUid());
-            finish();
-            Log.i("TAG", "onSuccess: " + mCode);
         }
 
         @Override
@@ -135,28 +129,27 @@ public class BindingPhoneActivity extends BaseActivity {
         }
     };
 
-
     private void sendSMS(String userPhone) {
         mSendCodePresenter.onCreate();
         mSendCodePresenter.attachView(mSendCodeView);
-        mSendCodePresenter.getSearchSendCode(userPhone,"5","获取中...");
+        mSendCodePresenter.getSearchSendCode(userPhone, "6", "获取中...");
     }
 
     private UserInfoView mSendCodeView = new UserInfoView() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            if (mUserInfoEntity.getResultCode().equals("1")) {
+                ToastUtils.makeText(context, mUserInfoEntity.getMsg());
                 return;
             }
             mCode = mUserInfoEntity.getData().getCode();
             sessionId = mUserInfoEntity.getData().getSessionId();
-            Log.i("TAG", "onSuccess: " + mCode);
+
         }
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
+            ToastUtils.makeText(context, result);
         }
     };
 }

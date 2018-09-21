@@ -9,7 +9,6 @@ import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
 import com.ifree.uu.uubuy.service.view.UserInfoView;
 import com.ifree.uu.uubuy.service.view.View;
-import com.ifree.uu.uubuy.uitls.SPUtil;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -22,13 +21,13 @@ import rx.subscriptions.CompositeSubscription;
  * Created by 2018/9/6.
  * Description:
  */
-public class BindPhonePresenter implements Presenter {
+public class ModifyPasswordPresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private UserInfoView mUserInfoView;
     private UserInfoEntity mUserInfoEntity;
-    public BindPhonePresenter(Context mContext){
+    public ModifyPasswordPresenter(Context mContext){
         this.mContext = mContext;
     }
     @Override
@@ -63,10 +62,10 @@ public class BindPhonePresenter implements Presenter {
     public void attachIncomingIntent(Intent intent) {
 
     }
-    public void getSearchBindPhone(String userPhone, String password, String code, String sessionId, String uid, String type,String mContent){
+    public void getSearchModifyPassword(String userPhone, String oldPassword, String newPassword, String code, String sessionId,String uid,String mContent){
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext,mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchBindPhone(userPhone,password,code,sessionId,uid,type)
+        mCompositeSubscription.add(manager.getSearchModifyPassword(userPhone, oldPassword, newPassword,code, sessionId,uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserInfoEntity>() {

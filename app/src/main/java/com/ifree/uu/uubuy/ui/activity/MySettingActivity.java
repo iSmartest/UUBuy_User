@@ -84,7 +84,7 @@ public class MySettingActivity extends BaseActivity {
     public void onClickView(View view){
         switch (view.getId()){
             case R.id.ll_account_security:
-
+                MyApplication.openActivity(context,AccountSecurityActivity.class);
                 break;
             case R.id.ll_binding_phone:
                 MyApplication.openActivity(context,BindingPhoneActivity.class);

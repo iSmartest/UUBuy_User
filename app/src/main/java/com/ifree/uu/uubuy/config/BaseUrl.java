@@ -10,11 +10,17 @@ public class BaseUrl {
     //服务器地址
 //    public static final String HTTP = "http://101.200.60.12:8080/robot-manager-web/";//网络
 
-    public static final String HTTP = "http://192.168.0.103:8080/app/";//本地
+    public static final String HTTP = "http://192.168.1.8:8080/app/";//本地
     //获取验证码
     public static final String SEND_CODE = "sendCode";
     //注册
     public static final String USER_REGISTER = "userRegister";
+    //绑定手机号
+    public static final String BIND_PHONE = "bindPhone?";
+    //更改手机号
+    public static final String MODIFY_PHONE = "modifyPhone?";
+    //更改登录密码
+    public static final String MODIFY_PASSWORD = "modifyPassword?";
     //忘记密码
     public static final String FORGET_PASSWORD = "forgetPassword";
     //手机号验证码登录

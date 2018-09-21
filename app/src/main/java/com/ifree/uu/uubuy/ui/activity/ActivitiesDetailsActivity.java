@@ -3,6 +3,7 @@ package com.ifree.uu.uubuy.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.ifree.uu.uubuy.service.view.ActivitiesDetailsView;
 import com.ifree.uu.uubuy.ui.adapter.ActivitiesDetailsAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,13 +59,19 @@ public class ActivitiesDetailsActivity extends BaseActivity {
         mAdapter = new ActivitiesDetailsAdapter(context,mList);
         recyclerView.setAdapter(mAdapter);
     }
-    @OnClick({R.id.tv_base_rightText,R.id.tv_enter_for_activities})
+    @OnClick({R.id.tv_enter_for_activities})
     public void onViewClicked(View view) {
         switch (view.getId()){
-            case R.id.tv_base_rightText:
-//                ToastUtils.makeText(context,"你点击了收藏");
-                break;
             case R.id.tv_enter_for_activities:
+                if (TextUtils.isEmpty(uid)){
+                    ToastUtils.makeText(context,"用户未登录，请登录");
+                    return;
+                }
+                if (SPUtil.getString(context,"isPhone").equals("0")){
+                    ToastUtils.makeText(context,"请绑定手机号");
+                    MyApplication.openActivity(context,BindingPhoneActivity.class);
+                    return;
+                }
                 Bundle bundle = new Bundle();
                 bundle.putString("marketId",marketId);
                 bundle.putString("type",type);
