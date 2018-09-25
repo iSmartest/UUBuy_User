@@ -1,88 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/app_main_background">
+    android:layout_height="wrap_content"
+    android:background="@color/app_main_background"
+    android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/ll_hot_word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/app_main_default">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="18dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="center">
-        <View android:layout_width="3dp"
-            android:layout_height="25dp"
-            android:background="@color/text_green"/>
-        <TextView
+        android:background="@color/app_main_default"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="热门搜索"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:paddingLeft="8dp"
-            android:textColor="@color/text_main_color"/>
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="18dp"
+            android:paddingTop="10dp">
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="25dp"
+                android:background="@color/text_green" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:text="热门搜索"
+                android:textColor="@color/text_main_color"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <com.ifree.uu.uubuy.custom.flowTagLayout.FlowTagLayout
             android:id="@+id/tf_flavor"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
-    <include layout="@layout/v_horizontal_line"/>
-
+        <include layout="@layout/v_horizontal_line" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_search_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@color/app_main_default"
+        android:orientation="horizontal"
         android:padding="15dp"
         android:visibility="gone">
+
         <TextView
             android:id="@+id/tv_search_all"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="全部"
-            android:gravity="center"
             android:layout_weight="1"
-            android:textSize="15dp"
-            android:textColor="@color/text_green"/>
+            android:gravity="center"
+            android:text="全部"
+            android:textColor="@color/text_green"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/tv_search_market"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="商城"
-            android:gravity="center"
             android:layout_weight="1"
-            android:textSize="15dp"
-            android:textColor="@color/text_main_color"/>
+            android:gravity="center"
+            android:text="商城"
+            android:textColor="@color/text_main_color"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/tv_search_store"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="商店"
             android:layout_weight="1"
             android:gravity="center"
-            android:textSize="15dp"
-            android:textColor="@color/text_main_color"/>
+            android:text="商店"
+            android:textColor="@color/text_main_color"
+            android:textSize="15dp" />
+
         <TextView
             android:id="@+id/tv_search_commodity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="商品"
-            android:gravity="center"
             android:layout_weight="1"
-            android:textSize="15dp"
-            android:textColor="@color/text_main_color"/>
+            android:gravity="center"
+            android:text="商品"
+            android:textColor="@color/text_main_color"
+            android:textSize="15dp" />
     </LinearLayout>
 </RelativeLayout>

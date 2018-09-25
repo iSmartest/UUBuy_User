@@ -175,9 +175,9 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         mCollectionPresenter.onCreate();
         mCollectionPresenter.attachView(mCollectionView);
         if (isCollection.equals("0")){
-            mCollectionPresenter.getSubmitIsCollection(uid,fristActivitiesId,"0","0","处理中...");
-        }else {
             mCollectionPresenter.getSubmitIsCollection(uid,fristActivitiesId,"0","1","处理中...");
+        }else {
+            mCollectionPresenter.getSubmitIsCollection(uid,fristActivitiesId,"0","0","处理中...");
         }
     }
 

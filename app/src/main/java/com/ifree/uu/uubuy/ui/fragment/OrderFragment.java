@@ -7,12 +7,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
 import com.ifree.uu.uubuy.service.presenter.OrderPresenter;
 import com.ifree.uu.uubuy.service.view.OrderView;
 import com.ifree.uu.uubuy.ui.adapter.OrderAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -84,7 +84,7 @@ public class OrderFragment extends BaseFragment {
     protected void initData() {
         orderPresenter.onCreate();
         orderPresenter.attachView(mOrderView);
-        orderPresenter.getSearchOrders(orderState,page,uid,"加载中...");
+        orderPresenter.getSearchOrders(orderState,page, SPUtil.getUid(context),"加载中...");
     }
 
     private OrderView mOrderView = new OrderView() {

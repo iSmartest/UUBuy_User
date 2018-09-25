@@ -176,9 +176,9 @@ public class CommodityActivity extends BaseActivity {
                 mCollectionPresenter.onCreate();
                 mCollectionPresenter.attachView(mCollectionView);
                 if (isCollection.equals("0")){
-                    mCollectionPresenter.getSubmitIsCollection(uid,commodityId,"2","0","处理中...");
-                }else {
                     mCollectionPresenter.getSubmitIsCollection(uid,commodityId,"2","1","处理中...");
+                }else {
+                    mCollectionPresenter.getSubmitIsCollection(uid,commodityId,"2","0","处理中...");
                 }
                 break;
         }

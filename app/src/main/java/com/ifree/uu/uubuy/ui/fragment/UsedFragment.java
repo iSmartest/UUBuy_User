@@ -8,6 +8,7 @@ import com.ifree.uu.uubuy.service.presenter.MyCouponPresenter;
 import com.ifree.uu.uubuy.service.view.CouponView;
 import com.ifree.uu.uubuy.ui.adapter.CouponAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -70,7 +71,7 @@ public class UsedFragment extends BaseFragment {
     protected void initData() {
         mMyCouponPresenter.onCreate();
         mMyCouponPresenter.attachView(mCouponView);
-        mMyCouponPresenter.getSearchMyCoupon(uid,businessId,couponType,longitude,latitude,townAdCode,page,"加载中...");
+        mMyCouponPresenter.getSearchMyCoupon(SPUtil.getUid(context),businessId,couponType,SPUtil.getLongitude(context),SPUtil.getLatitude(context),SPUtil.getTownAdCode(context),page,"加载中...");
     }
 
     private CouponView mCouponView = new CouponView() {

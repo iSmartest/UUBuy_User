@@ -2,7 +2,6 @@ package com.ifree.uu.uubuy.ui.activity;
 
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -17,8 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.custom.flowTagLayout.FlowTagLayout;
+import com.ifree.uu.uubuy.custom.flowTagLayout.OnTagClickListener;
 import com.ifree.uu.uubuy.custom.flowTagLayout.OnTagSelectListener;
 import com.ifree.uu.uubuy.service.entity.HotKeyWordEntity;
 import com.ifree.uu.uubuy.service.entity.SearchEntity;
@@ -29,12 +28,6 @@ import com.ifree.uu.uubuy.service.view.SearchView;
 import com.ifree.uu.uubuy.ui.adapter.FlowTagAdapter;
 import com.ifree.uu.uubuy.ui.adapter.SearchAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.ui.fragment.ActivitiesFragment;
-import com.ifree.uu.uubuy.ui.fragment.AroundFragment;
-import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
-import com.ifree.uu.uubuy.ui.fragment.MineFragment;
-import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
-import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -70,8 +63,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private String searchType = "0";
     private String keyWord;
     private ColorStateList csl1,csl2;
-    private List<String> hotSearch = new ArrayList<>();
-    private FlowTagAdapter<String> mFlavorAdapter;
+    private List<HotKeyWordEntity.DataBean.KeywordList> hotSearch = new ArrayList<>();
+    private FlowTagAdapter mFlavorAdapter;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_search;
@@ -80,7 +73,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void initView() {
         hideBack(8);
-        hotSearch = SPUtil.getList(context,"hotSearch");
         keyWord = getIntent().getStringExtra("keyWord");
         edtKeyword.setText(keyWord);
         Resources resource = context.getResources();
@@ -96,9 +88,19 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         xRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
         headView = LayoutInflater.from(context).inflate(R.layout.header_search,null);
         mFlavor = headView.findViewById(R.id.tf_flavor);
-        mFlavor.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_SINGLE);
-        mFlavorAdapter = new FlowTagAdapter<>(context);
+        mFlavor.setTagCheckedMode(FlowTagLayout.FLOW_TAG_CHECKED_NONE);
+        mFlavorAdapter = new FlowTagAdapter(context,hotSearch);
         mFlavor.setAdapter(mFlavorAdapter);
+        mFlavor.setOnTagClickListener(new OnTagClickListener() {
+            @Override
+            public void onItemClick(FlowTagLayout parent, View view, int position) {
+                keyWord = hotSearch.get(position).getName();
+                edtKeyword.setText(keyWord);
+                ll_hot_word.setVisibility(View.GONE);
+                ll_search_style.setVisibility(View.VISIBLE);
+                xRecyclerView.setRefreshing(true);
+            }
+        });
         ll_hot_word = headView.findViewById(R.id.ll_hot_word);
         ll_search_style = headView.findViewById(R.id.ll_search_style);
         mAll = headView.findViewById(R.id.tv_search_all);
@@ -208,8 +210,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             }
             if (mHotKeyWordEntity.getData().getKeywordList() != null && !mHotKeyWordEntity.getData().getKeywordList().isEmpty()){
                 hotSearch.addAll(mHotKeyWordEntity.getData().getKeywordList());
-                mFlavorAdapter.onlyAddAll(hotSearch);
-
+                mFlavorAdapter.notifyDataSetChanged();
             }
         }
 

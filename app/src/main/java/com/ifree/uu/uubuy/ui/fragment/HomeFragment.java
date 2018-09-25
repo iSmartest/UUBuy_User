@@ -250,7 +250,7 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
     protected void initData() {
         mHomePresenter.onCreate();
         mHomePresenter.attachView(mHomeView);
-        mHomePresenter.getSearchHomes(longitude, latitude, townAdCode, page, "加载中...");
+        mHomePresenter.getSearchHomes(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context), page, "加载中...");
     }
 
     private HomeView mHomeView = new HomeView() {

@@ -61,7 +61,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         try {
             //将crash log写入文件
             FileOutputStream fileOutputStream
-                    = new FileOutputStream(Environment.getExternalStorageDirectory().getPath() + "/溜达兔错误报告.txt", true);
+                    = new FileOutputStream(Environment.getExternalStorageDirectory().getPath() + "/UUGoErrorLog.txt", true);
             PrintStream printStream = new PrintStream(fileOutputStream);
             ex.printStackTrace(printStream);
             printStream.flush();

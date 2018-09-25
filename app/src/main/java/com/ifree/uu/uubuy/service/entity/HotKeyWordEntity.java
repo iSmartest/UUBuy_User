@@ -13,13 +13,33 @@ public class HotKeyWordEntity {
     private String resultCode;
     private DataBean data;
     public static class DataBean{
-        private List<String> keywordList;
+        private List<KeywordList> keywordList;
+        public static class KeywordList{
+            private String id;
+            private String name;
 
-        public List<String> getKeywordList() {
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+        }
+
+        public List<KeywordList> getKeywordList() {
             return keywordList;
         }
 
-        public void setKeywordList(List<String> keywordList) {
+        public void setKeywordList(List<KeywordList> keywordList) {
             this.keywordList = keywordList;
         }
     }

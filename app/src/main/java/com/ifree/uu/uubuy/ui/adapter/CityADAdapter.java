@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
-
 import java.util.List;
 
 import butterknife.BindView;

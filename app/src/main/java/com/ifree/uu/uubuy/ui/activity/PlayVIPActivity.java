@@ -155,6 +155,9 @@ public class PlayVIPActivity extends BaseActivity {
                 ToastUtils.makeText(context,"玩转会员规则");
                 break;
             case R.id.tv_sign_in:
+                if (uid.isEmpty()){
+                    ToastUtils.makeText(context,"登录之后才能签到哦！");
+                }
                 if (isSignIn.equals("0")){
                     goSignIn();
                 }else {

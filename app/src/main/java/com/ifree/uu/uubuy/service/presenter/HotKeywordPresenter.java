@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.service.entity.HotKeyWordEntity;
@@ -80,6 +81,7 @@ public class HotKeywordPresenter implements Presenter {
                         dialog.dismiss();
                         if (mHotKeyWordEntity != null){
                             mHotKeyWordView.onSuccess(mHotKeyWordEntity);
+                            Log.i("TAG", "onHotKeyword: " + new Gson().toJson(mHotKeyWordEntity));
                         }
                     }
 
@@ -88,7 +90,6 @@ public class HotKeywordPresenter implements Presenter {
                         e.printStackTrace();
                         dialog.dismiss();
                         mHotKeyWordView.onError("请求失败！！" + e.getMessage());
-                        Log.i("TAG", "onError: " + e.getMessage());
                     }
 
                     @Override

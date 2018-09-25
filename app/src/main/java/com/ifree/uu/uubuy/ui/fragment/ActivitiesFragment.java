@@ -12,6 +12,7 @@ import com.ifree.uu.uubuy.service.presenter.ActivitiesPresenter;
 import com.ifree.uu.uubuy.service.view.ActivitiesView;
 import com.ifree.uu.uubuy.ui.adapter.ActivitiesAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -83,7 +84,7 @@ public class ActivitiesFragment extends BaseFragment {
     protected void initData() {
         activitiesPresenter.onCreate();
         activitiesPresenter.attachView(mActivitiesView);
-        activitiesPresenter.getSearchActivities(longitude,latitude,townAdCode,page,uid,activitiesType,"加载中...");
+        activitiesPresenter.getSearchActivities(SPUtil.getLongitude(context),SPUtil.getLatitude(context),SPUtil.getTownAdCode(context),page,SPUtil.getUid(context),activitiesType,"加载中...");
     }
 
     private ActivitiesView mActivitiesView = new ActivitiesView() {

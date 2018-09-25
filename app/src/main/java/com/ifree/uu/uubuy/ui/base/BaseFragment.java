@@ -27,10 +27,6 @@ public abstract class BaseFragment extends Fragment {
     protected Context context;
     protected View view;
     protected Unbinder unbinder;
-    protected String latitude;
-    protected String longitude;
-    protected String townAdCode;
-    protected String uid;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +35,6 @@ public abstract class BaseFragment extends Fragment {
             view = inflater.inflate(getLayout(),container,false);
         }
         unbinder = ButterKnife.bind(this, view);
-        latitude = SPUtil.getString(context,"latitude");
-        longitude = SPUtil.getString(context,"longitude");
-        townAdCode = SPUtil.getString(context,"townAdCode");
-        uid = SPUtil.getString(context,"uid");
         initView();
         initData();
         return view;

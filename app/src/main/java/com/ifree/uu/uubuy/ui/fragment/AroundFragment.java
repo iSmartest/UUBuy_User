@@ -8,9 +8,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
-import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.presenter.AroundPresenter;
-import com.ifree.uu.uubuy.service.presenter.HomePresenter;
 import com.ifree.uu.uubuy.service.view.AroundView;
 import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
@@ -18,8 +16,8 @@ import com.ifree.uu.uubuy.ui.activity.MarketActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
 import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.ui.adapter.AroundAdapter;
-import com.ifree.uu.uubuy.ui.adapter.HomeAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -135,7 +133,8 @@ public class AroundFragment extends BaseFragment {
     protected void initData() {
         aroundPresenter.onCreate();
         aroundPresenter.attachView(mAroundView);
-        aroundPresenter.getSearchArounds(longitude,latitude,townAdCode,page,uid,"加载中...");
+        aroundPresenter.getSearchArounds(SPUtil.getLongitude(context),SPUtil.getLatitude(context)
+                ,SPUtil.getTownAdCode(context),page,SPUtil.getUid(context),"加载中...");
     }
     private AroundView mAroundView = new AroundView() {
         @Override

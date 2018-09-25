@@ -48,6 +48,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     //屏幕 机型适配
     implementation 'com.zhy:autolayout:1.4.5'
+    implementation 'me.jessyan:autosize:0.9.5'
     //刷新
     implementation project(':xrecyclerview')
     //高德

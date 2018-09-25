@@ -394,9 +394,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640"/>
     </application>
 
-    <meta-data android:name="design_width" android:value="360"></meta-data>
-    <meta-data android:name="design_height" android:value="640"></meta-data>
 
 </manifest>

@@ -9,6 +9,7 @@ import com.ifree.uu.uubuy.service.view.MessageView;
 import com.ifree.uu.uubuy.ui.adapter.AroundAdapter;
 import com.ifree.uu.uubuy.ui.adapter.MessageAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -76,7 +77,7 @@ public class MessageListFragment extends BaseFragment {
     protected void initData() {
         messagePresenter.onCreate();
         messagePresenter.attachView(mMessageView);
-        messagePresenter.getSearchMessages(uid,type,page,"加载中...");
+        messagePresenter.getSearchMessages(SPUtil.getUid(context),type,page,"加载中...");
     }
 
     private MessageView mMessageView = new MessageView() {

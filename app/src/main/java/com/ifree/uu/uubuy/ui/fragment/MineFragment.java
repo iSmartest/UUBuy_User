@@ -135,7 +135,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        if (uid.isEmpty()){
+        if (SPUtil.getUid(context).isEmpty()){
             mUserLogin.setVisibility(View.GONE);
             mGoLogin.setVisibility(View.VISIBLE);
         }else{
@@ -144,7 +144,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
         mineInfoPresenter.onCreate();
         mineInfoPresenter.attachView(mMineInfoView);
-        mineInfoPresenter.getSearchMineInfo(longitude, latitude, townAdCode, page, uid, "加载中...");
+        mineInfoPresenter.getSearchMineInfo(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context), page, SPUtil.getUid(context), "加载中...");
     }
 
     private MineInfoView mMineInfoView = new MineInfoView() {
@@ -226,7 +226,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         @Override
         public void onReceive(Context context, final Intent intent) {
             //接到广播通知后刷新数据源
-            uid = SPUtil.getString(context,"uid");
             initData();
         }
     };

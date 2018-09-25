@@ -37,7 +37,7 @@ import butterknife.OnClick;
  * Created by 2018/8/15.
  * Description:
  */
-public abstract class BaseActivity extends CheckPermissionsActivity{
+public abstract class BaseActivity extends FragmentActivity{
     protected Context context;
     private BaseFragment lastFragment;
     public static boolean anInt = true;

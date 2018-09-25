@@ -189,9 +189,9 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
         mCollectionPresenter.onCreate();
         mCollectionPresenter.attachView(mCollectionView);
         if (isCollection.equals("0")){
-            mCollectionPresenter.getSubmitIsCollection(uid,storeId,"1","0","处理中...");
-        }else {
             mCollectionPresenter.getSubmitIsCollection(uid,storeId,"1","1","处理中...");
+        }else {
+            mCollectionPresenter.getSubmitIsCollection(uid,storeId,"1","0","处理中...");
         }
     }
 

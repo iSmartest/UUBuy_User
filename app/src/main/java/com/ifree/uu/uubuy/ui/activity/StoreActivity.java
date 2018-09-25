@@ -68,6 +68,7 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
         fristActivitiesType = getIntent().getStringExtra("fristActivitiesType");
         setTitleText(fristActivitiesName);
         mCommodityPresenter = new CommodityPresenter(context);
+        mCollectionPresenter = new CollectionPresenter(context);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);
@@ -173,9 +174,9 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
         mCollectionPresenter.onCreate();
         mCollectionPresenter.attachView(mCollectionView);
         if (isCollection.equals("0")){
-            mCollectionPresenter.getSubmitIsCollection(uid,storeId,"1","0","处理中...");
-        }else {
             mCollectionPresenter.getSubmitIsCollection(uid,storeId,"1","1","处理中...");
+        }else {
+            mCollectionPresenter.getSubmitIsCollection(uid,storeId,"1","0","处理中...");
         }
     }
 
