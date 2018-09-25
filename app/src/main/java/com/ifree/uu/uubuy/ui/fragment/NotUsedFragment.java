@@ -54,19 +54,14 @@ public class NotUsedFragment extends BaseFragment {
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 initData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 initData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
-
         mAdapter = new CouponAdapter(context,mList,couponType);
         xRecyclerView.setAdapter(mAdapter);
     }

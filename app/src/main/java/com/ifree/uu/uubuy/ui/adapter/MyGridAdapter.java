@@ -66,8 +66,8 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyGridView
                 viewHolder.mType.setText("自营");
                 viewHolder.mCommodityName.setText(mList.getCommodityName());
                 viewHolder.mCommodityDec.setText(mList.getCommodityDec());
-                viewHolder.mCommodityNowPrice.setText(mList.getCommodityNowPrice());
-                viewHolder.mCommodityOriginalPrice.setText(mList.getCommodityOriginalPrice());
+                viewHolder.mCommodityNowPrice.setText("￥" + mList.getCommodityNowPrice());
+                viewHolder.mCommodityOriginalPrice.setText("￥" + mList.getCommodityOriginalPrice());
                 break;
         }
     }

@@ -106,5 +106,4 @@ public class UsedFragment extends BaseFragment {
             }
         }
     };
-
 }

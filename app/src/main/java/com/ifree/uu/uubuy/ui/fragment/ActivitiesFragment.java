@@ -100,7 +100,7 @@ public class ActivitiesFragment extends BaseFragment {
                 return;
             }
             List<ActivitiesEntity.DataBean.ActivitiesList> activitiesLists = mActivitiesEntity.getData().getActivitiesList();
-            if (activitiesLists != null && !activitiesLists.isEmpty() && activitiesLists.size() > 0){
+            if (activitiesLists != null && !activitiesLists.isEmpty()){
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();
                 if (activitiesLists.size() < 10){
@@ -158,5 +158,4 @@ public class ActivitiesFragment extends BaseFragment {
                 break;
         }
     }
-
 }

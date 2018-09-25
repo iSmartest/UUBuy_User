@@ -22,6 +22,7 @@ import com.ifree.uu.uubuy.service.view.UserInfoView;
 import com.ifree.uu.uubuy.ui.adapter.StoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -120,7 +121,7 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
     protected void loadData() {
         mCommodityPresenter.onCreate();
         mCommodityPresenter.attachView(mCommodityListView);
-        mCommodityPresenter.getSearchCommodityListInfo(storeId, page, "1", "加载中...");
+        mCommodityPresenter.getSearchCommodityListInfo(storeId, page, SPUtil.getUid(context), "加载中...");
     }
 
     private CommodityListView mCommodityListView = new CommodityListView() {

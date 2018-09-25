@@ -94,5 +94,4 @@ public class CollectionPresenter implements Presenter{
                 })
         );
     }
-
 }

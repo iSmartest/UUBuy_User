@@ -90,6 +90,7 @@
             android:background="@drawable/shape_background_frame"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
+            android:visibility="gone"
             android:paddingRight="10dp"/>
     </RelativeLayout>
 

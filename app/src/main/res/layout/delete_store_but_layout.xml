@@ -5,7 +5,7 @@
     android:layout_height="88dp"
     android:orientation="vertical">
     <Button
-        android:id="@+id/id_item_btn"
+        android:id="@+id/id_item_store_btn"
         android:layout_width="74dp"
         android:layout_height="match_parent"
         android:text="删除"

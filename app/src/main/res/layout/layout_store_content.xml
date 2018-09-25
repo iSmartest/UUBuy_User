@@ -24,12 +24,14 @@
             android:layout_toRightOf="@+id/iv_activities_circle_store_icon"
             android:layout_centerInParent="true">
             <TextView
+                android:id="@+id/tv_activities_circle_store_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="奥迪"
                 android:textSize="13dp"/>
             <TextView
+                android:id="@+id/tv_activities_circle_store_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

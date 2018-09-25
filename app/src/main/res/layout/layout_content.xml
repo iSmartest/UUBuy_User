@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_activities_market"
     android:layout_width="match_parent"
-    android:layout_height="187dp"
+    android:layout_height="180dp"
+    android:gravity="center"
     android:orientation="vertical">
     <TextView
         android:id="@+id/tv_activities_circle_name"
@@ -13,13 +14,15 @@
         android:text="物美超市"
         android:textColor="@color/text_main_color"
         android:textSize="17dp" />
+
     <include layout="@layout/v_horizontal_line"/>
 
     <ImageView
         android:id="@+id/iv_activities_circle_icon"
         android:layout_width="match_parent"
-        android:layout_height="123dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:layout_gravity="center"
         android:scaleType="centerCrop"
         android:src="@drawable/timg" />
 </LinearLayout>

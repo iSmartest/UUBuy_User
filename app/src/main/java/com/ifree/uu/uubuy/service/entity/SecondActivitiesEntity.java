@@ -103,8 +103,8 @@ public class SecondActivitiesEntity {
                 private String commodityId;
                 private String commodityName;
                 private String commodityPic;//商品图片
-                private String commodityOriginalPrice;//原价
-                private String commodityNowPrice;//现价
+                private int commodityOriginalPrice;//原价
+                private int commodityNowPrice;//现价
                 private String commodityDec;//描述
                 private String commodityTime;//活动时间
                 private String commodityDescent;//折扣
@@ -122,11 +122,11 @@ public class SecondActivitiesEntity {
                     return commodityPic;
                 }
 
-                public String getCommodityOriginalPrice() {
+                public int getCommodityOriginalPrice() {
                     return commodityOriginalPrice;
                 }
 
-                public String getCommodityNowPrice() {
+                public int getCommodityNowPrice() {
                     return commodityNowPrice;
                 }
 

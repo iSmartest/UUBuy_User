@@ -56,9 +56,9 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
                 break;
         }
 
-        holder.mReducePrice.setText(couponList.getCouponReducePrice());
+        holder.mReducePrice.setText(couponList.getCouponReducePrice() + "");
         holder.mAllPrice.setText("单笔" + couponList.getCondition());
-        holder.mTime.setText("有效时间" + couponList.getSecuritiesTimeZone());
+        holder.mTime.setText("有效时间:" + couponList.getSecuritiesTimeZone());
         holder.mStore.setText(couponList.getMsName());
         holder.mType.setText(couponList.getType());
 

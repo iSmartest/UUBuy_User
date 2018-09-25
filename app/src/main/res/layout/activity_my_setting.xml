@@ -285,7 +285,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/right_in" />
+            android:src="@drawable/right_in"/>
     </LinearLayout>
 
     <include layout="@layout/v_horizontal_line" />

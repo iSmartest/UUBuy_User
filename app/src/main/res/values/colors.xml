@@ -6,6 +6,7 @@
 
     <color name="app_main_background">#f2f2f2</color>
     <color name="app_main_default">#ffffff</color>
+    <color name="app_login_line">#A0A0A0</color>
     <color name="hint_text">#FF8E8E93</color>
     <color name="text_main_color">#ff4a4a4a</color>
     <color name="text_subtitle_color">#ff9B9B9B</color>

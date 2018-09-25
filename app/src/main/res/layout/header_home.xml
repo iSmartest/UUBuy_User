@@ -73,8 +73,7 @@
             android:id="@+id/rc_city_ad"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="9dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp">
         </android.support.v7.widget.RecyclerView>
 
@@ -86,8 +85,8 @@
             app:indicator_margin="3dp"
             app:indicator_width="7dp"
             android:background="@color/colorPrimary"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="8dp"/>
     </LinearLayout>
 </RelativeLayout>

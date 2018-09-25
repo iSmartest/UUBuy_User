@@ -46,8 +46,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         CommodityListEntity.DataBean.CommodityList commodityList = mList.get(position);
         holder.mName.setText(commodityList.getCommodityName());
         GlideImageLoader.imageLoader(context,commodityList.getCommodityPic(),holder.mPicture);
-        holder.mPrice.setText(commodityList.getCommodityNowPrice());
-        holder.mOldPrice.setText(commodityList.getCommodityOriginalPrice());
+        holder.mPrice.setText("￥"+commodityList.getCommodityNowPrice());
+        holder.mOldPrice.setText("￥"+commodityList.getCommodityOriginalPrice());
         holder.mSurplus.setText(commodityList.getCommodityStock());
     }
 

@@ -54,23 +54,16 @@ public class MarketCouponFragment extends BaseFragment {
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 initData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 initData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
-
         mAdapter = new CouponCenterAdapter(context,mList,couponType);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
-
     }
 
     @Override
@@ -83,6 +76,11 @@ public class MarketCouponFragment extends BaseFragment {
     private CouponView mCouponView = new CouponView() {
         @Override
         public void onSuccess(CouponEntity mCouponEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mCouponEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mCouponEntity.getMsg());
                 return;
@@ -91,12 +89,20 @@ public class MarketCouponFragment extends BaseFragment {
             if (couponLists != null && !couponLists.isEmpty()){
                 mList.addAll(couponLists);
                 mAdapter.notifyDataSetChanged();
+                if (couponLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 }

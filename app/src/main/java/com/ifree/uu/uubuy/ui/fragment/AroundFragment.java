@@ -3,6 +3,7 @@ package com.ifree.uu.uubuy.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
@@ -37,6 +38,8 @@ public class AroundFragment extends BaseFragment {
     private AroundPresenter aroundPresenter;
     @BindView(R.id.xr_around)
     XRecyclerView xRecyclerView;
+    @BindView(R.id.iv_placeholder)
+    ImageView imageView;
     private int page = 1;
     private List<AroundEntity.DataBean.ActivitiesList> mList = new ArrayList<>();
     private AroundAdapter mAdapter;
@@ -119,9 +122,6 @@ public class AroundFragment extends BaseFragment {
                         }
                         break;
                     case "6":
-                        bundle.putString("fristActivitiesId",mList.get(position).getActivitiesId());
-                        bundle.putString("fristActivitiesType",mList.get(position).getActivitiesType());
-                        bundle.putString("fristActivitiesName",mList.get(position).getActivitiesName());
                         MyApplication.openActivity(context,BrandActivity.class,bundle);
                         break;
                 }
@@ -149,7 +149,7 @@ public class AroundFragment extends BaseFragment {
                 return;
             }
             List<AroundEntity.DataBean.ActivitiesList> activitiesLists = mAroundEntity.getData().getActivityList();
-            if (activitiesLists != null && !activitiesLists.isEmpty() && activitiesLists.size() > 0){
+            if (activitiesLists != null && !activitiesLists.isEmpty()){
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();
                 if (activitiesLists.size() < 10){

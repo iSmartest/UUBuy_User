@@ -126,7 +126,7 @@ public class CommodityReserveActivity extends BaseActivity {
         String count = mNum.getText().toString().trim();
         mSubmitReservePresenter.onCreate();
         mSubmitReservePresenter.attachView(mSubmitReserveView);
-        mSubmitReservePresenter.getSubmitReserveInfo(commodityId,type,count,shopId,"1","提交中...");
+        mSubmitReservePresenter.getSubmitReserveInfo(commodityId,type,count,shopId,SPUtil.getUid(context),"提交中...");
     }
 
     private SubmitReserveView mSubmitReserveView = new SubmitReserveView() {

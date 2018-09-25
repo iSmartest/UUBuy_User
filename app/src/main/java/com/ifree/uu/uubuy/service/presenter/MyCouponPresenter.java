@@ -28,9 +28,10 @@ public class MyCouponPresenter implements Presenter {
     private CouponEntity mCouponEntity;
     private CouponView mCouponView;
 
-    public MyCouponPresenter(Context mContext){
+    public MyCouponPresenter(Context mContext) {
         this.mContext = mContext;
     }
+
     @Override
     public void onCreate() {
         manager = new DataManager(mContext);
@@ -64,13 +65,13 @@ public class MyCouponPresenter implements Presenter {
 
     }
 
-    public void getSearchMyCoupon(String uid,String businessId,String couponType,String longitude,String latitude,String townAdCode,int page, String mContent) {
+    public void getSearchMyCoupon(String uid, String businessId, String couponType, String longitude, String latitude, String townAdCode, int page, String mContent) {
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext, mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchMyCoupon(uid,businessId,couponType,longitude,latitude,townAdCode,page)
+        mCompositeSubscription.add(manager.getSearchMyCoupon(uid, businessId, couponType, longitude, latitude, townAdCode, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<CouponEntity >() {
+                .subscribe(new Observer<CouponEntity>() {
                     @Override
                     public void onCompleted() {
                         dialog.dismiss();
@@ -87,11 +88,10 @@ public class MyCouponPresenter implements Presenter {
                     }
 
                     @Override
-                    public void onNext(CouponEntity  groupEntity) {
+                    public void onNext(CouponEntity groupEntity) {
                         mCouponEntity = groupEntity;
                     }
                 }));
-
     }
 
 }

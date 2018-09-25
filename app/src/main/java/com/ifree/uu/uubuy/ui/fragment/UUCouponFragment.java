@@ -66,7 +66,6 @@ public class UUCouponFragment extends BaseFragment {
 
         mAdapter = new CouponCenterAdapter(context,mList,couponType);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
     }
 
     @Override
