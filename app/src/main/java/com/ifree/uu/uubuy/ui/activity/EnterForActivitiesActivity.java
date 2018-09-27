@@ -9,6 +9,7 @@ import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.ActivitiesSignUpPresenter;
 import com.ifree.uu.uubuy.service.view.UserInfoView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 
 import butterknife.BindView;
@@ -41,6 +42,9 @@ public class EnterForActivitiesActivity extends BaseActivity {
     protected void initView() {
         hideBack(5);
         setTitleText("活动报名");
+        mIdCart.setText(SPUtil.getString(context,"userIdCard"));
+        mPhone.setText(SPUtil.getString(context,"userPhone"));
+        mName.setText(SPUtil.getString(context,"userName"));
         marketId = getIntent().getStringExtra("marketId");
         type = getIntent().getStringExtra("type");
         mActivitiesSignUpPresenter = new ActivitiesSignUpPresenter(context);
