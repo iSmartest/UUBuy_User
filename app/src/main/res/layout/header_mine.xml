@@ -123,7 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="10张"
+                android:text="0张"
                 android:textColor="@color/text_main_color"
                 android:textSize="13sp" />
 
@@ -152,7 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="100分"
+                android:text="0分"
                 android:textColor="@color/text_main_color"
                 android:textSize="13sp" />
 

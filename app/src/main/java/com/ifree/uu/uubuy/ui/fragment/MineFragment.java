@@ -141,10 +141,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }else{
             mUserLogin.setVisibility(View.VISIBLE);
             mGoLogin.setVisibility(View.GONE);
+            mineInfoPresenter.onCreate();
+            mineInfoPresenter.attachView(mMineInfoView);
+            mineInfoPresenter.getSearchMineInfo(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context), page, SPUtil.getUid(context), "加载中...");
         }
-        mineInfoPresenter.onCreate();
-        mineInfoPresenter.attachView(mMineInfoView);
-        mineInfoPresenter.getSearchMineInfo(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context), page, SPUtil.getUid(context), "加载中...");
     }
 
     private MineInfoView mMineInfoView = new MineInfoView() {
