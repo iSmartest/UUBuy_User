@@ -171,8 +171,16 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             SPUtil.putString(context,"userSex",mMineEntity.getData().getUserSex());
             mConpouNum.setText(mMineEntity.getData().getUserCoupon() + "张");
             mGrownValue.setText(mMineEntity.getData().getUserGrowthValue() + "/" + mMineEntity.getData().getMedalTotalValue());
-            grown_bar.setMax(Integer.parseInt(mMineEntity.getData().getMedalTotalValue()));
-            grown_bar.setProgress(Integer.parseInt(mMineEntity.getData().getUserGrowthValue()));
+            if (mMineEntity.getData().getMedalTotalValue().isEmpty()){
+                grown_bar.setMax(0);
+            }else {
+                grown_bar.setMax(Integer.parseInt(mMineEntity.getData().getMedalTotalValue()));
+            }
+            if (mMineEntity.getData().getUserGrowthValue().isEmpty()){
+                grown_bar.setProgress(0);
+            }else {
+                grown_bar.setProgress(Integer.parseInt(mMineEntity.getData().getUserGrowthValue()));
+            }
             GlideImageLoader.imageLoader(context,mMineEntity.getData().getUserIcon(),mIcon);
             mIntegralNum.setText(mMineEntity.getData().getUserIntegral() + "分");
             List<MineEntity.DataBean.RecommendactivitiesList> recommendactivitiesLists = mMineEntity.getData().getRecommendactivitiesList();

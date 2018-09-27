@@ -75,8 +75,6 @@ public class LoginActivity extends BaseActivity {
     ImageView mWXLogin;
     @BindView(R.id.iv_qq_login)
     ImageView mQQLogin;
-
-
     private Dialog progressDlg;
     private String type = null;
     private String nickName = null, userIcon = null, thirdUid = null, phoneNum = null;
@@ -84,7 +82,7 @@ public class LoginActivity extends BaseActivity {
     private SHARE_MEDIA platform;
     private String mCode = "";
     private String sessionId = "";
-    private int isCodeOrPassword = 1;
+    private int isCodeOrPassword = 1;//默认验证码登录
 
     @Override
     protected int getLayoutId() {
@@ -93,12 +91,12 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        if (isCodeOrPassword == 1) {
+        if (isCodeOrPassword == 1) {//验证码
             mUserPassword.setVisibility(View.GONE);
             llCodeLogin.setVisibility(View.VISIBLE);
             tvCodeLogin.setVisibility(View.GONE);
             tvPasswordLogin.setVisibility(View.VISIBLE);
-        } else {
+        } else {//密码登录
             mUserPassword.setVisibility(View.VISIBLE);
             llCodeLogin.setVisibility(View.GONE);
             tvPasswordLogin.setVisibility(View.GONE);
@@ -126,14 +124,14 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_go_register:
                 MyApplication.openActivity(context, RegisterActivity.class);
                 break;
-            case R.id.tv_password_login:
+            case R.id.tv_password_login://切换密码登录
                 mUserPassword.setVisibility(View.VISIBLE);
                 llCodeLogin.setVisibility(View.GONE);
                 tvCodeLogin.setVisibility(View.VISIBLE);
                 tvPasswordLogin.setVisibility(View.GONE);
                 isCodeOrPassword = 0;
                 break;
-            case R.id.tv_code_login:
+            case R.id.tv_code_login://切换验证码登录
                 mUserPassword.setVisibility(View.GONE);
                 llCodeLogin.setVisibility(View.VISIBLE);
                 tvCodeLogin.setVisibility(View.GONE);
@@ -141,7 +139,7 @@ public class LoginActivity extends BaseActivity {
                 isCodeOrPassword = 1;
                 break;
             case R.id.tv_login:
-                if (isCodeOrPassword == 1) {
+                if (isCodeOrPassword == 0) {//密码登录判断
                     if (TextUtils.isEmpty(userPhone)) {
                         ToastUtils.makeText(context, "电话号码不能为空");
                         return;
@@ -162,7 +160,7 @@ public class LoginActivity extends BaseActivity {
                         return;
                     }
                     passWordLogin(userPhone, password);
-                }else {
+                }else {//验证码登录判断
                     String inviteCode = tvEditCode.getText().toString().trim();
                 //验证电话号码不能为空
                 if (TextUtils.isEmpty(userPhone)){

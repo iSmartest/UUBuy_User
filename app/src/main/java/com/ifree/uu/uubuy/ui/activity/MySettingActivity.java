@@ -74,7 +74,7 @@ public class MySettingActivity extends BaseActivity {
         GlideImageLoader.imageLoader(context,userIcon,mIcon);
         mName.setText(userName);
         mPhone.setText("账户：" + userPhone);
-        mAddress.setText("本地服务器：192.168.1.8:8080");
+        mAddress.setText("本地服务器：" + BaseUrl.HTTP);
     }
 
     @Override
@@ -132,11 +132,11 @@ public class MySettingActivity extends BaseActivity {
                 if (isItem == 0){//线上
                     BaseUrl.HTTP = "http://101.200.60.12:8080/uugo-user/app/";
                     isItem = 1;
-                    mAddress.setText("正式服务器：101.200.60.12");
+                    mAddress.setText("正式服务器：" + BaseUrl.HTTP);
                 }else {
                     BaseUrl.HTTP = "http://192.168.1.8:8080/app/";
                     isItem = 0;
-                    mAddress.setText("本地服务器：192.168.1.8:8080");
+                    mAddress.setText("本地服务器：" + BaseUrl.HTTP);
                 }
                 break;
         }
