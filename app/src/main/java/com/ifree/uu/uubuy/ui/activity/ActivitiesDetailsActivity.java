@@ -1,5 +1,6 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.dialog.LogOutDialog;
 import com.ifree.uu.uubuy.service.entity.ActivitiesDetailsEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.ActivitiesDetailsPresenter;
@@ -82,12 +84,17 @@ public class ActivitiesDetailsActivity extends BaseActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("marketId",marketId);
                     bundle.putString("type",type);
-                    MyApplication.openActivity(context,EnterForActivitiesActivity.class,bundle);
+                    MyApplication.openActivityForResult(ActivitiesDetailsActivity.this,EnterForActivitiesActivity.class,bundle,1001);
                 }else {
                     //取消报名
-                    cancelSingUp();
+                    LogOutDialog dialog = new LogOutDialog(context, R.string.cancel_enter, new LogOutDialog.OnSureBtnClickListener() {
+                        @Override
+                        public void sure() {
+                            cancelSingUp();
+                        }
+                    });
+                    dialog.show();
                 }
-
                 break;
         }
     }
@@ -96,7 +103,6 @@ public class ActivitiesDetailsActivity extends BaseActivity {
         mCancelSignUpPresenter.onCreate();
         mCancelSignUpPresenter.attachView(mCancelSingUpView);
         mCancelSignUpPresenter.getSearchCancelSignUp(uid,marketId,type,"取消中...");
-
     }
 
     private UserInfoView mCancelSingUpView = new UserInfoView() {
@@ -114,7 +120,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
 
         @Override
         public void onError(String result) {
-
+            ToastUtils.makeText(context,result);
         }
     };
 
@@ -155,4 +161,16 @@ public class ActivitiesDetailsActivity extends BaseActivity {
             ToastUtils.makeText(context,result);
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1001){
+            if (resultCode == 1002){
+                tvEnter.setBackgroundResource(R.drawable.shape_translucent_background);
+                tvEnter.setText("取消参加");
+                isSingUp = "1";
+            }
+        }
+    }
 }

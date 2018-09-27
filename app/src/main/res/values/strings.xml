@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">UU购</string>
+    <string name="app_name" translatable="false">UU购</string>
 
-    <string name="loading_icon">加载中图</string>
-    <string name="loading">加载中</string>
+    <string name="loading_icon" translatable="false">加载中图</string>
+    <string name="loading" translatable="false">加载中</string>
     <string name="notifyTitle">提示</string>
     <string name="notifyMsg">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
     <string name="setting">设置</string>
@@ -25,6 +25,8 @@
     <string name="registered_direct_login">已注册直接登录>></string>
     <string name="unknown">未知</string>
     <string name="log_out">确定退出登录吗?</string>
+    <string name="cancel_enter" translatable="false">确定取消报名吗？</string>
+    <string name="cancel_collection" translatable="false">确定取消收藏吗？</string>
     <string name="sure_to_do_sth">您确定要%s吗？</string>
 
 

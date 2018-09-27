@@ -80,6 +80,7 @@ public class EnterForActivitiesActivity extends BaseActivity {
                 return;
             }
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            setResult(1002);
             finish();
         }
 

@@ -15,6 +15,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.custom.swipeLayout.SwipeLayout;
 import com.ifree.uu.uubuy.custom.swipeLayout.SwipeLayoutManager;
+import com.ifree.uu.uubuy.dialog.LogOutDialog;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
@@ -101,19 +102,37 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
         holder.marketDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelCollection(activitiesList.getActivitiesId(),"0");
+                LogOutDialog dialog = new LogOutDialog(context, R.string.cancel_collection, new LogOutDialog.OnSureBtnClickListener() {
+                    @Override
+                    public void sure() {
+                        cancelCollection(activitiesList.getActivitiesId(),"0");
+                    }
+                });
+                dialog.show();
             }
         });
         holder.storeDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelCollection(activitiesList.getActivitiesId(),"1");
+                LogOutDialog dialog = new LogOutDialog(context, R.string.cancel_collection, new LogOutDialog.OnSureBtnClickListener() {
+                    @Override
+                    public void sure() {
+                        cancelCollection(activitiesList.getActivitiesId(),"1");
+                    }
+                });
+                dialog.show();
             }
         });
         holder.commodityDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelCollection(activitiesList.getActivitiesId(),"2");
+                LogOutDialog dialog = new LogOutDialog(context, R.string.cancel_collection, new LogOutDialog.OnSureBtnClickListener() {
+                    @Override
+                    public void sure() {
+                        cancelCollection(activitiesList.getActivitiesId(),"2");
+                    }
+                });
+                dialog.show();
             }
         });
         holder.sl_market.setOnSwipeLayoutClickListener(new SwipeLayout.OnSwipeLayoutClickListener() {
