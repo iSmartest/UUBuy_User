@@ -117,15 +117,10 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
                         MyApplication.openActivity(context, CarCommodityActivity.class, bundle);
                         break;
                     case "5":
+                    case "6":
                         bundle.putString("commodityId",mList.get(position).getCommodityId());
                         bundle.putString("type", mList.get(position).getType());
                         MyApplication.openActivity(context, CommodityActivity.class, bundle);
-                        break;
-                    case "6":
-                        bundle.putString("marketId",mList.get(position).getCommodityId());
-                        bundle.putString("type", mList.get(position).getType());
-                        bundle.putString("marketName", mList.get(position).getCommodityName());
-                        MyApplication.openActivity(context, ActivitiesDetailsActivity.class, bundle);
                         break;
                 }
             }
@@ -162,6 +157,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             mAddress.setText(mCommodityListEntity.getData().getStoreAddress());
             GlideImageLoader.imageLoader(context, mCommodityListEntity.getData().getStorePic(), mIcon);
             isCollection = mCommodityListEntity.getData().getIsCollection();
+
             if (isCollection.equals("0")){
                 setRightText("收藏");
             }else {

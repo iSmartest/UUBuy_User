@@ -60,7 +60,7 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
     private ColorStateList csl1,csl2;
     private String classify = "0";
     private String isCollection = "0";
-
+    private String isOver = "0";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_furniture_market_store;
@@ -157,10 +157,23 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
             mTime.setText(mSecondListEntity.getData().getMarketInfo().getActivitiesTime());
             GlideImageLoader.imageLoader(context,mSecondListEntity.getData().getMarketInfo().getActivitiesPic(),mPicture);
             isCollection = mSecondListEntity.getData().getMarketInfo().getIsCollection();
+            isOver = mSecondListEntity.getData().getMarketInfo().getIsOver();
             if (isCollection.equals("0")){
                 setRightText("收藏");
             }else {
                 setRightText("取消收藏");
+            }
+            switch (isOver){
+                case "0":
+                    mTime.setText("活动已结束");
+                    break;
+                case "1":
+                case "2":
+                    mTime.setText("活动时间 " + mSecondListEntity.getData().getMarketInfo().getActivitiesTime());
+                    break;
+                case "3":
+                    mTime.setText("暂无活动");
+                    break;
             }
         }
 
@@ -235,11 +248,13 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_market_activities:
-                Bundle bundle = new Bundle();
-                bundle.putString("marketId",fristActivitiesId);
-                bundle.putString("marketName",fristActivitiesName);
-                bundle.putString("type",fristActivitiesType);
-                MyApplication.openActivity(context,ActivitiesDetailsActivity.class,bundle);
+                if (isOver.equals("1") || isOver.equals("2")){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("marketId",fristActivitiesId);
+                    bundle.putString("marketName",fristActivitiesName);
+                    bundle.putString("type",fristActivitiesType);
+                    MyApplication.openActivity(context,ActivitiesDetailsActivity.class,bundle);
+                }
                 break;
             case R.id.tv_market_share:
                 ToastUtils.makeText(context,"你点击分享");

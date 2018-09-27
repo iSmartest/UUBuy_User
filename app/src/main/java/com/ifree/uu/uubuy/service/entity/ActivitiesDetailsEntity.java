@@ -23,7 +23,7 @@ public class ActivitiesDetailsEntity {
             private String couponType;
             private String couponCondition;
             private String couponId;
-            private String couponValue;
+            private int couponValue;
 
             public String getIsUse() {
                 return isUse;
@@ -58,11 +58,11 @@ public class ActivitiesDetailsEntity {
                 this.couponId = couponId;
             }
 
-            public String getCouponValue() {
+            public int getCouponValue() {
                 return couponValue;
             }
 
-            public void setCouponValue(String couponValue) {
+            public void setCouponValue(int couponValue) {
                 this.couponValue = couponValue;
             }
         }

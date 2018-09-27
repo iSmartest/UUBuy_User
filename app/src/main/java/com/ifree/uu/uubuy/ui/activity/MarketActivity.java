@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,7 +51,7 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
     private TextView mName,mTime;
     private ImageView mPicture;
     private String isCollection = "0";
-
+    private String isOver = "0";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_market;
@@ -87,19 +88,14 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
                 loadData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page++;
                 loadData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
-
         mAdapter = new MarketAdapter(context,mList,fristActivitiesId);
         xRecyclerView.setAdapter(mAdapter);
     }
@@ -114,6 +110,11 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
     private SecondListView mSecondListView = new SecondListView() {
         @Override
         public void onSuccess(SecondActivitiesEntity mSecondListEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mSecondListEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mSecondListEntity.getMsg());
                 return;
@@ -122,22 +123,42 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
             if (marketCommodityLists != null && !marketCommodityLists.isEmpty()){
                 mList.addAll(marketCommodityLists);
                 mAdapter.notifyDataSetChanged();
+                if (marketCommodityLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
             fristActivitiesName = mSecondListEntity.getData().getMarketInfo().getMarketName();
             mName.setText(fristActivitiesName);
-            mTime.setText(mSecondListEntity.getData().getMarketInfo().getActivitiesTime());
             GlideImageLoader.imageLoader(context,mSecondListEntity.getData().getMarketInfo().getActivitiesPic(),mPicture);
             isCollection = mSecondListEntity.getData().getMarketInfo().getIsCollection();
+            isOver = mSecondListEntity.getData().getMarketInfo().getIsOver();
             if (isCollection.equals("0")){
                 setRightText("收藏");
             }else {
                 setRightText("取消收藏");
+            }
+            switch (isOver){
+                case "0":
+                    mTime.setText("活动已结束");
+                    break;
+                case "1":
+                case "2":
+                    mTime.setText("活动时间 " + mSecondListEntity.getData().getMarketInfo().getActivitiesTime());
+                    break;
+                case "3":
+                    mTime.setText("暂无活动");
+                    break;
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 
@@ -183,11 +204,13 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_market_activities:
-                Bundle bundle = new Bundle();
-                bundle.putString("marketId",fristActivitiesId);
-                bundle.putString("marketName",fristActivitiesName);
-                bundle.putString("type",fristActivitiesType);
-                MyApplication.openActivity(context,ActivitiesDetailsActivity.class,bundle);
+                if (isOver.equals("1") || isOver.equals("2")){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("marketId",fristActivitiesId);
+                    bundle.putString("marketName",fristActivitiesName);
+                    bundle.putString("type",fristActivitiesType);
+                    MyApplication.openActivity(context,ActivitiesDetailsActivity.class,bundle);
+                }
                 break;
             case R.id.tv_market_share:
                 ToastUtils.makeText(context,"你点击分享");

@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
+import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
 import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
@@ -68,8 +70,30 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyGridView
                 viewHolder.mCommodityDec.setText(mList.getCommodityDec());
                 viewHolder.mCommodityNowPrice.setText("￥" + mList.getCommodityNowPrice());
                 viewHolder.mCommodityOriginalPrice.setText("￥" + mList.getCommodityOriginalPrice());
+                viewHolder.mCommodityOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                 break;
         }
+
+        viewHolder.mItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                switch (mList.getCommodityType()){
+                    case "0":
+                        bundle.putString("fristActivitiesId",mList.getCommodityId());
+                        bundle.putString("fristActivitiesType",mList.getCommodityType());
+                        bundle.putString("fristActivitiesName",mList.getCommodityName());
+                        MyApplication.openActivity(context,StoreActivity.class,bundle);
+                        break;
+                    case "1":
+                        bundle.putString("commodityId", mList.getCommodityId());
+                        bundle.putString("type", mList.getCommodityType());
+                        bundle.putString("commodityIcon", mList.getCommodityPic());
+                        MyApplication.openActivity(context, CommodityActivity.class, bundle);
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -78,9 +102,11 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyGridView
     }
 
     class MyGridViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_store_or_commodity_picture)
+        @BindView(R.id.ll_item_commodity)
+        LinearLayout mItem;
+        @BindView(R.id.tv_picture)
         ImageView mPicture;
-        @BindView(R.id.rl_store)
+        @BindView(R.id.rl_market_store)
         RelativeLayout rl_store;
         @BindView(R.id.tv_store_name)
         TextView mStoreName;

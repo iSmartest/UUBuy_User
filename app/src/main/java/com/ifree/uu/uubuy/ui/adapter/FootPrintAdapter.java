@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,10 +96,13 @@ public class FootPrintAdapter extends BaseAdapter {
                 viewHolder.mStore.setVisibility(View.GONE);
                 viewHolder.mCommodity.setVisibility(View.VISIBLE);
                 viewHolder.mCommodityName.setText(mList.getActivitiesName());
+                viewHolder.mCommodityDec.setText(mList.getActivitiesDes());
                 GlideImageLoader.imageLoader(context,mList.getActivitiesPic(),viewHolder.mCommodityPicture);
-                viewHolder.mPrice.setText(mList.getActivitiesPresentPrice());
-                viewHolder.mOldPrice.setText(mList.getActivitiesOriginalPrice());
+                viewHolder.mPrice.setText("￥"+mList.getActivitiesPresentPrice());
+                viewHolder.mOldPrice.setText("￥"+mList.getActivitiesOriginalPrice());
+                viewHolder.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                 viewHolder.mSurplus.setText(mList.getActivitiesSurplusNum());
+                viewHolder.mAddress.setText(mList.getActivitiesAdAddress());
                 break;
 
         }
@@ -216,19 +220,21 @@ public class FootPrintAdapter extends BaseAdapter {
         TextView mContent;
 
         @BindView(R.id.rl_search_commodity)
-        RelativeLayout mCommodity;
+        LinearLayout mCommodity;
         @BindView(R.id.iv_search_commodity_picture)
         ImageView mCommodityPicture;
         @BindView(R.id.tv_search_commodity_name)
         TextView mCommodityName;
+        @BindView(R.id.tv_search_commodity_dec)
+        TextView mCommodityDec;
         @BindView(R.id.tv_search_commodity_price)
         TextView mPrice;
         @BindView(R.id.tv_search_commodity_old_price)
         TextView mOldPrice;
         @BindView(R.id.tv_search_commodity_surplus)
         TextView mSurplus;
-        @BindView(R.id.tv_now_reserve)
-        TextView mReserve;
+        @BindView(R.id.tv_commodity_store_address)
+        TextView mAddress;
         public FootPrintViewHolder(View itemView) {
             ButterKnife.bind(this,itemView);
         }

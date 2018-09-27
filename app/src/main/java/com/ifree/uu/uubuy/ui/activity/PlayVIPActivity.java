@@ -114,8 +114,8 @@ public class PlayVIPActivity extends BaseActivity {
                 mSignIn.setBackgroundResource(R.drawable.shape_city_location_background);
                 mSignIn.setText("已签到");
             }else {
-                mGoPerfectInformation.setBackgroundResource(R.drawable.shape_red_background);
-                mGoPerfectInformation.setText("签到");
+                mSignIn.setBackgroundResource(R.drawable.shape_red_background);
+                mSignIn.setText("签到");
             }
             if (isShare.equals("1")){
                 mGoShare.setBackgroundResource(R.drawable.shape_city_location_background);

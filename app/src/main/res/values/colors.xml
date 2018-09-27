@@ -28,6 +28,7 @@
     <color name="text_fraction_red">#ec373f</color>
     <color name="text_type_red">#FFD0021B</color>
     <color name="sign_in_red">#FF3D62</color>
+    <color name="coupon_in_red">#FF2743</color>
     <color name="colorBanTransparent">#50000000</color>
     <color name="parting_line">#f8e7e5</color>
     <color name="transparent">#00000000</color>

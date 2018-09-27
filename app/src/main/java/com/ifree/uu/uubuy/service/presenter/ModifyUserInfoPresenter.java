@@ -3,7 +3,9 @@ package com.ifree.uu.uubuy.service.presenter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
@@ -76,6 +78,7 @@ public class ModifyUserInfoPresenter implements Presenter {
                         dialog.dismiss();
                         if (mUserInfoEntity != null){
                             mUserInfoView.onSuccess(mUserInfoEntity);
+                            Log.i("TAG", "onCompleted: " + new Gson().toJson(mUserInfoEntity));
                         }
                     }
 

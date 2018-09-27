@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,29 +45,25 @@ public class MineAdapter extends RecyclerView.Adapter<MineAdapter.MineViewHolder
     @Override
     public void onBindViewHolder(@NonNull MineViewHolder holder, int position) {
         MineEntity.DataBean.RecommendactivitiesList reList = mList.get(position);
-        switch (reList.getType()){
-            case "1":
-            case "2":
-            case "3":
-                holder.llMarket.setVisibility(View.VISIBLE);
-                holder.llStore.setVisibility(View.GONE);
-                GlideImageLoader.imageLoader(context,reList.getActivitiesPic(),holder.mMarketPicture);
-                holder.mMarketName.setText(reList.getActivitiesName());
-                holder.mMarketTime.setText("活动时间：" + reList.getActivitiesTime());
+        GlideImageLoader.imageLoader(context,reList.getActivitiesPic(),holder.mMarketPicture);
+        holder.mMarketName.setText(reList.getActivitiesName());
+        holder.mMarketTime.setText("活动时间：" + reList.getActivitiesTime());
+        ColorStateList cls1 = context.getResources().getColorStateList(R.color.text_green);
+        ColorStateList cls2 = context.getResources().getColorStateList(R.color.text_type_red);
+        ColorStateList cls3 = context.getResources().getColorStateList(R.color.silver_medal);
+        switch (reList.getIsOver()){
+            case "0"://活动结束
+                holder.mMarketState.setText("已结束");
+                holder.mMarketState.setTextColor(cls2);
                 break;
-            case "4":
-            case "5":
-            case "6":
-            case "7":
-            case "8":
-            case "9":
-                holder.llMarket.setVisibility(View.GONE);
-                holder.llStore.setVisibility(View.VISIBLE);
-                GlideImageLoader.imageLoader(context,reList.getActivitiesPic(),holder.mStorePicture);
-                holder.mStoreName.setText(reList.getActivitiesName());
-                holder.mStoreAddress.setText(reList.getActivitiesAdAddress());
+            case "1"://活动进行中
+                holder.mMarketState.setText("进行中");
+                holder.mMarketState.setTextColor(cls1);
                 break;
-
+            case "2"://活动未开始
+                holder.mMarketState.setText("未开始");
+                holder.mMarketState.setTextColor(cls3);
+                break;
         }
     }
 
@@ -76,14 +73,8 @@ public class MineAdapter extends RecyclerView.Adapter<MineAdapter.MineViewHolder
     }
 
     public class MineViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.ll_mine_store)
-        LinearLayout llStore;
-        @BindView(R.id.iv_mine_store_picture)
-        ImageView mStorePicture;
-        @BindView(R.id.tv_mine_store_name)
-        TextView mStoreName;
-        @BindView(R.id.tv_mine_store_address)
-        TextView mStoreAddress;
+        @BindView(R.id.tv_mine_market_state)
+        TextView mMarketState;
         @BindView(R.id.tv_mine_market_name)
         TextView mMarketName;
         @BindView(R.id.iv_mine_market_picture)

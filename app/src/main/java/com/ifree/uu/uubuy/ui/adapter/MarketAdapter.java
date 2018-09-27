@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,14 +13,11 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
-import com.ifree.uu.uubuy.custom.MyGridView;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
-import com.ifree.uu.uubuy.ui.activity.MarketActivity;
 import com.ifree.uu.uubuy.ui.activity.MoreActivity;
 import com.ifree.uu.uubuy.ui.activity.StoreActivity;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
 
 import java.util.List;
 
@@ -61,30 +57,30 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.MarketView
         holder.my_gv.setNestedScrollingEnabled(false);
         MyGridAdapter myGridAdapter = new MyGridAdapter(context,marketCommodityList.getCommodityList());
         holder.my_gv.setAdapter(myGridAdapter);
-        holder.my_gv.addOnItemTouchListener(new RecyclerItemTouchListener(holder.my_gv) {
-            @Override
-            public void onItemClick(RecyclerView.ViewHolder vh) {
-                int i = vh.getAdapterPosition();
-                if (i < 0 | i >= mList.size()){
-                    return;
-                }
-                Bundle bundle = new Bundle();
-                switch (marketCommodityList.getCommodityList().get(i).getCommodityType()){
-                    case "0":
-                        bundle.putString("fristActivitiesId",marketCommodityList.getCommodityList().get(i).getCommodityId());
-                        bundle.putString("fristActivitiesType",marketCommodityList.getCommodityList().get(i).getCommodityType());
-                        bundle.putString("fristActivitiesName",marketCommodityList.getCommodityList().get(i).getCommodityName());
-                        MyApplication.openActivity(context,StoreActivity.class,bundle);
-                        break;
-                    case "1":
-                        bundle.putString("commodityId",marketCommodityList.getCommodityList().get(i).getCommodityId());
-                        bundle.putString("type", marketCommodityList.getCommodityList().get(i).getCommodityType());
-                        bundle.putString("commodityIcon",marketCommodityList.getCommodityList().get(i).getCommodityPic());
-                        MyApplication.openActivity(context, CommodityActivity.class, bundle);
-                        break;
-                }
-            }
-        });
+//        holder.my_gv.addOnItemTouchListener(new RecyclerItemTouchListener(holder.my_gv) {
+//            @Override
+//            public void onItemClick(RecyclerView.ViewHolder vh) {
+//                int i = vh.getAdapterPosition();
+//                if (i < 0 | i >= mList.size()){
+//                    return;
+//                }
+//                Bundle bundle = new Bundle();
+//                switch (marketCommodityList.getCommodityList().get(i).getCommodityType()){
+//                    case "0":
+//                        bundle.putString("fristActivitiesId",marketCommodityList.getCommodityList().get(i).getCommodityId());
+//                        bundle.putString("fristActivitiesType",marketCommodityList.getCommodityList().get(i).getCommodityType());
+//                        bundle.putString("fristActivitiesName",marketCommodityList.getCommodityList().get(i).getCommodityName());
+//                        MyApplication.openActivity(context,StoreActivity.class,bundle);
+//                        break;
+//                    case "1":
+//                        bundle.putString("commodityId",marketCommodityList.getCommodityList().get(i).getCommodityId());
+//                        bundle.putString("type", marketCommodityList.getCommodityList().get(i).getCommodityType());
+//                        bundle.putString("commodityIcon",marketCommodityList.getCommodityList().get(i).getCommodityPic());
+//                        MyApplication.openActivity(context, CommodityActivity.class, bundle);
+//                        break;
+//                }
+//            }
+//        });
         holder.mMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

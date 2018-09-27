@@ -30,7 +30,7 @@ public class NotUsedFragment extends BaseFragment {
     XRecyclerView xRecyclerView;
     private int page = 1;
     private CouponAdapter mAdapter;
-    private List<CouponEntity.DataBean.CouponList> mList = new ArrayList<>();
+    private List<CouponEntity.DataBean.CouponList> mList;
     private String couponType = "0";
     private String businessId = "";
     @Override
@@ -40,6 +40,7 @@ public class NotUsedFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        mList = new ArrayList<>();
         mMyCouponPresenter = new MyCouponPresenter(context);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -76,6 +77,11 @@ public class NotUsedFragment extends BaseFragment {
     private CouponView mCouponView = new CouponView() {
         @Override
         public void onSuccess(CouponEntity mCouponEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mCouponEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mCouponEntity.getMsg());
                 return;
@@ -84,12 +90,20 @@ public class NotUsedFragment extends BaseFragment {
             if (couponLists != null && !couponLists.isEmpty()){
                 mList.addAll(couponLists);
                 mAdapter.notifyDataSetChanged();
+                if (couponLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 }

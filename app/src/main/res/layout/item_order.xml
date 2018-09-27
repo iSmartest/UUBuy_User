@@ -75,7 +75,7 @@
             android:id="@+id/iv_order_commodity_icon"
             android:layout_width="135dp"
             android:layout_height="120dp"
-            android:src="@drawable/timg"
+            android:src="@drawable/loading_error"
             android:layout_centerInParent="true"
             android:layout_alignParentLeft="true"
             android:scaleType="centerCrop"/>

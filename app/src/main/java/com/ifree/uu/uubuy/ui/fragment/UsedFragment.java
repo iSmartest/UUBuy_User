@@ -30,7 +30,7 @@ public class UsedFragment extends BaseFragment {
     XRecyclerView xRecyclerView;
     private int page = 1;
     private CouponAdapter mAdapter;
-    private List<CouponEntity.DataBean.CouponList> mList = new ArrayList<>();
+    private List<CouponEntity.DataBean.CouponList> mList;
     private String couponType = "1";
     private String businessId = "";
     @Override
@@ -40,6 +40,7 @@ public class UsedFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        mList = new ArrayList<>();
         mMyCouponPresenter = new MyCouponPresenter(context);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

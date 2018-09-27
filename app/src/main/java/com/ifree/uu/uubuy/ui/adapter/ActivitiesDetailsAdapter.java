@@ -51,7 +51,7 @@ public class ActivitiesDetailsAdapter extends RecyclerView.Adapter<ActivitiesDet
     @Override
     public void onBindViewHolder(@NonNull final ActivitiesDetailsViewHolder holder, int position) {
         final ActivitiesDetailsEntity.DataBean.CouponList couponList = mList.get(position);
-        holder.mReducePrice.setText(couponList.getCouponValue());
+        holder.mReducePrice.setText(String.valueOf(couponList.getCouponValue()));
         holder.mAllPrice.setText(couponList.getCouponCondition());
         holder.mType.setText(couponList.getCouponType());
         switch (couponList.getIsUse()){
@@ -108,7 +108,7 @@ public class ActivitiesDetailsAdapter extends RecyclerView.Adapter<ActivitiesDet
     }
 
     public static class ActivitiesDetailsViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_coupon_reduce_price)
+        @BindView(R.id.tv_reduce_price)
         TextView mReducePrice;
         @BindView(R.id.tv_coupon_all_price)
         TextView mAllPrice;

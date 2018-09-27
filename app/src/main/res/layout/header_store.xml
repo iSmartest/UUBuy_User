@@ -19,7 +19,7 @@
                 android:layout_centerInParent="true"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="18dp"
-                android:src="@drawable/timg"
+                android:src="@drawable/loading_error"
                 android:scaleType="centerCrop"/>
             <LinearLayout
                 android:layout_width="match_parent"

@@ -55,6 +55,8 @@ public class CommodityActivity extends BaseActivity {
     TextView mPresentPrice;
     @BindView(R.id.tv_store_commodity_address)
     TextView mAddress;
+    @BindView(R.id.tv_store_commodity_condition)
+    TextView mCondition;
     @BindView(R.id.iv_commodity_picture)
     ImageView mCommodityPicture;
     @BindView(R.id.rc_picture)
@@ -132,6 +134,7 @@ public class CommodityActivity extends BaseActivity {
             mPresentPrice.setText(commodityPrice);
             commodityAddress = mCommodityInfoEntity.getData().getActivitiesStoreAddress();
             mAddress.setText(commodityAddress);
+            mCondition.setText(mCommodityInfoEntity.getData().getCommodityCondition());
             commodityType = mCommodityInfoEntity.getData().getType();
             shopId = mCommodityInfoEntity.getData().getCommodityShopId();
             isCollection = mCommodityInfoEntity.getData().getIsCollection();

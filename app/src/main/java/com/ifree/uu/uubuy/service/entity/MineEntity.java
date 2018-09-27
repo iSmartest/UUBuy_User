@@ -37,6 +37,7 @@ public class MineEntity {
             private String activitiesAdAddress;
             private String activitiesType;
             private String type;
+            private String isOver;
             public String getActivitiesId() {
                 return activitiesId;
             }
@@ -91,6 +92,14 @@ public class MineEntity {
 
             public void setType(String type) {
                 this.type = type;
+            }
+
+            public String getIsOver() {
+                return isOver;
+            }
+
+            public void setIsOver(String isOver) {
+                this.isOver = isOver;
             }
         }
         public String getUserIcon() {

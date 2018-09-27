@@ -55,7 +55,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
                 holder.linearLayout.setBackgroundResource(R.drawable.coupon_used_background);
                 break;
         }
-
+        holder.mCoupon.setVisibility(View.GONE);
         holder.mReducePrice.setText(couponList.getCouponReducePrice() + "");
         holder.mAllPrice.setText("单笔" + couponList.getCondition());
         holder.mTime.setText("有效时间:" + couponList.getSecuritiesTimeZone());
@@ -82,6 +82,8 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
         TextView mTime;
         @BindView(R.id.tv_coupon_for_store)
         TextView mStore;
+        @BindView(R.id.tv_my_coupon)
+        TextView mCoupon;
         public CouponViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

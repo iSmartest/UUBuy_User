@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -89,10 +90,10 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
                 holder.sl_store.setVisibility(View.GONE);
                 holder.sl_commodity.setVisibility(View.VISIBLE);
                 holder.commodityName.setText(activitiesList.getActivitiesName());
-                holder.commodityDec.setText(activitiesList.getActivitiesDes());
-                holder.commodityNowPrice.setText(activitiesList.getActivitiesPresentPrice());
-                holder.commodityOriginalPrice.setText(activitiesList.getActivitiesOriginalPrice());
-                holder.commodityAddress.setText(activitiesList.getActivitiesAdAddress());
+                holder.commoditySurplus.setText(activitiesList.getActivitiesSurplusNum());
+                holder.commodityNowPrice.setText("￥"+activitiesList.getActivitiesPresentPrice());
+                holder.commodityOriginalPrice.setText("￥"+activitiesList.getActivitiesOriginalPrice());
+                holder.commodityOriginalPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
                 GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.commodityIcon);
                 break;
         }
@@ -215,14 +216,12 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
         ImageView commodityIcon;
         @BindView(R.id.iv_activities_circle_commodity_name)
         TextView commodityName;
-        @BindView(R.id.iv_activities_circle_commodity_dec)
-        TextView commodityDec;
+        @BindView(R.id.tv_activities_commodity_surplus)
+        TextView commoditySurplus;
         @BindView(R.id.iv_activities_circle_commodity_now_price)
         TextView commodityNowPrice;
         @BindView(R.id.iv_activities_circle_commodity_original_price)
         TextView commodityOriginalPrice;
-        @BindView(R.id.iv_activities_circle_commodity_address)
-        TextView commodityAddress;
         public ActivitiesViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

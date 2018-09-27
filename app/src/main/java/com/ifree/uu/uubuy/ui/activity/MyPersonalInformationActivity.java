@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -27,7 +26,6 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.dialog.EditContentDialog;
@@ -39,6 +37,7 @@ import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.PhotoUtil;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
+
 
 import java.io.File;
 import java.net.URI;
@@ -57,6 +56,7 @@ import okhttp3.RequestBody;
  * Created by 2018/8/21.
  * Description:
  */
+
 public class MyPersonalInformationActivity extends BaseActivity {
     private ModifyUserInfoPresenter mModifyUserInfoPresenter;
     @BindView(R.id.ri_my_icon_img)
@@ -90,10 +90,12 @@ public class MyPersonalInformationActivity extends BaseActivity {
     private EditContentDialog dialog;
     private final int DATE_DIALOG = 1;
     private int mYear, mMonth, mDay;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_personal_information;
     }
+
 
     @Override
     protected void initView() {
@@ -108,7 +110,6 @@ public class MyPersonalInformationActivity extends BaseActivity {
         userIdCard = SPUtil.getString(context,"userIdCard");
         userSex = SPUtil.getString(context,"userSex");
     }
-
 
     @Override
     protected void loadData() {
@@ -127,9 +128,9 @@ public class MyPersonalInformationActivity extends BaseActivity {
         mMonth = ca.get(Calendar.MONTH);
         mDay = ca.get(Calendar.DAY_OF_MONTH);
     }
-    @OnClick({R.id.ri_my_icon_img, R.id.ll_nick_name, R.id.ll_sex, R.id.ll_birthday,R.id.text_personal_information_id_cart,R.id.text_personal_information_address})
-    public void onViewClicked(View view) {
-        switch (view.getId()){
+    @OnClick({R.id.ri_my_icon_img,R.id.ll_nick_name, R.id.ll_sex, R.id.ll_birthday,R.id.text_personal_information_id_cart,R.id.text_personal_information_address})
+    public void onViewClicked(View v) {
+        switch (v.getId()) {
             case R.id.ri_my_icon_img:
                 showChoosePicDialog();
                 break;
@@ -221,6 +222,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
             ToastUtils.makeText(context,result);
         }
     };
+
     private void showChoosePicDialog() {
         builder = new AlertDialog.Builder(context, R.style.Dialog).create(); // 先得到构造器
         builder.show();
@@ -259,8 +261,9 @@ public class MyPersonalInformationActivity extends BaseActivity {
         dialogWindow.setAttributes(p);
     }
 
-
-    //自动获取相机权限
+    /**
+     * 自动获取相机权限
+     */
     private void autoObtainCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -273,7 +276,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
             if (hasSdcard()) {
                 imageUri = Uri.fromFile(fileUri);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    imageUri = FileProvider.getUriForFile(MyPersonalInformationActivity.this, "com.ifree.coupon_uu.uubuy.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
+                    imageUri = FileProvider.getUriForFile(MyPersonalInformationActivity.this, "com.ifree.uu.uubuy.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
                 PhotoUtil.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
             } else {
                 ToastUtils.makeText(this, "设备没有SD卡！");
@@ -281,17 +284,18 @@ public class MyPersonalInformationActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 自动获取sdk权限
+     */
 
-
-    //自动获取sdk权限
     private void autoObtainStoragePermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSIONS_REQUEST_CODE);
         } else {
             PhotoUtil.openPic(this, CODE_GALLERY_REQUEST);
         }
-    }
 
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -302,7 +306,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
                     if (hasSdcard()) {
                         imageUri = Uri.fromFile(fileUri);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            imageUri = FileProvider.getUriForFile(MyPersonalInformationActivity.this, "com.ifree.coupon_uu.uubuy.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
+                            imageUri = FileProvider.getUriForFile(MyPersonalInformationActivity.this, "com.ifree.uu.uubuy.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
                         PhotoUtil.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
                     } else {
                         ToastUtils.makeText(this, "设备没有SD卡！");
@@ -339,14 +343,14 @@ public class MyPersonalInformationActivity extends BaseActivity {
                         cropImageUri = Uri.fromFile(fileCropUri);
                         Uri newUri = Uri.parse(PhotoUtil.getPath(this, data.getData()));
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                            newUri = FileProvider.getUriForFile(this, "com.ifree.coupon_uu.uubuy.fileprovider", new File(newUri.getPath()));
+                            newUri = FileProvider.getUriForFile(this, "com.ifree.uu.uubuy.fileprovider", new File(newUri.getPath()));
                         PhotoUtil.cropImageUri(this, newUri, cropImageUri, 1, 1, output_X, output_Y, CODE_RESULT_REQUEST);
                     } else {
                         ToastUtils.makeText(this, "设备没有SD卡！");
                     }
                     break;
                 case CODE_RESULT_REQUEST:
-                    Bitmap bitmap = PhotoUtil.getBitmapFromUri(cropImageUri, context);
+                    Bitmap bitmap = PhotoUtil.getBitmapFromUri(cropImageUri, this);
                     if (bitmap != null) {
                         showImages(bitmap,cropImageUri);
                     }
@@ -356,10 +360,9 @@ public class MyPersonalInformationActivity extends BaseActivity {
     }
 
     private void showImages(Bitmap bitmap,Uri cropImageUri) {
-        mUserIcon.setImageBitmap(bitmap);
-//        GlideImageLoader.imageLoader(context,cropImageUri,mUserIcon);
         submitModifyUserIconInfo(cropImageUri);
     }
+
 
     private void submitModifyUserIconInfo(Uri cropImageUri) {
         File file = null;
@@ -384,6 +387,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
                 ToastUtils.makeText(context,mUserInfoEntity.getMsg());
                 return;
             }
+            GlideImageLoader.imageLoader(context,mUserInfoEntity.getData().getUserIcon(),mUserIcon);
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
             Intent intent = new Intent();
             intent.setAction("com.ifree.uu.mine.changed");
@@ -396,11 +400,14 @@ public class MyPersonalInformationActivity extends BaseActivity {
         }
     };
 
-    //检查设备是否存在SDCard的工具方法
+    /**
+     * 检查设备是否存在SDCard的工具方法
+     */
     private static boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
         return state.equals(Environment.MEDIA_MOUNTED);
     }
+
 
     @Override
     protected Dialog onCreateDialog(int id) {

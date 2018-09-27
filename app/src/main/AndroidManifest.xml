@@ -49,7 +49,20 @@
     <!-- 3.2.0版本增加 -->
     <uses-permission android:name="android.permission.BLUETOOTH"/>
 
-
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -387,7 +400,7 @@
         <!--Android 7.0相机调用-->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.ifree.coupon_uu.uubuy.fileprovider"
+            android:authorities="com.ifree.uu.uubuy.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

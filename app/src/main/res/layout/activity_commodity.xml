@@ -16,31 +16,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ll_commodity_banner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="330dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/image_item_conner_style"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/iv_commodity_picture"
-                    android:layout_width="211dp"
-                    android:layout_height="211dp"
-                    android:layout_marginTop="30dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rc_picture"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="27dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="27dp"
-                    android:layout_marginTop="16dp">
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/image_item_conner_style"
+                    android:layout_marginBottom="5dp">
                 </android.support.v7.widget.RecyclerView>
-            </LinearLayout>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_commodity_des"
@@ -134,6 +135,7 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/tv_store_commodity_condition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
@@ -169,37 +171,39 @@
                 </LinearLayout>
 
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_centerInParent="true"
                 android:layout_below="@+id/rl_commodity_des"
+                android:layout_centerInParent="true"
                 android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:layout_marginBottom="20dp">
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tv_commodity_compare"
                     android:layout_width="120dp"
                     android:layout_height="40dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/shape_background_sure"
+                    android:gravity="center"
                     android:text="精品比较"
                     android:textColor="@color/app_main_default"
                     android:textSize="19dp"
-                    android:gravity="center"
-                    android:layout_marginRight="40dp"
-                    android:visibility="visible"
-                    android:background="@drawable/shape_background_sure"/>
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/tv_commodity_reserve"
                     android:layout_width="120dp"
                     android:layout_height="40dp"
+                    android:background="@drawable/shape_background_sure"
+                    android:gravity="center"
                     android:text="立即预订"
                     android:textColor="@color/app_main_default"
                     android:textSize="19dp"
-                    android:gravity="center"
-                    android:visibility="visible"
-                    android:background="@drawable/shape_background_sure"/>
+                    android:visibility="visible" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

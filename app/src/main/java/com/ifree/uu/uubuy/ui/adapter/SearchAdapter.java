@@ -205,7 +205,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         TextView mContent;
 
         @BindView(R.id.rl_search_commodity)
-        RelativeLayout mCommodity;
+        LinearLayout mCommodity;
         @BindView(R.id.iv_search_commodity_picture)
         ImageView mCommodityPicture;
         @BindView(R.id.tv_search_commodity_name)
@@ -216,8 +216,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         TextView mOldPrice;
         @BindView(R.id.tv_search_commodity_surplus)
         TextView mSurplus;
-        @BindView(R.id.tv_now_reserve)
-        TextView mReserve;
         public SearchViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
