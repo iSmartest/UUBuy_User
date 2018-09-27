@@ -157,6 +157,10 @@ public class DataManager {
         return mRetrofitService.getSearchSignIns(uid);
     }
 
+    public Observable<UserInfoEntity> getSearchShare(String uid) {
+        return mRetrofitService.getSearchShare(uid);
+    }
+
     public Observable<CouponEntity> getSearchCouponCenter(String uid, String businessId, String couponType, String longitude, String latitude, String townAdCode, int page) {
         return mRetrofitService.getSearchCouponCenter(uid, businessId, couponType, longitude, latitude, townAdCode, page);
     }

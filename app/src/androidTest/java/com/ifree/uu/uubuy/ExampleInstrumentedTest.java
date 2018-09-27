@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.ifree.coupon_uu.uubuy", appContext.getPackageName());
+        assertEquals("com.ifree.uu.uubuy", appContext.getPackageName());
     }
 }

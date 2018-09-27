@@ -51,6 +51,7 @@ public class SelectProvinceActivity extends BaseActivity {
     protected void initView() {
         hideBack(5);
         setTitleText("选择城市");
+        MyApplication.addActivity(SelectProvinceActivity.this);
         mList = getIntent().getParcelableArrayListExtra("province");
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

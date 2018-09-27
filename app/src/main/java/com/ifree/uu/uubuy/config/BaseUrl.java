@@ -71,6 +71,8 @@ public class BaseUrl {
     public static final String GROUP_INFO = "getGroupInfo?";
     //签到
     public static final String SIGN_IN = "getSignIn?";
+    //分享
+    public static final String SHARE = "share?";
     //领券中心
     public static final String COUPON_CENTER = "getCouponInfo?";
     //领取优惠券

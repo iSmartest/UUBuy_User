@@ -1,14 +1,15 @@
 package com.ifree.uu.uubuy.ui.activity;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.ui.adapter.SelectAreaAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-
+import com.ifree.uu.uubuy.uitls.SPUtil;
 
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -38,7 +39,14 @@ public class SelectAreaActivity extends BaseActivity {
                 if (position < 0 | position >= mList.size()){
                     return;
                 }
-
+                SPUtil.putString(context, "city",mList.get(position).getTown());
+                SPUtil.putString(context, "townAdCode", mList.get(position).getTownAdCode());
+                SPUtil.putString(context, "latitude", mList.get(position).getLatitude());
+                SPUtil.putString(context, "longitude", mList.get(position).getLongitude());
+                MyApplication.clearActivity();
+                Intent intent = new Intent();
+                intent.setAction("com.ifree.uu.location.changed");
+                getApplicationContext().sendBroadcast(intent);
             }
         });
     }
@@ -47,6 +55,7 @@ public class SelectAreaActivity extends BaseActivity {
     protected void initView() {
         hideBack(5);
         setTitleText("选择城市");
+        MyApplication.addActivity(SelectAreaActivity.this);
         mList = getIntent().getParcelableArrayListExtra("area");
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

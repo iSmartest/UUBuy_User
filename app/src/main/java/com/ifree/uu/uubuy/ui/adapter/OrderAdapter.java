@@ -62,8 +62,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         final OrderEntity.DataBean.OrderInfoList orderInfoList = mList.get(position);
         switch (orderState){
             case "0":
+                switch (orderInfoList.getIsOver()){
+                    case "0":
+                        holder.isOver.setVisibility(View.VISIBLE);
+                        holder.commodityAgain.setVisibility(View.GONE);
+                        break;
+                    case "1":
+                        holder.isOver.setVisibility(View.GONE);
+                        holder.commodityAgain.setVisibility(View.VISIBLE);
+                        holder.commodityAgain.setText("取消预定");
+                        break;
+                }
                 holder.orderDelete.setVisibility(View.GONE);
-                holder.commodityAgain.setText("取消预定");
                 holder.commodityAgain.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -103,14 +113,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         }
         holder.orderId.setText("订单号" + orderInfoList.getOrderId());
         holder.commodityName.setText(orderInfoList.getCommodityTitle());
-        switch (orderInfoList.getIsOver()){
-            case "0":
-                holder.isOver.setVisibility(View.VISIBLE);
-                break;
-            case "1":
-                holder.isOver.setVisibility(View.GONE);
-                break;
-        }
         GlideImageLoader.imageLoader(context,orderInfoList.getCommodityIcon(),holder.commodityIcon);
         holder.commodityDec.setText(orderInfoList.getCommodityDec());
         holder.commodityPrice.setText("￥" + orderInfoList.getCommodityPresentPrice());

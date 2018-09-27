@@ -3,6 +3,7 @@ package com.ifree.uu.uubuy.ui.activity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.service.entity.GroupEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.GroupInfoPresenter;
+import com.ifree.uu.uubuy.service.presenter.SharePresenter;
 import com.ifree.uu.uubuy.service.presenter.SignInPresenter;
 import com.ifree.uu.uubuy.service.view.GroupInfoView;
 import com.ifree.uu.uubuy.service.view.UserInfoView;
@@ -20,6 +22,11 @@ import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.shareboard.ShareBoardConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +41,7 @@ import butterknife.OnClick;
  * Description:
  */
 public class PlayVIPActivity extends BaseActivity {
+    private SharePresenter mSharePresenter;
     private GroupInfoPresenter mGroupInfoPresenter;
     private SignInPresenter mSignInPresenter;
     @BindView(R.id.tv_sign_in)
@@ -68,6 +76,7 @@ public class PlayVIPActivity extends BaseActivity {
     protected void initView() {
         hideBack(7);
         setTitleText("玩转会员");
+        mSharePresenter = new SharePresenter(context);
         userName = SPUtil.getString(context,"userName");
         userIcon = SPUtil.getString(context,"userIcon");
         mGroupInfoPresenter = new GroupInfoPresenter(context);
@@ -146,7 +155,19 @@ public class PlayVIPActivity extends BaseActivity {
                 break;
             case R.id.tv_go_share:
                 if (isShare.equals("0")){
-                    ToastUtils.makeText(context,"跳转三方分享");
+                    ShareBoardConfig config = new ShareBoardConfig();
+                    ShareAction mShareAction = new ShareAction(this);
+                    config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR);// 圆角背景
+                    config.setCancelButtonVisibility(false);
+                    config.setTitleVisibility(true);
+                    config.setTitleText("— 分享到 —");
+                    mShareAction.setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                            .withTitle("您的好友"+userName+"邀请您加入【UU购】")
+                            .withText("赶快下载体验【UU购】APP！")
+                            .withMedia(new UMImage(context, R.mipmap.app_icon))
+                            .withTargetUrl("http://waipopo.cn")
+                            .setCallback(umShareListener)
+                            .open(config);
                 }else {
                     ToastUtils.makeText(context,"今天任务已经完成了，看看其他的吧！");
                 }
@@ -190,6 +211,54 @@ public class PlayVIPActivity extends BaseActivity {
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+        }
+    };
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Log.d("plat", "platform" + platform);
+            if (SPUtil.getString(context,"uid").isEmpty()){
+                ToastUtils.makeText(context, "分享成功啦");
+            }else {
+                Share();
+            }
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            ToastUtils.makeText(context, "分享失败啦！");
+            if (t != null) {
+                Log.d("throw", "throw:" + t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            ToastUtils.makeText(context, "分享已取消了");
+        }
+    };
+
+    private void Share() {
+        mSharePresenter.onCreate();
+        mSharePresenter.attachView(mShareView);
+        mSharePresenter.getSearchShare(SPUtil.getUid(context),"分享中...");
+    }
+
+    private UserInfoView mShareView = new UserInfoView() {
+        @Override
+        public void onSuccess(UserInfoEntity mUserInfoEntity) {
+            if (mUserInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                return;
+            }
+            ToastUtils.makeText(context, "分享成功啦");
+            mGoShare.setText("已分享");
+        }
+
+        @Override
+        public void onError(String result) {
+            ToastUtils.makeText(context, result);
         }
     };
 }

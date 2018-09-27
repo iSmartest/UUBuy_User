@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.ifree.coupon_uu.uubuy"
+        applicationId "com.ifree.uu.uubuy"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
@@ -78,6 +79,7 @@ public class CityInfoPresenter implements Presenter {
                         dialog.dismiss();
                         if (mCityInfoEntity != null){
                             mCityInfoView.onSuccess(mCityInfoEntity);
+                            Log.i("TAG", "onCompleted: " + new Gson().toJson(mCityInfoEntity));
                         }
                     }
 

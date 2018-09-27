@@ -97,7 +97,7 @@ public interface RetrofitService {
     @GET(BaseUrl.CITY_INFO)
     Observable<CityInfoEntity> getSearchCityInfo();
 
-    @POST(BaseUrl.HOT_KEY_WORD)
+    @GET(BaseUrl.HOT_KEY_WORD)
     Observable<HotKeyWordEntity> getSearchHotKeyword();
 
     @FormUrlEncoded
@@ -198,20 +198,23 @@ public interface RetrofitService {
     Observable<UserInfoEntity> getSearchModifyUserIconInfo(@Query("uid") String uid,
                                                            @Part MultipartBody.Part body);
 
-
-    @GET(BaseUrl.MODIFY_USER_INFO)
+    @FormUrlEncoded
+    @POST(BaseUrl.MODIFY_USER_INFO)
     Observable<UserInfoEntity> getSearchModifyUserInfo(@Query("uid") String uid,
                                                        @Query("userSex") String userSex,
-                                                       @Query("userName") String userName,
+                                                       @Field("userName") String userName,
                                                        @Query("userBirthday") String userBirthday,
                                                        @Query("idCard") String userIdCartNumber,
-                                                       @Query("address") String userAddress);
+                                                       @Field("address") String userAddress);
 
     @GET(BaseUrl.GROUP_INFO)
     Observable<GroupEntity> getSearchGroupInfos(@Query("uid") String uid);
 
     @GET(BaseUrl.SIGN_IN)
     Observable<UserInfoEntity> getSearchSignIns(@Query("uid") String uid);
+
+    @GET(BaseUrl.SHARE)
+    Observable<UserInfoEntity> getSearchShare(@Query("uid") String uid);
 
     @GET(BaseUrl.COUPON_CENTER)
     Observable<CouponEntity> getSearchCouponCenter(@Query("uid") String uid,
@@ -247,11 +250,11 @@ public interface RetrofitService {
     @GET(BaseUrl.ACTIVITIES_INFO)
     Observable<ActivitiesDetailsEntity> getSearchActivitiesInfo(@Query("uid") String uid,
                                                                 @Query("marketId") String marketId);
-
-    @GET(BaseUrl.SIGN_UP)
+    @FormUrlEncoded
+    @POST(BaseUrl.SIGN_UP)
     Observable<UserInfoEntity> getSearchActivitiesSignUp(@Query("uid") String uid,
                                                          @Query("marketId") String marketId,
-                                                         @Query("name") String name,
+                                                         @Field("name") String name,
                                                          @Query("phone") String phone,
                                                          @Query("idCard") String idCard,
                                                          @Query("type") String type);

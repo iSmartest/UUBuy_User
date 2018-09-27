@@ -1,6 +1,10 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -21,7 +25,7 @@ import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
 import com.ifree.uu.uubuy.ui.fragment.MineFragment;
 import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
 import com.ifree.uu.uubuy.uitls.AppManager;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -70,6 +74,9 @@ public class MainActivity extends BaseActivity {
         changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, true);
         initLocation();
         hideBack(1);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.ifree.uu.location.changed");
+        registerReceiver(mAllBroad, intentFilter);
     }
 
 
@@ -101,7 +108,6 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.ly_base_location:
                 MyApplication.openActivity(context, SelectHotCityActivity.class);
-                ToastUtils.makeText(context, "选择城市页面");
                 break;
             case R.id.ly_restart_location:
                 initLocation();
@@ -147,6 +153,9 @@ public class MainActivity extends BaseActivity {
             public void success(String result) {
                 setLocation(result);
                 Log.i("TAG", "success: " + result);
+                Intent intent = new Intent();
+                intent.setAction("com.ifree.uu.location.changed");
+                getApplicationContext().sendBroadcast(intent);
             }
 
             @Override
@@ -156,4 +165,13 @@ public class MainActivity extends BaseActivity {
         });
         gaoDeLocationListener.startLocation();
     }
+
+    private BroadcastReceiver mAllBroad = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, final Intent intent) {
+            //接到广播通知后刷新数据源
+           setLocation(SPUtil.getString(context,"city"));
+
+        }
+    };
 }

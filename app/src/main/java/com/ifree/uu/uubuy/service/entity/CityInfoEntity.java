@@ -41,6 +41,33 @@ public class CityInfoEntity {
         public static class HotCity{
             private String city;
             private String cityAdCode;
+            private List<TownList> townList;
+            public static class TownList implements Serializable{
+                private String townAdCode;
+                private String town;
+                private String latitude;
+                private String longitude;
+
+                public String getTownAdCode() {
+                    return townAdCode;
+                }
+
+                public String getTown() {
+                    return town;
+                }
+
+                public String getLatitude() {
+                    return latitude;
+                }
+
+                public String getLongitude() {
+                    return longitude;
+                }
+            }
+
+            public List<TownList> getTownList() {
+                return townList;
+            }
 
             public String getCity() {
                 return city;
@@ -49,6 +76,7 @@ public class CityInfoEntity {
             public String getCityAdCode() {
                 return cityAdCode;
             }
+
 
         }
         public static class ProvinceList implements Serializable {
@@ -78,6 +106,8 @@ public class CityInfoEntity {
                 public static class TownList implements Serializable{
                     private String townAdCode;
                     private String town;
+                    private String longitude;
+                    private String latitude;
 
                     public String getTownAdCode() {
                         return townAdCode;
@@ -85,6 +115,14 @@ public class CityInfoEntity {
 
                     public String getTown() {
                         return town;
+                    }
+
+                    public String getLongitude() {
+                        return longitude;
+                    }
+
+                    public String getLatitude() {
+                        return latitude;
                     }
                 }
             }

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.CommonLog;
@@ -338,7 +339,7 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-            Log.i("TAG", "onError: " + "授权失败");
+            Log.i("TAG", "onError: " + "授权失败" );
         }
 
         @Override

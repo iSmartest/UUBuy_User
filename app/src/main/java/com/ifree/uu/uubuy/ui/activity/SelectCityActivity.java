@@ -57,6 +57,7 @@ public class SelectCityActivity extends BaseActivity {
     protected void initView() {
         hideBack(5);
         setTitleText("选择城市");
+        MyApplication.addActivity(SelectCityActivity.this);
         mList = getIntent().getParcelableArrayListExtra("city");
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

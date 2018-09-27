@@ -1,9 +1,11 @@
 package com.ifree.uu.uubuy.ui.fragment;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -71,6 +73,14 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
     private HomeAdapter mAdapter;
     private AdTypeAdapter adTypeAdapter;
     private CityADAdapter cityADAdapter;
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        //注册广播
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.ifree.uu.location.changed");
+        getActivity().registerReceiver(mAllBroad, intentFilter);
+    }
 
     @Override
     protected int getLayout() {
@@ -291,7 +301,7 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
 
             List<HomeEntity.DataBean.CityADList> cityADLists = mHomeEntity.getData().getCityADList();
             if (cityADLists != null && !cityADLists.isEmpty()) {
-                mCityADList.clear();
+
                 mCityADList.addAll(cityADLists);
                 cityADAdapter.notifyDataSetChanged();
 
@@ -370,6 +380,16 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
     public void OnBannerClick(int position) {
 
     }
+
+    private BroadcastReceiver mAllBroad = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, final Intent intent) {
+            //接到广播通知后刷新数据源
+            xRecyclerView.setRefreshing(true);
+            mCityADList.clear();
+            cityADAdapter.notifyDataSetChanged();
+        }
+    };
 
     @Override
     public void onDestroy() {

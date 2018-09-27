@@ -1,7 +1,9 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import com.google.gson.Gson;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
+import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.CityInfoPresenter;
 import com.ifree.uu.uubuy.service.view.CityInfoView;
@@ -37,7 +40,6 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
     XRecyclerView xRecyclerView;
     private View headView;
     private TextView tvCurrentCity;
-    private String mCurrentCity;
     private List<CityInfoEntity.DataBean.HotCity> mList = new ArrayList<>();
     private List<CityInfoEntity.DataBean.ProvinceList> provinceList = new ArrayList<>();
     private SelectHotCityAdapter mAdapter;
@@ -50,6 +52,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
     protected void initView() {
         hideBack(5);
         setTitleText("选择城市");
+        MyApplication.addActivity(SelectHotCityActivity.this);
         mCityInfoPresenter = new CityInfoPresenter(context);
         xRecyclerView.setLayoutManager(new GridLayoutManager(context,4));
         xRecyclerView.setPullRefreshEnabled(false);
@@ -59,11 +62,20 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
         headView.findViewById(R.id.ly_again_location).setOnClickListener(this);
         headView.findViewById(R.id.tv_more_hot_city).setOnClickListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);
-        mCurrentCity = SPUtil.getString(context,"city");
-        tvCurrentCity.setText(mCurrentCity);
         mAdapter = new SelectHotCityAdapter(context,mList);
         xRecyclerView.setAdapter(mAdapter);
-
+        xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
+            @Override
+            public void onItemClick(RecyclerView.ViewHolder vh) {
+                int position = vh.getAdapterPosition()-2;
+                if (position < 0 | position >= mList.size()){
+                    return;
+                }
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("area",(Serializable) mList.get(position).getTownList());
+                MyApplication.openActivity(context,SelectHotAreaActivity.class,bundle);
+            }
+        });
     }
 
     @Override
@@ -119,6 +131,9 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
             public void success(String result) {
                 tvCurrentCity.setText(result);
                 Log.i("TAG", "success: " + result);
+                Intent intent = new Intent();
+                intent.setAction("com.ifree.uu.location.changed");
+                getApplicationContext().sendBroadcast(intent);
             }
 
             @Override

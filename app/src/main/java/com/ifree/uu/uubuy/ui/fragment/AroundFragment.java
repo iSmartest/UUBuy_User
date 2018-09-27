@@ -1,5 +1,10 @@
 package com.ifree.uu.uubuy.ui.fragment;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +48,14 @@ public class AroundFragment extends BaseFragment {
     private int page = 1;
     private List<AroundEntity.DataBean.ActivitiesList> mList = new ArrayList<>();
     private AroundAdapter mAdapter;
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        //注册广播
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.ifree.uu.location.changed");
+        getActivity().registerReceiver(mAllBroad, intentFilter);
+    }
     @Override
     protected int getLayout() {
         return R.layout.fragment_around;
@@ -166,6 +179,14 @@ public class AroundFragment extends BaseFragment {
             }else {
                 xRecyclerView.loadMoreComplete();
             }
+        }
+    };
+
+    private BroadcastReceiver mAllBroad = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, final Intent intent) {
+            //接到广播通知后刷新数据源
+            xRecyclerView.setRefreshing(true);
         }
     };
 }

@@ -9,8 +9,12 @@ import android.support.multidex.MultiDex;
 
 import com.ifree.uu.uubuy.uitls.CrashHandler;
 import com.ifree.uu.uubuy.uitls.DensityUtils;
+import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -24,14 +28,13 @@ import cn.jpush.android.api.JPushInterface;
 public class MyApplication extends Application {
     public static Context CONTEXT;
     private static MyApplication myApplication;
-    public static int defaultItem = 0;
-    public static int shopPay = 0;
-    public static int evaluate = 0;
+    private static List<Activity> lists = new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();
         CONTEXT = getApplicationContext();
         UMShareAPI.get(this);
+        Config.DEBUG = true;
         JPushInterface.setDebugMode(true);//如果时正式版就改成false
         JPushInterface.init(this);
         PlatformConfig.setWeixin("wx70539901dcad8e3d","e97ee6fac5e3d9e9da31b02450273f55");
@@ -50,6 +53,7 @@ public class MyApplication extends Application {
     public static Context getContext(){
         return CONTEXT;
     }
+
     public static MyApplication getApplication() {
         return myApplication;
     }
@@ -114,5 +118,18 @@ public class MyApplication extends Application {
             intent.putExtras(extras);
         }
         context.startActivity(intent);
+    }
+
+    public static void addActivity(Activity activity) {
+        lists.add(activity);
+    }
+
+    public static void clearActivity() {
+        if (lists != null) {
+            for (Activity activity : lists) {
+                activity.finish();
+            }
+            lists.clear();
+        }
     }
 }
