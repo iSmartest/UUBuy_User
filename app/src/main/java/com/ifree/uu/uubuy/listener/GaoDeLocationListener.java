@@ -79,20 +79,34 @@ public class GaoDeLocationListener {
                     SPUtil.putString(context, "longitude", location.getLongitude() + "");
                     SPUtil.putString(context, "address", location.getAddress() + "");
                     onQuestResultListener.success(location.getCity());
-//                    Log.i("TAG", "定位成功" + "\n" +"定位类型: " + location.getLocationType() + "\n"
-//                    +"经    度    : " + location.getLongitude() + "\n"+"纬    度    : " + location.getLatitude() + "\n"
-//                    +"精    度    : " + location.getAccuracy() + "米" + "\n"+"提供者    : " + location.getProvider() + "\n"
-//                    +"速    度    : " + location.getSpeed() + "米/秒" + "\n"+"角    度    : " + location.getBearing() + "\n"
-//                    + "星    数    : " + location.getSatellites() + "\n" +"国    家    : " + location.getCountry() + "\n"
-//                    +"省            : " + location.getProvince() + "\n"+"市            : " + location.getCity() + "\n"
-//                    +"城市编码 : " + location.getCityCode() + "\n"+"区            : " + location.getDistrict() + "\n"
-//                            +"区域 码   : " + location.getAdCode() + "\n"+"地    址    : " + location.getAddress() + "\n"
-//                    +"兴趣点    : " + location.getPoiName() + "\n");
+                    Log.i("TAG", "定位成功" + "\n" +"定位类型: " + location.getLocationType() + "\n"
+                    +"经    度    : " + location.getLongitude() + "\n"+"纬    度    : " + location.getLatitude() + "\n"
+                    +"精    度    : " + location.getAccuracy() + "米" + "\n"+"提供者    : " + location.getProvider() + "\n"
+                    +"速    度    : " + location.getSpeed() + "米/秒" + "\n"+"角    度    : " + location.getBearing() + "\n"
+                    + "星    数    : " + location.getSatellites() + "\n" +"国    家    : " + location.getCountry() + "\n"
+                    +"省            : " + location.getProvince() + "\n"+"市            : " + location.getCity() + "\n"
+                    +"城市编码 : " + location.getCityCode() + "\n"+"区            : " + location.getDistrict() + "\n"
+                            +"区域 码   : " + location.getAdCode() + "\n"+"地    址    : " + location.getAddress() + "\n"
+                    +"兴趣点    : " + location.getPoiName() + "\n");
                 } else {
                     onQuestResultListener.error("北京");
+                    SPUtil.putString(context, "city", "北京市");
+                    SPUtil.putString(context, "district", "海淀区");
+                    SPUtil.putString(context, "townAdCode", "110108");
+                    SPUtil.putString(context, "cityCode", "010");
+                    SPUtil.putString(context, "latitude", "40.034838");
+                    SPUtil.putString(context, "longitude", "116.311733");
+                    SPUtil.putString(context, "address", "北京市海淀区信息路甲28号靠近华夏银行(上地支行)");
                 }
             } else {
                 onQuestResultListener.error("北京");
+                SPUtil.putString(context, "city", "北京市");
+                SPUtil.putString(context, "district", "海淀区");
+                SPUtil.putString(context, "townAdCode", "110108");
+                SPUtil.putString(context, "cityCode", "010");
+                SPUtil.putString(context, "latitude", "40.034838");
+                SPUtil.putString(context, "longitude", "116.311733");
+                SPUtil.putString(context, "address", "北京市海淀区信息路甲28号靠近华夏银行(上地支行)");
             }
         }
     };

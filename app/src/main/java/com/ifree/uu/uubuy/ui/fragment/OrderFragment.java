@@ -100,12 +100,12 @@ public class OrderFragment extends BaseFragment {
                 return;
             }
             List<OrderEntity.DataBean.OrderInfoList> orderInfoList = mOrderEntity.getData().getOrderInfoList();
-            if (orderInfoList != null && !orderInfoList.isEmpty() && orderInfoList.size() > 0){
+            if (orderInfoList != null && !orderInfoList.isEmpty()){
                 mList.addAll(orderInfoList);
                 mAdapter.notifyDataSetChanged();
-                if (orderInfoList.size() < 10){
-                    xRecyclerView.setNoMore(true);
-                }
+            }
+            if (orderInfoList != null && !orderInfoList.isEmpty() && orderInfoList.size() < 10){
+                xRecyclerView.setNoMore(true);
             }
         }
 

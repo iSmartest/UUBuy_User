@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.dialog.LogOutDialog;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
@@ -52,9 +53,14 @@ public class MySettingActivity extends BaseActivity {
     LinearLayout mShare;
     @BindView(R.id.linear_my_setting_update)
     LinearLayout mUpdata;
+    @BindView(R.id.ll_testing)
+    LinearLayout mTesting;
+    @BindView(R.id.tv_http_address)
+    TextView mAddress;
     @BindView(R.id.text_my_setting_log_out)
     TextView mLogOut;
     private String userPhone,userIcon,userName;
+    private int isItem = 0;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_setting;
@@ -68,6 +74,7 @@ public class MySettingActivity extends BaseActivity {
         GlideImageLoader.imageLoader(context,userIcon,mIcon);
         mName.setText(userName);
         mPhone.setText("账户：" + userPhone);
+        mAddress.setText("本地服务器：192.168.1.8:8080");
     }
 
     @Override
@@ -81,7 +88,7 @@ public class MySettingActivity extends BaseActivity {
         }
     }
     @OnClick({R.id.ll_account_security, R.id.ll_binding_phone, R.id.ll_common_question, R.id.ll_feedback,
-            R.id.linear_my_setting_clear_cache, R.id.text_my_setting_log_out})
+            R.id.linear_my_setting_clear_cache, R.id.text_my_setting_log_out,R.id.ll_testing})
     public void onClickView(View view){
         switch (view.getId()){
             case R.id.ll_account_security:
@@ -120,6 +127,17 @@ public class MySettingActivity extends BaseActivity {
                     }
                 });
                 dialog.show();
+                break;
+            case R.id.ll_testing:
+                if (isItem == 0){//线上
+                    BaseUrl.HTTP = "http://101.200.60.12:8080/uugo-user/app/";
+                    isItem = 1;
+                    mAddress.setText("正式服务器：101.200.60.12");
+                }else {
+                    BaseUrl.HTTP = "http://192.168.1.8:8080/app/";
+                    isItem = 0;
+                    mAddress.setText("本地服务器：192.168.1.8:8080");
+                }
                 break;
         }
     }

@@ -94,15 +94,15 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void loadData() {
         if (isCodeOrPassword == 1) {
-            mUserPassword.setVisibility(View.VISIBLE);
-            llCodeLogin.setVisibility(View.GONE);
-            tvPasswordLogin.setVisibility(View.GONE);
-            tvCodeLogin.setVisibility(View.VISIBLE);
-        } else {
             mUserPassword.setVisibility(View.GONE);
             llCodeLogin.setVisibility(View.VISIBLE);
             tvCodeLogin.setVisibility(View.GONE);
             tvPasswordLogin.setVisibility(View.VISIBLE);
+        } else {
+            mUserPassword.setVisibility(View.VISIBLE);
+            llCodeLogin.setVisibility(View.GONE);
+            tvPasswordLogin.setVisibility(View.GONE);
+            tvCodeLogin.setVisibility(View.VISIBLE);
         }
     }
 
@@ -131,14 +131,14 @@ public class LoginActivity extends BaseActivity {
                 llCodeLogin.setVisibility(View.GONE);
                 tvCodeLogin.setVisibility(View.VISIBLE);
                 tvPasswordLogin.setVisibility(View.GONE);
-                isCodeOrPassword = 1;
+                isCodeOrPassword = 0;
                 break;
             case R.id.tv_code_login:
                 mUserPassword.setVisibility(View.GONE);
                 llCodeLogin.setVisibility(View.VISIBLE);
                 tvCodeLogin.setVisibility(View.GONE);
                 tvPasswordLogin.setVisibility(View.VISIBLE);
-                isCodeOrPassword = 0;
+                isCodeOrPassword = 1;
                 break;
             case R.id.tv_login:
                 if (isCodeOrPassword == 1) {

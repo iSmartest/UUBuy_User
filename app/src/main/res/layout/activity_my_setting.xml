@@ -290,6 +290,39 @@
 
     <include layout="@layout/v_horizontal_line" />
 
+    <LinearLayout
+        android:id="@+id/ll_testing"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/app_main_default"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="测试环境"
+            android:textColor="@color/text_main_color"
+            android:textSize="17dp" />
+        <TextView
+            android:id="@+id/tv_http_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:textColor="@color/text_main_color"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/right_in" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/text_my_setting_log_out"

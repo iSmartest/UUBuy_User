@@ -168,6 +168,8 @@ public class AroundFragment extends BaseFragment {
                 if (activitiesLists.size() < 10){
                     xRecyclerView.setNoMore(true);
                 }
+            }else {
+                xRecyclerView.setNoMore(true);
             }
         }
 

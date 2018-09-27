@@ -112,13 +112,15 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
                 page = 1;
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
-                initData();
+                mCityADList.clear();
+                cityADAdapter.notifyDataSetChanged();
+                loadData();
             }
 
             @Override
             public void onLoadMore() {
                 page++;
-                initData();
+                loadData();
             }
         });
 
@@ -258,6 +260,10 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
 
     @Override
     protected void initData() {
+
+    }
+
+    private void loadData(){
         mHomePresenter.onCreate();
         mHomePresenter.attachView(mHomeView);
         mHomePresenter.getSearchHomes(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context), page, "加载中...");
@@ -301,10 +307,8 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
 
             List<HomeEntity.DataBean.CityADList> cityADLists = mHomeEntity.getData().getCityADList();
             if (cityADLists != null && !cityADLists.isEmpty()) {
-
                 mCityADList.addAll(cityADLists);
                 cityADAdapter.notifyDataSetChanged();
-
             }
 
             List<HomeEntity.DataBean.RotateADList> rotateADLists = mHomeEntity.getData().getRotateADList();
@@ -317,9 +321,9 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
             if (activitiesLists != null && !activitiesLists.isEmpty()) {
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();
-                if (activitiesLists.size() < 10) {
-                    xRecyclerView.setNoMore(true);
-                }
+            }
+            if (activitiesLists.size() < 10) {
+                xRecyclerView.setNoMore(true);
             }
         }
 
@@ -333,7 +337,6 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
             }
         }
     };
-
 
     private void initTopViewData(final List<HomeEntity.DataBean.BannerList> mBannerList) {
         for (int i = 0; i < mBannerList.size(); i++) {
@@ -386,8 +389,6 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
         public void onReceive(Context context, final Intent intent) {
             //接到广播通知后刷新数据源
             xRecyclerView.setRefreshing(true);
-            mCityADList.clear();
-            cityADAdapter.notifyDataSetChanged();
         }
     };
 

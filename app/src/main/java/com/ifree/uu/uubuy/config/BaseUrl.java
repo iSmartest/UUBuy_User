@@ -10,7 +10,7 @@ public class BaseUrl {
 
 //    public static final String HTTP = "http://101.200.60.12:8080/uugo-user/app/";//正式服务器
 
-    public static final String HTTP = "http://192.168.1.8:8080/app/";//局域网测试地址
+    public static String HTTP = "http://192.168.1.8:8080/app/";//局域网测试地址
     //图片地址
     public static final String IMAGE_HTTP = "http://101.200.60.12:8080/uugo-manager";
     //获取验证码
