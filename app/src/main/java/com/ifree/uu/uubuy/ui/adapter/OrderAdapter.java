@@ -127,28 +127,27 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     }
 
     private void submitOperationOrder(String orderId, String type) {
-        String uid = SPUtil.getString(context,"uid");;
         mOperationOrderPresenter.onCreate();
-        mOperationOrderPresenter.attachView(mOperationOrderView);
-        mOperationOrderPresenter.getSubmitOperationOrder(orderId,type,uid,"提交中...");
+        mOperationOrderPresenter.getSubmitOperationOrder(orderId,type,SPUtil.getUid(context),"提交中...");
+        mOperationOrderPresenter.attachView(new ProjectView<UserInfoEntity>() {
+            @Override
+            public void onSuccess(UserInfoEntity mUserInfoEntity) {
+                if (mUserInfoEntity.getResultCode().equals("1")){
+                    ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                    return;
+                }
+                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String result) {
+                ToastUtils.makeText(context,result);
+            }
+        });
     }
 
-    private ProjectView<UserInfoEntity> mOperationOrderView = new ProjectView<UserInfoEntity>() {
-        @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
-                return;
-            }
-            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
-            notifyDataSetChanged();
-        }
 
-        @Override
-        public void onError(String result) {
-            ToastUtils.makeText(context,result);
-        }
-    };
     @Override
     public int getItemCount() {
         return mList == null ? 0 : mList.size();

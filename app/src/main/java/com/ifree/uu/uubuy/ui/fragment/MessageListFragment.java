@@ -52,19 +52,13 @@ public class MessageListFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 initData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 initData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
         mAdapter = new MessageAdapter(context,mList,type);
@@ -82,6 +76,13 @@ public class MessageListFragment extends BaseFragment {
     private ProjectView<MessageEntity> mMessageView = new ProjectView<MessageEntity>() {
         @Override
         public void onSuccess(MessageEntity mMessageEntity) {
+            if (page == 1){
+                xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
+            }else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mMessageEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mMessageEntity.getMsg());
                 return;
@@ -91,6 +92,11 @@ public class MessageListFragment extends BaseFragment {
             if (notifyLists != null && !notifyLists.isEmpty()){
                 mList.addAll(notifyLists);
                 mAdapter.notifyDataSetChanged();
+                if (notifyLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
+            }else {
+                xRecyclerView.setNoMore(true);
             }
         }
 

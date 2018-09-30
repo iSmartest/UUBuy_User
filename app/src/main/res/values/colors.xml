@@ -16,6 +16,7 @@
     <color name="text_price_color">#ffff3d62</color>
     <color name="toast_background">#FF8E8E93</color>
     <color name="divider_color">#EEEEEE</color>
+    <color name="stroke_color">#f0eff5</color>
     <color name="text_green">#ff23BF9C</color>
     <color name="text_light_green">#ff50e3c2</color>
     <color name="text_blue">#FF3AA7FF</color>

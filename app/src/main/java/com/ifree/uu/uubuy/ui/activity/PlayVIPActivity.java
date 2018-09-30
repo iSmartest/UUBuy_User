@@ -16,7 +16,6 @@ import com.ifree.uu.uubuy.service.presenter.GroupInfoPresenter;
 import com.ifree.uu.uubuy.service.presenter.SharePresenter;
 import com.ifree.uu.uubuy.service.presenter.SignInPresenter;
 import com.ifree.uu.uubuy.service.view.ProjectView;
-import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.PlayVIPAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;

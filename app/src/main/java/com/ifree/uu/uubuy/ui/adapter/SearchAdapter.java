@@ -1,5 +1,6 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.ifree.uu.uubuy.ui.activity.MarketActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
 import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
 import java.util.List;
 
@@ -54,6 +56,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         return viewHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         final SearchEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
@@ -64,7 +67,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 holder.mCommodity.setVisibility(View.GONE);
                 holder.address.setText(activitiesList.getActivitiesAdAddress());
                 holder.name.setText(activitiesList.getActivitiesName());
-                holder.time.setText("活动时间：" + activitiesList.getActivitiesTime());
+                holder.time.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(activitiesList.getActivitiesTime()));
                 GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
                 break;
             case "1":

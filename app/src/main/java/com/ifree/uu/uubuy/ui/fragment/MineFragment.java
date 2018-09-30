@@ -190,6 +190,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 if (recommendactivitiesLists.size() < 10){
                     xRecyclerView.setNoMore(true);
                 }
+            }else {
+                xRecyclerView.setNoMore(true);
             }
         }
 

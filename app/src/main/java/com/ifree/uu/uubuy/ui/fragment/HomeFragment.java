@@ -205,60 +205,6 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
                 }
             }
         });
-
-        rc_city_ad.addOnItemTouchListener(new RecyclerItemTouchListener(rc_city_ad) {
-            @Override
-            public void onItemClick(RecyclerView.ViewHolder vh) {
-                int position = vh.getAdapterPosition();
-                if (position < 0 | position >= mList.size()) {
-                    return;
-                }
-                Bundle bundle = new Bundle();
-                bundle.putString("fristActivitiesId", mCityADList.get(position).getCityADId());
-                bundle.putString("fristActivitiesType", mCityADList.get(position).getType());
-                bundle.putString("fristActivitiesName", mCityADList.get(position).getCityADName());
-                switch (mCityADList.get(position).getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
-                    case "1":
-                        if (mCityADList.get(position).getCityADType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
-                        } else {
-                            MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
-                        }
-                        break;
-                    case "2"://超市
-                        if (mCityADList.get(position).getCityADType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
-                        } else {
-                            MyApplication.openActivity(context, MarketActivity.class, bundle);
-                        }
-                        break;
-                    case "3":
-                        if (mCityADList.get(position).getCityADType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
-                        } else {
-                            MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
-                        }
-                        break;
-                    case "4":
-                        if (mCityADList.get(position).getCityADType().equals("1")) {
-                            MyApplication.openActivity(context, BrandActivity.class, bundle);
-                        } else {
-                            MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
-                        }
-                        break;
-                    case "5":
-                        if (mCityADList.get(position).getCityADType().equals("1")) {
-                            MyApplication.openActivity(context, BrandActivity.class, bundle);
-                        } else {
-                            MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
-                        }
-                        break;
-                    case "6":
-                        MyApplication.openActivity(context, BrandActivity.class, bundle);
-                        break;
-                }
-            }
-        });
     }
 
     @Override

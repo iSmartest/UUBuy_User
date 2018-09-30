@@ -1,5 +1,6 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.MarketOrStoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -130,6 +132,7 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
     }
 
     private ProjectView<SecondActivitiesEntity> mSecondListView = new ProjectView<SecondActivitiesEntity>() {
+        @SuppressLint("SetTextI18n")
         @Override
         public void onSuccess(SecondActivitiesEntity mSecondListEntity) {
             if (page == 1){
@@ -168,7 +171,7 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
                     break;
                 case "1":
                 case "2":
-                    mTime.setText("活动时间 " + mSecondListEntity.getData().getMarketInfo().getActivitiesTime());
+                    mTime.setText("活动时间 " + TimeFormatUtils.modifyDataFormat2(mSecondListEntity.getData().getMarketInfo().getActivitiesTime()));
                     break;
                 case "3":
                     mTime.setText("暂无活动");

@@ -103,8 +103,10 @@ public class OrderFragment extends BaseFragment {
             if (orderInfoList != null && !orderInfoList.isEmpty()){
                 mList.addAll(orderInfoList);
                 mAdapter.notifyDataSetChanged();
-            }
-            if (orderInfoList != null && !orderInfoList.isEmpty() && orderInfoList.size() < 10){
+                if (orderInfoList.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
+            }else {
                 xRecyclerView.setNoMore(true);
             }
         }

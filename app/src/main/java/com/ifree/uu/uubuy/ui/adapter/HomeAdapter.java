@@ -1,5 +1,6 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
 import java.util.List;
 
@@ -41,12 +43,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         return viewHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
         HomeEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
         holder.address.setText(activitiesList.getActivitiesAdAddress());
         holder.name.setText(activitiesList.getActivitiesName());
-        holder.time.setText("活动时间：" + activitiesList.getActivitiesTime());
+        holder.time.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(activitiesList.getActivitiesTime()));
         GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
     }
 

@@ -22,7 +22,7 @@
         android:layout_marginTop="136dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="133dp"
+            android:layout_height="125dp"
             android:background="@drawable/home_type_background"
             android:orientation="vertical">
 
@@ -32,7 +32,8 @@
                 android:layout_height="85dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="24dp"
-                android:layout_marginLeft="24dp">
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="6dp">
             </android.support.v7.widget.RecyclerView>
 
 
@@ -44,8 +45,7 @@
                 android:paddingLeft="18dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="12dp"
-                android:layout_marginTop="11dp"
+                android:layout_marginBottom="6dp"
                 android:paddingRight="18dp">
 
                 <TextView
@@ -75,8 +75,8 @@
             android:id="@+id/rc_city_ad"
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp">
         </android.support.v7.widget.RecyclerView>
 
         <com.youth.banner.Banner
@@ -86,8 +86,7 @@
             app:indicator_height="7dp"
             app:indicator_margin="3dp"
             app:indicator_width="7dp"
-
-            android:background="@color/colorPrimary"
+            android:background="@drawable/loading_error"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="8dp"

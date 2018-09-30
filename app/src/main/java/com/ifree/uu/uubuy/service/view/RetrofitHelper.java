@@ -1,11 +1,13 @@
 package com.ifree.uu.uubuy.service.view;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.GsonBuilder;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.uitls.NetUtil;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -49,15 +52,20 @@ public class RetrofitHelper {
     }
     private RetrofitHelper(Context mContext){
         this.mContext = mContext;
+        //设置缓存路径和缓存大小
         File cacheFile = new File(MyApplication.getApplication().getExternalCacheDir(), CACHE_NAME);
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
         Interceptor cacheInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
+                CacheControl.Builder cacheBuilder = new CacheControl.Builder();
+                cacheBuilder.maxAge(0, TimeUnit.SECONDS);
+                cacheBuilder.maxStale(365, TimeUnit.DAYS);
+                CacheControl cacheControl = cacheBuilder.build();
                 Request request = chain.request();
                 if (!NetUtil.isNetworkConnected()) {
                     request = request.newBuilder()
-                            .cacheControl(CacheControl.FORCE_CACHE)
+                            .cacheControl(cacheControl)
                             .build();
                 }
                 Response response = chain.proceed(request);
@@ -94,6 +102,13 @@ public class RetrofitHelper {
                 return chain.proceed(request);
             }
         };
+        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Log.i("UUGO", "OkHttp====message " + message);
+            }
+        });
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         client = new OkHttpClient.Builder()
                 .connectTimeout(DEFAULT_CONNECT_TIMEOUT, TimeUnit.SECONDS)
@@ -103,6 +118,7 @@ public class RetrofitHelper {
                 .cache(cache)
                 .addInterceptor(cacheInterceptor)
                 .addInterceptor(headerInterceptor)
+                .addInterceptor(logInterceptor)
                 .build();
         init();
 

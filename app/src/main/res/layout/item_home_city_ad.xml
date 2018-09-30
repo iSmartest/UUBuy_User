@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="6dp"
-        android:background="@drawable/image_item_style"
-        android:gravity="center">
-        <ImageView
-            android:id="@+id/iv_city_ad_icon"
-            android:layout_width="165dp"
-            android:layout_height="70dp"
-            android:scaleType="centerCrop"/>
-        <TextView
-            android:id="@+id/tv_city_ad_name"
+    <com.ifree.uu.uubuy.custom.RCRelativeLayout
+        android:layout_width="166dp"
+        android:layout_height="106dp"
+        app:round_corner="6dp"
+        app:stroke_color="@color/stroke_color"
+        app:stroke_width="0.5dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginBottom="6dp">
+        <LinearLayout
+            android:id="@+id/ll_item_city_ad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_main_color"
-            android:textSize="13dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="5dp"/>
-        <TextView
-            android:id="@+id/tv_city_ad_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#ff4a4a4a"
-            android:textSize="12dp"
-            android:layout_marginLeft="5dp"/>
-    </LinearLayout>
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/iv_city_ad_icon"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:scaleType="centerCrop"/>
+            <TextView
+                android:id="@+id/tv_city_ad_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_main_color"
+                android:textSize="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/tv_city_ad_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_subtitle_color"
+                android:textSize="11dp"
+                android:layout_marginLeft="5dp"/>
+        </LinearLayout>
+    </com.ifree.uu.uubuy.custom.RCRelativeLayout>
+
 </LinearLayout>

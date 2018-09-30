@@ -1,5 +1,6 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
 import java.util.List;
 
@@ -42,11 +44,12 @@ public class FirstClassifyAdapter extends RecyclerView.Adapter<FirstClassifyAdap
         return new FirstClassifyViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull FirstClassifyViewHolder holder, int position) {
         FirstClassifyEntity.DataBean.FristActivitiesList firstActivitiesList = mList.get(position);
         holder.mName.setText(firstActivitiesList.getFristActivitiesName());
-        holder.mTime.setText("活动时间 " + firstActivitiesList.getFristActivitiesTime());
+        holder.mTime.setText("活动时间 " + TimeFormatUtils.modifyDataFormat2(firstActivitiesList.getFristActivitiesTime()));
         GlideImageLoader.imageLoader(context,firstActivitiesList.getFristActivitiesPic(),holder.mPicture);
     }
 

@@ -75,6 +75,7 @@ public class MySettingActivity extends BaseActivity {
         mName.setText(userName);
         mPhone.setText("账户：" + userPhone);
         mAddress.setText(SPUtil.getString(context,"url"));
+        mTesting.setVisibility(View.GONE);
     }
 
     @Override

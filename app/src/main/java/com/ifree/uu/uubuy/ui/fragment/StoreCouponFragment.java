@@ -52,8 +52,6 @@ public class StoreCouponFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 initData();
             }
 
@@ -80,6 +78,8 @@ public class StoreCouponFragment extends BaseFragment {
         public void onSuccess(CouponEntity mCouponEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }
@@ -94,6 +94,8 @@ public class StoreCouponFragment extends BaseFragment {
                 if (couponLists.size() < 10){
                     xRecyclerView.setNoMore(true);
                 }
+            }else {
+                xRecyclerView.setNoMore(true);
             }
         }
 

@@ -13,7 +13,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="115dp"
+        android:layout_height="80dp"
         android:background="@color/app_main_default"
         android:gravity="center"
         android:orientation="horizontal"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/app_main_default"
-            android:paddingLeft="26dp">
+            android:paddingLeft="20dp">
 
             <com.ifree.uu.uubuy.custom.rounded.RoundedImageView
                 android:id="@+id/my_iconImgview"
@@ -92,7 +92,7 @@
             android:layout_weight="1"
             android:text="账户安全"
             android:textColor="@color/text_main_color"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
             android:layout_weight="1"
             android:text="绑定手机"
             android:textColor="@color/text_main_color"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -151,7 +151,7 @@
             android:layout_weight="1"
             android:text="常见问题"
             android:textColor="@color/text_main_color"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -180,7 +180,7 @@
             android:layout_weight="1"
             android:text="意见反馈"
             android:textColor="@color/text_main_color"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -206,7 +206,7 @@
             android:layout_centerVertical="true"
             android:text="清楚缓存"
             android:textColor="@color/text_main_color"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -220,7 +220,7 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="8dp"
                 android:textColor="@color/edit_hint_color"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -249,7 +249,7 @@
             android:layout_weight="1"
             android:text="分享"
             android:textColor="@color/text_main_color"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -280,7 +280,7 @@
             android:maxEms="4"
             android:text="版本更新"
             android:textColor="@color/text_main_color"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -306,7 +306,7 @@
             android:layout_centerVertical="true"
             android:text="测试环境"
             android:textColor="@color/text_main_color"
-            android:textSize="17dp" />
+            android:textSize="15dp" />
         <TextView
             android:id="@+id/tv_http_address"
             android:layout_width="wrap_content"
@@ -327,7 +327,7 @@
     <TextView
         android:id="@+id/text_my_setting_log_out"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
@@ -337,5 +337,5 @@
         android:padding="8dp"
         android:text="退出登录"
         android:textColor="@color/text_main_color"
-        android:textSize="17sp" />
+        android:textSize="17dp" />
 </LinearLayout>

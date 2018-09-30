@@ -1,5 +1,6 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.MineEntity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
 import java.util.List;
 
@@ -42,12 +44,13 @@ public class MineAdapter extends RecyclerView.Adapter<MineAdapter.MineViewHolder
         return viewHolder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MineViewHolder holder, int position) {
         MineEntity.DataBean.RecommendactivitiesList reList = mList.get(position);
         GlideImageLoader.imageLoader(context,reList.getActivitiesPic(),holder.mMarketPicture);
         holder.mMarketName.setText(reList.getActivitiesName());
-        holder.mMarketTime.setText("活动时间：" + reList.getActivitiesTime());
+        holder.mMarketTime.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(reList.getActivitiesTime()));
         ColorStateList cls1 = context.getResources().getColorStateList(R.color.text_green);
         ColorStateList cls2 = context.getResources().getColorStateList(R.color.text_type_red);
         ColorStateList cls3 = context.getResources().getColorStateList(R.color.silver_medal);

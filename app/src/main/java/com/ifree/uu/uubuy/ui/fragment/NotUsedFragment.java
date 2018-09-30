@@ -93,6 +93,8 @@ public class NotUsedFragment extends BaseFragment {
                 if (couponLists.size() < 10){
                     xRecyclerView.setNoMore(true);
                 }
+            }else {
+                xRecyclerView.setNoMore(true);
             }
         }
 
