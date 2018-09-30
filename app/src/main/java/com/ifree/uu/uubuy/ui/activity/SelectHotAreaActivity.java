@@ -27,6 +27,7 @@ public class SelectHotAreaActivity extends BaseActivity {
     RecyclerView recyclerView;
     private ArrayList<? extends CityInfoEntity.DataBean.HotCity.TownList> mList;
     private SelectHotAreaAdapter mAdapter;
+    private String city;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_select_province_ciry_area;
@@ -41,7 +42,8 @@ public class SelectHotAreaActivity extends BaseActivity {
                 if (position < 0 | position >= mList.size()){
                     return;
                 }
-                SPUtil.putString(context, "city",mList.get(position).getTown());
+                SPUtil.putString(context, "city",city);
+                SPUtil.putString(context, "district",mList.get(position).getTown());
                 SPUtil.putString(context, "townAdCode", mList.get(position).getTownAdCode());
                 SPUtil.putString(context, "latitude", mList.get(position).getLatitude());
                 SPUtil.putString(context, "longitude", mList.get(position).getLongitude());
@@ -59,6 +61,7 @@ public class SelectHotAreaActivity extends BaseActivity {
         setTitleText("选择城市");
         MyApplication.addActivity(SelectHotAreaActivity.this);
         mList = getIntent().getParcelableArrayListExtra("area");
+        city = getIntent().getStringExtra("city");
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);

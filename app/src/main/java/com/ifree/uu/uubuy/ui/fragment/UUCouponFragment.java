@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
 import com.ifree.uu.uubuy.service.presenter.CouponCenterPresenter;
-import com.ifree.uu.uubuy.service.view.CouponView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.CouponCenterAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -53,8 +53,6 @@ public class UUCouponFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 initData();
             }
 
@@ -76,11 +74,13 @@ public class UUCouponFragment extends BaseFragment {
         mCouponCenterPresenter.getSearchCouponCenter(SPUtil.getUid(context),businessId,couponType,SPUtil.getLongitude(context),SPUtil.getLatitude(context),SPUtil.getTownAdCode(context),page,"加载中...");
     }
 
-    private CouponView mCouponView = new CouponView() {
+    private ProjectView<CouponEntity> mCouponView = new ProjectView<CouponEntity>() {
         @Override
         public void onSuccess(CouponEntity mCouponEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }

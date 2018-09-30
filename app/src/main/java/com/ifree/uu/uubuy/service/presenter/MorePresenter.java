@@ -7,11 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.service.entity.CommodityListEntity;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.MoreEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.CommodityListView;
-import com.ifree.uu.uubuy.service.view.MoreView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -30,7 +29,7 @@ public class MorePresenter implements Presenter {
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private MoreEntity mMoreEntity;
-    private MoreView mMoreView;
+    private ProjectView mMoreView;
 
     public MorePresenter(Context mContext){
         this.mContext = mContext;
@@ -60,7 +59,7 @@ public class MorePresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mMoreView = (MoreView) view;
+        mMoreView = (ProjectView) view;
     }
 
     @Override
@@ -88,7 +87,7 @@ public class MorePresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mMoreView.onError("请求失败！！");
+                        mMoreView.onError(RequestResult.getError(e));
                     }
 
                     @Override

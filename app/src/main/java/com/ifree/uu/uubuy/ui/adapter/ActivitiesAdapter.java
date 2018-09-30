@@ -17,10 +17,9 @@ import com.ifree.uu.uubuy.custom.swipeLayout.SwipeLayout;
 import com.ifree.uu.uubuy.custom.swipeLayout.SwipeLayoutManager;
 import com.ifree.uu.uubuy.dialog.LogOutDialog;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
-import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.CollectionPresenter;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.activity.ActivitiesDetailsActivity;
 import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.CarCommodityActivity;
@@ -185,7 +184,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
     private void cancelCollection(String activitiesId,String type) {
         mCollectionPresenter.onCreate();
         mCollectionPresenter.getSubmitIsCollection(SPUtil.getUid(context),activitiesId,type,"0","处理中...");
-        mCollectionPresenter.attachView(new UserInfoView() {
+        mCollectionPresenter.attachView(new ProjectView<UserInfoEntity>() {
             @Override
             public void onSuccess(UserInfoEntity mUserInfoEntity) {
                 if (mUserInfoEntity.getResultCode().equals("1")){

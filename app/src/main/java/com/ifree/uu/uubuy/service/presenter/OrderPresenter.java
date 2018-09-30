@@ -8,9 +8,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.OrderView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -28,7 +29,7 @@ public class OrderPresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private OrderView mOrderView;
+    private ProjectView mOrderView;
     private OrderEntity mOrderEntity;
 
     public OrderPresenter(Context mContext){
@@ -60,7 +61,7 @@ public class OrderPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mOrderView = (OrderView) view;
+        mOrderView = (ProjectView) view;
     }
 
     @Override
@@ -88,7 +89,7 @@ public class OrderPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mOrderView.onError("请求失败！！");
+                        mOrderView.onError(RequestResult.getError(e));
                     }
 
                     @Override

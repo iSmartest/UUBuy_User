@@ -7,9 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.CommodityInfoEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.CommodityInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -28,7 +29,7 @@ public class CommodityInfoPresenter implements Presenter {
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private CommodityInfoEntity mCommodityInfoEntity;
-    private CommodityInfoView mCommodityInfoView;
+    private ProjectView mCommodityInfoView;
 
     public CommodityInfoPresenter(Context mContext){
         this.mContext = mContext;
@@ -58,7 +59,7 @@ public class CommodityInfoPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mCommodityInfoView = (CommodityInfoView) view;
+        mCommodityInfoView = (ProjectView) view;
     }
 
     @Override
@@ -86,7 +87,7 @@ public class CommodityInfoPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mCommodityInfoView.onError("请求失败！！");
+                        mCommodityInfoView.onError(RequestResult.getError(e));
                     }
 
                     @Override

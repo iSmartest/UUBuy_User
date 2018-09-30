@@ -44,7 +44,24 @@ public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeView
     public void onBindViewHolder(@NonNull AdTypeViewHolder holder, int position) {
         HomeEntity.DataBean.AdTypeList mList = mAdTypeList.get(position);
         holder.mName.setText(mList.getAdTypeTitle());
-        GlideImageLoader.imageLoader(context,mList.getAdTypeIcon(),holder.icon);
+        switch (position){
+            case 0:
+                holder.icon.setImageResource(R.drawable.zongheshangchang_home);
+                break;case 1:
+                holder.icon.setImageResource(R.drawable.zonghechangshi_home);
+                break;case 2:
+                holder.icon.setImageResource(R.drawable.jiajujiancai_home);
+                break;case 3:
+                holder.icon.setImageResource(R.drawable.qichezhanting_home);
+                break;case 4:
+                holder.icon.setImageResource(R.drawable.pinpaizhanshi_home);
+                break;case 5:
+                holder.icon.setImageResource(R.drawable.jiaoyu_home);
+                break;
+        }
+
+
+//        GlideImageLoader.imageLoader(context,mList.getAdTypeIcon(),holder.icon);
     }
 
     @Override

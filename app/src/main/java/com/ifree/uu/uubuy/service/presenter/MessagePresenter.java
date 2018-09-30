@@ -7,9 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.MessageEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.MessageView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -28,7 +29,7 @@ public class MessagePresenter implements Presenter {
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private MessageEntity mMessageEntity;
-    private MessageView mMessageView;
+    private ProjectView mMessageView;
 
     public MessagePresenter(Context mContext) {
         this.mContext = mContext;
@@ -59,7 +60,7 @@ public class MessagePresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mMessageView = (MessageView) view;
+        mMessageView = (ProjectView) view;
     }
 
     @Override
@@ -88,7 +89,7 @@ public class MessagePresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mMessageView.onError("请求失败！！");
+                        mMessageView.onError(RequestResult.getError(e));
                     }
 
                     @Override

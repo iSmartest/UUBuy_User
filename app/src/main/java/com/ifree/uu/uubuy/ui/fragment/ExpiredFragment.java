@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
 import com.ifree.uu.uubuy.service.presenter.MyCouponPresenter;
-import com.ifree.uu.uubuy.service.view.CouponView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.CouponAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -53,8 +53,6 @@ public class ExpiredFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 initData();
             }
 
@@ -78,11 +76,13 @@ public class ExpiredFragment extends BaseFragment {
                 ,SPUtil.getLatitude(context),SPUtil.getTownAdCode(context),page,"加载中...");
     }
 
-    private CouponView mCouponView = new CouponView() {
+    private ProjectView<CouponEntity> mCouponView = new ProjectView<CouponEntity>() {
         @Override
         public void onSuccess(CouponEntity mCouponEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }

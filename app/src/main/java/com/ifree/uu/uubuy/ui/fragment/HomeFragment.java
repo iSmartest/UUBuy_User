@@ -23,13 +23,14 @@ import com.ifree.uu.uubuy.listener.MarqueeTextViewClickListener;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.presenter.HomePresenter;
-import com.ifree.uu.uubuy.service.view.HomeView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.FirstClassifyActivity;
 import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
 import com.ifree.uu.uubuy.ui.activity.MarketActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
 import com.ifree.uu.uubuy.ui.activity.StoreActivity;
+import com.ifree.uu.uubuy.ui.activity.TestActivity;
 import com.ifree.uu.uubuy.ui.adapter.AdTypeAdapter;
 import com.ifree.uu.uubuy.ui.adapter.CityADAdapter;
 import com.ifree.uu.uubuy.ui.adapter.HomeAdapter;
@@ -110,10 +111,6 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
-                mCityADList.clear();
-                cityADAdapter.notifyDataSetChanged();
                 loadData();
             }
 
@@ -140,12 +137,18 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
                 if (position < 0 | position >= mAdTypeList.size()) {
                     return;
                 }
-                Log.i("TAG", "onItemClick: " + position);
                 Bundle bundle = new Bundle();
-                bundle.putString("adTypeId", mAdTypeList.get(position).getAdTypeId());
-                bundle.putString("type", mAdTypeList.get(position).getType());
-                bundle.putString("title", mAdTypeList.get(position).getAdTypeTitle());
-                MyApplication.openActivity(context, FirstClassifyActivity.class, bundle);
+                if (position == 0){
+                    Log.i("TAG", "onItemClick: " + position);
+                    bundle.putString("adTypeId", mAdTypeList.get(position).getAdTypeId());
+                    bundle.putString("type", mAdTypeList.get(position).getType());
+                    bundle.putString("title", mAdTypeList.get(position).getAdTypeTitle());
+                    MyApplication.openActivity(context, FirstClassifyActivity.class, bundle);
+                }else {
+                    bundle.putString("title", mAdTypeList.get(position).getAdTypeTitle());
+                    MyApplication.openActivity(context, TestActivity.class, bundle);
+                }
+
             }
         });
 
@@ -266,14 +269,18 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
     private void loadData(){
         mHomePresenter.onCreate();
         mHomePresenter.attachView(mHomeView);
-        mHomePresenter.getSearchHomes(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context), page, "加载中...");
+        mHomePresenter.getSearchHomes(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context),SPUtil.getCity(context), page, "加载中...");
     }
 
-    private HomeView mHomeView = new HomeView() {
+    private ProjectView<HomeEntity> mHomeView = new ProjectView<HomeEntity>() {
         @Override
         public void onSuccess(HomeEntity mHomeEntity) {
             if (page == 1) {
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
+                mCityADList.clear();
+                cityADAdapter.notifyDataSetChanged();
             } else {
                 xRecyclerView.loadMoreComplete();
             }
@@ -283,10 +290,9 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
             }
             List<HomeEntity.DataBean.BannerList> bannerLists = mHomeEntity.getData().getBannerList();
             if (bannerLists != null && !bannerLists.isEmpty()) {
-                if (mBannerList.size() == 0) {
-                    mBannerList.addAll(bannerLists);
-                    initTopViewData(mBannerList);
-                }
+                mBannerList.clear();
+                mBannerList.addAll(bannerLists);
+                initTopViewData(mBannerList);
             }
 
             List<HomeEntity.DataBean.AdTypeList> adTypeLists = mHomeEntity.getData().getAdTypeList();
@@ -339,12 +345,14 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
     };
 
     private void initTopViewData(final List<HomeEntity.DataBean.BannerList> mBannerList) {
+        List<String> imag = new ArrayList<>();
         for (int i = 0; i < mBannerList.size(); i++) {
-            imageSlideshow.addImageTitle(BaseUrl.IMAGE_HTTP + mBannerList.get(i).getBannerPic());
+            imag.add(BaseUrl.IMAGE_HTTP + mBannerList.get(i).getBannerPic());
+
         }
+        imageSlideshow.addImageTitle(imag);
         imageSlideshow.setDotSpace(18);
         imageSlideshow.setDotSize(20);
-        imageSlideshow.setDelay(3000);
         imageSlideshow.setOnItemClickListener(new ImageSlideshow.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -354,19 +362,6 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
         imageSlideshow.commit();
     }
 
-    private void initSetNotice(List<HomeEntity.DataBean.UURecommendNotice> messageLists) {
-        List<String> textArrays = new ArrayList<>();
-        for (int i = 0; i < messageLists.size(); i++) {
-            textArrays.add(messageLists.get(i).getUuRecommentContent());
-        }
-        marqueeTv.setTextArraysAndClickListener(context, textArrays, new MarqueeTextViewClickListener() {
-            @Override
-            public void onClick(int position) {
-                Bundle bundle = new Bundle();
-//                MyApplication.openActivity(context, WebDetailsActivity.class, bundle);
-            }
-        });
-    }
 
     private void initRotateViewData(List<HomeEntity.DataBean.RotateADList> rotateADLists) {
         List<String> imag = new ArrayList<>();
@@ -379,9 +374,110 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
                 .start();
     }
 
+
+    private void initSetNotice(final List<HomeEntity.DataBean.UURecommendNotice> messageLists) {
+        List<String> textArrays = new ArrayList<>();
+        for (int i = 0; i < messageLists.size(); i++) {
+            textArrays.add(messageLists.get(i).getUuRecommentContent());
+        }
+        marqueeTv.setTextArraysAndClickListener(context, textArrays, new MarqueeTextViewClickListener() {
+            @Override
+            public void onClick(int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("fristActivitiesId", messageLists.get(position).getUuRecommendId());
+                bundle.putString("fristActivitiesType", messageLists.get(position).getType());
+                bundle.putString("fristActivitiesName", messageLists.get(position).getUuRecommendName());
+                switch (messageLists.get(position).getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
+                    case "1":
+                        if (messageLists.get(position).getUuRecommentType().equals("1")) {
+                            MyApplication.openActivity(context, StoreActivity.class, bundle);
+                        } else {
+                            MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
+                        }
+                        break;
+                    case "2"://超市
+                        if (messageLists.get(position).getUuRecommentType().equals("1")) {
+                            MyApplication.openActivity(context, StoreActivity.class, bundle);
+                        } else {
+                            MyApplication.openActivity(context, MarketActivity.class, bundle);
+                        }
+                        break;
+                    case "3":
+                        if (messageLists.get(position).getUuRecommentType().equals("1")) {
+                            MyApplication.openActivity(context, StoreActivity.class, bundle);
+                        } else {
+                            MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
+                        }
+                        break;
+                    case "4":
+                        if (messageLists.get(position).getUuRecommentType().equals("1")) {
+                            MyApplication.openActivity(context, BrandActivity.class, bundle);
+                        } else {
+                            MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
+                        }
+                        break;
+                    case "5":
+                        if (messageLists.get(position).getUuRecommentType().equals("1")) {
+                            MyApplication.openActivity(context, BrandActivity.class, bundle);
+                        } else {
+                            MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
+                        }
+                        break;
+                    case "6":
+                        MyApplication.openActivity(context, BrandActivity.class, bundle);
+                        break;
+                }
+            }
+        });
+    }
+
+
     @Override
     public void OnBannerClick(int position) {
-
+        Bundle bundle = new Bundle();
+        bundle.putString("fristActivitiesId", mRotateADList.get(position-1).getRotateADId());
+        bundle.putString("fristActivitiesType", mRotateADList.get(position-1).getType());
+        bundle.putString("fristActivitiesName", mRotateADList.get(position-1).getRotateName());
+        switch (mRotateADList.get(position-1).getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
+            case "1":
+                if (mRotateADList.get(position-1).getRotateADType().equals("1")) {
+                    MyApplication.openActivity(context, StoreActivity.class, bundle);
+                } else {
+                    MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
+                }
+                break;
+            case "2"://超市
+                if (mRotateADList.get(position-1).getRotateADType().equals("1")) {
+                    MyApplication.openActivity(context, StoreActivity.class, bundle);
+                } else {
+                    MyApplication.openActivity(context, MarketActivity.class, bundle);
+                }
+                break;
+            case "3":
+                if (mRotateADList.get(position-1).getRotateADType().equals("1")) {
+                    MyApplication.openActivity(context, StoreActivity.class, bundle);
+                } else {
+                    MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
+                }
+                break;
+            case "4":
+                if (mRotateADList.get(position-1).getRotateADType().equals("1")) {
+                    MyApplication.openActivity(context, BrandActivity.class, bundle);
+                } else {
+                    MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
+                }
+                break;
+            case "5":
+                if (mRotateADList.get(position-1).getRotateADType().equals("1")) {
+                    MyApplication.openActivity(context, BrandActivity.class, bundle);
+                } else {
+                    MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
+                }
+                break;
+            case "6":
+                MyApplication.openActivity(context, BrandActivity.class, bundle);
+                break;
+        }
     }
 
     private BroadcastReceiver mAllBroad = new BroadcastReceiver() {

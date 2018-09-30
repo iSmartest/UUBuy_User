@@ -14,7 +14,7 @@ import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.service.entity.ActivitiesDetailsEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.GetCouponPresenter;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.activity.BindingPhoneActivity;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
@@ -73,7 +73,7 @@ public class ActivitiesDetailsAdapter extends RecyclerView.Adapter<ActivitiesDet
                         }
                         mGetCouponPresenter.onCreate();
                         mGetCouponPresenter.getCoupon(uid,couponList.getCouponId(),"领取中...");
-                        mGetCouponPresenter.attachView(new UserInfoView() {
+                        mGetCouponPresenter.attachView(new ProjectView<UserInfoEntity>() {
                             @Override
                             public void onSuccess(UserInfoEntity mUserInfoEntity) {
                                 if (mUserInfoEntity.getResultCode().equals("1")){

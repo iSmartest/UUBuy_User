@@ -7,13 +7,21 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.view.View;
 
 
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.HomeView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLHandshakeException;
+
+import retrofit2.HttpException;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -30,7 +38,7 @@ public class HomePresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private HomeView mHomeView;
+    private ProjectView mHomeView;
     private HomeEntity mHomeEntity;
     public HomePresenter(Context mContext){
         this.mContext = mContext;
@@ -61,7 +69,7 @@ public class HomePresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mHomeView = (HomeView) view;
+        mHomeView = (ProjectView) view;
     }
 
     @Override
@@ -69,10 +77,10 @@ public class HomePresenter implements Presenter {
 
     }
 
-    public void getSearchHomes(String longitude, String latitude, String townAdCode, int page,String mContent){
+    public void getSearchHomes(String longitude, String latitude, String townAdCode, String city,int page,String mContent){
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext,mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchHomes(longitude,latitude,townAdCode,page)
+        mCompositeSubscription.add(manager.getSearchHomes(longitude,latitude,townAdCode,city,page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<HomeEntity>() {
@@ -89,7 +97,7 @@ public class HomePresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mHomeView.onError("请求失败！！");
+                        mHomeView.onError(RequestResult.getError(e));
                     }
 
                     @Override

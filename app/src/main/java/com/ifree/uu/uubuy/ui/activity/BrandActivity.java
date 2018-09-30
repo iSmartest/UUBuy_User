@@ -1,7 +1,6 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,13 +13,10 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.CommodityListEntity;
-import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.service.presenter.CommodityPresenter;
-import com.ifree.uu.uubuy.service.presenter.SecondListPresenter;
-import com.ifree.uu.uubuy.service.view.CommodityListView;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.BrandAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -88,8 +84,6 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 loadData();
             }
 
@@ -134,11 +128,13 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
         mCommodityPresenter.getSearchCommodityListInfo(storeId, page, uid, "加载中...");
     }
 
-    private CommodityListView mCommodityListView = new CommodityListView() {
+    private ProjectView<CommodityListEntity> mCommodityListView = new ProjectView<CommodityListEntity>() {
         @Override
         public void onSuccess(CommodityListEntity mCommodityListEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }
@@ -192,7 +188,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    private UserInfoView mCollectionView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mCollectionView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){

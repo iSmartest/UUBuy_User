@@ -6,11 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.service.entity.OrderEntity;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.OrderView;
-import com.ifree.uu.uubuy.service.view.SubmitReserveView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -28,7 +27,7 @@ public class SubmitReservePresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private SubmitReserveView mSubmitReserveView;
+    private ProjectView mSubmitReserveView;
     private UserInfoEntity mUserInfoEntity;
 
     public SubmitReservePresenter(Context mContext){
@@ -60,7 +59,7 @@ public class SubmitReservePresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mSubmitReserveView = (SubmitReserveView) view;
+        mSubmitReserveView = (ProjectView) view;
     }
 
     @Override
@@ -87,7 +86,7 @@ public class SubmitReservePresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mSubmitReserveView.onError("请求失败！！");
+                        mSubmitReserveView.onError(RequestResult.getError(e));
                     }
 
                     @Override

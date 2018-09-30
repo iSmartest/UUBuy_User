@@ -1,4 +1,4 @@
-package com.ifree.uu.uubuy.service;
+package com.ifree.uu.uubuy.service.view;
 
 import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
@@ -109,11 +109,12 @@ public interface RetrofitService {
                                            @Field("keyWord") String keyWord,
                                            @Query("uid") String uid,
                                            @Query("searchType") String searchType);
-
-    @GET(BaseUrl.HOME_INFO)
+    @FormUrlEncoded
+    @POST(BaseUrl.HOME_INFO)
     Observable<HomeEntity> getSearchHomes(@Query("longitude") String longitude,
                                           @Query("latitude") String latitude,
                                           @Query("townAdCode") String townAdCode,
+                                          @Field("city") String city,
                                           @Query("page") int page);
 
     @GET(BaseUrl.CLASSIFY_LIST_INFO)

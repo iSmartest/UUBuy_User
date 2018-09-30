@@ -91,6 +91,7 @@ public class HomeEntity {
         public static class UURecommendNotice{
             private String uuRecommendId;
             private String uuRecommentContent;
+            private String uuRecommendName;
             private String uuRecommentType;
             private String type;
 
@@ -108,6 +109,14 @@ public class HomeEntity {
 
             public void setUuRecommentContent(String uuRecommentContent) {
                 this.uuRecommentContent = uuRecommentContent;
+            }
+
+            public String getUuRecommendName() {
+                return uuRecommendName;
+            }
+
+            public void setUuRecommendName(String uuRecommendName) {
+                this.uuRecommendName = uuRecommendName;
             }
 
             public String getUuRecommentType() {
@@ -195,6 +204,7 @@ public class HomeEntity {
 
         public static class RotateADList{
             private String rotateADId;
+            private String rotateName;
             private String rotateADIcon;
             private String rotateADType;
             private String type;
@@ -205,6 +215,14 @@ public class HomeEntity {
 
             public void setRotateADId(String rotateADId) {
                 this.rotateADId = rotateADId;
+            }
+
+            public String getRotateName() {
+                return rotateName;
+            }
+
+            public void setRotateName(String rotateName) {
+                this.rotateName = rotateName;
             }
 
             public String getRotateADIcon() {

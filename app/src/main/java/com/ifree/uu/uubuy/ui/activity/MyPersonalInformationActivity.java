@@ -31,7 +31,7 @@ import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.dialog.EditContentDialog;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.ModifyUserInfoPresenter;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.PhotoUtil;
@@ -122,7 +122,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
         mBirthday.setText(userBirthday);
         mIdCart.setText(userIdCard);
         mAddress.setText(userAddress);
-        GlideImageLoader.imageLoader(context,userIcon,mUserIcon);
+        GlideImageLoader.headerImageLoader(context,userIcon,mUserIcon);
         final Calendar ca = Calendar.getInstance();
         mYear = ca.get(Calendar.YEAR);
         mMonth = ca.get(Calendar.MONTH);
@@ -204,7 +204,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
     }
 
 
-    private UserInfoView mModifyUserInfoView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mModifyUserInfoView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
@@ -380,14 +380,14 @@ public class MyPersonalInformationActivity extends BaseActivity {
         mModifyUserInfoPresenter.getSearchModifyUserIconInfo(uid,body,"提交中...");
     }
 
-    private UserInfoView mModifyUserIconInfoView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mModifyUserIconInfoView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mUserInfoEntity.getMsg());
                 return;
             }
-            GlideImageLoader.imageLoader(context,mUserInfoEntity.getData().getUserIcon(),mUserIcon);
+            GlideImageLoader.headerImageLoader(context,mUserInfoEntity.getData().getUserIcon(),mUserIcon);
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
             Intent intent = new Intent();
             intent.setAction("com.ifree.uu.mine.changed");

@@ -15,8 +15,8 @@ import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.GroupInfoPresenter;
 import com.ifree.uu.uubuy.service.presenter.SharePresenter;
 import com.ifree.uu.uubuy.service.presenter.SignInPresenter;
-import com.ifree.uu.uubuy.service.view.GroupInfoView;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.PlayVIPAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -83,7 +83,7 @@ public class PlayVIPActivity extends BaseActivity {
         mSignInPresenter = new SignInPresenter(context);
         uid = SPUtil.getString(context,"uid");
         mName.setText(userName);
-        GlideImageLoader.imageLoader(context,userIcon,mIcon);
+        GlideImageLoader.headerImageLoader(context,userIcon,mIcon);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.HORIZONTAL,false));
         mAdapter = new PlayVIPAdapter(context,mList);
         recyclerView.setAdapter(mAdapter);
@@ -96,7 +96,7 @@ public class PlayVIPActivity extends BaseActivity {
         mGroupInfoPresenter.getSearchGroupInfos(uid,"加载中...");
     }
 
-    private GroupInfoView mGroupInfoView = new GroupInfoView() {
+    private ProjectView<GroupEntity> mGroupInfoView = new ProjectView<GroupEntity>() {
         @Override
         public void onSuccess(GroupEntity mGroupEntity) {
             if (mGroupEntity.getResultCode().equals("1")){
@@ -194,7 +194,7 @@ public class PlayVIPActivity extends BaseActivity {
         mSignInPresenter.getSearchSignIns(uid,"签到中...");
     }
 
-    private UserInfoView mUserInfoView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mUserInfoView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
@@ -245,7 +245,7 @@ public class PlayVIPActivity extends BaseActivity {
         mSharePresenter.getSearchShare(SPUtil.getUid(context),"分享中...");
     }
 
-    private UserInfoView mShareView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mShareView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){

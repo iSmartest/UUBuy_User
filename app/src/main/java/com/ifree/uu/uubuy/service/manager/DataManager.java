@@ -2,8 +2,8 @@ package com.ifree.uu.uubuy.service.manager;
 
 import android.content.Context;
 
-import com.ifree.uu.uubuy.service.RetrofitHelper;
-import com.ifree.uu.uubuy.service.RetrofitService;
+import com.ifree.uu.uubuy.service.view.RetrofitHelper;
+import com.ifree.uu.uubuy.service.view.RetrofitService;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.ActivitiesDetailsEntity;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
@@ -89,8 +89,8 @@ public class DataManager {
         return mRetrofitService.getSearchInfo(longitude, latitude, townAdCode, page, keyWord, uid, searchType);
     }
 
-    public Observable<HomeEntity> getSearchHomes(String longitude, String latitude, String townAdCode, int page) {
-        return mRetrofitService.getSearchHomes(longitude, latitude, townAdCode, page);
+    public Observable<HomeEntity> getSearchHomes(String longitude, String latitude, String townAdCode, String city,int page) {
+        return mRetrofitService.getSearchHomes(longitude, latitude, townAdCode, city,page);
     }
 
     public Observable<FirstClassifyEntity> getSearchClassifyListInfo(String longitude, String latitude, String townAdCode, String adTypeId, String type, String menuId, int page, String uid) {

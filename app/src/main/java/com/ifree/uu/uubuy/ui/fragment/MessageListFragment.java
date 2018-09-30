@@ -5,8 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.MessageEntity;
 import com.ifree.uu.uubuy.service.presenter.MessagePresenter;
-import com.ifree.uu.uubuy.service.view.MessageView;
-import com.ifree.uu.uubuy.ui.adapter.AroundAdapter;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.MessageAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -80,7 +79,7 @@ public class MessageListFragment extends BaseFragment {
         messagePresenter.getSearchMessages(SPUtil.getUid(context),type,page,"加载中...");
     }
 
-    private MessageView mMessageView = new MessageView() {
+    private ProjectView<MessageEntity> mMessageView = new ProjectView<MessageEntity>() {
         @Override
         public void onSuccess(MessageEntity mMessageEntity) {
             if (mMessageEntity.getResultCode().equals("1")){

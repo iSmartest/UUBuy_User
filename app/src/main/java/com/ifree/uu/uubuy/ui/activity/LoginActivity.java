@@ -13,18 +13,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.CommonLog;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.listener.LoginCompleteListener;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.CodeLoginPresenter;
 import com.ifree.uu.uubuy.service.presenter.PasswordLoginPresenter;
 import com.ifree.uu.uubuy.service.presenter.SendCodePresenter;
 import com.ifree.uu.uubuy.service.presenter.ThirdLoginPresenter;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StringUtils;
@@ -233,7 +231,7 @@ public class LoginActivity extends BaseActivity {
         mPasswordLoginPresenter.getSearchPassWordLogin(userPhone, password, "登录中...");
     }
 
-    private UserInfoView mPasswordLoginView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mPasswordLoginView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")) {
@@ -261,7 +259,7 @@ public class LoginActivity extends BaseActivity {
         mCodeLoginPresenter.getSearchPhoneCodeLogin(userPhone, mCode, sessionId, "登录中...");
     }
 
-    private UserInfoView mCodeLoginView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mCodeLoginView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")) {
@@ -289,7 +287,7 @@ public class LoginActivity extends BaseActivity {
         mSendCodePresenter.getSearchSendCode(userPhone, "3", "获取中...");
     }
 
-    private UserInfoView mSendCodeView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mSendCodeView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")) {
@@ -352,7 +350,7 @@ public class LoginActivity extends BaseActivity {
         mThirdLoginPresenter.getSearchThirdLogin(thirdUid, nickName, userIcon, type, "登录中...");
     }
 
-    private UserInfoView mThirdLoginView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mThirdLoginView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")) {

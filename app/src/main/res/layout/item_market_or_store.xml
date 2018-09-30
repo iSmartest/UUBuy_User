@@ -32,7 +32,6 @@
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="科曼多"
                 android:textColor="@color/text_main_color"
                 android:textSize="13dp"
                 />
@@ -40,7 +39,6 @@
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="奥特莱斯B3 BF34店"
                 android:textColor="@color/text_main_color"
                 android:textSize="11dp"
                 android:layout_marginTop="8dp"/>

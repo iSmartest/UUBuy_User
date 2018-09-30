@@ -28,14 +28,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="奥迪"
                 android:textSize="13dp"/>
             <TextView
                 android:id="@+id/tv_activities_circle_store_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="上地店"
                 android:layout_marginTop="2dp"
                 android:textSize="11dp"/>
         </LinearLayout>

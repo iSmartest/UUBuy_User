@@ -23,8 +23,7 @@ import com.ifree.uu.uubuy.service.entity.HotKeyWordEntity;
 import com.ifree.uu.uubuy.service.entity.SearchEntity;
 import com.ifree.uu.uubuy.service.presenter.HotKeywordPresenter;
 import com.ifree.uu.uubuy.service.presenter.SearchPresenter;
-import com.ifree.uu.uubuy.service.view.HotKeyWordView;
-import com.ifree.uu.uubuy.service.view.SearchView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.FlowTagAdapter;
 import com.ifree.uu.uubuy.ui.adapter.SearchAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
@@ -116,8 +115,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 search();
             }
 
@@ -201,7 +198,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
     }
 
-    private HotKeyWordView mHotKeywordView = new HotKeyWordView() {
+    private ProjectView<HotKeyWordEntity> mHotKeywordView = new ProjectView<HotKeyWordEntity>() {
         @Override
         public void onSuccess(HotKeyWordEntity mHotKeyWordEntity) {
             if (mHotKeyWordEntity.getData().equals("1")){
@@ -220,11 +217,13 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
     };
 
-    private SearchView mSearchView = new SearchView() {
+    private ProjectView<SearchEntity> mSearchView = new ProjectView<SearchEntity>() {
         @Override
         public void onSuccess(SearchEntity mSearchEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }

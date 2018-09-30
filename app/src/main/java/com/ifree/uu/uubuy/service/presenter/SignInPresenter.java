@@ -7,13 +7,11 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.service.entity.GroupEntity;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.GroupInfoView;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
-import com.tencent.connect.UserInfo;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,7 +29,7 @@ public class SignInPresenter implements Presenter {
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private UserInfoEntity mUserInfoEntity;
-    private UserInfoView mUserInfoView;
+    private ProjectView mUserInfoView;
 
     public SignInPresenter(Context mContext){
         this.mContext = mContext;
@@ -61,7 +59,7 @@ public class SignInPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mUserInfoView = (UserInfoView) view;
+        mUserInfoView = (ProjectView) view;
     }
 
     @Override
@@ -89,8 +87,7 @@ public class SignInPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        Log.i("TAG", "onCompleted: " + e.getMessage());
-                        mUserInfoView.onError("请求失败！！");
+                        mUserInfoView.onError(RequestResult.getError(e));
                     }
 
                     @Override

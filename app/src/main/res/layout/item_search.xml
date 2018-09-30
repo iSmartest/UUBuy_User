@@ -34,7 +34,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
-                android:text="物美超市"
                 android:textColor="@color/app_main_default"
                 android:textSize="19dp" />
 
@@ -50,7 +49,6 @@
                     android:id="@+id/tv_search_market_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="活动时间：2018-07-22"
                     android:textColor="@color/app_main_default"
                     android:textSize="13dp" />
 
@@ -58,7 +56,6 @@
                     android:id="@+id/tv_search_market_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="活动地点：北京市上地万达商城"
                     android:textColor="@color/app_main_default"
                     android:textSize="13dp" />
             </LinearLayout>
@@ -93,7 +90,6 @@
                 android:id="@+id/tv_search_store_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="科曼多"
                 android:textColor="@color/text_main_color"
                 android:textSize="13dp"
                 />
@@ -101,7 +97,6 @@
                 android:id="@+id/tv_search_store_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="奥特莱斯B3 BF34店"
                 android:textColor="@color/text_main_color"
                 android:textSize="11dp"
                 android:layout_marginTop="8dp"/>
@@ -138,14 +133,12 @@
                     android:id="@+id/tv_search_commodity_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="特步男鞋运动鞋男款"
                     android:textColor="@color/text_main_color"
                     android:textSize="14dp"/>
                 <TextView
                     android:id="@+id/tv_search_commodity_dec"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="特步男鞋运动鞋男款"
                     android:textColor="@color/text_subtitle_color"
                     android:textSize="14dp"
                     android:maxLines="2"
@@ -160,14 +153,12 @@
                         android:id="@+id/tv_search_commodity_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥179.00"
                         android:textColor="@color/text_price_color"
                         android:textSize="18sp" />
                     <TextView
                         android:id="@+id/tv_search_commodity_old_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥319.00"
                         android:textColor="@color/text_main_color"
                         android:textSize="14dp"
                         android:layout_marginLeft="6dp"
@@ -190,7 +181,6 @@
                         android:id="@+id/tv_search_commodity_surplus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="45%"
                         android:textColor="@color/text_price_color"
                         android:textSize="13dp"/>
                 </LinearLayout>

@@ -16,10 +16,9 @@ import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.CityInfoPresenter;
-import com.ifree.uu.uubuy.service.view.CityInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.SelectHotCityAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -73,6 +72,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
                 }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("area",(Serializable) mList.get(position).getTownList());
+                bundle.putString("city", mList.get(position).getCity());
                 MyApplication.openActivity(context,SelectHotAreaActivity.class,bundle);
             }
         });
@@ -85,7 +85,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
         mCityInfoPresenter.getSearchCityInfo("加载中...");
     }
 
-    private CityInfoView mCityInfoView = new CityInfoView() {
+    private ProjectView<CityInfoEntity> mCityInfoView = new ProjectView<CityInfoEntity>() {
         @Override
         public void onSuccess(CityInfoEntity mCityInfoEntity) {
             Log.i("TAG", "onCompleted: " + new Gson().toJson(mCityInfoEntity));

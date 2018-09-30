@@ -36,7 +36,6 @@
                     android:id="@+id/iv_activities_circle_commodity_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="爱马仕"
                     android:textColor="@color/text_main_color"
                     android:textSize="14dp" />
 
@@ -61,7 +60,6 @@
                         android:id="@+id/iv_activities_circle_commodity_now_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥179.00"
                         android:textColor="@color/text_price_color"
                         android:textSize="18sp" />
 
@@ -69,7 +67,6 @@
                         android:id="@+id/iv_activities_circle_commodity_original_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="￥319.00"
                         android:textColor="@color/text_main_color"
                         android:textSize="14dp"
                         android:layout_marginLeft="6dp"
@@ -93,7 +90,6 @@
                         android:id="@+id/tv_activities_commodity_surplus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="45%"
                         android:textColor="@color/text_price_color"
                         android:textSize="13dp"/>
                 </LinearLayout>

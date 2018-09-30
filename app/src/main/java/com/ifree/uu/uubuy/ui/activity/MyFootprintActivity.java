@@ -7,9 +7,8 @@ import android.widget.ImageView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.MyFootPrintEntity;
 import com.ifree.uu.uubuy.service.presenter.MyFootPrintPresenter;
-import com.ifree.uu.uubuy.service.view.MyFootPrintView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.MyFootprintAdapter;
-import com.ifree.uu.uubuy.ui.adapter.SearchAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -56,8 +55,6 @@ public class MyFootprintActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 loadData();
             }
 
@@ -81,11 +78,13 @@ public class MyFootprintActivity extends BaseActivity {
         mMyFootPrintPresenter.getSearchMyFootPrint(uid,page,"加载中...");
     }
 
-    private MyFootPrintView mMyFootPrintView = new MyFootPrintView() {
+    private ProjectView<MyFootPrintEntity> mMyFootPrintView = new ProjectView<MyFootPrintEntity>() {
         @Override
         public void onSuccess(MyFootPrintEntity mMyFootPrintEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }

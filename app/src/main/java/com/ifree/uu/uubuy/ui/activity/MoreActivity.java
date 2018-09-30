@@ -9,9 +9,8 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.MoreEntity;
 import com.ifree.uu.uubuy.service.presenter.MorePresenter;
-import com.ifree.uu.uubuy.service.view.MoreView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.MoreAdapter;
-import com.ifree.uu.uubuy.ui.adapter.OrderAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -70,8 +69,6 @@ public class MoreActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 loadData();
             }
 
@@ -93,11 +90,13 @@ public class MoreActivity extends BaseActivity {
     }
 
 
-    private MoreView mMoreView = new MoreView() {
+    private ProjectView<MoreEntity> mMoreView = new ProjectView<MoreEntity>() {
         @Override
         public void onSuccess(MoreEntity mMoreEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }

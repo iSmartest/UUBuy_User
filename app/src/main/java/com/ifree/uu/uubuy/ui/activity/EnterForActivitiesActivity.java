@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.ActivitiesSignUpPresenter;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
@@ -76,7 +76,7 @@ public class EnterForActivitiesActivity extends BaseActivity {
         mActivitiesSignUpPresenter.getSearchActivitiesSignUp(uid,marketId,name,phone,idCard,type,"提交中...");
     }
 
-    private UserInfoView mActivitiesSignUpView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mActivitiesSignUpView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){

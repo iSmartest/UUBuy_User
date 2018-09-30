@@ -45,7 +45,7 @@ public class ImageSlideshow extends FrameLayout {
     private Animator animatorToLarge;
     private Animator animatorToSmall;
     private SparseBooleanArray isLarge;
-    private List<ImageTitleBean> imageTitleBeanList;
+    private List<String> imageTitleBeanList;
     private int dotSize = 12;
     private int dotSpace = 20;
     private int delay = 3000;
@@ -106,32 +106,13 @@ public class ImageSlideshow extends FrameLayout {
         this.delay = delay;
     }
 
-    // 添加图片
-    public void addImageUrl(String imageUrl) {
-        ImageTitleBean imageTitleBean = new ImageTitleBean();
-        imageTitleBean.setImageUrl(imageUrl);
-        imageTitleBeanList.add(imageTitleBean);
-    }
-
-
     // 添加图片和标题
-    public void addImageTitle(String imageUrl) {
-        ImageTitleBean imageTitleBean = new ImageTitleBean();
-        imageTitleBean.setImageUrl(imageUrl);
-//        imageTitleBean.setTitle(title);
-        imageTitleBeanList.add(imageTitleBean);
-    }
-
-
-    // 添加图片和标题的JavaBean
-    public void addImageTitleBean(ImageTitleBean imageTitleBean) {
-        imageTitleBeanList.add(imageTitleBean);
-    }
-
-
-    // 设置图片和标题的JavaBean数据列表
-    public void setImageTitleBeanList(List<ImageTitleBean> imageTitleBeanList) {
-        this.imageTitleBeanList = imageTitleBeanList;
+    public void addImageTitle(List<String> imageUrl) {
+        if (imageTitleBeanList.size() > 0){
+            handler.removeCallbacks(task);
+            imageTitleBeanList.clear();
+        }
+        this.imageTitleBeanList = imageUrl;
     }
 
     // 设置完后最终提交
@@ -157,7 +138,7 @@ public class ImageSlideshow extends FrameLayout {
         isLarge = new SparseBooleanArray();
         // 记得创建前先清空数据，否则会受遗留数据的影响。
         llDot.removeAllViews();
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < imageTitleBeanList.size(); i++) {
             View view = new View(context);
             view.setBackgroundResource(R.drawable.lunbo_unselected);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(dotSize, dotSize);
@@ -263,7 +244,7 @@ public class ImageSlideshow extends FrameLayout {
      * @param imageTitleBeanList
      */
 
-    private void setViewPager(List<ImageTitleBean> imageTitleBeanList) {
+    private void setViewPager(List<String> imageTitleBeanList) {
         // 设置View列表
         setViewList(imageTitleBeanList);
         vpImageTitle.setAdapter(new ImageTitlePagerAdapter());
@@ -334,23 +315,19 @@ public class ImageSlideshow extends FrameLayout {
      * @param imageTitleBeanList
      */
 
-    private void setViewList(List<ImageTitleBean> imageTitleBeanList) {
+    private void setViewList(List<String> imageTitleBeanList) {
         viewList = new ArrayList<>();
         for (int i = 0; i < count + 2; i++) {
             View view = LayoutInflater.from(context).inflate(R.layout.is_image_title_layout, null);
             ImageView ivImage = (ImageView) view.findViewById(R.id.iv_image);
             TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
             if (i == 0) {// 将最前面一页设置成本来最后的那页
-                Glide.with(context).load(imageTitleBeanList.get(count - 1).getImageUrl()).into(ivImage);
-                tvTitle.setText(imageTitleBeanList.get(count - 1).getTitle());
+                Glide.with(context).load(imageTitleBeanList.get(count - 1)).into(ivImage);
             } else if (i == count + 1) {// 将最后面一页设置成本来最前的那页
-                Glide.with(context).load(imageTitleBeanList.get(0).getImageUrl()).into(ivImage);
-                tvTitle.setText(imageTitleBeanList.get(0).getTitle());
+                Glide.with(context).load(imageTitleBeanList.get(0)).into(ivImage);
             } else {
-                Glide.with(context).load(imageTitleBeanList.get(i - 1).getImageUrl()).into(ivImage);
-                tvTitle.setText(imageTitleBeanList.get(i - 1).getTitle());
+                Glide.with(context).load(imageTitleBeanList.get(i - 1)).into(ivImage);
             }
-
             // 将设置好的View添加到View列表中
             viewList.add(view);
         }

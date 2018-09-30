@@ -170,8 +170,7 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onReceive(Context context, final Intent intent) {
             //接到广播通知后刷新数据源
-           setLocation(SPUtil.getString(context,"city"));
-
+           setLocation(SPUtil.getDistrict(context));
         }
     };
 }

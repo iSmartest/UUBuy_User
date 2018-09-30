@@ -14,7 +14,6 @@
             android:id="@+id/tv_first_classify_name"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:text="奥特莱斯"
             android:textColor="@color/text_subtitle_color"
             android:textSize="13dp"
             android:gravity="center"/>

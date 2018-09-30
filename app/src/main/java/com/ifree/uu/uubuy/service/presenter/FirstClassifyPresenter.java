@@ -7,11 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.service.entity.CouponEntity;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.CouponView;
-import com.ifree.uu.uubuy.service.view.FirstClassifyView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -30,7 +29,7 @@ public class FirstClassifyPresenter implements Presenter {
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private FirstClassifyEntity mFirstClassifyEntity;
-    private FirstClassifyView mFirstClassifyView;
+    private ProjectView mFirstClassifyView;
 
     public FirstClassifyPresenter(Context mContext){
         this.mContext = mContext;
@@ -60,7 +59,7 @@ public class FirstClassifyPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mFirstClassifyView = (FirstClassifyView) view;
+        mFirstClassifyView = (ProjectView) view;
     }
 
     @Override
@@ -88,7 +87,7 @@ public class FirstClassifyPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mFirstClassifyView.onError("请求失败！！");
+                        mFirstClassifyView.onError(RequestResult.getError(e));
                     }
 
                     @Override

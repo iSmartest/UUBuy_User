@@ -16,8 +16,7 @@ import com.ifree.uu.uubuy.service.entity.ActivitiesDetailsEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.ActivitiesDetailsPresenter;
 import com.ifree.uu.uubuy.service.presenter.CancelSignUpPresenter;
-import com.ifree.uu.uubuy.service.view.ActivitiesDetailsView;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.ActivitiesDetailsAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -105,7 +104,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
         mCancelSignUpPresenter.getSearchCancelSignUp(uid,marketId,type,"取消中...");
     }
 
-    private UserInfoView mCancelSingUpView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mCancelSingUpView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
@@ -131,8 +130,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
         mActivitiesDetailsPresenter.getSearchActivitiesInfo(uid,marketId,"加载中...");
     }
 
-    private ActivitiesDetailsView mActivitiesDetailsView = new ActivitiesDetailsView() {
-
+    private ProjectView<ActivitiesDetailsEntity> mActivitiesDetailsView = new ProjectView<ActivitiesDetailsEntity>() {
         @Override
         public void onSuccess(ActivitiesDetailsEntity mActivitiesDetailsEntity) {
             if (mActivitiesDetailsEntity.getResultCode().equals("1")){

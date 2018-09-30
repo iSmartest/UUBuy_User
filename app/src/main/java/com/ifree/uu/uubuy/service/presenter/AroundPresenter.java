@@ -7,13 +7,19 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
-import com.ifree.uu.uubuy.service.entity.HomeEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.AroundView;
-import com.ifree.uu.uubuy.service.view.HomeView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLHandshakeException;
+
+import retrofit2.HttpException;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -30,7 +36,7 @@ public class AroundPresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private AroundView mAroundView;
+    private ProjectView mAroundView;
     private AroundEntity mAroundEntity;
     public AroundPresenter(Context mContext){
         this.mContext = mContext;
@@ -61,7 +67,7 @@ public class AroundPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mAroundView = (AroundView) view;
+        mAroundView = (ProjectView) view;
     }
 
     @Override
@@ -89,7 +95,7 @@ public class AroundPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mAroundView.onError("请求失败！！");
+                        mAroundView.onError(RequestResult.getError(e));
                     }
 
                     @Override

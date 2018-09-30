@@ -71,10 +71,10 @@ public class MySettingActivity extends BaseActivity {
         userName = SPUtil.getString(context,"userName");
         userIcon = SPUtil.getString(context,"userIcon");
         userPhone = SPUtil.getString(context,"userPhone");
-        GlideImageLoader.imageLoader(context,userIcon,mIcon);
+        GlideImageLoader.headerImageLoader(context,userIcon,mIcon);
         mName.setText(userName);
         mPhone.setText("账户：" + userPhone);
-        mAddress.setText("本地服务器：" + BaseUrl.HTTP);
+        mAddress.setText(SPUtil.getString(context,"url"));
     }
 
     @Override
@@ -130,13 +130,15 @@ public class MySettingActivity extends BaseActivity {
                 break;
             case R.id.ll_testing:
                 if (isItem == 0){//线上
-                    BaseUrl.HTTP = "http://101.200.60.12:8080/uugo-user/app/";
+                    BaseUrl.HTTP = "http://www.uugood.cn:8080/uugo-user/app/";
                     isItem = 1;
-                    mAddress.setText("正式服务器：" + BaseUrl.HTTP);
+                    mAddress.setText(BaseUrl.HTTP);
+                    SPUtil.putString(context,"url","http://www.uugood.cn:8080/uugo-user/app/");
                 }else {
-                    BaseUrl.HTTP = "http://192.168.1.8:8080/app/";
+                    BaseUrl.HTTP = "http://192.168.1.8:8080/uugo-user/app/";
+                    SPUtil.putString(context,"url","http://192.168.1.8:8080/uugo-user/app/");
                     isItem = 0;
-                    mAddress.setText("本地服务器：" + BaseUrl.HTTP);
+                    mAddress.setText(BaseUrl.HTTP);
                 }
                 break;
         }

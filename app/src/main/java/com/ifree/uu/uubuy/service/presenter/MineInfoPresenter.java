@@ -7,9 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.MineEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.MineInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -27,7 +28,7 @@ public class MineInfoPresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private MineInfoView mMineInfoView;
+    private ProjectView mMineInfoView;
     private MineEntity mMineEntity;
 
     public MineInfoPresenter(Context mContext) {
@@ -59,7 +60,7 @@ public class MineInfoPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mMineInfoView = (MineInfoView) view;
+        mMineInfoView = (ProjectView) view;
     }
 
     @Override
@@ -87,7 +88,7 @@ public class MineInfoPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mMineInfoView.onError("请求失败！！");
+                        mMineInfoView.onError(RequestResult.getError(e));
                     }
 
                     @Override

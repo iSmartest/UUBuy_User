@@ -7,7 +7,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
 import com.ifree.uu.uubuy.service.presenter.CouponCenterPresenter;
-import com.ifree.uu.uubuy.service.view.CouponView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.CouponCenterAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
@@ -55,8 +55,6 @@ public class StoreCouponActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 loadData();
             }
 
@@ -82,11 +80,13 @@ public class StoreCouponActivity extends BaseActivity {
 
     }
 
-    private CouponView mCouponView = new CouponView() {
+    private ProjectView<CouponEntity> mCouponView = new ProjectView<CouponEntity>() {
         @Override
         public void onSuccess(CouponEntity mCouponEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }

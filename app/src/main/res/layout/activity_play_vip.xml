@@ -48,7 +48,6 @@
                         android:id="@+id/tv_play_vip_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="张小北"
                         android:textColor="@color/app_main_default"
                         android:textSize="17dp" />
 
@@ -58,7 +57,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:background="@drawable/shape_silver_medal_background"
-                        android:text="银牌"
                         android:textColor="@color/app_main_default"
                         android:textSize="9dp" />
                 </LinearLayout>
@@ -68,7 +66,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="成长值：200"
                     android:textColor="@color/app_main_default"
                     android:textSize="11dp" />
             </LinearLayout>

@@ -21,7 +21,6 @@
             android:id="@+id/tv_city_ad_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="沃尔玛上地店"
             android:textColor="@color/text_main_color"
             android:textSize="13dp"
             android:layout_marginTop="2dp"
@@ -30,7 +29,6 @@
             android:id="@+id/tv_city_ad_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2018.08.12-2018.08.14"
             android:textColor="#ff4a4a4a"
             android:textSize="12dp"
             android:layout_marginLeft="5dp"/>

@@ -7,11 +7,19 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLHandshakeException;
+
+import retrofit2.HttpException;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -28,7 +36,7 @@ public class GetCouponPresenter implements Presenter {
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private UserInfoEntity mUserInfoEntity;
-    private UserInfoView mUserInfoView;
+    private ProjectView mUserInfoView;
 
     public GetCouponPresenter(Context mContext){
         this.mContext = mContext;
@@ -58,7 +66,7 @@ public class GetCouponPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mUserInfoView = (UserInfoView) view;
+        mUserInfoView = (ProjectView) view;
     }
 
     @Override
@@ -86,8 +94,7 @@ public class GetCouponPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        Log.i("TAG", "onCompleted: " + e.getMessage());
-                        mUserInfoView.onError("请求失败！！");
+                        mUserInfoView.onError(RequestResult.getError(e));
                     }
 
                     @Override

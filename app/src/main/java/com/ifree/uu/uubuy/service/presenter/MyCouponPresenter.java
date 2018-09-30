@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.CouponEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.CouponView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -26,7 +27,7 @@ public class MyCouponPresenter implements Presenter {
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private CouponEntity mCouponEntity;
-    private CouponView mCouponView;
+    private ProjectView mCouponView;
 
     public MyCouponPresenter(Context mContext) {
         this.mContext = mContext;
@@ -57,7 +58,7 @@ public class MyCouponPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mCouponView = (CouponView) view;
+        mCouponView = (ProjectView) view;
     }
 
     @Override
@@ -84,7 +85,7 @@ public class MyCouponPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mCouponView.onError("请求失败！！");
+                        mCouponView.onError(RequestResult.getError(e));
                     }
 
                     @Override

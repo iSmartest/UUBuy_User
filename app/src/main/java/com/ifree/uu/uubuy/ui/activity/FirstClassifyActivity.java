@@ -15,7 +15,7 @@ import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.service.presenter.FirstClassifyPresenter;
-import com.ifree.uu.uubuy.service.view.FirstClassifyView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.FirstClassifyAdapter;
 import com.ifree.uu.uubuy.ui.adapter.FirstMenuAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
@@ -95,19 +95,13 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 loadData();
-                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page ++ ;
                 loadData();
-                xRecyclerView.loadMoreComplete();
-                mAdapter.notifyDataSetChanged();
-                xRecyclerView.setNoMore(true);
             }
         });
 
@@ -166,9 +160,16 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
         mFirstClassifyPresenter.getSearchClassifyListInfo(longitude,latitude,townAdCode,adTypeId,type,menuId,page,uid,"加载中...");
     }
 
-    private FirstClassifyView mFirstClassifyView = new FirstClassifyView() {
+    private ProjectView<FirstClassifyEntity> mFirstClassifyView = new ProjectView<FirstClassifyEntity>() {
         @Override
         public void onSuccess(FirstClassifyEntity mFirstClassifyEntity) {
+            if (page == 1) {
+                xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
+            } else {
+                xRecyclerView.loadMoreComplete();
+            }
             if (mFirstClassifyEntity.getResultCode().equals("1")){
                 ToastUtils.makeText(context,mFirstClassifyEntity.getMsg());
                 return;
@@ -185,11 +186,19 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
                 mList.addAll(fristActivitiesLists);
                 mAdapter.notifyDataSetChanged();
             }
+            if (fristActivitiesLists.size() < 10) {
+                xRecyclerView.setNoMore(true);
+            }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            if (page == 1) {
+                xRecyclerView.refreshComplete();
+            } else {
+                xRecyclerView.loadMoreComplete();
+            }
         }
     };
 

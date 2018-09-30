@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -25,7 +26,7 @@ public class SendCodePresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private UserInfoView mUserInfoView;
+    private ProjectView mUserInfoView;
     private UserInfoEntity mUserInfoEntity;
     public SendCodePresenter(Context mContext){
         this.mContext = mContext;
@@ -55,7 +56,7 @@ public class SendCodePresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mUserInfoView = (UserInfoView) view;
+        mUserInfoView = (ProjectView) view;
     }
 
     @Override
@@ -81,7 +82,7 @@ public class SendCodePresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mUserInfoView.onError("请求失败！！");
+                        mUserInfoView.onError(RequestResult.getError(e));
                     }
 
                     @Override

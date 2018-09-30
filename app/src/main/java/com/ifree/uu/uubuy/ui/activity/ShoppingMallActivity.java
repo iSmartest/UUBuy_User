@@ -17,8 +17,7 @@ import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.service.presenter.SecondListPresenter;
-import com.ifree.uu.uubuy.service.view.SecondListView;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.MarketOrStoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -87,8 +86,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 loadData();
             }
 
@@ -124,11 +121,13 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         mSecondListPresenter.getSearchSecondListInfo(fristActivitiesId,page,uid,fristActivitiesType,"","加载中...");
     }
 
-    private SecondListView mSecondListView = new SecondListView() {
+    private ProjectView<SecondActivitiesEntity> mSecondListView = new ProjectView<SecondActivitiesEntity>() {
         @Override
         public void onSuccess(SecondActivitiesEntity mSecondListEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }
@@ -197,7 +196,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-    private UserInfoView mCollectionView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mCollectionView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){

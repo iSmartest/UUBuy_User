@@ -299,4 +299,15 @@ public class SPUtil {
         return SPUtil.getString(context,"townAdCode");
     }
 
+    public static String getCity(Context context){
+        return SPUtil.getString(context,"city");
+    }
+
+    public static String getDistrict(Context context){
+        return SPUtil.getString(context,"district");
+    }
+
+    public static String getURL(Context context){
+        return SPUtil.getString(context,"url");
+    }
 }

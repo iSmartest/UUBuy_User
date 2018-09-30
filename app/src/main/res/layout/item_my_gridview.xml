@@ -40,14 +40,12 @@
                     android:id="@+id/tv_store_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="乐事"
                     android:textColor="@color/text_main_color"
                     android:textSize="10dp" />
                 <TextView
                     android:id="@+id/tv_store_descent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5.5折"
                     android:textColor="@color/text_type_red"
                     android:textSize="12dp"
                     android:layout_marginLeft="4dp"/>
@@ -57,7 +55,6 @@
                 android:id="@+id/tv_store_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8月7号-8月10号"
                 android:textColor="@color/text_main_color"
                 android:textSize="10dp"
 
@@ -77,7 +74,6 @@
             android:id="@+id/tv_commodity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="绿鲜知 胡萝卜"
             android:textColor="@color/text_subtitle_color"
             android:textSize="12dp"
             android:maxLines="1"
@@ -86,7 +82,6 @@
             android:id="@+id/tv_commodity_dec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" 休闲零食 坚果炒货 "
             android:maxLines="1"
             android:textColor="#ff9b9b9b"
             android:textSize="9dp"/>
@@ -99,7 +94,6 @@
                     android:id="@+id/tv_commodity_now_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥90"
                     android:textColor="@color/text_green"
                     android:textSize="13dp"
                     />
@@ -107,7 +101,6 @@
                     android:id="@+id/tv_commodity_original_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="￥100"
                     android:textColor="@color/text_subtitle_color"
                     android:textSize="12dp"
                     android:layout_marginLeft="4dp"/>

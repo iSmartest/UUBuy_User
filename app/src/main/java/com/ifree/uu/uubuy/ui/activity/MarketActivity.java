@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,8 +14,7 @@ import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.service.presenter.SecondListPresenter;
-import com.ifree.uu.uubuy.service.view.SecondListView;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.MarketAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -107,7 +105,7 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
         mSecondListPresenter.getSearchSecondListInfo(fristActivitiesId,page,uid,fristActivitiesType,"","加载中...");
 
     }
-    private SecondListView mSecondListView = new SecondListView() {
+    private ProjectView<SecondActivitiesEntity> mSecondListView = new ProjectView<SecondActivitiesEntity>() {
         @Override
         public void onSuccess(SecondActivitiesEntity mSecondListEntity) {
             if (page == 1){
@@ -178,7 +176,7 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
     }
 
 
-    private UserInfoView mCollectionView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mCollectionView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){

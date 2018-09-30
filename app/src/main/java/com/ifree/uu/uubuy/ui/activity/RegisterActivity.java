@@ -7,11 +7,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.RegisterPresenter;
 import com.ifree.uu.uubuy.service.presenter.SendCodePresenter;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.StringUtils;
 import com.ifree.uu.uubuy.uitls.TimerUtil;
@@ -132,7 +131,7 @@ public class RegisterActivity extends BaseActivity {
         mRegisterPresenter.getSearchRegister(userPhone,password,inviteCode,sessionId,"提交中...");
     }
 
-    private UserInfoView mRegisterView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mRegisterView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
@@ -156,7 +155,7 @@ public class RegisterActivity extends BaseActivity {
         mSendCodePresenter.getSearchSendCode(userPhone,"2","获取中...");
     }
 
-    private UserInfoView mSendCodeView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mSendCodeView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){

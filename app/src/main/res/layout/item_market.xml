@@ -15,7 +15,6 @@
             android:id="@+id/tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="休闲零食"
             android:layout_weight="1"
             android:textColor="@color/text_main_color"
             android:gravity="center_vertical"

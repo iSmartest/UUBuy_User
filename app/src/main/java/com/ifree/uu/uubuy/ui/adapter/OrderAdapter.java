@@ -15,7 +15,7 @@ import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.OperationOrderPresenter;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.activity.CommodityReserveActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -133,7 +133,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         mOperationOrderPresenter.getSubmitOperationOrder(orderId,type,uid,"提交中...");
     }
 
-    private UserInfoView mOperationOrderView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mOperationOrderView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){

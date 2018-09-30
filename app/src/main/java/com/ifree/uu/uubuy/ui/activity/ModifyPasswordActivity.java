@@ -9,7 +9,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.ModifyPasswordPresenter;
 import com.ifree.uu.uubuy.service.presenter.SendCodePresenter;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.StringUtils;
 import com.ifree.uu.uubuy.uitls.TimerUtil;
@@ -113,7 +113,7 @@ public class ModifyPasswordActivity extends BaseActivity {
 
     }
 
-    private UserInfoView mModifyPasswordView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mModifyPasswordView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
@@ -135,7 +135,7 @@ public class ModifyPasswordActivity extends BaseActivity {
         mSendCodePresenter.getSearchSendCode(userPhone, "6", "获取中...");
     }
 
-    private UserInfoView mSendCodeView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mSendCodeView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")) {

@@ -7,9 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.CityInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -28,7 +29,7 @@ public class CityInfoPresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private CityInfoView mCityInfoView;
+    private ProjectView mCityInfoView;
     private CityInfoEntity mCityInfoEntity;
 
     public CityInfoPresenter(Context mContext){
@@ -59,7 +60,7 @@ public class CityInfoPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mCityInfoView = (CityInfoView) view;
+        mCityInfoView = (ProjectView) view;
     }
 
     @Override
@@ -87,7 +88,7 @@ public class CityInfoPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mCityInfoView.onError("请求失败！！");
+                        mCityInfoView.onError(RequestResult.getError(e));
                     }
 
                     @Override

@@ -7,11 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.HotKeyWordEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.CityInfoView;
-import com.ifree.uu.uubuy.service.view.HotKeyWordView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -30,7 +29,7 @@ public class HotKeywordPresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private HotKeyWordView mHotKeyWordView;
+    private ProjectView mHotKeyWordView;
     private HotKeyWordEntity mHotKeyWordEntity;
 
     public HotKeywordPresenter(Context mContext){
@@ -61,7 +60,7 @@ public class HotKeywordPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mHotKeyWordView = (HotKeyWordView) view;
+        mHotKeyWordView = (ProjectView) view;
     }
 
     @Override
@@ -89,7 +88,7 @@ public class HotKeywordPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mHotKeyWordView.onError("请求失败！！" + e.getMessage());
+                        mHotKeyWordView.onError(RequestResult.getError(e));
                     }
 
                     @Override

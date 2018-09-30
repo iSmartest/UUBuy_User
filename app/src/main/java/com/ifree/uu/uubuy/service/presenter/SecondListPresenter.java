@@ -7,9 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.SecondListView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -28,7 +29,7 @@ public class SecondListPresenter implements Presenter {
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private SecondActivitiesEntity mSecondListEntity;
-    private SecondListView mSecondListView;
+    private ProjectView mSecondListView;
 
     public SecondListPresenter(Context mContext) {
         this.mContext = mContext;
@@ -59,7 +60,7 @@ public class SecondListPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mSecondListView = (SecondListView) view;
+        mSecondListView = (ProjectView) view;
     }
 
     @Override
@@ -87,7 +88,7 @@ public class SecondListPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mSecondListView.onError("请求失败！！");
+                        mSecondListView.onError(RequestResult.getError(e));
                     }
 
                     @Override

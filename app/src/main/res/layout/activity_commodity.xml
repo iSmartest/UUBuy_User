@@ -57,7 +57,6 @@
                     android:id="@+id/tv_commodity_brand_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="枝纯"
                     android:textColor="@color/text_main_color"
                     android:textSize="23dp" />
 
@@ -71,7 +70,6 @@
                     android:gravity="center"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"
-                    android:text="60%"
                     android:textColor="@color/app_main_default"
                     android:textSize="17dp" />
 
@@ -80,7 +78,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_below="@+id/tv_commodity_brand_name"
-                    android:text="吮指甜心 水果胡萝卜"
                     android:textColor="@color/text_main_color"
                     android:textSize="13dp" />
 
@@ -89,7 +86,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_commodity_name"
-                    android:text="优选产地，安徽砀山，“零食化”蔬菜概念产品，科学加工，开袋即食，拇指般大小，感受自然的甜美，好吃又健康！"
                     android:textColor="@color/text_main_color"
                     android:textSize="17dp" />
 
@@ -113,7 +109,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
-                        android:text="179.00"
                         android:textColor="@color/sign_in_red"
                         android:textSize="17dp" />
 
@@ -139,7 +134,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
-                        android:text="条件：购买1件及以上，赠完即止） 此价格不与套装优惠同时享受"
                         android:textColor="@color/text_main_color"
                         android:textSize="12dp" />
                 </LinearLayout>
@@ -164,7 +158,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
-                        android:text="北京市海淀区上地信息路家乐福超市3楼店"
                         android:textColor="@color/text_main_color"
                         android:textSize="12dp" />
 

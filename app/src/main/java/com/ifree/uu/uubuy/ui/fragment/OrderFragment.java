@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.OrderEntity;
 import com.ifree.uu.uubuy.service.presenter.OrderPresenter;
-import com.ifree.uu.uubuy.service.view.OrderView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.OrderAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -65,8 +65,6 @@ public class OrderFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 initData();
             }
 
@@ -87,11 +85,13 @@ public class OrderFragment extends BaseFragment {
         orderPresenter.getSearchOrders(orderState,page, SPUtil.getUid(context),"加载中...");
     }
 
-    private OrderView mOrderView = new OrderView() {
+    private ProjectView<OrderEntity> mOrderView = new ProjectView<OrderEntity>() {
         @Override
         public void onSuccess(OrderEntity mOrderEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }

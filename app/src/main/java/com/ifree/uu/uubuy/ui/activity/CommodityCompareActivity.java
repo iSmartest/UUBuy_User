@@ -8,7 +8,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.CompareCommodityEntity;
 import com.ifree.uu.uubuy.service.presenter.CommodityComparePresenter;
-import com.ifree.uu.uubuy.service.view.CompareView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.CommodityCompareAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
@@ -55,8 +55,6 @@ public class CommodityCompareActivity extends BaseActivity{
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 loadData();
             }
 
@@ -94,11 +92,13 @@ public class CommodityCompareActivity extends BaseActivity{
         mCommodityComparePresenter.getSearchCompareInfo(commodityId,page,"加载中");
 
     }
-    private CompareView mCompareView = new CompareView() {
+    private ProjectView<CompareCommodityEntity> mCompareView = new ProjectView<CompareCommodityEntity>() {
         @Override
         public void onSuccess(CompareCommodityEntity mCompareCommodityEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }

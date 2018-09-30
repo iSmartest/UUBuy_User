@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.service.presenter.ActivitiesPresenter;
-import com.ifree.uu.uubuy.service.view.ActivitiesView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.ActivitiesAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -65,8 +65,6 @@ public class ActivitiesFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 initData();
             }
 
@@ -87,11 +85,13 @@ public class ActivitiesFragment extends BaseFragment {
         activitiesPresenter.getSearchActivities(SPUtil.getLongitude(context),SPUtil.getLatitude(context),SPUtil.getTownAdCode(context),page,SPUtil.getUid(context),activitiesType,"加载中...");
     }
 
-    private ActivitiesView mActivitiesView = new ActivitiesView() {
+    private ProjectView<ActivitiesEntity> mActivitiesView = new ProjectView<ActivitiesEntity>() {
         @Override
         public void onSuccess(ActivitiesEntity mActivitiesEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }

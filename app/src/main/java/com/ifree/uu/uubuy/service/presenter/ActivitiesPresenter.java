@@ -8,12 +8,17 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
-import com.ifree.uu.uubuy.service.entity.AroundEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.ActivitiesView;
-import com.ifree.uu.uubuy.service.view.AroundView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLHandshakeException;
+
+import retrofit2.HttpException;
 import rx.Observer;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,7 +36,7 @@ public class ActivitiesPresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private ActivitiesView mActivitiesView;
+    private ProjectView mActivitiesView;
     private ActivitiesEntity mActivitiesEntity;
 
     public ActivitiesPresenter(Context mContext){
@@ -62,7 +67,7 @@ public class ActivitiesPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mActivitiesView = (ActivitiesView) view;
+        mActivitiesView = (ProjectView) view;
     }
 
     @Override
@@ -92,7 +97,31 @@ public class ActivitiesPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mActivitiesView.onError("请求失败！！");
+                        try {
+                            if (e instanceof SocketTimeoutException) {//请求超时
+                            } else if (e instanceof ConnectException) {//网络连接超时
+                                mActivitiesView.onError("网络连接超时");
+                            } else if (e instanceof SSLHandshakeException) {//安全证书异常
+                                mActivitiesView.onError("安全证书异常");
+                            } else if (e instanceof HttpException) {//请求的地址不存在
+                                int code = ((HttpException) e).code();
+                                if (code == 504) {
+                                    mActivitiesView.onError("网络异常，请检查您的网络状态");
+                                } else if (code == 404) {
+                                    mActivitiesView.onError("请求的地址不存在");
+                                } else {
+                                    mActivitiesView.onError("请求失败");
+                                }
+                            } else if (e instanceof UnknownHostException) {//域名解析失败
+                                mActivitiesView.onError("域名解析失败");
+                            } else {
+                                mActivitiesView.onError("error:" + e.getMessage());
+                            }
+                        } catch (Exception e2) {
+                            e2.printStackTrace();
+                        } finally {
+                            Log.e("OnSuccessAndFaultSub", "error:" + e.getMessage());
+                        }
                     }
 
                     @Override

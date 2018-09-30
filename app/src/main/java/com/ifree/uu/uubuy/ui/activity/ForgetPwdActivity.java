@@ -1,37 +1,23 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 
-import android.content.Context;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.app.MyApplication;
-import com.ifree.uu.uubuy.config.Constant;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.ForgetPasswordPresenter;
 import com.ifree.uu.uubuy.service.presenter.SendCodePresenter;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StringUtils;
 import com.ifree.uu.uubuy.uitls.TimerUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
-import com.tencent.connect.UserInfo;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.Call;
 
 
 /**
@@ -148,7 +134,7 @@ public class ForgetPwdActivity extends BaseActivity{
         mForgetPasswordPresenter.getSearchForgetPassword(userPhone,password,code,sessionId,"提交中...");
     }
 
-    private UserInfoView mForgetPasswordView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mForgetPasswordView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){
@@ -171,7 +157,7 @@ public class ForgetPwdActivity extends BaseActivity{
         mSendCodePresenter.getSearchSendCode(userPhone,"4","获取中...");
     }
 
-    private UserInfoView mSendCodeView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mSendCodeView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){

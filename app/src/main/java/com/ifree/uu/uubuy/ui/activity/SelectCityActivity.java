@@ -48,6 +48,7 @@ public class SelectCityActivity extends BaseActivity {
                 }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("area",(Serializable) mList.get(position).getTownList());
+                bundle.putString("city",mList.get(position).getCity());
                 MyApplication.openActivity(context,SelectAreaActivity.class,bundle);
             }
         });

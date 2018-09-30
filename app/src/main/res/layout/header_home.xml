@@ -86,6 +86,7 @@
             app:indicator_height="7dp"
             app:indicator_margin="3dp"
             app:indicator_width="7dp"
+
             android:background="@color/colorPrimary"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

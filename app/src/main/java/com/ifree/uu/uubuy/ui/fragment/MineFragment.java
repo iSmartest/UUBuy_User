@@ -20,7 +20,7 @@ import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.MineEntity;
 import com.ifree.uu.uubuy.service.presenter.MineInfoPresenter;
-import com.ifree.uu.uubuy.service.view.MineInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.activity.ActivitiesDetailsActivity;
 import com.ifree.uu.uubuy.ui.activity.CouponCenterActivity;
 import com.ifree.uu.uubuy.ui.activity.LoginActivity;
@@ -103,8 +103,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 initData();
             }
 
@@ -147,11 +145,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    private MineInfoView mMineInfoView = new MineInfoView() {
+    private ProjectView<MineEntity> mMineInfoView = new ProjectView<MineEntity>() {
         @Override
         public void onSuccess(MineEntity mMineEntity) {
             if (page == 1){
                 xRecyclerView.refreshComplete();
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
             }else {
                 xRecyclerView.loadMoreComplete();
             }
@@ -181,7 +181,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             }else {
                 grown_bar.setProgress(Integer.parseInt(mMineEntity.getData().getUserGrowthValue()));
             }
-            GlideImageLoader.imageLoader(context,mMineEntity.getData().getUserIcon(),mIcon);
+            GlideImageLoader.headerImageLoader(context,mMineEntity.getData().getUserIcon(),mIcon);
             mIntegralNum.setText(mMineEntity.getData().getUserIntegral() + "分");
             List<MineEntity.DataBean.RecommendactivitiesList> recommendactivitiesLists = mMineEntity.getData().getRecommendactivitiesList();
             if (recommendactivitiesLists != null && !recommendactivitiesLists.isEmpty()) {

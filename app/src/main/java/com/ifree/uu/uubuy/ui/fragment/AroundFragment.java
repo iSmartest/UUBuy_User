@@ -15,7 +15,7 @@ import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.service.entity.AroundEntity;
 import com.ifree.uu.uubuy.service.presenter.AroundPresenter;
-import com.ifree.uu.uubuy.service.view.AroundView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
 import com.ifree.uu.uubuy.ui.activity.MarketActivity;
@@ -74,8 +74,6 @@ public class AroundFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 page = 1;
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
                 initData();
             }
 
@@ -149,10 +147,12 @@ public class AroundFragment extends BaseFragment {
         aroundPresenter.getSearchArounds(SPUtil.getLongitude(context),SPUtil.getLatitude(context)
                 ,SPUtil.getTownAdCode(context),page,SPUtil.getUid(context),"加载中...");
     }
-    private AroundView mAroundView = new AroundView() {
+    private ProjectView<AroundEntity> mAroundView = new ProjectView<AroundEntity>() {
         @Override
         public void onSuccess(AroundEntity mAroundEntity) {
             if (page == 1){
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
                 xRecyclerView.refreshComplete();
             }else {
                 xRecyclerView.loadMoreComplete();

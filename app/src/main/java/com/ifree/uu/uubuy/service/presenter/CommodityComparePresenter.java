@@ -7,11 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.service.entity.CommodityInfoEntity;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.CompareCommodityEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.CommodityInfoView;
-import com.ifree.uu.uubuy.service.view.CompareView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -30,7 +29,7 @@ public class CommodityComparePresenter implements Presenter {
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private CompareCommodityEntity mCompareCommodityEntity;
-    private CompareView mCompareView;
+    private ProjectView mCompareView;
 
     public CommodityComparePresenter(Context mContext){
         this.mContext = mContext;
@@ -60,7 +59,7 @@ public class CommodityComparePresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mCompareView = (CompareView) view;
+        mCompareView = (ProjectView) view;
     }
 
     @Override
@@ -88,7 +87,7 @@ public class CommodityComparePresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mCompareView.onError("请求失败！！");
+                        mCompareView.onError(RequestResult.getError(e));
                     }
 
                     @Override

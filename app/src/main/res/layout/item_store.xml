@@ -33,7 +33,6 @@
                 android:id="@+id/tv_store_commodity_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="特步男鞋运动鞋男款"
                 android:textColor="@color/text_main_color"
                 android:textSize="14sp"
                 />
@@ -41,7 +40,6 @@
                 android:id="@+id/tv_store_commodity_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥179.00"
                 android:textColor="@color/text_price_color"
                 android:textSize="18sp"
                 android:layout_weight="1"/>
@@ -49,7 +47,6 @@
                 android:id="@+id/tv_store_commodity_old_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥319.00"
                 android:textColor="@color/text_main_color"
                 android:textSize="10sp"
                 android:layout_weight="1"/>
@@ -70,7 +67,6 @@
                     android:id="@+id/tv_store_commodity_surplus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="45%"
                     android:textColor="@color/text_price_color"
                     android:textSize="10sp"
                     />

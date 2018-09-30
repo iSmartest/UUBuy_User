@@ -7,9 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.service.RequestResult;
 import com.ifree.uu.uubuy.service.entity.SearchEntity;
 import com.ifree.uu.uubuy.service.manager.DataManager;
-import com.ifree.uu.uubuy.service.view.SearchView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.service.view.View;
 
 import rx.Observer;
@@ -28,7 +29,7 @@ public class SearchPresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
-    private SearchView mSearchView;
+    private ProjectView mSearchView;
     private SearchEntity mSearchEntity;
     public SearchPresenter(Context mContext){
         this.mContext = mContext;
@@ -59,7 +60,7 @@ public class SearchPresenter implements Presenter {
 
     @Override
     public void attachView(View view) {
-        mSearchView = (SearchView) view;
+        mSearchView = (ProjectView) view;
     }
 
     @Override
@@ -87,7 +88,7 @@ public class SearchPresenter implements Presenter {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        mSearchView.onError("请求失败！！");
+                        mSearchView.onError(RequestResult.getError(e));
                     }
 
                     @Override

@@ -9,7 +9,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.SubmitReservePresenter;
-import com.ifree.uu.uubuy.service.view.SubmitReserveView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -129,7 +129,7 @@ public class CommodityReserveActivity extends BaseActivity {
         mSubmitReservePresenter.getSubmitReserveInfo(commodityId,type,count,shopId,SPUtil.getUid(context),"提交中...");
     }
 
-    private SubmitReserveView mSubmitReserveView = new SubmitReserveView() {
+    private ProjectView<UserInfoEntity> mSubmitReserveView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){

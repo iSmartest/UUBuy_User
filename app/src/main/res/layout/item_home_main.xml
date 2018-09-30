@@ -28,7 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="物美超市"
             android:textColor="@color/app_main_default"
             android:textSize="19dp" />
 
@@ -44,7 +43,6 @@
                 android:id="@+id/tv_home_main_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="活动时间：2018-07-22"
                 android:textColor="@color/app_main_default"
                 android:textSize="13dp" />
 
@@ -52,7 +50,6 @@
                 android:id="@+id/tv_home_main_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="活动地点：北京市上地万达商城"
                 android:textColor="@color/app_main_default"
                 android:textSize="13dp" />
         </LinearLayout>

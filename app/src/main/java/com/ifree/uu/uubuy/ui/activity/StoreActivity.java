@@ -17,8 +17,7 @@ import com.ifree.uu.uubuy.service.entity.CommodityListEntity;
 import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.service.presenter.CommodityPresenter;
-import com.ifree.uu.uubuy.service.view.CommodityListView;
-import com.ifree.uu.uubuy.service.view.UserInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.StoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -124,7 +123,7 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
         mCommodityPresenter.getSearchCommodityListInfo(storeId, page, SPUtil.getUid(context), "加载中...");
     }
 
-    private CommodityListView mCommodityListView = new CommodityListView() {
+    private ProjectView<CommodityListEntity> mCommodityListView = new ProjectView<CommodityListEntity>() {
         @Override
         public void onSuccess(CommodityListEntity mCommodityListEntity) {
             if (page == 1){
@@ -182,7 +181,7 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    private UserInfoView mCollectionView = new UserInfoView() {
+    private ProjectView<UserInfoEntity> mCollectionView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")){

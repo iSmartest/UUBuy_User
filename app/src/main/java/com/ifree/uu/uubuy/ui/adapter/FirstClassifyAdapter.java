@@ -28,6 +28,7 @@ public class FirstClassifyAdapter extends RecyclerView.Adapter<FirstClassifyAdap
 
     private Context context;
     private List<FirstClassifyEntity.DataBean.FristActivitiesList> mList;
+
     public FirstClassifyAdapter(Context context, List<FirstClassifyEntity.DataBean.FristActivitiesList> mList) {
         this.context = context;
         this.mList = mList;
@@ -36,17 +37,17 @@ public class FirstClassifyAdapter extends RecyclerView.Adapter<FirstClassifyAdap
     @NonNull
     @Override
     public FirstClassifyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_first_classify,parent,false);
-        FirstClassifyViewHolder viewHolder = new FirstClassifyViewHolder(view);
-        return viewHolder;
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = inflater.inflate(R.layout.item_first_classify, parent, false);
+        return new FirstClassifyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull FirstClassifyViewHolder holder, int position) {
-        FirstClassifyEntity.DataBean.FristActivitiesList fristActivitiesList = mList.get(position);
-        holder.mName.setText(fristActivitiesList.getFristActivitiesName());
-        holder.mTime.setText("活动时间 " + fristActivitiesList.getFristActivitiesTime());
-        GlideImageLoader.imageLoader(context,fristActivitiesList.getFristActivitiesPic(),holder.mPicture);
+        FirstClassifyEntity.DataBean.FristActivitiesList firstActivitiesList = mList.get(position);
+        holder.mName.setText(firstActivitiesList.getFristActivitiesName());
+        holder.mTime.setText("活动时间 " + firstActivitiesList.getFristActivitiesTime());
+        GlideImageLoader.imageLoader(context,firstActivitiesList.getFristActivitiesPic(),holder.mPicture);
     }
 
     @Override

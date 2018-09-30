@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.service.entity.CommodityInfoEntity;
 import com.ifree.uu.uubuy.service.presenter.CommodityInfoPresenter;
-import com.ifree.uu.uubuy.service.view.CommodityInfoView;
+import com.ifree.uu.uubuy.service.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.CarCommodityAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -58,7 +58,7 @@ public class CarCommodityActivity extends BaseActivity {
         mCommodityInfoPresenter.getSearchCommodityInfo(commodityId,type,uid,"加载中...");
     }
 
-    private CommodityInfoView mCommodityInfoView = new CommodityInfoView() {
+    private ProjectView<CommodityInfoEntity> mCommodityInfoView = new ProjectView<CommodityInfoEntity>() {
         @Override
         public void onSuccess(CommodityInfoEntity mCommodityInfoEntity) {
             if (mCommodityInfoEntity.getResultCode().equals("1")){
