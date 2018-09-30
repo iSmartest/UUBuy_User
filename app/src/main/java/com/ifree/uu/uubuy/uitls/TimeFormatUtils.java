@@ -9,13 +9,21 @@ package com.ifree.uu.uubuy.uitls;
 public class TimeFormatUtils {
     public static String modifyDataFormat(String str){
         String result;
-        result = str.substring(0,4) + "."+ str.substring(5,7) + "."+ str.substring(8,10);
+        if (str.isEmpty()){
+            result = "";
+        }else {
+            result = str.substring(0,4) + "."+ str.substring(5,7) + "."+ str.substring(8,10);
+        }
         return result;
     }
 
     public static String modifyDataFormat2(String str){
         String result;
-        result = str.substring(0,4) + "."+ str.substring(5,7) + "."+ str.substring(8,10) + "—" + str.substring(11,15) + "." + str.substring(16,18) + "." + str.substring(19,21);
+        if (str.isEmpty()){
+            result = "";
+        }else {
+            result = str.substring(0,4) + "."+ str.substring(5,7) + "."+ str.substring(8,10) + "—" + str.substring(11,15) + "." + str.substring(16,18) + "." + str.substring(19,21);
+        }
         return result;
     }
 }
