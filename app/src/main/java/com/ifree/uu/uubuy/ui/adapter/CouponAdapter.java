@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.service.entity.CouponEntity;
+import com.ifree.uu.uubuy.mvp.entity.CouponEntity;
 import java.util.List;
 
 import butterknife.BindView;

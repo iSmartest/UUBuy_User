@@ -3,9 +3,9 @@ package com.ifree.uu.uubuy.ui.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.service.entity.CouponEntity;
-import com.ifree.uu.uubuy.service.presenter.MyCouponPresenter;
-import com.ifree.uu.uubuy.service.view.ProjectView;
+import com.ifree.uu.uubuy.mvp.entity.CouponEntity;
+import com.ifree.uu.uubuy.mvp.presenter.MyCouponPresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.CouponAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.SPUtil;

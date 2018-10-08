@@ -96,7 +96,8 @@
                 android:layout_height="wrap_content"
                 android:text="登录/注册"
                 android:textSize="17dp"
-                android:padding="15dp"/>
+                android:padding="15dp"
+                android:textColor="@color/app_main_default"/>
         </LinearLayout>
     </RelativeLayout>
 

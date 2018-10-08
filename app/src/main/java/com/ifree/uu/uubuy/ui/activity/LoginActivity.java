@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,12 +20,12 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.CommonLog;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.service.presenter.CodeLoginPresenter;
-import com.ifree.uu.uubuy.service.presenter.PasswordLoginPresenter;
-import com.ifree.uu.uubuy.service.presenter.SendCodePresenter;
-import com.ifree.uu.uubuy.service.presenter.ThirdLoginPresenter;
-import com.ifree.uu.uubuy.service.view.ProjectView;
+import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.mvp.presenter.CodeLoginPresenter;
+import com.ifree.uu.uubuy.mvp.presenter.PasswordLoginPresenter;
+import com.ifree.uu.uubuy.mvp.presenter.SendCodePresenter;
+import com.ifree.uu.uubuy.mvp.presenter.ThirdLoginPresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StringUtils;
@@ -73,6 +76,10 @@ public class LoginActivity extends BaseActivity {
     ImageView mWXLogin;
     @BindView(R.id.iv_qq_login)
     ImageView mQQLogin;
+    @BindView(R.id.ck_login)
+    CheckBox mCheck;
+    @BindView(R.id.text_login_protocol)
+    TextView mProtocol;
     private Dialog progressDlg;
     private String type = null;
     private String nickName = null, userIcon = null, thirdUid = null, phoneNum = null;
@@ -81,6 +88,7 @@ public class LoginActivity extends BaseActivity {
     private String mCode = "";
     private String sessionId = "";
     private int isCodeOrPassword = 1;//默认验证码登录
+    private boolean isChoose = true;
 
     @Override
     protected int getLayoutId() {
@@ -111,11 +119,21 @@ public class LoginActivity extends BaseActivity {
         mCodeLoginPresenter = new CodeLoginPresenter(context);
         mShareAPI = UMShareAPI.get(context);
         mThirdLoginPresenter = new ThirdLoginPresenter(context);
+        mCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    isChoose = true;
+                } else {
+                    isChoose = false;
+                }
+            }
+        });
     }
 
     @OnClick({R.id.tv_go_register, R.id.tv_password_login, R.id.tv_code_login, R.id.tv_login,
-            R.id.tv_send_verification_code,R.id.tv_password_forget_password,R.id.iv_wx_login
-    ,R.id.iv_qq_login})
+            R.id.tv_send_verification_code, R.id.tv_password_forget_password, R.id.iv_wx_login
+            , R.id.iv_qq_login,R.id.text_login_protocol})
     public void onViewClicked(View view) {
         String userPhone = mUserPhone.getText().toString().trim();//电话号码
         switch (view.getId()) {
@@ -157,40 +175,48 @@ public class LoginActivity extends BaseActivity {
                         ToastUtils.makeText(context, "密码格式不正确，请核对后重新输入");
                         return;
                     }
+                    if (!isChoose) {
+                        ToastUtils.makeText(context, "请阅读并同意《UU购登录协议》");
+                        return;
+                    }
                     passWordLogin(userPhone, password);
-                }else {//验证码登录判断
+                } else {//验证码登录判断
                     String inviteCode = tvEditCode.getText().toString().trim();
-                //验证电话号码不能为空
-                if (TextUtils.isEmpty(userPhone)){
-                    ToastUtils.makeText(context,"请输入手机号！");
-                    return;
-                }
-                //验证手机号是否正确
-                if (!StringUtils.isMatchesPhone(userPhone)){
-                    ToastUtils.makeText(context,"你输入的手机号格式不正确");
-                    return;
-                }
-                if (TextUtils.isEmpty(inviteCode)){
-                    ToastUtils.makeText(context, "验证码不能为空");
-                    return;
-                }
+                    //验证电话号码不能为空
+                    if (TextUtils.isEmpty(userPhone)) {
+                        ToastUtils.makeText(context, "请输入手机号！");
+                        return;
+                    }
+                    //验证手机号是否正确
+                    if (!StringUtils.isMatchesPhone(userPhone)) {
+                        ToastUtils.makeText(context, "你输入的手机号格式不正确");
+                        return;
+                    }
+                    if (TextUtils.isEmpty(inviteCode)) {
+                        ToastUtils.makeText(context, "验证码不能为空");
+                        return;
+                    }
 //                //验证验证码是否正确
 //                if (!inviteCode.equals(mCode)) {
 //                    ToastUtils.makeText(context, "验证码不正确");
 //                    return;
 //                }
-                codeLogin(userPhone,inviteCode);
+                    if (!isChoose) {
+                        ToastUtils.makeText(context, "请阅读并同意《UU购登录协议》");
+                        return;
+                    }
+                    codeLogin(userPhone, inviteCode);
                 }
                 break;
             case R.id.tv_send_verification_code:
-               // 验证电话号码不能为空
-                if (TextUtils.isEmpty(userPhone)){
-                    ToastUtils.makeText(context,"请输入手机号！");
+                // 验证电话号码不能为空
+                if (TextUtils.isEmpty(userPhone)) {
+                    ToastUtils.makeText(context, "请输入手机号！");
                     return;
                 }
                 //验证手机号是否正确
-                if (!StringUtils.isMatchesPhone(userPhone)){
-                    ToastUtils.makeText(context,"你输入的手机号格式不正确");
+                if (!StringUtils.isMatchesPhone(userPhone)) {
+                    ToastUtils.makeText(context, "你输入的手机号格式不正确");
                     return;
                 }
                 TimerUtil mTimerUtil = new TimerUtil(tvSendCode);
@@ -198,11 +224,14 @@ public class LoginActivity extends BaseActivity {
                 sendSMS(userPhone);
                 break;
             case R.id.tv_password_forget_password:
-                MyApplication.openActivity(context,ForgetPwdActivity.class);
+                MyApplication.openActivity(context, ForgetPwdActivity.class);
                 break;
-
             case R.id.iv_wx_login:
                 type = "0";
+                if (!isChoose) {
+                    ToastUtils.makeText(context, "请阅读并同意《UU购登录协议》");
+                    return;
+                }
                 if (!isWeixinAvilible(context)) {
                     ToastUtils.makeText(context, "请安装微信客户端");
                     return;
@@ -215,11 +244,23 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.iv_qq_login:
                 type = "1";
+                if (!isChoose) {
+                    ToastUtils.makeText(context, "请阅读并同意《UU购登录协议》");
+                    return;
+                }
                 progressDlg = ProgressDialog.createLoadingDialog(context, "登录跳转中...");
                 progressDlg.show();
                 ToastUtils.makeText(context, "正在跳转QQ登录,请稍后...");
                 mShareAPI.isInstall(LoginActivity.this, SHARE_MEDIA.QQ);
                 mShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.QQ, umAuthListener);
+                break;
+            case R.id.text_login_protocol:
+                Bundle bundle = new Bundle();
+                bundle.putString("title","UU购登录协议");
+                bundle.putString("type","0");
+                MyApplication.openActivity(context,ProtocolActivity.class,bundle);
+                break;
+            default:
                 break;
         }
     }
@@ -335,7 +376,7 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-            Log.i("TAG", "onError: " + "授权失败" );
+            Log.i("TAG", "onError: " + "授权失败");
         }
 
         @Override

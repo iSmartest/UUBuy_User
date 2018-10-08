@@ -5,9 +5,9 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.service.entity.MyFootPrintEntity;
-import com.ifree.uu.uubuy.service.presenter.MyFootPrintPresenter;
-import com.ifree.uu.uubuy.service.view.ProjectView;
+import com.ifree.uu.uubuy.mvp.entity.MyFootPrintEntity;
+import com.ifree.uu.uubuy.mvp.presenter.MyFootPrintPresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.MyFootprintAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.ToastUtils;

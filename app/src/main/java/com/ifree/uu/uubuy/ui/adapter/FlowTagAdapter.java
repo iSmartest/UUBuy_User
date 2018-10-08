@@ -9,9 +9,8 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.custom.flowTagLayout.OnInitSelectedPosition;
-import com.ifree.uu.uubuy.service.entity.HotKeyWordEntity;
+import com.ifree.uu.uubuy.mvp.entity.HotKeyWordEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

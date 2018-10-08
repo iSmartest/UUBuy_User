@@ -3,9 +3,9 @@ package com.ifree.uu.uubuy.ui.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.service.entity.MessageEntity;
-import com.ifree.uu.uubuy.service.presenter.MessagePresenter;
-import com.ifree.uu.uubuy.service.view.ProjectView;
+import com.ifree.uu.uubuy.mvp.entity.MessageEntity;
+import com.ifree.uu.uubuy.mvp.presenter.MessagePresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.MessageAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.SPUtil;

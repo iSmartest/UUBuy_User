@@ -13,11 +13,8 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
-import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
-import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
-import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
+import com.ifree.uu.uubuy.mvp.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.ui.activity.MoreActivity;
-import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,11 +12,11 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
-import com.ifree.uu.uubuy.service.entity.SecondActivitiesEntity;
-import com.ifree.uu.uubuy.service.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.service.presenter.CollectionPresenter;
-import com.ifree.uu.uubuy.service.presenter.SecondListPresenter;
-import com.ifree.uu.uubuy.service.view.ProjectView;
+import com.ifree.uu.uubuy.mvp.entity.SecondActivitiesEntity;
+import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.mvp.presenter.CollectionPresenter;
+import com.ifree.uu.uubuy.mvp.presenter.SecondListPresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.MarketOrStoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;

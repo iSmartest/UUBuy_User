@@ -3,14 +3,11 @@ package com.ifree.uu.uubuy.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
-import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.mvp.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.ui.adapter.SelectCityAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 

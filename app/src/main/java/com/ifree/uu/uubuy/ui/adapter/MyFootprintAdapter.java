@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.custom.MyListView;
-import com.ifree.uu.uubuy.service.entity.MyFootPrintEntity;
+import com.ifree.uu.uubuy.mvp.entity.MyFootPrintEntity;
 
 import java.util.List;
 

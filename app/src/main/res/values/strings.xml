@@ -3,31 +3,36 @@
 
     <string name="loading_icon" translatable="false">加载中图</string>
     <string name="loading" translatable="false">加载中</string>
-    <string name="notifyTitle">提示</string>
-    <string name="notifyMsg">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
-    <string name="setting">设置</string>
-    <string name="cancel">取消</string>
-    <string name="city_name">北京</string>
-    <string name="take_photo">拍摄</string>
-    <string name="local_album">本地相册</string>
-    <string name="nick_name">修改昵称</string>
-    <string name="edit_nick_name">输入昵称</string>
-    <string name="id_cart">身份证号</string>
-    <string name="edit_id_cart">输入身份证号</string>
-    <string name="user_address">编辑地址</string>
-    <string name="edit_user_address">输入地址</string>
-    <string name="make_cancel">取消</string>
-    <string name="make_sure">确定</string>
-    <string name="error_input_phone">请输入正确的手机号码</string>
-    <string name="error_input_pwd_fail_info_tips">请输入6-20位英文字母或数字</string>
-    <string name="error_input_verification">请输入验证码</string>
-    <string name="error_input_verification_fail_info">验证码错误:验证码由6位数字组成</string>
-    <string name="registered_direct_login">已注册直接登录>></string>
-    <string name="unknown">未知</string>
-    <string name="log_out">确定退出登录吗?</string>
+    <string name="notifyTitle" translatable="false">提示</string>
+    <string name="notifyMsg" translatable="false">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
+    <string name="setting" translatable="false">设置</string>
+    <string name="cancel" translatable="false">取消</string>
+    <string name="city_name" translatable="false">北京</string>
+    <string name="take_photo" translatable="false">拍摄</string>
+    <string name="local_album" translatable="false">本地相册</string>
+    <string name="nick_name" translatable="false">修改昵称</string>
+    <string name="edit_nick_name" translatable="false">输入昵称</string>
+    <string name="id_cart" translatable="false">身份证号</string>
+    <string name="edit_id_cart" translatable="false">输入身份证号</string>
+    <string name="user_address" translatable="false">编辑地址</string>
+    <string name="edit_user_address" translatable="false">输入地址</string>
+    <string name="make_cancel" translatable="false">取消</string>
+    <string name="make_sure" translatable="false">确定</string>
+    <string name="error_input_phone" translatable="false">请输入正确的手机号码</string>
+    <string name="error_input_pwd_fail_info_tips" translatable="false">请输入6-20位英文字母或数字</string>
+    <string name="error_input_verification" translatable="false">请输入验证码</string>
+    <string name="error_input_verification_fail_info" translatable="false">验证码错误:验证码由6位数字组成</string>
+    <string name="registered_direct_login" translatable="false">已注册直接登录>></string>
+    <string name="unknown" translatable="false">未知</string>
+    <string name="log_out" translatable="false">确定退出登录吗?</string>
     <string name="cancel_enter" translatable="false">确定取消报名吗？</string>
     <string name="cancel_collection" translatable="false">确定取消收藏吗？</string>
-    <string name="sure_to_do_sth">您确定要%s吗？</string>
+    <string name="sure_to_do_sth" translatable="false">您确定要%s吗？</string>
 
-
+    <string name="want_good_praise" translatable="false">我要好评</string>
+    <string name="version_update" translatable="false">版本更新</string>
+    <string name="version_introduction" translatable="false">版本介绍</string>
+    <string name="version_format" translatable="false">车小宝:%s</string>
+    <string name="tip_rate_err" translatable="false">您手机上没有可以评价的应用市场哦,\n下次再好评吧</string>
+    <string name="company_copyright" translatable="false">北京赋睿智能科技有限公司&#160;&#160;&#160;&#160;版权所有\nCopyright©2018&#8211;%d IFree.All Rights Reserved</string>
 </resources>

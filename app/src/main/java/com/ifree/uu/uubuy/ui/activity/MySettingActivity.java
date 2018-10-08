@@ -2,6 +2,7 @@ package com.ifree.uu.uubuy.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -15,7 +16,6 @@ import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.dialog.LogOutDialog;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.AppManager;
 import com.ifree.uu.uubuy.uitls.DataCleanManager;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -89,7 +89,7 @@ public class MySettingActivity extends BaseActivity {
         }
     }
     @OnClick({R.id.ll_account_security, R.id.ll_binding_phone, R.id.ll_common_question, R.id.ll_feedback,
-            R.id.linear_my_setting_clear_cache, R.id.text_my_setting_log_out,R.id.ll_testing})
+            R.id.linear_my_setting_clear_cache,R.id.ll_share, R.id.linear_my_setting_update, R.id.text_my_setting_log_out,R.id.ll_testing})
     public void onClickView(View view){
         switch (view.getId()){
             case R.id.ll_account_security:
@@ -99,7 +99,10 @@ public class MySettingActivity extends BaseActivity {
                 MyApplication.openActivity(context,BindingPhoneActivity.class);
                 break;
             case R.id.ll_common_question:
-                MyApplication.openActivity(context,KnowledgeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("title","常见问题");
+                bundle.putString("type","1");
+                MyApplication.openActivity(context,ProtocolActivity.class,bundle);
                 break;
             case R.id.ll_feedback:
                 MyApplication.openActivity(context,FeedbackActivity.class);
@@ -111,7 +114,7 @@ public class MySettingActivity extends BaseActivity {
                 ToastUtils.makeText(context,"开发中...");
                 break;
             case R.id.linear_my_setting_update:
-
+                MyApplication.openActivity(context, UpdateActivity.class);
                 break;
             case R.id.text_my_setting_log_out:
                 LogOutDialog dialog = new LogOutDialog(context, R.string.log_out, new LogOutDialog.OnSureBtnClickListener() {

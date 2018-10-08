@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.service.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.mvp.entity.CityInfoEntity;
 
 import java.util.ArrayList;
 

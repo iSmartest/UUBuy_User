@@ -6,9 +6,9 @@ import android.support.v7.widget.RecyclerView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
-import com.ifree.uu.uubuy.service.entity.CompareCommodityEntity;
-import com.ifree.uu.uubuy.service.presenter.CommodityComparePresenter;
-import com.ifree.uu.uubuy.service.view.ProjectView;
+import com.ifree.uu.uubuy.mvp.entity.CompareCommodityEntity;
+import com.ifree.uu.uubuy.mvp.presenter.CommodityComparePresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.CommodityCompareAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.ToastUtils;

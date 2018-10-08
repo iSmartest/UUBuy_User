@@ -3,12 +3,11 @@ package com.ifree.uu.uubuy.ui.activity;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.service.entity.CommodityInfoEntity;
-import com.ifree.uu.uubuy.service.presenter.CommodityInfoPresenter;
-import com.ifree.uu.uubuy.service.view.ProjectView;
+import com.ifree.uu.uubuy.mvp.entity.CommodityInfoEntity;
+import com.ifree.uu.uubuy.mvp.presenter.CommodityInfoPresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.CarCommodityAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 

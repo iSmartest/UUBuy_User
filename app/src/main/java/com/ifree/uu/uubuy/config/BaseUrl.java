@@ -94,4 +94,6 @@ public class BaseUrl {
     public static final String SUBMIT_IS_COLLECTION = "submitIsCollection?";
     //意见反馈
     public static final String FEEDBACK = "submitIsCollection?";
+    //版本更新
+    public static final String UPDATE = "version?";
 }

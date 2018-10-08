@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.service.entity.ActivitiesEntity;
-import com.ifree.uu.uubuy.service.presenter.ActivitiesPresenter;
-import com.ifree.uu.uubuy.service.view.ProjectView;
+import com.ifree.uu.uubuy.mvp.entity.ActivitiesEntity;
+import com.ifree.uu.uubuy.mvp.presenter.ActivitiesPresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.ActivitiesAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.SPUtil;
