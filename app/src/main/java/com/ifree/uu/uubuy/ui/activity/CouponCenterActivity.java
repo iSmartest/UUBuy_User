@@ -1,20 +1,18 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.content.res.ColorStateList;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.custom.LazyViewPager;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.ui.fragment.ExpiredFragment;
 import com.ifree.uu.uubuy.ui.fragment.MarketCouponFragment;
-import com.ifree.uu.uubuy.ui.fragment.NotUsedFragment;
 import com.ifree.uu.uubuy.ui.fragment.StoreCouponFragment;
 import com.ifree.uu.uubuy.ui.fragment.UUCouponFragment;
-import com.ifree.uu.uubuy.ui.fragment.UsedFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +34,8 @@ public class CouponCenterActivity extends BaseActivity {
     @BindView(R.id.tv_is_expired)
     TextView tv_wait_goods;
     @BindView(R.id.vPager)
-    LazyViewPager viewPager;
-    private int selectedColor, unSelectedColor;//是否选择显示的颜色
+    ViewPager viewPager;
+    private ColorStateList selectedColor, unSelectedColor;//是否选择显示的颜色
     private List<Fragment> fragments;// Tab页面列表
     @Override
     protected int getLayoutId() {
@@ -66,9 +64,8 @@ public class CouponCenterActivity extends BaseActivity {
     protected void initView() {
         hideBack(5);
         setTitleText("我的优惠券");
-        selectedColor = getResources().getColor(R.color.text_green);
-        unSelectedColor = getResources().getColor(R.color.text_main_color);
-
+        selectedColor = context.getResources().getColorStateList(R.color.text_green);
+        unSelectedColor = context.getResources().getColorStateList(R.color.text_main_color);
     }
 
 
@@ -112,7 +109,7 @@ public class CouponCenterActivity extends BaseActivity {
 
 
     //为选项卡绑定监听器
-    public class MyOnPageChangeListener implements LazyViewPager.OnPageChangeListener {
+    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         public void onPageScrollStateChanged(int index) {
         }

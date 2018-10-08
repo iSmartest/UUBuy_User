@@ -70,6 +70,7 @@ public class MarqueeTextView extends LinearLayout {
             textView.setText(textArrays.get(i));
             textView.setTextSize(12);
             textView.setTextColor(mContext.getResources().getColorStateList(R.color.text_fraction_red));
+
             final int finalI = i;
             textView.setOnClickListener(new OnClickListener() {
                 @Override

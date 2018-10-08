@@ -49,8 +49,8 @@ public class AroundFragment extends BaseFragment {
     private List<AroundEntity.DataBean.ActivitiesList> mList = new ArrayList<>();
     private AroundAdapter mAdapter;
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         //注册广播
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.ifree.uu.location.changed");

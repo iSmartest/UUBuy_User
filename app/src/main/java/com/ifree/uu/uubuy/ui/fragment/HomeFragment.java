@@ -1,6 +1,5 @@
 package com.ifree.uu.uubuy.ui.fragment;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -42,7 +41,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerClickListener;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +54,7 @@ import butterknife.BindView;
  * Created by 2018/8/17.
  * Description:
  */
-public class HomeFragment extends BaseFragment implements OnBannerClickListener {
+public class HomeFragment extends BaseFragment implements OnBannerListener {
     private HomePresenter mHomePresenter;
     @BindView(R.id.xr_home)
     XRecyclerView xRecyclerView;
@@ -75,8 +74,8 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
     private AdTypeAdapter adTypeAdapter;
     private CityADAdapter cityADAdapter;
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         //注册广播
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.ifree.uu.location.changed");
@@ -103,7 +102,7 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
         rc_type = headView.findViewById(R.id.rc_type);
         rc_city_ad = headView.findViewById(R.id.rc_city_ad);
         mSlideshow = headView.findViewById(R.id.img_rotate_gallery);
-        mSlideshow.setOnBannerClickListener(this);
+        mSlideshow.setOnBannerListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);
         rc_type.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.HORIZONTAL, false));
         rc_city_ad.setLayoutManager(new GridLayoutManager(context, 2));
@@ -381,40 +380,40 @@ public class HomeFragment extends BaseFragment implements OnBannerClickListener 
     @Override
     public void OnBannerClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("fristActivitiesId", mRotateADList.get(position-1).getRotateADId());
-        bundle.putString("fristActivitiesType", mRotateADList.get(position-1).getType());
-        bundle.putString("fristActivitiesName", mRotateADList.get(position-1).getRotateName());
-        switch (mRotateADList.get(position-1).getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
+        bundle.putString("fristActivitiesId", mRotateADList.get(position).getRotateADId());
+        bundle.putString("fristActivitiesType", mRotateADList.get(position).getType());
+        bundle.putString("fristActivitiesName", mRotateADList.get(position).getRotateName());
+        switch (mRotateADList.get(position).getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
             case "1":
-                if (mRotateADList.get(position-1).getRotateADType().equals("1")) {
+                if (mRotateADList.get(position).getRotateADType().equals("1")) {
                     MyApplication.openActivity(context, StoreActivity.class, bundle);
                 } else {
                     MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
                 }
                 break;
             case "2"://超市
-                if (mRotateADList.get(position-1).getRotateADType().equals("1")) {
+                if (mRotateADList.get(position).getRotateADType().equals("1")) {
                     MyApplication.openActivity(context, StoreActivity.class, bundle);
                 } else {
                     MyApplication.openActivity(context, MarketActivity.class, bundle);
                 }
                 break;
             case "3":
-                if (mRotateADList.get(position-1).getRotateADType().equals("1")) {
+                if (mRotateADList.get(position).getRotateADType().equals("1")) {
                     MyApplication.openActivity(context, StoreActivity.class, bundle);
                 } else {
                     MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
                 }
                 break;
             case "4":
-                if (mRotateADList.get(position-1).getRotateADType().equals("1")) {
+                if (mRotateADList.get(position).getRotateADType().equals("1")) {
                     MyApplication.openActivity(context, BrandActivity.class, bundle);
                 } else {
                     MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
                 }
                 break;
             case "5":
-                if (mRotateADList.get(position-1).getRotateADType().equals("1")) {
+                if (mRotateADList.get(position).getRotateADType().equals("1")) {
                     MyApplication.openActivity(context, BrandActivity.class, bundle);
                 } else {
                     MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);

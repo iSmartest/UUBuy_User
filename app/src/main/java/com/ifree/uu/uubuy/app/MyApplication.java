@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 
+import com.ifree.uu.uubuy.service.UURunService;
 import com.ifree.uu.uubuy.uitls.CrashHandler;
 import com.ifree.uu.uubuy.uitls.DensityUtils;
 import com.umeng.socialize.Config;
@@ -44,6 +45,8 @@ public class MyApplication extends Application {
         DensityUtils.setDensity(this);
         CrashHandler catchExcep = new CrashHandler(this);
         Thread.setDefaultUncaughtExceptionHandler(catchExcep);
+        Intent startIntent = new Intent(CONTEXT, UURunService.class);
+        startService(startIntent);
     }
     @Override
     protected void attachBaseContext(Context base) {

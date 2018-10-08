@@ -60,8 +60,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private MineAdapter mAdapter;
     private List<MineEntity.DataBean.RecommendactivitiesList> mList = new ArrayList<>();
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         //注册广播
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.ifree.uu.mine.changed");

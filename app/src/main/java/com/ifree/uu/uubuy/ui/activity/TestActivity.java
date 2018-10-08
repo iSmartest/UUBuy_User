@@ -1,7 +1,14 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.content.res.ColorStateList;
+import android.content.res.XmlResourceParser;
+
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 
 /**
  * Author：小火

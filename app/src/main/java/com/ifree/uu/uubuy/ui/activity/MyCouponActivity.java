@@ -3,11 +3,11 @@ package com.ifree.uu.uubuy.ui.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.custom.LazyViewPager;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.ui.fragment.ExpiredFragment;
 import com.ifree.uu.uubuy.ui.fragment.NotUsedFragment;
@@ -33,7 +33,7 @@ public class MyCouponActivity extends BaseActivity {
     @BindView(R.id.tv_is_expired)
     TextView tv_wait_goods;
     @BindView(R.id.vPager)
-    LazyViewPager viewPager;
+    ViewPager viewPager;
     private int selectedColor, unSelectedColor;//是否选择显示的颜色
     private List<Fragment> fragments;// Tab页面列表
     @Override
@@ -108,7 +108,7 @@ public class MyCouponActivity extends BaseActivity {
 
 
     //为选项卡绑定监听器
-    public class MyOnPageChangeListener implements LazyViewPager.OnPageChangeListener {
+    public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         public void onPageScrollStateChanged(int index) {
         }

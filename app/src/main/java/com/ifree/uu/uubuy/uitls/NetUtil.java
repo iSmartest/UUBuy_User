@@ -32,40 +32,41 @@ public class NetUtil {
     }
 
     /**
-     * 判断WIFI网络是否可用
+     * 判断当前网络是否是wifi网络
+     * if(activeNetInfo.getType()==ConnectivityManager.TYPE_MOBILE) { //判断3G网
      *
      * @param context
-     * @return
+     * @return boolean
      */
     public static boolean isWifiConnected(Context context) {
-        if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) MyApplication.getApplication()
-                    .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mWiFiNetworkInfo = mConnectivityManager
-                    .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            if (mWiFiNetworkInfo != null) {
-                return mWiFiNetworkInfo.isAvailable();
-            }
-        }
-        return false;
-    }
-
-
-    public static boolean isWiFiActive() {
-        ConnectivityManager connectivity = (ConnectivityManager) MyApplication.getApplication()
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null) {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null) {
-                for (int i = 0; i < info.length; i++) {
-                    if (info[i].getTypeName().equals("WIFI") && info[i].isConnected()) {
-                        return true;
-                    }
-                }
-            }
+        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetInfo != null
+                && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+            return true;
         }
         return false;
     }
+
+    /**
+     * 判断当前网络是否是3G网络
+     *
+     * @param context
+     * @return boolean
+     */
+    public static boolean is3G(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetInfo != null
+                && activeNetInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+            return true;
+        }
+        return false;
+    }
+
+
 
     /**
      * 获取当前网络连接的类型信息

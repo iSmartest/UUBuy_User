@@ -6,6 +6,6 @@
         android:color="@color/app_main_default"
         />
     <corners android:radius="5dp" />
-    <solid android:color="@color/hint_text" />
+    <solid android:color="@color/app_main_default" />
 
 </shape>
