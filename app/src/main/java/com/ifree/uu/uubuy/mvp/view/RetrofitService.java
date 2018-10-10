@@ -270,7 +270,11 @@ public interface RetrofitService {
                                                      @Query("activitiesId") String activitiesId,
                                                      @Query("type") String type,
                                                      @Query("isCollection") String isCollection);
-//  版本更新
+    //版本更新
     @GET(BaseUrl.UPDATE)
     Observable<UpdateEntity> getUpdate();
+
+    //版本更新
+    @GET(BaseUrl.CLICK_COUNT)
+    Observable<UserInfoEntity> getClickCount(@Query("json") String json);
 }

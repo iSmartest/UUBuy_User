@@ -1,6 +1,5 @@
 package com.ifree.uu.uubuy.ui.fragment;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +29,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -92,6 +92,20 @@ public class AroundFragment extends BaseFragment {
                 if (position < 0 | position >= mList.size()){
                     return;
                 }
+
+                Map<String,String> currentMap = SPUtil.getMap(context,"key");
+                if (currentMap.isEmpty()){
+                    currentMap.put(mList.get(position).getaId(), 1 + "");
+                }else {
+                    if (currentMap.containsKey(mList.get(position).getaId())){
+                        currentMap.put(mList.get(position).getaId(), (Integer.valueOf(currentMap.get(mList.get(position).getaId())) + 1)+"");
+                    }else {
+                        currentMap.put(mList.get(position).getaId(), 1 + "");
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+                SPUtil.putMap(context,"key",currentMap);
+                mAdapter.notifyDataSetChanged();
                 Bundle bundle = new Bundle();
                 bundle.putString("fristActivitiesId",mList.get(position).getActivitiesId());
                 bundle.putString("fristActivitiesType",mList.get(position).getType());

@@ -24,9 +24,11 @@ import com.ifree.uu.uubuy.ui.activity.MarketActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
 import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +60,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SearchViewHolder holder, int position) {
         final SearchEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
         switch (activitiesList.getActivitiesType()){
             case "0":
@@ -69,6 +71,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 holder.name.setText(activitiesList.getActivitiesName());
                 holder.time.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(activitiesList.getActivitiesTime()));
                 GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
+                holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing() + "人");
+                holder.signUp.setText("报名：" + activitiesList.getSignUp() + "人");
                 break;
             case "1":
                 holder.mMarket.setVisibility(View.GONE);
@@ -117,6 +121,19 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                         MyApplication.openActivity(context,BrandActivity.class,bundle);
                         break;
                 }
+                Map<String,String> currentMap = SPUtil.getMap(context,"key");
+                if (currentMap.isEmpty()){
+                    currentMap.put(activitiesList.getaId(), 1 + "");
+                }else {
+                    if (currentMap.containsKey(activitiesList.getaId())){
+                        currentMap.put(activitiesList.getaId(), (Integer.valueOf(currentMap.get(activitiesList.getaId())) + 1)+"");
+                    }else {
+                        currentMap.put(activitiesList.getaId(), 1 + "");
+                    }
+                }
+                int temp = activitiesList.getBrowsing() + Integer.valueOf(currentMap.get(activitiesList.getaId()));
+                holder.browsingVolume.setText("浏览：" + temp + "人");
+                SPUtil.putMap(context,"key",currentMap);
             }
         });
         holder.mStore.setOnClickListener(new View.OnClickListener() {
@@ -197,7 +214,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         TextView time;
         @BindView(R.id.tv_search_market_address)
         TextView address;
-        
+        @BindView(R.id.tv_home_main_browsing_volume)
+        TextView browsingVolume;
+        @BindView(R.id.tv_home_main_sign_up)
+        TextView signUp;
         @BindView(R.id.ll_search_store)
         LinearLayout mStore;
         @BindView(R.id.iv_search_store_picture)

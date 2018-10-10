@@ -30,11 +30,10 @@ public class GlideImageLoader extends ImageLoader {
     }
 
     public static void headerImageLoader(Context context, String image, ImageView imageView){
-        String imageHttp = BaseUrl.HEADER_HTTP + image;
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.loading_error);
         requestOptions.error(R.drawable.loading_error);
-        Glide.with(context).load(imageHttp).apply(requestOptions).into(imageView);
+        Glide.with(context).load(image).apply(requestOptions).into(imageView);
     }
 
 

@@ -1,7 +1,6 @@
 package com.ifree.uu.uubuy.ui.base;
 
 import android.annotation.TargetApi;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
@@ -19,8 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.ui.activity.CheckPermissionsActivity;
 import com.ifree.uu.uubuy.uitls.AppManager;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StatusBarUtil;
@@ -29,7 +26,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Author: 小火

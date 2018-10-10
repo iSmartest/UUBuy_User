@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.mvp.entity.AroundEntity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,10 +50,22 @@ public class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.AroundView
     @Override
     public void onBindViewHolder(@NonNull AroundViewHolder holder, int position) {
         AroundEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
+        Map<String,String> spMap = SPUtil.getMap(context,"key");
         holder.name.setText(activitiesList.getActivitiesName());
         holder.time.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(activitiesList.getActivitiesTime()));
         holder.address.setText("活动地点：" + activitiesList.getActivitiesAdAddress());
         GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
+        holder.signUp.setText("报名：" + activitiesList.getSignUp() + "人");
+        if (spMap.isEmpty()){
+            holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
+        }else {
+            if (spMap.containsKey(activitiesList.getActivitiesId())){
+                int temp = activitiesList.getBrowsing() + Integer.valueOf(spMap.get(activitiesList.getActivitiesId()));
+                holder.browsingVolume.setText("浏览：" + temp + "人");
+            }else {
+                holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
+            }
+        }
     }
 
     @Override
@@ -69,6 +83,10 @@ public class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.AroundView
         TextView time;
         @BindView(R.id.tv_home_main_address)
         TextView address;
+        @BindView(R.id.tv_home_main_browsing_volume)
+        TextView browsingVolume;
+        @BindView(R.id.tv_home_main_sign_up)
+        TextView signUp;
         public AroundViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

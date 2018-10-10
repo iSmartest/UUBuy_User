@@ -45,6 +45,7 @@ import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -128,7 +129,6 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
 
         cityADAdapter = new CityADAdapter(context, mCityADList);
         rc_city_ad.setAdapter(cityADAdapter);
-
         rc_type.addOnItemTouchListener(new RecyclerItemTouchListener(rc_type) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
@@ -147,7 +147,6 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
                     bundle.putString("title", mAdTypeList.get(position).getAdTypeTitle());
                     MyApplication.openActivity(context, TestActivity.class, bundle);
                 }
-
             }
         });
 
@@ -158,6 +157,18 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
                 if (position < 0 | position >= mList.size()) {
                     return;
                 }
+                Map<String,String> currentMap = SPUtil.getMap(context,"key");
+                if (currentMap.isEmpty()){
+                    currentMap.put(mList.get(position).getaId(), 1 + "");
+                }else {
+                    if (currentMap.containsKey(mList.get(position).getaId())){
+                        currentMap.put(mList.get(position).getaId(), (Integer.valueOf(currentMap.get(mList.get(position).getaId())) + 1)+"");
+                    }else {
+                        currentMap.put(mList.get(position).getaId(), 1 + "");
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+                SPUtil.putMap(context,"key",currentMap);
                 Bundle bundle = new Bundle();
                 bundle.putString("fristActivitiesId", mList.get(position).getActivitiesId());
                 bundle.putString("fristActivitiesType", mList.get(position).getType());

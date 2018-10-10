@@ -16,6 +16,7 @@ public class SearchEntity {
         private List<ActivitiesList> activitiesList;
         public static class ActivitiesList{
             private String activitiesId;//用于跳转到具体活动
+            private String aId;
             private String activitiesName; //活动名称
             private String activitiesPic;//活动图片
             private String activitiesTime; //活动时间
@@ -23,13 +24,23 @@ public class SearchEntity {
             private String activitiesType;//0商场1店铺2商品
             private String type;//活动类型1普通2超市3品牌
             private String activitiesPrice;//价格
-
+            private int browsing;
+            private int count = 0;
+            private String signUp;
             public String getActivitiesId() {
                 return activitiesId;
             }
 
             public void setActivitiesId(String activitiesId) {
                 this.activitiesId = activitiesId;
+            }
+
+            public String getaId() {
+                return aId;
+            }
+
+            public void setaId(String aId) {
+                this.aId = aId;
             }
 
             public String getActivitiesName() {
@@ -86,6 +97,30 @@ public class SearchEntity {
 
             public void setActivitiesPrice(String activitiesPrice) {
                 this.activitiesPrice = activitiesPrice;
+            }
+
+            public int getBrowsing() {
+                return browsing;
+            }
+
+            public void setBrowsing(int browsing) {
+                this.browsing = browsing;
+            }
+
+            public int getCount() {
+                return count;
+            }
+
+            public void setCount(int count) {
+                this.count = count;
+            }
+
+            public String getSignUp() {
+                return signUp;
+            }
+
+            public void setSignUp(String signUp) {
+                this.signUp = signUp;
             }
         }
 

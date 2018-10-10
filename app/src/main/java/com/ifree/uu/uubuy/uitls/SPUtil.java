@@ -79,7 +79,7 @@ public class SPUtil {
      * @param value   值
      */
     public static void putBoolean(Context context, String key, boolean value) {
-        SharedPreferences sp     = getSp(context);
+        SharedPreferences sp = getSp(context);
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean(key, value);
         editor.apply();
@@ -220,11 +220,8 @@ public class SPUtil {
      * @param context 上下文
      * @param key 键
      * @param map 存储的集合
-     * @param <K> 指定Map的键
-     * @param <V> 指定Map的值
      */
-    public static <K extends Serializable, V extends Serializable> void putMap(Context context,
-                                                                               String key, Map<K, V> map)
+    public static void putMap(Context context,String key, Map<String, String> map)
     {
         try {
             put(context, key, map);
@@ -233,11 +230,10 @@ public class SPUtil {
         }
     }
 
-    public static <K extends Serializable, V extends Serializable> Map<K, V> getMap(Context context,
-                                                                                    String key)
+    public static Map<String, String> getMap(Context context,String key)
     {
         try {
-            return (Map<K, V>) get(context, key);
+            return (Map<String, String>) get(context,key);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -271,11 +267,11 @@ public class SPUtil {
         String wordBase64 = getString(context, key);
         // 将base64格式字符串还原成byte数组
         if (TextUtils.isEmpty(wordBase64)) { //不可少，否则在下面会报java.io.StreamCorruptedException
-            return null;
+            return "";
         }
-        byte[]               objBytes = Base64.decode(wordBase64.getBytes(), Base64.DEFAULT);
-        ByteArrayInputStream bais     = new ByteArrayInputStream(objBytes);
-        ObjectInputStream ois      = new ObjectInputStream(bais);
+        byte[]objBytes = Base64.decode(wordBase64.getBytes(), Base64.DEFAULT);
+        ByteArrayInputStream bais = new ByteArrayInputStream(objBytes);
+        ObjectInputStream ois = new ObjectInputStream(bais);
         // 将byte数组转换成product对象
         Object obj = ois.readObject();
         bais.close();
@@ -310,4 +306,5 @@ public class SPUtil {
     public static String getURL(Context context){
         return SPUtil.getString(context,"url");
     }
+
 }

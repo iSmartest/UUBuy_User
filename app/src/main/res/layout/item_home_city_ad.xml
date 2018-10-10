@@ -7,7 +7,7 @@
 
     <com.ifree.uu.uubuy.custom.RCRelativeLayout
         android:layout_width="166dp"
-        android:layout_height="106dp"
+        android:layout_height="126dp"
         app:round_corner="6dp"
         app:stroke_color="@color/stroke_color"
         app:stroke_width="0.5dp"
@@ -40,6 +40,31 @@
                 android:textColor="@color/text_subtitle_color"
                 android:textSize="11dp"
                 android:layout_marginLeft="5dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+                <TextView
+                    android:id="@+id/tv_city_sign_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_subtitle_color"
+                    android:textSize="11dp"
+                    android:gravity="center|left"
+                    android:layout_weight="1"
+                    android:text="报名：334人"/>
+                <TextView
+                    android:id="@+id/tv_city_browsing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_subtitle_color"
+                    android:textSize="11dp"
+                    android:layout_weight="1"
+                    android:gravity="center|right"
+                    android:text="浏览：3242人"/>
+            </LinearLayout>
         </LinearLayout>
     </com.ifree.uu.uubuy.custom.RCRelativeLayout>
 

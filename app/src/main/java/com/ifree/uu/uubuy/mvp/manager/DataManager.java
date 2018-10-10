@@ -202,5 +202,10 @@ public class DataManager {
         return mRetrofitService.getUpdate();
     }
 
+    // 点击量
+    public Observable<UserInfoEntity> getClickCount(String json) {
+        return mRetrofitService.getClickCount(json);
+    }
+
 
 }

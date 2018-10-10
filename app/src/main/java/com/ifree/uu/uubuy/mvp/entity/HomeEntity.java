@@ -138,19 +138,30 @@ public class HomeEntity {
 
         public static class CityADList{
             private String cityADId;
+            private String aId;
             private String cityADName;
             private String cityADPic;
             private String cityADStartTime;
             private String cityADEndTime;
             private String cityADType;
             private String type;
-
+            private int browsing;
+            private int count = 0;
+            private int signUp;
             public String getCityADId() {
                 return cityADId;
             }
 
             public void setCityADId(String cityADId) {
                 this.cityADId = cityADId;
+            }
+
+            public String getaId() {
+                return aId;
+            }
+
+            public void setaId(String aId) {
+                this.aId = aId;
             }
 
             public String getCityADName() {
@@ -199,6 +210,30 @@ public class HomeEntity {
 
             public void setType(String type) {
                 this.type = type;
+            }
+
+            public int getBrowsing() {
+                return browsing;
+            }
+
+            public void setBrowsing(int browsing) {
+                this.browsing = browsing;
+            }
+
+            public int getSignUp() {
+                return signUp;
+            }
+
+            public void setSignUp(int signUp) {
+                this.signUp = signUp;
+            }
+
+            public int getCount() {
+                return count;
+            }
+
+            public void setCount(int count) {
+                this.count = count;
             }
         }
 
@@ -252,18 +287,30 @@ public class HomeEntity {
 
         public static class ActivitiesList{
             private String activitiesId;
+            private String aId;
             private String activitiesPic;
             private String activitiesName;
             private String activitiesTime;
             private String activitiesAdAddress;
             private String activitiesType;
             private String type;
+            private int browsing;
+            private int signUp;
+            private int count = 0;
             public String getActivitiesId() {
                 return activitiesId;
             }
 
             public void setActivitiesId(String activitiesId) {
                 this.activitiesId = activitiesId;
+            }
+
+            public String getaId() {
+                return aId;
+            }
+
+            public void setaId(String aId) {
+                this.aId = aId;
             }
 
             public String getActivitiesPic() {
@@ -312,6 +359,30 @@ public class HomeEntity {
 
             public void setType(String type) {
                 this.type = type;
+            }
+
+            public int getBrowsing() {
+                return browsing;
+            }
+
+            public void setBrowsing(int browsing) {
+                this.browsing = browsing;
+            }
+
+            public int getSignUp() {
+                return signUp;
+            }
+
+            public void setSignUp(int signUp) {
+                this.signUp = signUp;
+            }
+
+            public int getCount() {
+                return count;
+            }
+
+            public void setCount(int count) {
+                this.count = count;
             }
         }
 

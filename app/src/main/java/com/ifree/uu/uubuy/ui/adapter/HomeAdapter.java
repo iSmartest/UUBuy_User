@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.mvp.entity.HomeEntity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,10 +49,22 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
         HomeEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
+        Map<String,String> spMap = SPUtil.getMap(context,"key");
         holder.address.setText(activitiesList.getActivitiesAdAddress());
         holder.name.setText(activitiesList.getActivitiesName());
         holder.time.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(activitiesList.getActivitiesTime()));
         GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
+        holder.signUp.setText("报名：" + activitiesList.getSignUp() + "人");
+        if (spMap.isEmpty()){
+            holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
+        }else {
+            if (spMap.containsKey(activitiesList.getaId())){
+                int temp = activitiesList.getBrowsing() + Integer.valueOf(spMap.get(activitiesList.getaId()));
+                holder.browsingVolume.setText("浏览：" + temp + "人");
+            }else {
+                holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
+            }
+        }
     }
 
     @Override
@@ -68,6 +82,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         TextView time;
         @BindView(R.id.tv_home_main_address)
         TextView address;
+        @BindView(R.id.tv_home_main_browsing_volume)
+        TextView browsingVolume;
+        @BindView(R.id.tv_home_main_sign_up)
+        TextView signUp;
         public HomeViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

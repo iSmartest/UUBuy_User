@@ -67,6 +67,8 @@ public class MainActivity extends BaseActivity {
         keyWord.setCursorVisible(false);
         keyWord.setFocusable(false);
         keyWord.setFocusableInTouchMode(false);
+
+
     }
 
     @Override

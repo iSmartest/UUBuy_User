@@ -74,7 +74,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rc_city_ad"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="260dp"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp">
         </android.support.v7.widget.RecyclerView>

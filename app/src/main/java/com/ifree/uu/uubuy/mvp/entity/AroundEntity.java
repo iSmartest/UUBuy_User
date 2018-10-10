@@ -16,19 +16,29 @@ public class AroundEntity {
         private List<ActivitiesList> activityList;
         public static class ActivitiesList{
             private String activitiesId;
+            private String aId;
             private String activitiesPic;
             private String activitiesName;
             private String activitiesTime;
             private String activitiesAdAddress;
             private String activitiesType;
             private String type;
-
+            private int browsing;
+            private int signUp;
             public String getActivitiesId() {
                 return activitiesId;
             }
 
             public void setActivitiesId(String activitiesId) {
                 this.activitiesId = activitiesId;
+            }
+
+            public String getaId() {
+                return aId;
+            }
+
+            public void setaId(String aId) {
+                this.aId = aId;
             }
 
             public String getActivitiesPic() {
@@ -77,6 +87,22 @@ public class AroundEntity {
 
             public void setType(String type) {
                 this.type = type;
+            }
+
+            public int getBrowsing() {
+                return browsing;
+            }
+
+            public void setBrowsing(int browsing) {
+                this.browsing = browsing;
+            }
+
+            public int getSignUp() {
+                return signUp;
+            }
+
+            public void setSignUp(int signUp) {
+                this.signUp = signUp;
             }
         }
 
