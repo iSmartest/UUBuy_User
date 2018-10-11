@@ -8,12 +8,10 @@ package com.ifree.uu.uubuy.config;
  */
 public class BaseUrl {
 
-    public static String HTTP = "http://www.uugood.cn:8080/uugo-user/app/";//正式服务器
+//    public static String HTTP = "http://www.uugood.cn:8080/uugo-user/app/";//正式服务器
 
-//    public static String HTTP = "http://192.168.1.8:8083/app/";//局域网测试地址
-    //图片地址
-    public static final String IMAGE_HTTP = "http://www.uugood.cn:8080/uugo-manager";
-//    public static final String IMAGE_HTTP = "http://192.168.1.100:8080/uugo-manager";
+    public static String HTTP = "http://192.168.1.100:8080/uugo-user/app/";//局域网测试地址
+
     //获取验证码
     public static final String SEND_CODE = "sendCode";
     //注册

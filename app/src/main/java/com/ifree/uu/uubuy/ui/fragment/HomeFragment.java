@@ -15,7 +15,6 @@ import android.view.View;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
-import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.custom.ImageSlideshow;
 import com.ifree.uu.uubuy.custom.MarqueeTextView;
 import com.ifree.uu.uubuy.listener.MarqueeTextViewClickListener;
@@ -303,7 +302,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
     private void initTopViewData(final List<HomeEntity.DataBean.BannerList> mBannerList) {
         List<String> imag = new ArrayList<>();
         for (int i = 0; i < mBannerList.size(); i++) {
-            imag.add(BaseUrl.IMAGE_HTTP + mBannerList.get(i).getBannerPic());
+            imag.add(mBannerList.get(i).getBannerPic());
 
         }
         imageSlideshow.addImageTitle(imag);
