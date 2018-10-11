@@ -59,8 +59,8 @@ public class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.AroundView
         if (spMap.isEmpty()){
             holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
         }else {
-            if (spMap.containsKey(activitiesList.getActivitiesId())){
-                int temp = activitiesList.getBrowsing() + Integer.valueOf(spMap.get(activitiesList.getActivitiesId()));
+            if (spMap.containsKey(activitiesList.getaId())){
+                int temp = activitiesList.getBrowsing() + Integer.valueOf(spMap.get(activitiesList.getaId()));
                 holder.browsingVolume.setText("浏览：" + temp + "人");
             }else {
                 holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");

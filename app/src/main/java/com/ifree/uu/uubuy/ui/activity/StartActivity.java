@@ -12,21 +12,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.google.gson.Gson;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.config.Constant;
-import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.mvp.presenter.OnclickCountPresenter;
-import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StatusBarUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Author: 小火
@@ -83,32 +77,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         StatusBarUtil.fullScreen(StartActivity.this);
         mStartTime = System.currentTimeMillis();//记录开始时间1
-        Map<String,String> currentMap = SPUtil.getMap(StartActivity.this,"key");
-        Log.i("111", "onSuccess: " + new Gson().toJson(currentMap));
-        if (!currentMap.isEmpty()){
-            submit();
-        }
         checkPermission();
-    }
-
-    private void submit() {
-        String json = new Gson().toJson(SPUtil.getMap(StartActivity.this,"key"));
-        mOnclickCountPresenter = new OnclickCountPresenter(StartActivity.this);
-        mOnclickCountPresenter.onCreate();
-        mOnclickCountPresenter.attachView(new ProjectView<UserInfoEntity>() {
-            @Override
-            public void onSuccess(UserInfoEntity userInfoEntity) {
-                if (userInfoEntity.getResultCode().equals("0")){
-                    SPUtil.putMap(StartActivity.this,"key",new HashMap<String, String>());
-                }
-                Log.i("111", "onSuccess: " + new Gson().toJson(SPUtil.getMap(StartActivity.this,"key")));
-            }
-            @Override
-            public void onError(String result) {
-
-            }
-        });
-        mOnclickCountPresenter.getClickCount(json);
     }
 
     private void saveTag() {

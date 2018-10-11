@@ -8,6 +8,15 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.mvp.presenter.OnclickCountPresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
+import com.ifree.uu.uubuy.uitls.SPUtil;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Author：小火
  * Email：1403241630@qq.com
@@ -15,6 +24,7 @@ import android.util.Log;
  * Description:
  */
 public class UURunService extends Service {
+    private OnclickCountPresenter mOnclickCountPresenter;
     static Handler myHandler = new Handler();
     protected static Context context;
     @Nullable
@@ -27,7 +37,7 @@ public class UURunService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //处理具体的逻辑
-        myHandler.postDelayed(myRunnable, 3000000);//五分钟
+        myHandler.postDelayed(myRunnable, 3000);//五分钟
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -35,11 +45,34 @@ public class UURunService extends Service {
         @Override
         public void run() {
             try {
-                myHandler.postDelayed(this, 3000000);
-                Log.i("TAG", "run: " + "呵呵");
+                Map<String,String> currentMap = SPUtil.getMap(context,"key");
+                Log.i("fff", "onSuccess: " + new Gson().toJson(currentMap));
+                if (!currentMap.isEmpty()){
+                    submit();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     };
+
+    private void submit() {
+        myHandler.removeCallbacks(myRunnable);
+        myHandler.postDelayed(myRunnable, 3000);//300000
+        String json = new Gson().toJson(SPUtil.getMap(context,"key"));
+        mOnclickCountPresenter = new OnclickCountPresenter(context);
+        mOnclickCountPresenter.onCreate();
+        mOnclickCountPresenter.attachView(new ProjectView<UserInfoEntity>() {
+            @Override
+            public void onSuccess(UserInfoEntity userInfoEntity) {
+                if (userInfoEntity.getResultCode().equals("0")){
+                    SPUtil.putMap(context,"key",new HashMap<String, String>());
+                }
+            }
+            @Override
+            public void onError(String result) {
+            }
+        });
+        mOnclickCountPresenter.getClickCount(json);
+    }
 }

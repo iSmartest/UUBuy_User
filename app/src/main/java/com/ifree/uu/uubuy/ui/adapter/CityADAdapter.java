@@ -64,8 +64,8 @@ public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADVi
         if (spMap.isEmpty()){
             holder.browsing.setText("浏览：" + cityADList.getBrowsing()  + "人");
         }else {
-            if (spMap.containsKey(cityADList.getCityADId())){
-                int temp = cityADList.getBrowsing() + Integer.valueOf(spMap.get(cityADList.getCityADId()));
+            if (spMap.containsKey(cityADList.getaId())){
+                int temp = cityADList.getBrowsing() + Integer.valueOf(spMap.get(cityADList.getaId()));
                 holder.browsing.setText("浏览：" + temp + "人");
             }else {
                 holder.browsing.setText("浏览：" + cityADList.getBrowsing()  + "人");
