@@ -48,8 +48,9 @@ public class UURunService extends Service {
                 Map<String,String> currentMap = SPUtil.getMap(context,"key");
                 Log.i("fff", "onSuccess: " + new Gson().toJson(currentMap));
                 if (currentMap == null || currentMap.size() == 0){
-                    submit();
+                    return;
                 }
+                submit();
             } catch (Exception e) {
                 e.printStackTrace();
             }
