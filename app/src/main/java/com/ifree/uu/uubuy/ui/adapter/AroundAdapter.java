@@ -56,7 +56,7 @@ public class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.AroundView
         holder.address.setText("活动地点：" + activitiesList.getActivitiesAdAddress());
         GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
         holder.signUp.setText("报名：" + activitiesList.getSignUp() + "人");
-        if (spMap.isEmpty()){
+        if (spMap == null || spMap.size() == 0){
             holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
         }else {
             if (spMap.containsKey(activitiesList.getaId())){

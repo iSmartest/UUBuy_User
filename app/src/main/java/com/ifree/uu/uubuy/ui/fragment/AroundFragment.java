@@ -33,6 +33,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 
+
 /**
  * Author: 小火
  * Email:1403241630@qq.com
@@ -94,7 +95,7 @@ public class AroundFragment extends BaseFragment {
                 }
 
                 Map<String,String> currentMap = SPUtil.getMap(context,"key");
-                if (currentMap.isEmpty()){
+                if (currentMap == null || currentMap.size() == 0){
                     currentMap.put(mList.get(position).getaId(), 1 + "");
                 }else {
                     if (currentMap.containsKey(mList.get(position).getaId())){

@@ -55,7 +55,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         holder.time.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(activitiesList.getActivitiesTime()));
         GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
         holder.signUp.setText("报名：" + activitiesList.getSignUp() + "人");
-        if (spMap.isEmpty()){
+        if (spMap == null || spMap.size() == 0){
             holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
         }else {
             if (spMap.containsKey(activitiesList.getaId())){

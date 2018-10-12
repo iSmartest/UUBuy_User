@@ -37,7 +37,7 @@ public class UURunService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //处理具体的逻辑
-        myHandler.postDelayed(myRunnable, 3000);//五分钟
+        myHandler.postDelayed(myRunnable, 300000);//五分钟
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -47,7 +47,7 @@ public class UURunService extends Service {
             try {
                 Map<String,String> currentMap = SPUtil.getMap(context,"key");
                 Log.i("fff", "onSuccess: " + new Gson().toJson(currentMap));
-                if (!currentMap.isEmpty()){
+                if (currentMap == null || currentMap.size() == 0){
                     submit();
                 }
             } catch (Exception e) {
@@ -58,7 +58,7 @@ public class UURunService extends Service {
 
     private void submit() {
         myHandler.removeCallbacks(myRunnable);
-        myHandler.postDelayed(myRunnable, 3000);//300000
+        myHandler.postDelayed(myRunnable, 300000);//300000
         String json = new Gson().toJson(SPUtil.getMap(context,"key"));
         mOnclickCountPresenter = new OnclickCountPresenter(context);
         mOnclickCountPresenter.onCreate();

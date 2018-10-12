@@ -157,7 +157,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
                     return;
                 }
                 Map<String,String> currentMap = SPUtil.getMap(context,"key");
-                if (currentMap.isEmpty()){
+                if (currentMap == null || currentMap.size() == 0){
                     currentMap.put(mList.get(position).getaId(), 1 + "");
                 }else {
                     if (currentMap.containsKey(mList.get(position).getaId())){

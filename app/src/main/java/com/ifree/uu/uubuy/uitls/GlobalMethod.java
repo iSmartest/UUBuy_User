@@ -36,6 +36,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -455,5 +456,13 @@ public class GlobalMethod {
     public static float px2sp(Context context, float pxVal) {
         return (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
 
+    }
+
+    public static boolean getMapIsEmpty(Map<String,String> map){
+
+        if (map instanceof Map && ((Map) map).isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }

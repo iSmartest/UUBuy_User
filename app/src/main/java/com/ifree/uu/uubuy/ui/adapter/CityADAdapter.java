@@ -61,7 +61,7 @@ public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADVi
         holder.time.setText(TimeFormatUtils.modifyDataFormat(cityADList.getCityADStartTime()) + "—" + TimeFormatUtils.modifyDataFormat(cityADList.getCityADEndTime()));
         GlideImageLoader.imageLoader(context, cityADList.getCityADPic(), holder.icon);
         holder.signUp.setText("报名：" + cityADList.getSignUp() + "人");
-        if (spMap.isEmpty()){
+        if (spMap == null || spMap.size() == 0){
             holder.browsing.setText("浏览：" + cityADList.getBrowsing()  + "人");
         }else {
             if (spMap.containsKey(cityADList.getaId())){
@@ -79,7 +79,7 @@ public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADVi
                 bundle.putString("fristActivitiesType", cityADList.getType());
                 bundle.putString("fristActivitiesName", cityADList.getCityADName());
                 Map<String,String> currentMap = SPUtil.getMap(context,"key");
-                if (currentMap.isEmpty()){
+                if (currentMap == null || currentMap.size() == 0){
                     currentMap.put(cityADList.getaId(), 1 + "");
                 }else {
                     if (currentMap.containsKey(cityADList.getaId())){

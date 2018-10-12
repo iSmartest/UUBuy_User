@@ -33,6 +33,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.ifree.uu.uubuy.uitls.GlobalMethod.getMapIsEmpty;
+
 /**
  * Author：小火
  * Email：1403241630@qq.com
@@ -62,6 +64,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     @Override
     public void onBindViewHolder(@NonNull final SearchViewHolder holder, int position) {
         final SearchEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
+        Map<String,String> spMap = SPUtil.getMap(context,"key");
         switch (activitiesList.getActivitiesType()){
             case "0":
                 holder.mMarket.setVisibility(View.VISIBLE);
@@ -71,8 +74,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 holder.name.setText(activitiesList.getActivitiesName());
                 holder.time.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(activitiesList.getActivitiesTime()));
                 GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
-                holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing() + "人");
                 holder.signUp.setText("报名：" + activitiesList.getSignUp() + "人");
+                if (spMap == null || spMap.size() == 0){
+                    holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
+                }else {
+                    if (spMap.containsKey(activitiesList.getaId())){
+                        int temp = activitiesList.getBrowsing() + Integer.valueOf(spMap.get(activitiesList.getaId()));
+                        holder.browsingVolume.setText("浏览：" + temp + "人");
+                    }else {
+                        holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
+                    }
+                }
+
                 break;
             case "1":
                 holder.mMarket.setVisibility(View.GONE);
@@ -122,7 +135,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                         break;
                 }
                 Map<String,String> currentMap = SPUtil.getMap(context,"key");
-                if (currentMap.isEmpty()){
+                if (getMapIsEmpty(currentMap)){
                     currentMap.put(activitiesList.getaId(), 1 + "");
                 }else {
                     if (currentMap.containsKey(activitiesList.getaId())){

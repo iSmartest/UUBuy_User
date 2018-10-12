@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -267,7 +268,7 @@ public class SPUtil {
         String wordBase64 = getString(context, key);
         // 将base64格式字符串还原成byte数组
         if (TextUtils.isEmpty(wordBase64)) { //不可少，否则在下面会报java.io.StreamCorruptedException
-            return "";
+            return new HashMap<>();
         }
         byte[]objBytes = Base64.decode(wordBase64.getBytes(), Base64.DEFAULT);
         ByteArrayInputStream bais = new ByteArrayInputStream(objBytes);
