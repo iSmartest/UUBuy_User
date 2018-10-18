@@ -90,6 +90,8 @@ public class PlayVIPActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
+        mList.clear();
+        mAdapter.notifyDataSetChanged();
         mGroupInfoPresenter.onCreate();
         mGroupInfoPresenter.attachView(mGroupInfoView);
         mGroupInfoPresenter.getSearchGroupInfos(uid,"加载中...");
@@ -164,7 +166,7 @@ public class PlayVIPActivity extends BaseActivity {
                             .withTitle("您的好友"+userName+"邀请您加入【UU购】")
                             .withText("赶快下载体验【UU购】APP！")
                             .withMedia(new UMImage(context, R.mipmap.app_icon))
-                            .withTargetUrl("http://waipopo.cn")
+                            .withTargetUrl("http://www.ifreee.cn/")
                             .setCallback(umShareListener)
                             .open(config);
                 }else {

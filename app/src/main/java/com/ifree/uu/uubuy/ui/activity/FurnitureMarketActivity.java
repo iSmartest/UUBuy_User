@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * Author: 小火
  * Email:1403241630@qq.com
  * Created by 2018/8/25.
- * Description:商场
+ * Description:家具建材
  */
 public class FurnitureMarketActivity extends BaseActivity implements View.OnClickListener {
     private SecondListPresenter mSecondListPresenter;

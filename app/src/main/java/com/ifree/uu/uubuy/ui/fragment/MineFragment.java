@@ -1,6 +1,5 @@
 package com.ifree.uu.uubuy.ui.fragment;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -139,10 +138,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }else{
             mUserLogin.setVisibility(View.VISIBLE);
             mGoLogin.setVisibility(View.GONE);
-            mineInfoPresenter.onCreate();
-            mineInfoPresenter.attachView(mMineInfoView);
-            mineInfoPresenter.getSearchMineInfo(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context), page, SPUtil.getUid(context), "加载中...");
         }
+        mineInfoPresenter.onCreate();
+        mineInfoPresenter.attachView(mMineInfoView);
+        mineInfoPresenter.getSearchMineInfo(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context), page, SPUtil.getUid(context), "加载中...");
     }
 
     private ProjectView<MineEntity> mMineInfoView = new ProjectView<MineEntity>() {
