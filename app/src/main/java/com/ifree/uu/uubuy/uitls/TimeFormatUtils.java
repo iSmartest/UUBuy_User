@@ -22,7 +22,11 @@ public class TimeFormatUtils {
         if (str.isEmpty()){
             result = "";
         }else {
-            result = str.substring(0,4) + "."+ str.substring(5,7) + "."+ str.substring(8,10) + "—" + str.substring(11,15) + "." + str.substring(16,18) + "." + str.substring(19,21);
+            if (str.equals("永久")){
+                result = "永久";
+            }else {
+                result = str.substring(0,4) + "."+ str.substring(5,7) + "."+ str.substring(8,10) + "—" + str.substring(11,15) + "." + str.substring(16,18) + "." + str.substring(19,21);
+            }
         }
         return result;
     }

@@ -27,7 +27,7 @@ import butterknife.OnClick;
  * Author: 小火
  * Email:1403241630@qq.com
  * Created by 2018/8/17.
- * Description:
+ * Description:收藏
  */
 public class ActivitiesFragment extends BaseFragment {
     private ActivitiesPresenter activitiesPresenter;

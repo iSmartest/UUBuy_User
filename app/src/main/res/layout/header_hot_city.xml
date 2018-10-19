@@ -48,7 +48,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
-                android:text="北京"
+                android:text=""
                 android:gravity="center"
                 android:background="@drawable/shape_hot_city_background"
                 android:textColor="@color/text_main_color"/>

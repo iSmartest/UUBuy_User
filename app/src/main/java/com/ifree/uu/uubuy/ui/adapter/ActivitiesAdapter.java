@@ -71,6 +71,21 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
         final ActivitiesEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
         switch (activitiesType){
             case "0":
+                if (activitiesList.getIsOver().equals("0")){
+                    holder.mIsOver.setVisibility(View.VISIBLE);
+                }else {
+                    holder.mIsOver.setVisibility(View.GONE);
+                    holder.sl_market.setOnSwipeLayoutClickListener(new SwipeLayout.OnSwipeLayoutClickListener() {
+                        @Override
+                        public void onClick() {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("marketId",activitiesList.getActivitiesId());
+                            bundle.putString("marketName",activitiesList.getActivitiesName());
+                            bundle.putString("type",activitiesList.getType());
+                            MyApplication.openActivity(context,ActivitiesDetailsActivity.class,bundle);
+                        }
+                    });
+                }
                 holder.sl_market.setVisibility(View.VISIBLE);
                 holder.sl_store.setVisibility(View.GONE);
                 holder.sl_commodity.setVisibility(View.GONE);
@@ -134,16 +149,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
                 dialog.show();
             }
         });
-        holder.sl_market.setOnSwipeLayoutClickListener(new SwipeLayout.OnSwipeLayoutClickListener() {
-            @Override
-            public void onClick() {
-                Bundle bundle = new Bundle();
-                bundle.putString("marketId",activitiesList.getActivitiesId());
-                bundle.putString("marketName",activitiesList.getActivitiesName());
-                bundle.putString("type",activitiesList.getType());
-                MyApplication.openActivity(context,ActivitiesDetailsActivity.class,bundle);
-            }
-        });
+
         holder.sl_store.setOnSwipeLayoutClickListener(new SwipeLayout.OnSwipeLayoutClickListener() {
             @Override
             public void onClick() {
@@ -214,6 +220,8 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
         SwipeLayout sl_store;
         @BindView(R.id.sl_commodity)
         SwipeLayout sl_commodity;
+        @BindView(R.id.tv_is_over)
+        TextView mIsOver;
         @BindView(R.id.id_item_btn)
         TextView marketDelete;
         @BindView(R.id.tv_activities_circle_name)

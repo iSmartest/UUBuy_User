@@ -19,12 +19,14 @@ import com.ifree.uu.uubuy.mvp.presenter.CityInfoPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.SelectHotCityAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 
 /**
@@ -42,6 +44,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
     private List<CityInfoEntity.DataBean.HotCity> mList = new ArrayList<>();
     private List<CityInfoEntity.DataBean.ProvinceList> provinceList = new ArrayList<>();
     private SelectHotCityAdapter mAdapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.avtivity_select_hot_city;
@@ -53,27 +56,28 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
         setTitleText("选择城市");
         MyApplication.addActivity(SelectHotCityActivity.this);
         mCityInfoPresenter = new CityInfoPresenter(context);
-        xRecyclerView.setLayoutManager(new GridLayoutManager(context,4));
+        xRecyclerView.setLayoutManager(new GridLayoutManager(context, 4));
         xRecyclerView.setPullRefreshEnabled(false);
         xRecyclerView.setLoadingMoreEnabled(false);
-        headView = LayoutInflater.from(context).inflate(R.layout.header_hot_city,null);
+        headView = LayoutInflater.from(context).inflate(R.layout.header_hot_city, null);
         tvCurrentCity = headView.findViewById(R.id.tv_current_city);
+        tvCurrentCity.setText(SPUtil.getString(context, "district"));
         headView.findViewById(R.id.ly_again_location).setOnClickListener(this);
         headView.findViewById(R.id.tv_more_hot_city).setOnClickListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);
-        mAdapter = new SelectHotCityAdapter(context,mList);
+        mAdapter = new SelectHotCityAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
         xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
-                int position = vh.getAdapterPosition()-2;
-                if (position < 0 | position >= mList.size()){
+                int position = vh.getAdapterPosition() - 2;
+                if (position < 0 | position >= mList.size()) {
                     return;
                 }
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("area",(Serializable) mList.get(position).getTownList());
+                bundle.putSerializable("area", (Serializable) mList.get(position).getTownList());
                 bundle.putString("city", mList.get(position).getCity());
-                MyApplication.openActivity(context,SelectHotAreaActivity.class,bundle);
+                MyApplication.openActivity(context, SelectHotAreaActivity.class, bundle);
             }
         });
     }
@@ -89,43 +93,46 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
         @Override
         public void onSuccess(CityInfoEntity mCityInfoEntity) {
             Log.i("TAG", "onCompleted: " + new Gson().toJson(mCityInfoEntity));
-            if (mCityInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mCityInfoEntity.getResult());
+            if (mCityInfoEntity.getResultCode().equals("1")) {
+                ToastUtils.makeText(context, mCityInfoEntity.getResult());
                 return;
             }
             List<CityInfoEntity.DataBean.HotCity> hotCityList = mCityInfoEntity.getData().getHotCity();
             List<CityInfoEntity.DataBean.ProvinceList> provinceLists = mCityInfoEntity.getData().getProvinceList();
-            if (hotCityList != null && !hotCityList.isEmpty()){
-              mList.addAll(hotCityList);
-              mAdapter.notifyDataSetChanged();
+            if (hotCityList != null && !hotCityList.isEmpty()) {
+                mList.addAll(hotCityList);
+                mAdapter.notifyDataSetChanged();
             }
-            if (provinceLists != null && !provinceLists.isEmpty()){
+            if (provinceLists != null && !provinceLists.isEmpty()) {
                 provinceList.addAll(provinceLists);
             }
         }
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
+            ToastUtils.makeText(context, result);
         }
     };
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ly_again_location:
                 initLocation();
                 break;
+//            case R.id.tv_current_city:
+//                MyApplication.clearActivity();
+//                break;
             case R.id.tv_more_hot_city:
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("province",(Serializable) provinceList);
-                MyApplication.openActivity(context,SelectProvinceActivity.class,bundle);
+                bundle.putSerializable("province", (Serializable) provinceList);
+                MyApplication.openActivity(context, SelectProvinceActivity.class, bundle);
                 break;
         }
     }
 
-    private void initLocation(){
+    private void initLocation() {
         GaoDeLocationListener gaoDeLocationListener = new GaoDeLocationListener(context, new GaoDeLocationListener.OnQuestResultListener() {
             @Override
             public void success(String result) {

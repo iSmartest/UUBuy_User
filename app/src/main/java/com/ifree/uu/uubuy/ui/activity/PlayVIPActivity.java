@@ -255,6 +255,7 @@ public class PlayVIPActivity extends BaseActivity {
             }
             ToastUtils.makeText(context, "分享成功啦");
             mGoShare.setText("已分享");
+            mGoShare.setBackgroundResource(R.drawable.shape_city_location_background);
         }
 
         @Override
