@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.mvp.entity.HomeEntity;
+import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
 
@@ -23,9 +24,10 @@ import butterknife.ButterKnife;
  * Created by 2018/8/20.
  * Description:
  */
-public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeViewHolder>{
+public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeViewHolder> {
     private Context context;
     private List<HomeEntity.DataBean.AdTypeList> mAdTypeList;
+
     public AdTypeAdapter(Context context, List<HomeEntity.DataBean.AdTypeList> mAdTypeList) {
         this.context = context;
         this.mAdTypeList = mAdTypeList;
@@ -34,7 +36,7 @@ public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeView
     @NonNull
     @Override
     public AdTypeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_home_ad_type,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_home_ad_type, parent, false);
         AdTypeViewHolder viewHolder = new AdTypeViewHolder(view);
         return viewHolder;
     }
@@ -43,19 +45,24 @@ public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeView
     public void onBindViewHolder(@NonNull AdTypeViewHolder holder, int position) {
         HomeEntity.DataBean.AdTypeList mList = mAdTypeList.get(position);
         holder.mName.setText(mList.getAdTypeTitle());
-        switch (position){
-            case 0:
-                holder.icon.setImageResource(R.drawable.zongheshangchang_home);
-                break;case 1:
-                holder.icon.setImageResource(R.drawable.zonghechangshi_home);
-                break;case 2:
-                holder.icon.setImageResource(R.drawable.jiajujiancai_home);
-                break;case 3:
-                holder.icon.setImageResource(R.drawable.qichezhanting_home);
-                break;case 4:
-                holder.icon.setImageResource(R.drawable.pinpaizhanshi_home);
-                break;case 5:
-                holder.icon.setImageResource(R.drawable.jiaoyu_home);
+        switch (mList.getType()) {
+            case "1":
+                GlideImageLoader.adTypeImageLoader(context, mList.getAdTypeIcon(), holder.icon, "1");
+                break;
+            case "2":
+                GlideImageLoader.adTypeImageLoader(context, mList.getAdTypeIcon(), holder.icon, "2");
+                break;
+            case "3":
+                GlideImageLoader.adTypeImageLoader(context, mList.getAdTypeIcon(), holder.icon, "3");
+                break;
+            case "4":
+                GlideImageLoader.adTypeImageLoader(context, mList.getAdTypeIcon(), holder.icon, "4");
+                break;
+            case "5":
+                GlideImageLoader.adTypeImageLoader(context, mList.getAdTypeIcon(), holder.icon, "5");
+                break;
+            case "6":
+                GlideImageLoader.adTypeImageLoader(context, mList.getAdTypeIcon(), holder.icon, "6");
                 break;
         }
 
@@ -68,11 +75,12 @@ public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeView
         return mAdTypeList == null ? 6 : mAdTypeList.size();
     }
 
-    public class AdTypeViewHolder extends RecyclerView.ViewHolder{
+    public class AdTypeViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_ad_type)
         ImageView icon;
         @BindView(R.id.tv_ad_type)
         TextView mName;
+
         public AdTypeViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,17 +37,10 @@ public class PhotoUtil {
                 Environment.DIRECTORY_PICTURES);
         File image = null;
         try {
-            image = File.createTempFile(
-                    imageFileName,  /* prefix */
-                    ".jpg",         /* suffix */
-                    storageDir      /* directory */
-            );
+            image = File.createTempFile(imageFileName, ".jpg", storageDir);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        // Save a file: path for use with ACTION_VIEW intents
         return Uri.fromFile(image);
     }
 
@@ -61,7 +53,6 @@ public class PhotoUtil {
                 outputChannel = new FileOutputStream(dest).getChannel();
                 outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } finally {
@@ -69,14 +60,12 @@ public class PhotoUtil {
                 inputChannel.close();
                 outputChannel.close();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
     }
 
     private static final String TAG = "PhotoUtils";
-
     /**
      * @param activity    当前activity
      * @param imageUri    拍照后照片存储路径

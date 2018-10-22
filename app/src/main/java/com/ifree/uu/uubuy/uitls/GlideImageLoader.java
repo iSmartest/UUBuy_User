@@ -1,7 +1,6 @@
 package com.ifree.uu.uubuy.uitls;
 
 import android.content.Context;
-import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -20,25 +19,44 @@ public class GlideImageLoader extends ImageLoader {
         Glide.with(context).load(path).apply(requestOptions).into(imageView);
     }
 
-    public static void imageLoader(Context context, String image, ImageView imageView){
+    public static void imageLoader(Context context, String image, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.loading_error);
         requestOptions.error(R.drawable.loading_error);
         Glide.with(context).load(image).apply(requestOptions).into(imageView);
     }
 
-    public static void headerImageLoader(Context context, String image, ImageView imageView){
+    public static void headerImageLoader(Context context, String image, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.loading_error);
         requestOptions.error(R.drawable.loading_error);
         Glide.with(context).load(image).apply(requestOptions).into(imageView);
     }
 
-
-    public static void imageLoader(Context context, Uri image, ImageView imageView){
+    public static void adTypeImageLoader(Context context, String image, ImageView imageView, String type) {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.loading_error);
-        requestOptions.error(R.drawable.loading_error);
+        switch (type) {
+            case "1":
+                requestOptions.error(R.drawable.zongheshangchang_home);
+                break;
+            case "2":
+                requestOptions.error(R.drawable.zonghechangshi_home);
+                break;
+            case "3":
+                requestOptions.error(R.drawable.jiajujiancai_home);
+                break;
+            case "4":
+                requestOptions.error(R.drawable.qichezhanting_home);
+                break;
+            case "5":
+                requestOptions.error(R.drawable.pinpaizhanshi_home);
+                break;
+            case "6":
+                requestOptions.error(R.drawable.jiaoyu_home);
+                break;
+        }
         Glide.with(context).load(image).apply(requestOptions).into(imageView);
     }
+
 }

@@ -115,7 +115,6 @@ public class UpdateManager {
     private void showDownloadDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle("软件版本更新");
-
         final LayoutInflater inflater = LayoutInflater.from(mContext);
         View v = inflater.inflate(R.layout.main_progress, null);
         mProgress = v.findViewById(R.id.progress);
@@ -206,6 +205,5 @@ public class UpdateManager {
         i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
                 "application/vnd.android.package-archive");
         mContext.startActivity(i);
-
     }
 }

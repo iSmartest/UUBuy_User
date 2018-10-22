@@ -45,8 +45,7 @@ import java.util.Objects;
  */
 public class GlobalMethod {
     /**
-     * The method to get is network available or not
-     *
+     * 网络可用或不可用
      * @param context
      * @return
      */
@@ -60,7 +59,12 @@ public class GlobalMethod {
         return false;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    /**
+     * 获取屏幕尺寸
+     * @param context
+     * @return
+     */
+    @SuppressLint("NewApi")
     public static Point getWindowSize(Context context) {
         Point p = new Point();
         DisplayMetrics dm = new DisplayMetrics();

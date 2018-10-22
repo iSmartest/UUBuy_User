@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.dialog.LogOutDialog;
+import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.DataCleanManager;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -52,7 +54,7 @@ public class MySettingActivity extends BaseActivity {
     @BindView(R.id.ll_share)
     LinearLayout mShare;
     @BindView(R.id.linear_my_setting_update)
-    LinearLayout mUpdata;
+    LinearLayout mUpData;
     @BindView(R.id.ll_testing)
     LinearLayout mTesting;
     @BindView(R.id.tv_http_address)
@@ -61,6 +63,7 @@ public class MySettingActivity extends BaseActivity {
     TextView mLogOut;
     private String userPhone,userIcon,userName;
     private int isItem = 0;
+    private Dialog dialog;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_setting;
@@ -82,6 +85,7 @@ public class MySettingActivity extends BaseActivity {
     protected void initView() {
         hideBack(5);
         setTitleText("设置");
+        dialog = ProgressDialog.createLoadingDialog(context,"清理中...");
         try {
             mCacheSize.setText(DataCleanManager.getTotalCacheSize(context));
         } catch (Exception e) {
@@ -108,6 +112,7 @@ public class MySettingActivity extends BaseActivity {
                 MyApplication.openActivity(context,FeedbackActivity.class);
                 break;
             case R.id.linear_my_setting_clear_cache:
+                dialog.show();
                 new Thread(new clearCache()).start();
                 break;
             case R.id.ll_share:
@@ -168,12 +173,15 @@ public class MySettingActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
+                    dialog.dismiss();
                     ToastUtils.makeText(context, "清理完成");
                     try {
                         mCacheSize.setText(DataCleanManager.getTotalCacheSize(context));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
+
                     break;
             }
         }
