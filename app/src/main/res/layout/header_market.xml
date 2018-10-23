@@ -62,4 +62,6 @@
 
     </LinearLayout>
 
+    <include layout="@layout/v_horizontal_line"/>
+
 </LinearLayout>

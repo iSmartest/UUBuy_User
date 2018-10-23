@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -68,10 +69,9 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         fristActivitiesId = getIntent().getStringExtra("fristActivitiesId");
         fristActivitiesType = getIntent().getStringExtra("fristActivitiesType");
         mSecondListPresenter = new SecondListPresenter(context);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        GridLayoutManager layoutManager = new GridLayoutManager(context,2);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);
-        xRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         xRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
         xRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallPulse);
         xRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
@@ -142,6 +142,8 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 if (secondActivitiesList.size() < 10){
                     xRecyclerView.setNoMore(true);
                 }
+            }else {
+                xRecyclerView.setNoMore(true);
             }
             fristActivitiesName = mSecondListEntity.getData().getMarketInfo().getMarketName();
             mName.setText(fristActivitiesName);

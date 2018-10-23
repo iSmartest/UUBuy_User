@@ -87,10 +87,10 @@ public interface RetrofitService {
     @GET(BaseUrl.USER_PASSWORD_LOGIN)
     Observable<UserInfoEntity> getSearchPassWordLogin(@Query("userPhone") String userPhone,
                                                       @Query("password") String password);
-
-    @GET(BaseUrl.THIRD_LOGIN)
+    @FormUrlEncoded
+    @POST(BaseUrl.THIRD_LOGIN)
     Observable<UserInfoEntity> getSearchThirdLogin(@Query("thirdUid") String thirdUid,
-                                                   @Query("nickName") String nickName,
+                                                   @Field("nickName") String nickName,
                                                    @Query("userIcon") String userIcon,
                                                    @Query("type") String type);
 

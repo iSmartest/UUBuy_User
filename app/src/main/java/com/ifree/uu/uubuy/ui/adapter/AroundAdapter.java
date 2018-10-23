@@ -2,16 +2,24 @@ package com.ifree.uu.uubuy.ui.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.AroundEntity;
+import com.ifree.uu.uubuy.ui.activity.BrandActivity;
+import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
+import com.ifree.uu.uubuy.ui.activity.MarketActivity;
+import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
+import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
@@ -48,8 +56,8 @@ public class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.AroundView
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull AroundViewHolder holder, int position) {
-        AroundEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
+    public void onBindViewHolder(@NonNull final AroundViewHolder holder, final int position) {
+        final AroundEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
         Map<String,String> spMap = SPUtil.getMap(context,"key");
         holder.name.setText(activitiesList.getActivitiesName());
         holder.time.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(activitiesList.getActivitiesTime()));
@@ -66,6 +74,69 @@ public class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.AroundView
                 holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
             }
         }
+        holder.rl_activities.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Map<String,String> currentMap = SPUtil.getMap(context,"key");
+                if (currentMap == null || currentMap.size() == 0){
+                    currentMap.put(activitiesList.getaId(), 1 + "");
+                }else {
+                    if (currentMap.containsKey(activitiesList.getaId())){
+                        currentMap.put(activitiesList.getaId(), (Integer.valueOf(currentMap.get(activitiesList.getaId())) + 1)+"");
+                    }else {
+                        currentMap.put(activitiesList.getaId(), 1 + "");
+                    }
+                }
+                int temp = activitiesList.getBrowsing() + Integer.valueOf(currentMap.get(activitiesList.getaId()));
+                holder.browsingVolume.setText("浏览：" + temp + "人");
+                SPUtil.putMap(context,"key",currentMap);
+                Bundle bundle = new Bundle();
+                bundle.putString("fristActivitiesId",activitiesList.getActivitiesId());
+                bundle.putString("fristActivitiesType",activitiesList.getType());
+                bundle.putString("fristActivitiesName",activitiesList.getActivitiesName());
+                switch (activitiesList.getType()){// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
+                    case "1":
+                        if (activitiesList.getActivitiesType().equals("1")){
+                            MyApplication.openActivity(context, StoreActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+                        }
+                        break;
+                    case "2"://超市
+                        if (activitiesList.getActivitiesType().equals("1")){
+                            MyApplication.openActivity(context, StoreActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,MarketActivity.class,bundle);
+                        }
+                        break;
+                    case "3":
+                        if (activitiesList.getActivitiesType().equals("1")){
+                            MyApplication.openActivity(context, StoreActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,FurnitureMarketActivity.class,bundle);
+                        }
+                        break;
+                    case "4":
+                        if (activitiesList.getActivitiesType().equals("1")){
+                            MyApplication.openActivity(context, BrandActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+                        }
+                        break;
+                    case "5":
+                        if (activitiesList.getActivitiesType().equals("1")){
+                            MyApplication.openActivity(context, BrandActivity.class,bundle);
+                        }else {
+                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
+                        }
+                        break;
+                    case "6":
+                        MyApplication.openActivity(context,BrandActivity.class,bundle);
+                        break;
+                }
+            }
+        });
+
     }
 
     @Override
@@ -87,6 +158,8 @@ public class AroundAdapter extends RecyclerView.Adapter<AroundAdapter.AroundView
         TextView browsingVolume;
         @BindView(R.id.tv_home_main_sign_up)
         TextView signUp;
+        @BindView(R.id.rl_activities)
+        RelativeLayout rl_activities;
         public AroundViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

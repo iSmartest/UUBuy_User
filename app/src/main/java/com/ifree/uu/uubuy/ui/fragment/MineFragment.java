@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -82,7 +83,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         xRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
         headView = LayoutInflater.from(context).inflate(R.layout.header_mine, null);
         mIcon = headView.findViewById(R.id.my_icon_img);
-        mIcon.setOnClickListener(this);
         headView.findViewById(R.id.linear_mine_coupon).setOnClickListener(this);
         headView.findViewById(R.id.linear_mine_integral).setOnClickListener(this);
         mUserName = headView.findViewById(R.id.tv_mine_user_name);
@@ -96,7 +96,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         headView.findViewById(R.id.tv_mine_footprint).setOnClickListener(this);
         headView.findViewById(R.id.tv_mine_get_coupon_center).setOnClickListener(this);
         mGoLogin = headView.findViewById(R.id.tv_go_login);
-        mGoLogin.setOnClickListener(this);
+        headView.findViewById(R.id.ll_mine_user_info).setOnClickListener(this);
+
         if (headView != null) xRecyclerView.addHeaderView(headView);
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -208,11 +209,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_go_login:
-                MyApplication.openActivity(context, LoginActivity.class);
-                break;
-            case R.id.my_icon_img:
-                MyApplication.openActivity(context, MyPersonalInformationActivity.class);
+            case R.id.ll_mine_user_info:
+                if (TextUtils.isEmpty(SPUtil.getUid(context))){
+                    MyApplication.openActivity(context, LoginActivity.class);
+                }else {
+                    MyApplication.openActivity(context, MyPersonalInformationActivity.class);
+                }
                 break;
             case R.id.linear_mine_coupon:
                 MyApplication.openActivity(context, MyCouponActivity.class);

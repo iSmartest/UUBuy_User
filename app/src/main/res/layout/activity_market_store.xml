@@ -3,14 +3,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_main_background">
+    android:background="@color/app_main_default">
 
     <include layout="@layout/activity_base"/>
+
+    <include layout="@layout/v_horizontal_line"/>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/xr_market_store"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp">
 
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
 

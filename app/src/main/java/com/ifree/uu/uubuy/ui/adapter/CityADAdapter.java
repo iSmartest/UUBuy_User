@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,11 @@ public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADVi
         final HomeEntity.DataBean.CityADList cityADList = mCityADList.get(position);
         Map<String,String> spMap = SPUtil.getMap(context,"key");
         holder.name.setText(cityADList.getCityADName());
-        holder.time.setText(TimeFormatUtils.modifyDataFormat(cityADList.getCityADStartTime()) + "—" + TimeFormatUtils.modifyDataFormat(cityADList.getCityADEndTime()));
+        if (TextUtils.isEmpty(cityADList.getCityADStartTime()) && TextUtils.isEmpty(cityADList.getCityADEndTime())){
+            holder.time.setText("暂无活动");
+        }else {
+            holder.time.setText(TimeFormatUtils.modifyDataFormat(cityADList.getCityADStartTime()) + "—" + TimeFormatUtils.modifyDataFormat(cityADList.getCityADEndTime()));
+        }
         GlideImageLoader.imageLoader(context, cityADList.getCityADPic(), holder.icon);
         holder.signUp.setText("报名：" + cityADList.getSignUp() + "人");
         if (spMap == null || spMap.size() == 0){

@@ -16,5 +16,7 @@
             path="" />
     </paths>
 
+    <external-path path="Android/data/com.ifree.uu.uubuy/"    name="files_root" />
+    <external-path path="." name="external_storage_root" />
 
 </resources>

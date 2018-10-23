@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -67,7 +68,7 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
         fristActivitiesType = getIntent().getStringExtra("fristActivitiesType");
         mCommodityPresenter = new CommodityPresenter(context);
         setTitleText(fristActivitiesName);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        GridLayoutManager layoutManager = new GridLayoutManager(context,2);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);
         xRecyclerView.setLayoutManager(new LinearLayoutManager(context));

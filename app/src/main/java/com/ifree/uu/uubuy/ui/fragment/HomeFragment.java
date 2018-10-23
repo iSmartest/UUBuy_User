@@ -225,6 +225,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
         mHomePresenter.onCreate();
         mHomePresenter.attachView(mHomeView);
         mHomePresenter.getSearchHomes(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context),SPUtil.getCity(context), page, "加载中...");
+
     }
 
     private ProjectView<HomeEntity> mHomeView = new ProjectView<HomeEntity>() {

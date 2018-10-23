@@ -49,13 +49,13 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.BrandViewHol
 
     @Override
     public int getItemCount() {
-        return mList == null ? 0 : mList.size();
+        return 3;
     }
 
     class BrandViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.tv_name)
         TextView mName;
-        @BindView(R.id.tv_content)
+        @BindView(R.id.tv_content_time)
         TextView mContent;
         @BindView(R.id.iv_picture)
         ImageView mPicture;

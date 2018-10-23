@@ -128,6 +128,9 @@ public class MySettingActivity extends BaseActivity {
                         SPUtil.putString(context, "uid", "");//用户ID
                         SPUtil.putString(context, "isPhone", "");//手机号码
                         ToastUtils.makeText(context, "已安全退出账号");
+                        SPUtil.putString(context, "nickName","");
+                        SPUtil.putString(context, "userIcon","");
+                        SPUtil.putString(context, "thirdType", "");
                         finish();
                         Intent intent = new Intent();
                         intent.setAction("com.ifree.uu.mine.changed");

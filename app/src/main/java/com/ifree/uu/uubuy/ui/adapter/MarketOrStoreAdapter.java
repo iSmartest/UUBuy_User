@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.mvp.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class MarketOrStoreAdapter extends RecyclerView.Adapter<MarketOrStoreAdap
     public void onBindViewHolder(@NonNull MarketOrStoreViewHolder holder, int position) {
         SecondActivitiesEntity.DataBean.BandCommodityList sList = mList.get(position);
         holder.mName.setText(sList.getSecondActivitiesName());
-        holder.mContent.setText(sList.getSecondActivitiesAdAddress());
+        holder.mContent.setText(TimeFormatUtils.modifyDataFormat2(sList.getSecondActivitiesTime()));
         GlideImageLoader.imageLoader(context,sList.getSecondActivitiesPic(),holder.mPicture);
     }
 
@@ -59,7 +60,7 @@ public class MarketOrStoreAdapter extends RecyclerView.Adapter<MarketOrStoreAdap
         ImageView mPicture;
         @BindView(R.id.tv_name)
         TextView mName;
-        @BindView(R.id.tv_content)
+        @BindView(R.id.tv_content_time)
         TextView mContent;
         public MarketOrStoreViewHolder(View itemView) {
             super(itemView);

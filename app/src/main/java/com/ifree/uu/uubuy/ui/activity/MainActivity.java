@@ -25,7 +25,9 @@ import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
 import com.ifree.uu.uubuy.ui.fragment.MineFragment;
 import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
 import com.ifree.uu.uubuy.uitls.AppManager;
+import com.ifree.uu.uubuy.uitls.GlobalMethod;
 import com.ifree.uu.uubuy.uitls.SPUtil;
+import com.ifree.uu.uubuy.uitls.UpdateAppUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -64,10 +66,18 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
+        String apkPath = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk";
         keyWord.setCursorVisible(false);
         keyWord.setFocusable(false);
         keyWord.setFocusableInTouchMode(false);
-
+        UpdateAppUtils.from(this)
+                .checkBy(UpdateAppUtils.CHECK_BY_VERSION_CODE)//版本检查方式
+                .serverVersionName(GlobalMethod.getVersionName(context))//获取版本名
+                .serverVersionCode(GlobalMethod.getVersionCode(context))//获取版本号
+                .apkPath(apkPath)//下载地址
+                .downloadBy(UpdateAppUtils.DOWNLOAD_BY_APP)//下载方式，app或浏览器
+                .isForce(false)//是否强制更新
+                .update();
 
     }
 

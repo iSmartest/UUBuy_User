@@ -4,36 +4,21 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
-
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.app.MyApplication;
-import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.mvp.entity.AroundEntity;
 import com.ifree.uu.uubuy.mvp.presenter.AroundPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.ui.activity.BrandActivity;
-import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
-import com.ifree.uu.uubuy.ui.activity.MarketActivity;
-import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
-import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.ui.adapter.AroundAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import butterknife.BindView;
-
-
 /**
  * Author: 小火
  * Email:1403241630@qq.com
@@ -86,73 +71,6 @@ public class AroundFragment extends BaseFragment {
         });
         mAdapter = new AroundAdapter(context,mList);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
-            @Override
-            public void onItemClick(RecyclerView.ViewHolder vh) {
-                int position = vh.getAdapterPosition()-1;
-                if (position < 0 | position >= mList.size()){
-                    return;
-                }
-
-                Map<String,String> currentMap = SPUtil.getMap(context,"key");
-                if (currentMap == null || currentMap.size() == 0){
-                    currentMap.put(mList.get(position).getaId(), 1 + "");
-                }else {
-                    if (currentMap.containsKey(mList.get(position).getaId())){
-                        currentMap.put(mList.get(position).getaId(), (Integer.valueOf(currentMap.get(mList.get(position).getaId())) + 1)+"");
-                    }else {
-                        currentMap.put(mList.get(position).getaId(), 1 + "");
-                    }
-                }
-                mAdapter.notifyDataSetChanged();
-                SPUtil.putMap(context,"key",currentMap);
-                mAdapter.notifyDataSetChanged();
-                Bundle bundle = new Bundle();
-                bundle.putString("fristActivitiesId",mList.get(position).getActivitiesId());
-                bundle.putString("fristActivitiesType",mList.get(position).getType());
-                bundle.putString("fristActivitiesName",mList.get(position).getActivitiesName());
-                switch (mList.get(position).getType()){// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
-                    case "1":
-                        if (mList.get(position).getActivitiesType().equals("1")){
-                            MyApplication.openActivity(context, StoreActivity.class,bundle);
-                        }else {
-                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
-                        }
-                        break;
-                    case "2"://超市
-                        if (mList.get(position).getActivitiesType().equals("1")){
-                            MyApplication.openActivity(context, StoreActivity.class,bundle);
-                        }else {
-                            MyApplication.openActivity(context,MarketActivity.class,bundle);
-                        }
-                        break;
-                    case "3":
-                        if (mList.get(position).getActivitiesType().equals("1")){
-                            MyApplication.openActivity(context, StoreActivity.class,bundle);
-                        }else {
-                            MyApplication.openActivity(context,FurnitureMarketActivity.class,bundle);
-                        }
-                        break;
-                    case "4":
-                        if (mList.get(position).getActivitiesType().equals("1")){
-                            MyApplication.openActivity(context, BrandActivity.class,bundle);
-                        }else {
-                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
-                        }
-                        break;
-                    case "5":
-                        if (mList.get(position).getActivitiesType().equals("1")){
-                            MyApplication.openActivity(context, BrandActivity.class,bundle);
-                        }else {
-                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
-                        }
-                        break;
-                    case "6":
-                        MyApplication.openActivity(context,BrandActivity.class,bundle);
-                        break;
-                }
-            }
-        });
     }
 
     @Override

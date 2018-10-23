@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:layout_marginTop="8dp"
-    android:background="@drawable/image_item_conner_style"
     android:orientation="vertical">
-
+    <com.ifree.uu.uubuy.custom.RCRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:round_corner="6dp"
+        app:stroke_color="@color/stroke_color"
+        app:stroke_width="0.5dp">
 
     <RelativeLayout
         android:id="@+id/rl_activities"
         android:layout_width="match_parent"
-        android:layout_height="164dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp">
+        android:layout_height="164dp">
 
         <ImageView
             android:id="@+id/iv_home_main_icon"
@@ -59,7 +62,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:layout_below="@+id/rl_activities">
+        android:layout_below="@+id/rl_activities"
+        android:background="@color/app_main_default">
         <TextView
             android:id="@+id/tv_home_main_sign_up"
             android:layout_width="wrap_content"
@@ -77,5 +81,7 @@
             android:layout_weight="1"
             android:gravity="center|left"/>
     </LinearLayout>
-</RelativeLayout>
+    </com.ifree.uu.uubuy.custom.RCRelativeLayout>
+
+</LinearLayout>
 
