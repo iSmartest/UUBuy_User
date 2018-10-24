@@ -10,6 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0.85"
         android:scrollbars="none">
 
         <RelativeLayout
@@ -58,7 +59,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_main_color"
-                    android:textSize="23dp" />
+                    android:textSize="18dp"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tv_commodity_surplus_num"
@@ -68,10 +70,8 @@
                     android:layout_toRightOf="@+id/tv_commodity_brand_name"
                     android:background="@drawable/shape_red_surplus_background"
                     android:gravity="center"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
                     android:textColor="@color/app_main_default"
-                    android:textSize="17dp" />
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/tv_commodity_name"
@@ -86,6 +86,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_commodity_name"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
                     android:textColor="@color/text_main_color"
                     android:textSize="17dp" />
 
@@ -100,9 +102,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="UU价格: "
+                        android:text="UU价格:"
                         android:textColor="@color/text_main_color"
-                        android:textSize="12dp" />
+                        android:textSize="13dp" />
 
                     <TextView
                         android:id="@+id/tv_present_price"
@@ -125,9 +127,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="促  销: "
+                        android:text="促      销:"
                         android:textColor="@color/text_main_color"
-                        android:textSize="12dp" />
+                        android:textSize="13dp" />
 
                     <TextView
                         android:id="@+id/tv_store_commodity_condition"
@@ -135,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
                         android:textColor="@color/text_main_color"
-                        android:textSize="12dp" />
+                        android:textSize="13dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -149,9 +151,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="地  址: "
+                        android:text="地      址:"
                         android:textColor="@color/text_main_color"
-                        android:textSize="12dp" />
+                        android:textSize="13dp" />
 
                     <TextView
                         android:id="@+id/tv_store_commodity_address"
@@ -159,45 +161,44 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
                         android:textColor="@color/text_main_color"
-                        android:textSize="12dp" />
+                        android:textSize="13dp" />
 
                 </LinearLayout>
 
             </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rl_commodity_des"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_commodity_compare"
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="40dp"
-                    android:background="@drawable/shape_background_sure"
-                    android:gravity="center"
-                    android:text="精品比较"
-                    android:textColor="@color/app_main_default"
-                    android:textSize="19dp"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/tv_commodity_reserve"
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/shape_background_sure"
-                    android:gravity="center"
-                    android:text="立即预订"
-                    android:textColor="@color/app_main_default"
-                    android:textSize="19dp"
-                    android:visibility="visible" />
-            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_commodity_des"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_commodity_compare"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/shape_background_sure"
+            android:gravity="center"
+            android:text="精品比较"
+            android:textColor="@color/app_main_default"
+            android:textSize="19dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_commodity_reserve"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_background_sure"
+            android:gravity="center"
+            android:text="立即预订"
+            android:textColor="@color/app_main_default"
+            android:textSize="19dp"
+            android:visibility="visible" />
+    </LinearLayout>
 </LinearLayout>

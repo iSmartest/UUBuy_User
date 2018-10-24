@@ -130,7 +130,7 @@ public class CommodityActivity extends BaseActivity {
             mCommodityName.setText(commodityName);
             mCommodityDes.setText(mCommodityInfoEntity.getData().getCommodityDes());
             commodityPrice = mCommodityInfoEntity.getData().getCommodityPresentPrice();
-            mPresentPrice.setText(commodityPrice);
+            mPresentPrice.setText("￥" + commodityPrice);
             commodityAddress = mCommodityInfoEntity.getData().getActivitiesStoreAddress();
             mAddress.setText(commodityAddress);
             mCondition.setText(mCommodityInfoEntity.getData().getCommodityCondition());

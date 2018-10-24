@@ -21,6 +21,7 @@ import com.ifree.uu.uubuy.ui.adapter.StoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
+import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -142,8 +143,8 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
                     xRecyclerView.setNoMore(true);
                 }
             }
-            mStoreName.setText(mCommodityListEntity.getData().getStoreName());
-            mStoreTime.setText(mCommodityListEntity.getData().getStoreTime());
+            mStoreName.setText("活动地点:" + mCommodityListEntity.getData().getStoreAddress());
+            mStoreTime.setText("活动时间:" + TimeFormatUtils.modifyDataFormat2(mCommodityListEntity.getData().getStoreTime()));
             GlideImageLoader.imageLoader(context, mCommodityListEntity.getData().getStorePic(), mStorePicture);
             isCollection = mCommodityListEntity.getData().getIsCollection();
             if (isCollection.equals("0")){

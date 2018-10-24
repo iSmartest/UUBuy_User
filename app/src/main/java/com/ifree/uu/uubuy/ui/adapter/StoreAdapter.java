@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,6 +49,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         GlideImageLoader.imageLoader(context,commodityList.getCommodityPic(),holder.mPicture);
         holder.mPrice.setText("￥"+commodityList.getCommodityNowPrice());
         holder.mOldPrice.setText("￥"+commodityList.getCommodityOriginalPrice());
+        holder.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         holder.mSurplus.setText(commodityList.getCommodityStock());
     }
 

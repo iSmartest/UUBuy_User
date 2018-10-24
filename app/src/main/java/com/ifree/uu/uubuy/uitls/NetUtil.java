@@ -3,8 +3,10 @@ package com.ifree.uu.uubuy.uitls;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.telephony.TelephonyManager;
 
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.config.Constant;
 
 /**
  * Author：小火
@@ -31,57 +33,46 @@ public class NetUtil {
         return false;
     }
 
-    /**
-     * 判断当前网络是否是wifi网络
-     * if(activeNetInfo.getType()==ConnectivityManager.TYPE_MOBILE) { //判断3G网
-     *
-     * @param context
-     * @return boolean
-     */
-    public static boolean isWifiConnected(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetInfo != null
-                && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-            return true;
+    public static int getNetWorkClass(Context context) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        switch (telephonyManager.getNetworkType()) {
+            case TelephonyManager.NETWORK_TYPE_GPRS:
+            case TelephonyManager.NETWORK_TYPE_EDGE:
+            case TelephonyManager.NETWORK_TYPE_CDMA:
+            case TelephonyManager.NETWORK_TYPE_1xRTT:
+            case TelephonyManager.NETWORK_TYPE_IDEN:
+                return Constant.NETWORK_CLASS_2_G;
+            case TelephonyManager.NETWORK_TYPE_UMTS:
+            case TelephonyManager.NETWORK_TYPE_EVDO_0:
+            case TelephonyManager.NETWORK_TYPE_EVDO_A:
+            case TelephonyManager.NETWORK_TYPE_HSDPA:
+            case TelephonyManager.NETWORK_TYPE_HSUPA:
+            case TelephonyManager.NETWORK_TYPE_HSPA:
+            case TelephonyManager.NETWORK_TYPE_EVDO_B:
+            case TelephonyManager.NETWORK_TYPE_EHRPD:
+            case TelephonyManager.NETWORK_TYPE_HSPAP:
+                return Constant.NETWORK_CLASS_3_G;
+            case TelephonyManager.NETWORK_TYPE_LTE:
+                return Constant.NETWORK_CLASS_4_G;
+            default:
+                return Constant.NETWORK_CLASS_UNKNOWN;
         }
-        return false;
     }
 
-    /**
-     * 判断当前网络是否是3G网络
-     *
-     * @param context
-     * @return boolean
-     */
-    public static boolean is3G(Context context) {
+    public static int getNetWorkStatus(Context context) {
+        int netWorkType = Constant.NETWORK_CLASS_UNKNOWN;
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetInfo != null
-                && activeNetInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
-            return true;
-        }
-        return false;
-    }
-
-
-
-    /**
-     * 获取当前网络连接的类型信息
-     *
-     * @return
-     */
-    public static int getConnectedType() {
-        if (MyApplication.getApplication() != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) MyApplication.getApplication()
-                    .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-            if (mNetworkInfo != null && mNetworkInfo.isAvailable()) {
-                return mNetworkInfo.getType();
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            int type = networkInfo.getType();
+            if (type == ConnectivityManager.TYPE_WIFI) {
+                netWorkType = Constant.NETWORK_WIFI;
+            } else if (type == ConnectivityManager.TYPE_MOBILE) {
+                netWorkType = getNetWorkClass(context);
             }
         }
-        return -1;
+        return netWorkType;
     }
 }
+

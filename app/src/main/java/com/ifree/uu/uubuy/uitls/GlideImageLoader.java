@@ -19,21 +19,21 @@ public class GlideImageLoader extends ImageLoader {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.loading_error);
         requestOptions.error(R.drawable.loading_error);
-        Glide.with(context).load(getImagePath(context,(String)path)).apply(requestOptions).into(imageView);
+        Glide.with(context).load(path).apply(requestOptions).into(imageView);
     }
 
     public static void imageLoader(Context context, String image, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.loading_error);
         requestOptions.error(R.drawable.loading_error);
-        Glide.with(context).load(getImagePath(context,image)).apply(requestOptions).into(imageView);
+        Glide.with(context).load(getImagePath(context, image)).apply(requestOptions).into(imageView);
     }
 
     public static void headerImageLoader(Context context, String image, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.loading_error);
         requestOptions.error(R.drawable.loading_error);
-        Glide.with(context).load(getImagePath(context,image)).apply(requestOptions).into(imageView);
+        Glide.with(context).load(getImagePath(context, image)).apply(requestOptions).into(imageView);
     }
 
     public static void adTypeImageLoader(Context context, String image, ImageView imageView, String type) {
@@ -63,15 +63,42 @@ public class GlideImageLoader extends ImageLoader {
     }
 
     @SuppressLint("NewApi")
-    public static String getImagePath(Context context, String image){
+    public static String getImagePath(Context context, String image) {
         String imagePath = image;
-        switch (GlobalMethod.getNetState(context)){
-            case Constant.NetState.Mobile:
-                imagePath = image + "?w=500";
-                break;
-            case Constant.NetState.WIFI:
-                imagePath = image;
-                break;
+        if (SPUtil.getString(context,"pictureModel").equals("2")){
+            imagePath = image;
+        }else if (SPUtil.getString(context,"pictureModel").equals("3")) {
+            switch (NetUtil.getNetWorkStatus(context)) {
+                case Constant.NETWORK_WIFI:
+                case Constant.NETWORK_CLASS_3_G:
+                case Constant.NETWORK_CLASS_4_G:
+                    imagePath = image + "?w=1000";
+                    break;
+                case Constant.NETWORK_CLASS_2_G:
+                    imagePath = image + "?w=500";
+                    break;
+                case Constant.NETWORK_CLASS_UNKNOWN:
+                    imagePath = image + "?w=800";
+                    break;
+            }
+        }else {
+            switch (NetUtil.getNetWorkStatus(context)) {
+                case Constant.NETWORK_WIFI:
+                    imagePath = image;
+                    break;
+                case Constant.NETWORK_CLASS_2_G:
+                    imagePath = image + "?w=500";
+                    break;
+                case Constant.NETWORK_CLASS_3_G:
+                    imagePath = image + "?w=800";
+                    break;
+                case Constant.NETWORK_CLASS_4_G:
+                    imagePath = image + "?w=1200";
+                    break;
+                case Constant.NETWORK_CLASS_UNKNOWN:
+                    imagePath = image;
+                    break;
+            }
         }
         return imagePath;
     }

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
-import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.dialog.LogOutDialog;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
@@ -51,18 +50,15 @@ public class MySettingActivity extends BaseActivity {
     RelativeLayout mClearCache;
     @BindView(R.id.text_my_setting_clear_cache_size)
     TextView mCacheSize;
+    @BindView(R.id.ll_picture_quality)
+    LinearLayout mPictureQuality;
     @BindView(R.id.ll_share)
     LinearLayout mShare;
     @BindView(R.id.linear_my_setting_update)
     LinearLayout mUpData;
-    @BindView(R.id.ll_testing)
-    LinearLayout mTesting;
-    @BindView(R.id.tv_http_address)
-    TextView mAddress;
     @BindView(R.id.text_my_setting_log_out)
     TextView mLogOut;
     private String userPhone,userIcon,userName;
-    private int isItem = 0;
     private Dialog dialog;
     @Override
     protected int getLayoutId() {
@@ -77,8 +73,6 @@ public class MySettingActivity extends BaseActivity {
         GlideImageLoader.headerImageLoader(context,userIcon,mIcon);
         mName.setText(userName);
         mPhone.setText("账户：" + userPhone);
-        mAddress.setText(SPUtil.getString(context,"url"));
-        mTesting.setVisibility(View.GONE);
     }
 
     @Override
@@ -93,7 +87,7 @@ public class MySettingActivity extends BaseActivity {
         }
     }
     @OnClick({R.id.ll_account_security, R.id.ll_binding_phone, R.id.ll_common_question, R.id.ll_feedback,
-            R.id.linear_my_setting_clear_cache,R.id.ll_share, R.id.linear_my_setting_update, R.id.text_my_setting_log_out,R.id.ll_testing})
+            R.id.linear_my_setting_clear_cache,R.id.ll_share,R.id.ll_picture_quality, R.id.linear_my_setting_update, R.id.text_my_setting_log_out})
     public void onClickView(View view){
         switch (view.getId()){
             case R.id.ll_account_security:
@@ -114,6 +108,9 @@ public class MySettingActivity extends BaseActivity {
             case R.id.linear_my_setting_clear_cache:
                 dialog.show();
                 new Thread(new clearCache()).start();
+                break;
+            case R.id.ll_picture_quality:
+                MyApplication.openActivity(context,PictureQualityActivity.class);
                 break;
             case R.id.ll_share:
                 ToastUtils.makeText(context,"开发中...");
@@ -139,19 +136,6 @@ public class MySettingActivity extends BaseActivity {
                     }
                 });
                 dialog.show();
-                break;
-            case R.id.ll_testing:
-                if (isItem == 0){//线上
-                    BaseUrl.HTTP = "http://www.uugood.cn:8080/uugo-user/app/";
-                    isItem = 1;
-                    mAddress.setText(BaseUrl.HTTP);
-                    SPUtil.putString(context,"url","http://www.uugood.cn:8080/uugo-user/app/");
-                }else {
-                    BaseUrl.HTTP = "http://192.168.1.8:8080/uugo-user/app/";
-                    SPUtil.putString(context,"url","http://192.168.1.8:8080/uugo-user/app/");
-                    isItem = 0;
-                    mAddress.setText(BaseUrl.HTTP);
-                }
                 break;
         }
     }
