@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.config.Constant;
 import com.ifree.uu.uubuy.mvp.presenter.OnclickCountPresenter;
+import com.ifree.uu.uubuy.service.UURunService;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StatusBarUtil;
 
@@ -77,6 +78,8 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         StatusBarUtil.fullScreen(StartActivity.this);
         mStartTime = System.currentTimeMillis();//记录开始时间1
+        Intent startIntent = new Intent(StartActivity.this, UURunService.class);
+        startService(startIntent);
         checkPermission();
     }
 

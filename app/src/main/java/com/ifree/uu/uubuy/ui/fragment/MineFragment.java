@@ -159,7 +159,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 ToastUtils.makeText(context, mMineEntity.getMsg());
                 return;
             }
-
             mUserName.setText(mMineEntity.getData().getUserName());
             SPUtil.putString(context,"userName",mMineEntity.getData().getUserName());
             SPUtil.putString(context,"isPhone",mMineEntity.getData().getUserBindPhone());
@@ -171,7 +170,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             SPUtil.putString(context,"userSex",mMineEntity.getData().getUserSex());
             mConpouNum.setText(mMineEntity.getData().getUserCoupon() + "张");
             mGrownValue.setText(mMineEntity.getData().getUserGrowthValue() + "/" + mMineEntity.getData().getMedalTotalValue());
-            if (mMineEntity.getData().getMedalTotalValue().isEmpty()){
+            if (mMineEntity.getData().getMedalTotalValue().isEmpty() ){
                 grown_bar.setMax(0);
             }else {
                 grown_bar.setMax(Integer.parseInt(mMineEntity.getData().getMedalTotalValue()));

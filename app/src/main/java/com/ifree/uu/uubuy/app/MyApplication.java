@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 
-import com.ifree.uu.uubuy.service.UURunService;
-import com.ifree.uu.uubuy.uitls.CrashHandler;
-import com.ifree.uu.uubuy.uitls.DensityUtils;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -27,34 +24,29 @@ import cn.jpush.android.api.JPushInterface;
  */
 
 public class MyApplication extends Application {
-    public static Context CONTEXT;
     private static MyApplication myApplication;
     private static List<Activity> lists = new ArrayList<>();
     @Override
     public void onCreate() {
         super.onCreate();
-        CONTEXT = getApplicationContext();
+        myApplication = this;
         UMShareAPI.get(this);
-        Config.DEBUG = true;
-        JPushInterface.setDebugMode(true);//如果时正式版就改成false
-        JPushInterface.init(this);
+        initJPush();
         PlatformConfig.setWeixin("wx70539901dcad8e3d","e97ee6fac5e3d9e9da31b02450273f55");
         PlatformConfig.setQQZone("1107863232","GLfhGhsWkLDSGpC2");
-        myApplication = this;
         //崩溃错误日志写入本地文档
-        DensityUtils.setDensity(this);
-        CrashHandler catchExcep = new CrashHandler(this);
-        Thread.setDefaultUncaughtExceptionHandler(catchExcep);
-        Intent startIntent = new Intent(CONTEXT, UURunService.class);
-        startService(startIntent);
+//        CrashHandler catchExcep = new CrashHandler(this);
+//        Thread.setDefaultUncaughtExceptionHandler(catchExcep);
+    }
+
+    public static  void initJPush(){
+        JPushInterface.setDebugMode(Config.DEBUG);
+        JPushInterface.init(myApplication);
     }
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(base);
-    }
-    public static Context getContext(){
-        return CONTEXT;
     }
 
     public static MyApplication getApplication() {
