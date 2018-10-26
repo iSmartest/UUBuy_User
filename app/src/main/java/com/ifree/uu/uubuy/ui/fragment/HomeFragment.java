@@ -122,7 +122,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
 
         mAdapter = new HomeAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
-
+        xRecyclerView.setRefreshing(true);
         adTypeAdapter = new AdTypeAdapter(context, mAdTypeList);
         rc_type.setAdapter(adTypeAdapter);
 
