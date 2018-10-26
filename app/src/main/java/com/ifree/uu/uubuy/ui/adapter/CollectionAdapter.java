@@ -20,10 +20,10 @@ import com.ifree.uu.uubuy.mvp.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.mvp.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.ui.activity.ActivitiesDetailsActivity;
 import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.CarCommodityActivity;
 import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
+import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
 import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -40,17 +40,18 @@ import butterknife.ButterKnife;
  * Created by 2018/8/20.
  * Description:
  */
-public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.ActivitiesViewHolder>{
+public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.ActivitiesViewHolder>{
     private CollectionPresenter mCollectionPresenter;
     private Context context;
     private List<ActivitiesEntity.DataBean.ActivitiesList> mList;
     private String  activitiesType;
 
-    public ActivitiesAdapter(Context context, List<ActivitiesEntity.DataBean.ActivitiesList> mList, String activitiesType) {
+    public CollectionAdapter(Context context, List<ActivitiesEntity.DataBean.ActivitiesList> mList, String activitiesType) {
         this.context = context;
         this.mList = mList;
         this.activitiesType = activitiesType;
         mCollectionPresenter = new CollectionPresenter(context);
+
 
     }
 
@@ -79,10 +80,10 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
                         @Override
                         public void onClick() {
                             Bundle bundle = new Bundle();
-                            bundle.putString("marketId",activitiesList.getActivitiesId());
-                            bundle.putString("marketName",activitiesList.getActivitiesName());
-                            bundle.putString("type",activitiesList.getType());
-                            MyApplication.openActivity(context,ActivitiesDetailsActivity.class,bundle);
+                            bundle.putString("fristActivitiesId", activitiesList.getActivitiesId());
+                            bundle.putString("fristActivitiesType", activitiesList.getType());
+                            bundle.putString("fristActivitiesName", activitiesList.getActivitiesName());
+                            MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
                         }
                     });
                 }

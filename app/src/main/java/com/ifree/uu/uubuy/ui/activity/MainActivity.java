@@ -19,7 +19,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.ui.fragment.ActivitiesFragment;
+import com.ifree.uu.uubuy.ui.fragment.CollectionFragment;
 import com.ifree.uu.uubuy.ui.fragment.AroundFragment;
 import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
 import com.ifree.uu.uubuy.ui.fragment.MineFragment;
@@ -105,7 +105,7 @@ public class MainActivity extends BaseActivity {
                 hideBack(2);
                 break;
             case R.id.iv_main_activities:
-                changeFragment(ActivitiesFragment.class, R.id.linear_main_layout_content, true, null, false);
+                changeFragment(CollectionFragment.class, R.id.linear_main_layout_content, true, null, false);
                 hideBack(3);
                 setTitleText("活动圈");
                 break;

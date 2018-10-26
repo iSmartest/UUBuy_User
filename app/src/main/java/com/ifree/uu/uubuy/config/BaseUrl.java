@@ -8,9 +8,9 @@ package com.ifree.uu.uubuy.config;
  */
 public class BaseUrl {
 
-    public static String HTTP = "http://www.uugood.cn:8080/uugo-user/app/";//正式服务器
+//    public static String HTTP = "http://www.uugood.cn:8080/uugo-user/app/";//正式服务器
 
-//      public static String HTTP = "http://192.168.1.100:8080/uugo-user/app/";//局域网测试地址
+      public static String HTTP = "http://192.168.1.100:8080/uugo-user/app/";//局域网测试地址
 //
 //    public static String HTTP = "http://192.168.1.8:8080/uugo-user/app/";//本地测试地址
 

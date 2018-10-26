@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.custom;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,8 +70,9 @@ public class MarqueeTextView extends LinearLayout {
             TextView textView = new TextView(mContext);
             textView.setText(textArrays.get(i));
             textView.setTextSize(12);
+            textView.setSingleLine(true);
+            textView.setEllipsize(TextUtils.TruncateAt.END);
             textView.setTextColor(mContext.getResources().getColorStateList(R.color.text_fraction_red));
-
             final int finalI = i;
             textView.setOnClickListener(new OnClickListener() {
                 @Override
@@ -83,8 +85,6 @@ public class MarqueeTextView extends LinearLayout {
             i++;
         }
     }
-
-
 
     public void releaseResources() {
         if (marqueeTextView != null) {

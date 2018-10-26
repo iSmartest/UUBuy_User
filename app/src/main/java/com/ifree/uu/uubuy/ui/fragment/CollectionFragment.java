@@ -10,7 +10,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.mvp.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.mvp.presenter.ActivitiesPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.ui.adapter.ActivitiesAdapter;
+import com.ifree.uu.uubuy.ui.adapter.CollectionAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * Created by 2018/8/17.
  * Description:收藏
  */
-public class ActivitiesFragment extends BaseFragment {
+public class CollectionFragment extends BaseFragment {
     private ActivitiesPresenter activitiesPresenter;
     @BindView(R.id.tv_activities_market)
     TextView mMarket;
@@ -42,7 +42,7 @@ public class ActivitiesFragment extends BaseFragment {
     private int page = 1;
     private ColorStateList csl1,csl2;
     private List<ActivitiesEntity.DataBean.ActivitiesList> mList = new ArrayList<>();
-    private ActivitiesAdapter mAdapter;
+    private CollectionAdapter mAdapter;
     private String activitiesType = "0";
     @Override
     protected int getLayout() {
@@ -74,7 +74,7 @@ public class ActivitiesFragment extends BaseFragment {
                 initData();
             }
         });
-        mAdapter = new ActivitiesAdapter(context,mList,activitiesType);
+        mAdapter = new CollectionAdapter(context,mList,activitiesType);
         xRecyclerView.setAdapter(mAdapter);
     }
 

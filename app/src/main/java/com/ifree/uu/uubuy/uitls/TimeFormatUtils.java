@@ -10,7 +10,7 @@ public class TimeFormatUtils {
     public static String modifyDataFormat(String str){
         String result;
         if (str.isEmpty()){
-            result = "";
+            result = "活动已结束";
         }else {
             result = str.substring(0,4) + "."+ str.substring(5,7) + "."+ str.substring(8,10);
         }
@@ -20,13 +20,9 @@ public class TimeFormatUtils {
     public static String modifyDataFormat2(String str){
         String result;
         if (str.isEmpty()){
-            result = "";
+            result = "活动已结束";
         }else {
-            if (str.equals("永久")){
-                result = "永久";
-            }else {
-                result = str.substring(0,4) + "."+ str.substring(5,7) + "."+ str.substring(8,10) + "—" + str.substring(11,15) + "." + str.substring(16,18) + "." + str.substring(19,21);
-            }
+            result = str.substring(0,4) + "."+ str.substring(5,7) + "."+ str.substring(8,10) + "—" + str.substring(11,15) + "." + str.substring(16,18) + "." + str.substring(19,21);
         }
         return result;
     }

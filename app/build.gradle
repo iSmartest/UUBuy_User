@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
-
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        //noinspection GradlePluginVersion
+        classpath 'com.android.tools.build:gradle:0.12.+'//修改此处版本号为 0.5.0
+    }
+}
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -10,30 +19,34 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        flavorDimensions "versionCode"
     }
+    signingConfigs {
+        release {
+            storeFile file(project.KEY_PATH)   //文件位置
+            storePassword project.KEY_PASS  //指定密码
+            keyAlias project.ALIAS_NAME  //指定别名
+            keyPassword project.ALIAS_PASS  //指定别名密码
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    signingConfigs {
-        debug {
-            keyAlias 'key0'
-            keyPassword '123456'
-            storeFile file('D:/worksprce/UUBuy/app/uugo.jks')
-            storePassword '123456'
-        }
-    }
+
     allprojects {
         gradle.projectsEvaluated {
             tasks.withType(JavaCompile) {
-                 options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
-             }
-         }
+                options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            }
+        }
     }
 }
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
@@ -76,4 +89,5 @@ dependencies {
     implementation files('libs/jpush-android_v3.0.0.jar')
     implementation files('libs/jcore-android_v1.0.0.jar')
     implementation files('libs/libammsdk.jar')
+
 }
