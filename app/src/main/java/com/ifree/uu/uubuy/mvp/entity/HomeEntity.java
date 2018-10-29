@@ -235,6 +235,7 @@ public class HomeEntity {
             public void setCount(int count) {
                 this.count = count;
             }
+
         }
 
         public static class RotateADList{

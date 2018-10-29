@@ -1,7 +1,6 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -10,13 +9,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.Constant;
+import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
 import com.ifree.uu.uubuy.ui.adapter.GuideViewPagerAdapter;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 
@@ -48,6 +47,7 @@ public class GuideActivity extends Activity implements View.OnClickListener {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_spalash);
         setContentView(R.layout.activity_guide);
+        initLocation();
         views = new ArrayList<View>();
         // 初始化引导页视图列表
         for (int i = 0; i < pics.length; i++) {
@@ -76,7 +76,18 @@ public class GuideActivity extends Activity implements View.OnClickListener {
         initDots();
     }
 
+    private void initLocation() {
+        GaoDeLocationListener gaoDeLocationListener = new GaoDeLocationListener(GuideActivity.this, new GaoDeLocationListener.OnQuestResultListener() {
+            @Override
+            public void success(String result) {
+            }
 
+            @Override
+            public void error(String result) {
+            }
+        });
+        gaoDeLocationListener.startLocation();
+    }
 
     @Override
     protected void onPause() {

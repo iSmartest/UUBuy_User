@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
@@ -163,7 +162,7 @@ public class MainActivity extends BaseActivity {
         GaoDeLocationListener gaoDeLocationListener = new GaoDeLocationListener(context, new GaoDeLocationListener.OnQuestResultListener() {
             @Override
             public void success(String result) {
-                setLocation(result);
+                setLocation(SPUtil.getString(context,"district"));
                 Log.i("TAG", "success: " + result);
                 Intent intent = new Intent();
                 intent.setAction("com.ifree.uu.location.changed");

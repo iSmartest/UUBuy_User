@@ -7,18 +7,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
+import com.ifree.uu.uubuy.mvp.RequestResult;
 import com.ifree.uu.uubuy.mvp.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.mvp.manager.DataManager;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.mvp.view.View;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-
-import javax.net.ssl.SSLHandshakeException;
-
-import retrofit2.HttpException;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -87,40 +81,14 @@ public class ActivitiesPresenter implements Presenter {
                         if (mActivitiesEntity != null){
                             mActivitiesView.onSuccess(mActivitiesEntity);
                             Log.i("TAG", "onActivities: " + new Gson().toJson(mActivitiesEntity));
-
                         }
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         dialog.dismiss();
-                        try {
-                            if (e instanceof SocketTimeoutException) {//请求超时
-                            } else if (e instanceof ConnectException) {//网络连接超时
-                                mActivitiesView.onError("网络连接超时");
-                            } else if (e instanceof SSLHandshakeException) {//安全证书异常
-                                mActivitiesView.onError("安全证书异常");
-                            } else if (e instanceof HttpException) {//请求的地址不存在
-                                int code = ((HttpException) e).code();
-                                if (code == 504) {
-                                    mActivitiesView.onError("网络异常，请检查您的网络状态");
-                                } else if (code == 404) {
-                                    mActivitiesView.onError("请求的地址不存在");
-                                } else {
-                                    mActivitiesView.onError("请求失败");
-                                }
-                            } else if (e instanceof UnknownHostException) {//域名解析失败
-                                mActivitiesView.onError("域名解析失败");
-                            } else {
-                                mActivitiesView.onError("error:" + e.getMessage());
-                            }
-                        } catch (Exception e2) {
-                            e2.printStackTrace();
-                        } finally {
-                            Log.e("OnSuccessAndFaultSub", "error:" + e.getMessage());
-                        }
+                        mActivitiesView.onError(RequestResult.getError(e));
                     }
 
                     @Override

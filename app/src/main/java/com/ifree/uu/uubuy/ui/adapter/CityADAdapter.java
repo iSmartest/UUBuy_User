@@ -39,10 +39,11 @@ import butterknife.ButterKnife;
  */
 public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADViewHolder> {
     private Context context;
-    private List<HomeEntity.DataBean.CityADList> mCityADList;
+    private List<HomeEntity.DataBean.CityADList> mList;
+
     public CityADAdapter(Context context, List<HomeEntity.DataBean.CityADList> mCityADList) {
         this.context = context;
-        this.mCityADList = mCityADList;
+        this.mList = mCityADList;
     }
 
     @NonNull
@@ -56,94 +57,94 @@ public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADVi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final CityADADViewHolder holder, final int position) {
-        final HomeEntity.DataBean.CityADList cityADList = mCityADList.get(position);
-        Map<String,String> spMap = SPUtil.getMap(context,"key");
-        holder.name.setText(cityADList.getCityADName());
-        if (TextUtils.isEmpty(cityADList.getCityADStartTime()) && TextUtils.isEmpty(cityADList.getCityADEndTime())){
-            holder.time.setText("暂无活动");
-        }else {
-            holder.time.setText(TimeFormatUtils.modifyDataFormat(cityADList.getCityADStartTime()) + "—" + TimeFormatUtils.modifyDataFormat(cityADList.getCityADEndTime()));
-        }
-        GlideImageLoader.imageLoader(context, cityADList.getCityADPic(), holder.icon);
-        holder.signUp.setText("报名：" + cityADList.getSignUp() + "人");
-        if (spMap == null || spMap.size() == 0){
-            holder.browsing.setText("浏览：" + cityADList.getBrowsing()  + "人");
-        }else {
-            if (spMap.containsKey(cityADList.getaId())){
-                int temp = cityADList.getBrowsing() + Integer.valueOf(spMap.get(cityADList.getaId()));
-                holder.browsing.setText("浏览：" + temp + "人");
-            }else {
-                holder.browsing.setText("浏览：" + cityADList.getBrowsing()  + "人");
+        final HomeEntity.DataBean.CityADList cityADList = mList.get(position);
+            Map<String, String> spMap = SPUtil.getMap(context, "key");
+            holder.name.setText(cityADList.getCityADName());
+            if (TextUtils.isEmpty(cityADList.getCityADStartTime()) && TextUtils.isEmpty(cityADList.getCityADEndTime())) {
+                holder.time.setText("暂无活动");
+            } else {
+                holder.time.setText(TimeFormatUtils.modifyDataFormat(cityADList.getCityADStartTime()) + "—" + TimeFormatUtils.modifyDataFormat(cityADList.getCityADEndTime()));
             }
-        }
-        holder.llAD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("fristActivitiesId", cityADList.getCityADId());
-                bundle.putString("fristActivitiesType", cityADList.getType());
-                bundle.putString("fristActivitiesName", cityADList.getCityADName());
-                Map<String,String> currentMap = SPUtil.getMap(context,"key");
-                if (currentMap == null || currentMap.size() == 0){
-                    currentMap.put(cityADList.getaId(), 1 + "");
-                }else {
-                    if (currentMap.containsKey(cityADList.getaId())){
-                        currentMap.put(cityADList.getaId(), (Integer.valueOf(currentMap.get(cityADList.getaId())) + 1)+"");
-                    }else {
+            GlideImageLoader.imageLoader(context, cityADList.getCityADPic(), holder.icon);
+            holder.signUp.setText("报名：" + cityADList.getSignUp() + "人");
+            if (spMap == null || spMap.size() == 0) {
+                holder.browsing.setText("浏览：" + cityADList.getBrowsing() + "人");
+            } else {
+                if (spMap.containsKey(cityADList.getaId())) {
+                    int temp = cityADList.getBrowsing() + Integer.valueOf(spMap.get(cityADList.getaId()));
+                    holder.browsing.setText("浏览：" + temp + "人");
+                } else {
+                    holder.browsing.setText("浏览：" + cityADList.getBrowsing() + "人");
+                }
+            }
+            holder.llAD.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("fristActivitiesId", cityADList.getCityADId());
+                    bundle.putString("fristActivitiesType", cityADList.getType());
+                    bundle.putString("fristActivitiesName", cityADList.getCityADName());
+                    Map<String, String> currentMap = SPUtil.getMap(context, "key");
+                    if (currentMap == null || currentMap.size() == 0) {
                         currentMap.put(cityADList.getaId(), 1 + "");
+                    } else {
+                        if (currentMap.containsKey(cityADList.getaId())) {
+                            currentMap.put(cityADList.getaId(), (Integer.valueOf(currentMap.get(cityADList.getaId())) + 1) + "");
+                        } else {
+                            currentMap.put(cityADList.getaId(), 1 + "");
+                        }
+                    }
+                    int temp = cityADList.getBrowsing() + Integer.valueOf(currentMap.get(cityADList.getaId()));
+                    holder.browsing.setText("浏览：" + temp + "人");
+                    SPUtil.putMap(context, "key", currentMap);
+                    switch (cityADList.getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
+                        case "1":
+                            if (cityADList.getCityADType().equals("1")) {
+                                MyApplication.openActivity(context, StoreActivity.class, bundle);
+                            } else {
+                                MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
+                            }
+                            break;
+                        case "2"://超市
+                            if (cityADList.getCityADType().equals("1")) {
+                                MyApplication.openActivity(context, StoreActivity.class, bundle);
+                            } else {
+                                MyApplication.openActivity(context, MarketActivity.class, bundle);
+                            }
+                            break;
+                        case "3":
+                            if (cityADList.getCityADType().equals("1")) {
+                                MyApplication.openActivity(context, StoreActivity.class, bundle);
+                            } else {
+                                MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
+                            }
+                            break;
+                        case "4":
+                            if (cityADList.getCityADType().equals("1")) {
+                                MyApplication.openActivity(context, BrandActivity.class, bundle);
+                            } else {
+                                MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
+                            }
+                            break;
+                        case "5":
+                            if (cityADList.getCityADType().equals("1")) {
+                                MyApplication.openActivity(context, BrandActivity.class, bundle);
+                            } else {
+                                MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
+                            }
+                            break;
+                        case "6":
+                            MyApplication.openActivity(context, BrandActivity.class, bundle);
+                            break;
                     }
                 }
-                int temp = cityADList.getBrowsing() + Integer.valueOf(currentMap.get(cityADList.getaId()));
-                holder.browsing.setText("浏览：" + temp + "人");
-                SPUtil.putMap(context,"key",currentMap);
-                switch (cityADList.getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
-                    case "1":
-                        if (cityADList.getCityADType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
-                        } else {
-                            MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
-                        }
-                        break;
-                    case "2"://超市
-                        if (cityADList.getCityADType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
-                        } else {
-                            MyApplication.openActivity(context, MarketActivity.class, bundle);
-                        }
-                        break;
-                    case "3":
-                        if (cityADList.getCityADType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
-                        } else {
-                            MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
-                        }
-                        break;
-                    case "4":
-                        if (cityADList.getCityADType().equals("1")) {
-                            MyApplication.openActivity(context, BrandActivity.class, bundle);
-                        } else {
-                            MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
-                        }
-                        break;
-                    case "5":
-                        if (cityADList.getCityADType().equals("1")) {
-                            MyApplication.openActivity(context, BrandActivity.class, bundle);
-                        } else {
-                            MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
-                        }
-                        break;
-                    case "6":
-                        MyApplication.openActivity(context, BrandActivity.class, bundle);
-                        break;
-                }
-            }
-        });
+            });
     }
 
 
     @Override
     public int getItemCount() {
-        return mCityADList == null ? 4 : mCityADList.size();
+        return mList == null ? 4 : mList.size();
     }
 
     public class CityADADViewHolder extends RecyclerView.ViewHolder {

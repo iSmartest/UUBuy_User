@@ -216,19 +216,39 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.linear_mine_coupon:
-                MyApplication.openActivity(context, MyCouponActivity.class);
+                if (TextUtils.isEmpty(SPUtil.getUid(context))){
+                    ToastUtils.makeText(context,"请先登录！");
+                }else {
+                    MyApplication.openActivity(context, MyCouponActivity.class);
+                }
                 break;
             case R.id.linear_mine_integral:
-                ToastUtils.makeText(context, "开发中...");
+                if (TextUtils.isEmpty(SPUtil.getUid(context))){
+                    ToastUtils.makeText(context,"请先登录！");
+                }else {
+                    ToastUtils.makeText(context, "即将开通，敬请期待");
+                }
                 break;
             case R.id.tv_mine_play_vip:
-                MyApplication.openActivity(context, PlayVIPActivity.class);
+                if (TextUtils.isEmpty(SPUtil.getUid(context))){
+                    ToastUtils.makeText(context,"请先登录！");
+                }else {
+                    MyApplication.openActivity(context, PlayVIPActivity.class);
+                }
                 break;
             case R.id.tv_mine_footprint:
-                MyApplication.openActivity(context, MyFootprintActivity.class);
+                if (TextUtils.isEmpty(SPUtil.getUid(context))){
+                    ToastUtils.makeText(context,"请先登录！");
+                }else {
+                    MyApplication.openActivity(context, MyFootprintActivity.class);
+                }
                 break;
             case R.id.tv_mine_get_coupon_center:
-                MyApplication.openActivity(context, CouponCenterActivity.class);
+                if (TextUtils.isEmpty(SPUtil.getUid(context))){
+                    ToastUtils.makeText(context,"请先登录！");
+                }else {
+                    MyApplication.openActivity(context, CouponCenterActivity.class);
+                }
                 break;
         }
     }

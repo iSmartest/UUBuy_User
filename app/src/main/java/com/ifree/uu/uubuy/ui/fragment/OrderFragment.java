@@ -1,5 +1,9 @@
 package com.ifree.uu.uubuy.ui.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +48,15 @@ public class OrderFragment extends BaseFragment {
     private String orderState = "0";
     private List<OrderEntity.DataBean.OrderInfoList> mList = new ArrayList<>();
     private OrderAdapter mAdapter;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        //注册广播
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.ifree.uu.order.changed");
+        getActivity().registerReceiver(mAllBroad, intentFilter);
+    }
+
     @Override
     protected int getLayout() {
         return R.layout.fragment_order;
@@ -160,4 +173,11 @@ public class OrderFragment extends BaseFragment {
                 break;
         }
     }
+    private BroadcastReceiver mAllBroad = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, final Intent intent) {
+            //接到广播通知后刷新数据源
+            xRecyclerView.setRefreshing(true);
+        }
+    };
 }

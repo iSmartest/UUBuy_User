@@ -18,7 +18,7 @@ public class OrderEntity {
             private String orderId;
             private String orderState;
             private String commodityid;
-            private String commodityTitle;
+            private String commodityName;
             private String commodityIcon;
             private String commodityDec;
             private String commodityNum;
@@ -54,11 +54,11 @@ public class OrderEntity {
             }
 
             public String getCommodityTitle() {
-                return commodityTitle;
+                return commodityName;
             }
 
-            public void setCommodityTitle(String commodityTitle) {
-                this.commodityTitle = commodityTitle;
+            public void setCommodityTitle(String commodityName) {
+                this.commodityName = commodityName;
             }
 
             public String getCommodityIcon() {

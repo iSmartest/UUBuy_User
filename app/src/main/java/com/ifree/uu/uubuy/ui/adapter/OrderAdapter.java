@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -115,6 +116,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.commodityName.setText(orderInfoList.getCommodityTitle());
         GlideImageLoader.imageLoader(context,orderInfoList.getCommodityIcon(),holder.commodityIcon);
         holder.commodityDec.setText(orderInfoList.getCommodityDec());
+        holder.commodityNum.setText("x" + orderInfoList.getCommodityNum());
         holder.commodityPrice.setText("￥" + orderInfoList.getCommodityPresentPrice());
         holder.commodityAddress.setText(orderInfoList.getStoreAddress());
         holder.orderTime.setText("下单时间：" + orderInfoList.getOrderTime());
@@ -136,8 +138,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                     ToastUtils.makeText(context,mUserInfoEntity.getMsg());
                     return;
                 }
+
                 ToastUtils.makeText(context,mUserInfoEntity.getMsg());
-                notifyDataSetChanged();
+                Intent intent = new Intent();
+                intent.setAction("com.ifree.uu.order.changed");
+                context.sendBroadcast(intent);
             }
 
             @Override
@@ -167,6 +172,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         ImageView commodityIcon;
         @BindView(R.id.tv_order_commodity_dec)
         TextView commodityDec;
+        @BindView(R.id.tv_commodity_num)
+        TextView commodityNum;
         @BindView(R.id.tv_order_commodity_price)
         TextView commodityPrice;
         @BindView(R.id.tv_order_time)

@@ -1,10 +1,8 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.widget.TextView;
-
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-
 import java.io.InputStream;
 
 import butterknife.BindView;
@@ -32,8 +30,6 @@ public class ProtocolActivity extends BaseActivity {
         }else {
             text.setText(readStream(getResources().openRawResource(R.raw.questionknowledge)));
         }
-
-
     }
 
     @Override
