@@ -35,9 +35,11 @@
                     android:id="@+id/rc_picture"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:layout_marginLeft="27dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginRight="27dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_centerInParent="true"
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/image_item_conner_style"
                     android:layout_marginBottom="5dp">
@@ -59,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_main_color"
-                    android:textSize="18dp"
+                    android:textSize="15dp"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -79,7 +81,8 @@
                     android:layout_height="20dp"
                     android:layout_below="@+id/tv_commodity_brand_name"
                     android:textColor="@color/text_main_color"
-                    android:textSize="13dp" />
+                    android:textSize="14dp"
+                    android:layout_marginTop="6dp"/>
 
                 <TextView
                     android:id="@+id/tv_commodity_des"
@@ -88,8 +91,8 @@
                     android:layout_below="@+id/tv_commodity_name"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="2dp"
-                    android:textColor="@color/text_main_color"
-                    android:textSize="17dp" />
+                    android:textColor="@color/text_subtitle_color"
+                    android:textSize="13dp" />
 
                 <LinearLayout
                     android:id="@+id/ll_uu_price_title"
@@ -102,7 +105,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="UU价格:"
+                        android:text="U U价格:"
                         android:textColor="@color/text_main_color"
                         android:textSize="13dp" />
 

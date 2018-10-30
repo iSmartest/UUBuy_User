@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -25,11 +26,15 @@ import butterknife.ButterKnife;
 public class CommodityInfoAdapter extends RecyclerView.Adapter<CommodityInfoAdapter.CommodityInfoViewHolder>{
     private Context context;
     private List<String> mList;
+    private int defItem = 0;//声明默认选中的项
     public CommodityInfoAdapter(Context context, List<String> mList) {
         this.context = context;
         this.mList = mList;
     }
-
+    public void setDefSelect(int position) {
+        this.defItem = position;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public CommodityInfoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,6 +46,11 @@ public class CommodityInfoAdapter extends RecyclerView.Adapter<CommodityInfoAdap
     @Override
     public void onBindViewHolder(@NonNull CommodityInfoViewHolder holder, int position) {
         GlideImageLoader.imageLoader(context,mList.get(position),holder.mIcon);
+        if (position == defItem){
+            holder.mll.setBackgroundResource(R.color.text_green);
+        }else {
+            holder.mll.setBackgroundResource(R.color.app_main_default);
+        }
     }
 
     @Override
@@ -49,6 +59,8 @@ public class CommodityInfoAdapter extends RecyclerView.Adapter<CommodityInfoAdap
     }
 
     class CommodityInfoViewHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.ll_commodity_picture)
+        LinearLayout mll;
         @BindView(R.id.iv_commodity_icon)
         ImageView mIcon;
         public CommodityInfoViewHolder(View itemView) {

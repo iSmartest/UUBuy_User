@@ -3,6 +3,7 @@ package com.ifree.uu.uubuy.ui.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.MineEntity;
+import com.ifree.uu.uubuy.ui.activity.ActivitiesDetailsActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
@@ -46,8 +49,8 @@ public class MineAdapter extends RecyclerView.Adapter<MineAdapter.MineViewHolder
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull MineViewHolder holder, int position) {
-        MineEntity.DataBean.RecommendactivitiesList reList = mList.get(position);
+    public void onBindViewHolder(@NonNull MineViewHolder holder, final int position) {
+        final MineEntity.DataBean.RecommendactivitiesList reList = mList.get(position);
         GlideImageLoader.imageLoader(context,reList.getActivitiesPic(),holder.mMarketPicture);
         holder.mMarketName.setText(reList.getActivitiesName());
         holder.mMarketTime.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(reList.getActivitiesTime()));
@@ -68,6 +71,16 @@ public class MineAdapter extends RecyclerView.Adapter<MineAdapter.MineViewHolder
                 holder.mMarketState.setTextColor(cls3);
                 break;
         }
+        holder.llMarket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("marketId", reList.getActivitiesId());
+                bundle.putString("marketName", reList.getActivitiesName());
+                bundle.putString("type", reList.getType());
+                MyApplication.openActivity(context, ActivitiesDetailsActivity.class, bundle);
+            }
+        });
     }
 
     @Override

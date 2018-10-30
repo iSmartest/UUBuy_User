@@ -19,7 +19,6 @@ import com.ifree.uu.uubuy.mvp.presenter.CityInfoPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.SelectHotCityAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -61,7 +60,6 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
         xRecyclerView.setLoadingMoreEnabled(false);
         headView = LayoutInflater.from(context).inflate(R.layout.header_hot_city, null);
         tvCurrentCity = headView.findViewById(R.id.tv_current_city);
-        tvCurrentCity.setText(SPUtil.getString(context, "district"));
         headView.findViewById(R.id.ly_again_location).setOnClickListener(this);
         headView.findViewById(R.id.tv_more_hot_city).setOnClickListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);
@@ -80,6 +78,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
                 MyApplication.openActivity(context, SelectHotAreaActivity.class, bundle);
             }
         });
+        initLocation();
     }
 
     @Override
@@ -97,6 +96,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
                 ToastUtils.makeText(context, mCityInfoEntity.getResult());
                 return;
             }
+
             List<CityInfoEntity.DataBean.HotCity> hotCityList = mCityInfoEntity.getData().getHotCity();
             List<CityInfoEntity.DataBean.ProvinceList> provinceLists = mCityInfoEntity.getData().getProvinceList();
             if (hotCityList != null && !hotCityList.isEmpty()) {
@@ -121,9 +121,12 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
             case R.id.ly_again_location:
                 initLocation();
                 break;
-//            case R.id.tv_current_city:
-//                MyApplication.clearActivity();
-//                break;
+            case R.id.tv_current_city:
+                MyApplication.clearActivity();
+                Intent intent = new Intent();
+                intent.setAction("com.ifree.uu.location.changed");
+                getApplicationContext().sendBroadcast(intent);
+                break;
             case R.id.tv_more_hot_city:
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("province", (Serializable) provinceList);
@@ -138,11 +141,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
             public void success(String result) {
                 tvCurrentCity.setText(result);
                 Log.i("TAG", "success: " + result);
-                Intent intent = new Intent();
-                intent.setAction("com.ifree.uu.location.changed");
-                getApplicationContext().sendBroadcast(intent);
             }
-
             @Override
             public void error(String result) {
                 tvCurrentCity.setText(result);

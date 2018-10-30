@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.dialog.SeePictureDialog;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.mvp.entity.CommodityInfoEntity;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
@@ -65,7 +66,7 @@ public class CommodityActivity extends BaseActivity {
     private List<String> mList = new ArrayList<>();
     private CommodityInfoAdapter mAdapter;
     private String isCollection = "0";
-
+    private SeePictureDialog seePictureDialog;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_commodity;
@@ -96,9 +97,18 @@ public class CommodityActivity extends BaseActivity {
                 if (position < 0 | position >= mList.size()){
                     return;
                 }
+                mAdapter.setDefSelect(position);
                 GlideImageLoader.imageLoader(context,mList.get(position),mCommodityPicture);
             }
         });
+        mCommodityPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seePictureDialog = new SeePictureDialog(context,mList);
+                seePictureDialog.show();
+            }
+        });
+
     }
 
 

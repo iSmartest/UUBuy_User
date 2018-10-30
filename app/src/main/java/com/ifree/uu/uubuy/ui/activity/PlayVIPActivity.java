@@ -1,5 +1,6 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
@@ -219,7 +221,7 @@ public class PlayVIPActivity extends BaseActivity {
         @Override
         public void onResult(SHARE_MEDIA platform) {
             Log.d("plat", "platform" + platform);
-            if (SPUtil.getString(context,"uid").isEmpty()){
+            if (SPUtil.getUid(context).isEmpty()){
                 ToastUtils.makeText(context, "分享成功啦");
             }else {
                 Share();
@@ -254,8 +256,12 @@ public class PlayVIPActivity extends BaseActivity {
                 return;
             }
             ToastUtils.makeText(context, "分享成功啦");
-            mGoShare.setText("已分享");
-            mGoShare.setBackgroundResource(R.drawable.shape_city_location_background);
+            loadData();
+//            mGoShare.setText("已分享");
+//            mGoShare.setBackgroundResource(R.drawable.shape_city_location_background);
+            Intent intent = new Intent();
+            intent.setAction("com.ifree.uu.mine.changed");
+            getApplicationContext().sendBroadcast(intent);
         }
 
         @Override
@@ -263,4 +269,10 @@ public class PlayVIPActivity extends BaseActivity {
             ToastUtils.makeText(context, result);
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(context).onActivityResult(requestCode, resultCode, data);
+    }
 }

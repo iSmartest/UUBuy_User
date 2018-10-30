@@ -8,9 +8,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.ifree.uu.uubuy.uitls.SPUtil;
-import com.ifree.uu.uubuy.uitls.Util;
-
-import butterknife.internal.Utils;
 
 /**
  * Author: 小火
@@ -89,7 +86,7 @@ public class GaoDeLocationListener {
                             +"区域 码   : " + location.getAdCode() + "\n"+"地    址    : " + location.getAddress() + "\n"
                     +"兴趣点    : " + location.getPoiName() + "\n");
                 } else {
-                    onQuestResultListener.error("北京");
+                    onQuestResultListener.error("海淀区");
                     SPUtil.putString(context, "city", "北京市");
                     SPUtil.putString(context, "district", "海淀区");
                     SPUtil.putString(context, "townAdCode", "110108");
@@ -99,7 +96,7 @@ public class GaoDeLocationListener {
                     SPUtil.putString(context, "address", "北京市海淀区信息路甲28号靠近华夏银行(上地支行)");
                 }
             } else {
-                onQuestResultListener.error("北京");
+                onQuestResultListener.error("海淀区");
                 SPUtil.putString(context, "city", "北京市");
                 SPUtil.putString(context, "district", "海淀区");
                 SPUtil.putString(context, "townAdCode", "110108");

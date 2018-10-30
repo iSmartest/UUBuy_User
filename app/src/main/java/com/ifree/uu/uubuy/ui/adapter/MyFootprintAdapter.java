@@ -34,7 +34,7 @@ public class MyFootprintAdapter extends RecyclerView.Adapter<MyFootprintAdapter.
     @NonNull
     @Override
     public MyFootprintViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_foot_print,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_my_foot_print,parent,false);
         MyFootprintViewHolder viewHolder = new MyFootprintViewHolder(view);
         return viewHolder;
     }

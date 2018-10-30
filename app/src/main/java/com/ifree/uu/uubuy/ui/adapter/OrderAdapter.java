@@ -61,19 +61,19 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         final OrderEntity.DataBean.OrderInfoList orderInfoList = mList.get(position);
+        switch (orderInfoList.getIsOver()){
+            case "0":
+                holder.isOver.setVisibility(View.VISIBLE);
+                holder.commodityAgain.setVisibility(View.GONE);
+                break;
+            case "1":
+                holder.isOver.setVisibility(View.GONE);
+                holder.commodityAgain.setVisibility(View.VISIBLE);
+                break;
+        }
         switch (orderState){
             case "0":
-                switch (orderInfoList.getIsOver()){
-                    case "0":
-                        holder.isOver.setVisibility(View.VISIBLE);
-                        holder.commodityAgain.setVisibility(View.GONE);
-                        break;
-                    case "1":
-                        holder.isOver.setVisibility(View.GONE);
-                        holder.commodityAgain.setVisibility(View.VISIBLE);
-                        holder.commodityAgain.setText("取消预定");
-                        break;
-                }
+                holder.commodityAgain.setText("取消预定");
                 holder.orderDelete.setVisibility(View.GONE);
                 holder.commodityAgain.setOnClickListener(new View.OnClickListener() {
                     @Override
