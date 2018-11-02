@@ -41,7 +41,7 @@ import butterknife.OnClick;
  * Author：小火
  * Email：1403241630@qq.com
  * Created by 2018/9/19 0019
- * Description:
+ * Description: 搜索页面
  */
 public class SearchActivity extends BaseActivity implements View.OnClickListener {
     private SearchPresenter mSearchPresenter;
@@ -52,6 +52,8 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     EditText edtKeyword;
     @BindView(R.id.xr_search)
     XRecyclerView xRecyclerView;
+    @BindView(R.id.tv_search_empty)
+    TextView mEmpty;
     private LinearLayout ll_hot_word,ll_search_style;
     private TextView mAll,mMarket,mStore,mCommodity;
     private FlowTagLayout mFlavor;
@@ -233,17 +235,21 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             }
             List<SearchEntity.DataBean.ActivitiesList> activitiesLists = mSearchEntity.getData().getActivitiesList();
             if (activitiesLists != null && !activitiesLists.isEmpty()){
+                mEmpty.setVisibility(View.GONE);
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();
                 if (activitiesLists.size() < 10){
                     xRecyclerView.setNoMore(true);
                 }
+            }else {
+                mEmpty.setVisibility(View.VISIBLE);
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            mEmpty.setVisibility(View.VISIBLE);
             if (page == 1){
                 xRecyclerView.refreshComplete();
             }else {

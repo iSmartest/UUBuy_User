@@ -1,46 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/app_main_background">
+    app:cardCornerRadius="5dp"
+    app:cardElevation="1dp"
+    app:cardMaxElevation="2dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/image_item_conner_style"
         android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginTop="4dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_market_or_store_name"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="30dp"
             android:gravity="center_vertical"
+            android:paddingLeft="14dp"
             android:textColor="@color/text_main_color"
-            android:textSize="17dp"
-            android:paddingLeft="14dp"/>
+            android:textSize="16dp" />
 
-        <include layout="@layout/v_horizontal_line"/>
+        <include layout="@layout/v_horizontal_line" />
 
         <ImageView
             android:id="@+id/iv_activities_picture"
             android:layout_width="match_parent"
             android:layout_height="123dp"
-            android:src="@drawable/loading_error"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/loading_error" />
 
         <TextView
             android:id="@+id/tv_activities_time"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:textColor="@color/text_main_color"
-            android:textSize="11dp"
             android:gravity="center_vertical"
-            android:paddingLeft="14dp"/>
+            android:paddingLeft="14dp"
+            android:textColor="@color/text_main_color"
+            android:textSize="11dp" />
 
     </LinearLayout>
 
-</LinearLayout>
+</android.support.v7.widget.CardView>
+

@@ -53,6 +53,7 @@ public class MarketOrStoreAdapter extends RecyclerView.Adapter<MarketOrStoreAdap
     @Override
     public int getItemCount() {
         return mList == null ? 0 : mList.size();
+//        return 30;
     }
 
     static class MarketOrStoreViewHolder extends RecyclerView.ViewHolder {

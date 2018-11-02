@@ -52,6 +52,7 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
     private ImageView mPicture;
     private String isCollection = "0";
     private String isOver = "0";
+    private String floor = "";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_market;
@@ -104,7 +105,7 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
     protected void loadData() {
         mSecondListPresenter.onCreate();
         mSecondListPresenter.attachView(mSecondListView);
-        mSecondListPresenter.getSearchSecondListInfo(fristActivitiesId,page,uid,fristActivitiesType,"","加载中...");
+        mSecondListPresenter.getSearchSecondListInfo(floor,fristActivitiesId,page,uid,fristActivitiesType,"","加载中...");
 
     }
     private ProjectView<SecondActivitiesEntity> mSecondListView = new ProjectView<SecondActivitiesEntity>() {
@@ -189,8 +190,10 @@ public class MarketActivity extends BaseActivity implements View.OnClickListener
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
             if (isCollection.equals("0")){
                 setRightText("取消收藏");
+                isCollection = "1";
             }else {
                 setRightText("收藏");
+                isCollection = "0";
             }
         }
 

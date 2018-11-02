@@ -43,6 +43,8 @@ public class OrderFragment extends BaseFragment {
     TextView mCancel;
     @BindView(R.id.xr_order)
     XRecyclerView xRecyclerView;
+    @BindView(R.id.iv_order_empty)
+    TextView mEmpty;
     private int page = 1;
     private ColorStateList csl1,csl2;
     private String orderState = "0";
@@ -114,19 +116,21 @@ public class OrderFragment extends BaseFragment {
             }
             List<OrderEntity.DataBean.OrderInfoList> orderInfoList = mOrderEntity.getData().getOrderInfoList();
             if (orderInfoList != null && !orderInfoList.isEmpty()){
+                mEmpty.setVisibility(View.GONE);
                 mList.addAll(orderInfoList);
                 mAdapter.notifyDataSetChanged();
                 if (orderInfoList.size() < 10){
                     xRecyclerView.setNoMore(true);
                 }
             }else {
-                xRecyclerView.setNoMore(true);
+                mEmpty.setVisibility(View.VISIBLE);
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            mEmpty.setVisibility(View.VISIBLE);
             if (page == 1){
                 xRecyclerView.refreshComplete();
             }else {

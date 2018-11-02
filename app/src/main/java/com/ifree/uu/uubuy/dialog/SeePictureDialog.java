@@ -26,7 +26,7 @@ import java.util.List;
  * Author: 小火
  * Email:1403241630@qq.com
  * Created by 2018/8/27.
- * Description:
+ * Description: 图片查看器
  */
 
 public class SeePictureDialog extends Dialog {
@@ -38,11 +38,12 @@ public class SeePictureDialog extends Dialog {
     private TextView mTotalItem;
     private ImageAdapter mImageAdapter;
     private boolean isVISIBLE = true;
-
-    public SeePictureDialog(Context context, List<String> mList) {
+    private int defPosition; // 默认显示的图片位置
+    public SeePictureDialog(Context context, List<String> mList,int defPosition) {
         super(context);
         this.mContext = context;
         this.mList = mList;
+        this.defPosition = defPosition;
         setContentView(R.layout.see_picture_tips);
         initView();
         try {
@@ -59,10 +60,11 @@ public class SeePictureDialog extends Dialog {
         mPager = findViewById(R.id.see_pager);
         mLlPicture = findViewById(R.id.ll_see_picture);
         mTotalItem = findViewById(R.id.text_total_item);
-        mTotalItem.setText(1 + "/" + mList.size());
+        mTotalItem.setText((defPosition + 1)+ "/" + mList.size());
         mPager.setPageMargin((int) (mContext.getResources().getDisplayMetrics().density * 15));
         mImageAdapter = new ImageAdapter(mContext, mList);
         mPager.setAdapter(mImageAdapter);
+        mPager.setCurrentItem(defPosition);
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -75,7 +77,6 @@ public class SeePictureDialog extends Dialog {
                 dismiss();
             }
         });
-
     }
 
     public class ImageAdapter extends PagerAdapter {
@@ -120,7 +121,6 @@ public class SeePictureDialog extends Dialog {
                         mLlPicture.setVisibility(View.VISIBLE);
                         isVISIBLE = true;
                     }
-
                 }
             });
             GlideImageLoader.imageLoader(mContext, sellPointdscs.get(position), photo_view);

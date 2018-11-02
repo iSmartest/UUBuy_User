@@ -55,7 +55,8 @@
                         android:id="@+id/tv_vip_medal_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="银牌"
                         android:background="@drawable/shape_silver_medal_background"
                         android:textColor="@color/app_main_default"
                         android:textSize="9dp" />

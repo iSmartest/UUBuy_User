@@ -17,6 +17,9 @@
     <com.ifree.uu.uubuy.custom.MyListView
         android:id="@+id/list_foot"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
     </com.ifree.uu.uubuy.custom.MyListView>
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.ifree.uu.uubuy.ui.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.mvp.entity.CouponEntity;
@@ -28,6 +30,8 @@ public class UsedFragment extends BaseFragment {
     private MyCouponPresenter mMyCouponPresenter;
     @BindView(R.id.xr_coupon)
     XRecyclerView xRecyclerView;
+    @BindView(R.id.tv_coupon_empty)
+    TextView mEmpty;
     private int page = 1;
     private CouponAdapter mAdapter;
     private List<CouponEntity.DataBean.CouponList> mList;
@@ -89,19 +93,21 @@ public class UsedFragment extends BaseFragment {
             }
             List<CouponEntity.DataBean.CouponList> couponLists = mCouponEntity.getData().getCouponList();
             if (couponLists != null && !couponLists.isEmpty()){
+                mEmpty.setVisibility(View.GONE);
                 mList.addAll(couponLists);
                 mAdapter.notifyDataSetChanged();
                 if (couponLists.size() < 10){
                     xRecyclerView.setNoMore(true);
                 }
             }else {
-                xRecyclerView.setNoMore(true);
+                mEmpty.setVisibility(View.VISIBLE);
             }
         }
 
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context,result);
+            mEmpty.setVisibility(View.VISIBLE);
             if (page == 1){
                 xRecyclerView.refreshComplete();
             }else {

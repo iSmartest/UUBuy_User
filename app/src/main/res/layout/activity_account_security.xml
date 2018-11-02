@@ -20,13 +20,13 @@
             android:layout_height="wrap_content"
             android:text="更改登录密码"
             android:textColor="@color/text_main_color"
-            android:textSize="18sp"/>
+            android:textSize="14dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="建议你定期更改密码以保账户安全"
             android:textColor="@color/text_main_color"
-            android:textSize="11sp"
+            android:textSize="10dp"
             android:layout_below="@+id/tv_modify_password"/>
         <ImageView
             android:layout_width="wrap_content"
@@ -51,13 +51,13 @@
             android:layout_height="wrap_content"
             android:text="修改手机号"
             android:textColor="@color/text_main_color"
-            android:textSize="18sp"/>
+            android:textSize="14dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="建议你定期更改密码以保账户安全"
             android:textColor="@color/text_main_color"
-            android:textSize="11sp"
+            android:textSize="10dp"
             android:layout_below="@+id/tv_modify_phone"/>
         <ImageView
             android:layout_width="wrap_content"

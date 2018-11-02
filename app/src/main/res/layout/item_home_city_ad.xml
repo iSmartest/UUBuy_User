@@ -9,8 +9,8 @@
         android:layout_width="166dp"
         android:layout_height="126dp"
         app:round_corner="6dp"
-        app:stroke_color="@color/stroke_color"
-        app:stroke_width="0.5dp"
+        app:stroke_color="@color/divider_color"
+        app:stroke_width="1dp"
         android:layout_marginRight="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginBottom="6dp">

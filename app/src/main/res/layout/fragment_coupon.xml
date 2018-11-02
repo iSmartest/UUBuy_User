@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_main_background">
+
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/xr_coupon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_coupon_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/empty_coupon"
+        android:layout_centerInParent="true"
+        android:text="您还没有领取优惠券哦！！"
+        android:gravity="center"
+        android:textColor="@color/text_green"
+        android:textSize="14dp"
+        android:drawablePadding="5dp"
+        android:visibility="gone"/>
+</RelativeLayout>

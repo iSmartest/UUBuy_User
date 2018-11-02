@@ -62,6 +62,7 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
     private String classify = "0";
     private String isCollection = "0";
     private String isOver = "0";
+    private String floor = "";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_furniture_market_store;
@@ -128,7 +129,7 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
     protected void loadData() {
         mSecondListPresenter.onCreate();
         mSecondListPresenter.attachView(mSecondListView);
-        mSecondListPresenter.getSearchSecondListInfo(fristActivitiesId,page,uid,fristActivitiesType,classify,"加载中...");
+        mSecondListPresenter.getSearchSecondListInfo(floor,fristActivitiesId,page,uid,fristActivitiesType,classify,"加载中...");
     }
 
     private ProjectView<SecondActivitiesEntity> mSecondListView = new ProjectView<SecondActivitiesEntity>() {
@@ -234,8 +235,10 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
             if (isCollection.equals("0")){
                 setRightText("取消收藏");
+                isCollection = "1";
             }else {
                 setRightText("收藏");
+                isCollection = "0";
             }
         }
 

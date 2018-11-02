@@ -17,6 +17,8 @@ public class SecondActivitiesEntity {
         private List<BandCommodityList> bandCommodityList;
         private List<MarketCommodityList> marketCommodityList;
         public static class MarketInfo{
+            private String startFloor;
+            private String endFloor;
             private String activitiesAddress;
             private String activitiesPic;
             private String activitiesTime;
@@ -24,7 +26,13 @@ public class SecondActivitiesEntity {
             private String isOver;
             private String marketId;
             private String marketName;
+            public String getStartFloor() {
+                return startFloor;
+            }
 
+            public String getEndFloor() {
+                return endFloor;
+            }
             public String getActivitiesAddress() {
                 return activitiesAddress;
             }
@@ -159,6 +167,8 @@ public class SecondActivitiesEntity {
                 return commodityList;
             }
         }
+
+
 
         public MarketInfo getMarketInfo() {
             return marketInfo;

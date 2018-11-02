@@ -51,10 +51,27 @@
             android:background="@drawable/shape_right_background"/>
     </LinearLayout>
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/xr_order"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+        android:layout_height="match_parent">
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/xr_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+        <TextView
+            android:id="@+id/iv_order_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/empty_order"
+            android:layout_centerInParent="true"
+            android:text="您还没有订单哦！！"
+            android:gravity="center"
+            android:textColor="@color/text_green"
+            android:textSize="14dp"
+            android:drawablePadding="5dp"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
 </LinearLayout>

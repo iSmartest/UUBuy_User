@@ -52,6 +52,8 @@ public class MySettingActivity extends BaseActivity {
     TextView mCacheSize;
     @BindView(R.id.ll_picture_quality)
     LinearLayout mPictureQuality;
+    @BindView(R.id.linear_my_setting_privacy)
+    LinearLayout mPrivacy;
     @BindView(R.id.ll_share)
     LinearLayout mShare;
     @BindView(R.id.linear_my_setting_update)
@@ -87,8 +89,10 @@ public class MySettingActivity extends BaseActivity {
         }
     }
     @OnClick({R.id.ll_account_security, R.id.ll_binding_phone, R.id.ll_common_question, R.id.ll_feedback,
-            R.id.linear_my_setting_clear_cache,R.id.ll_share,R.id.ll_picture_quality, R.id.linear_my_setting_update, R.id.text_my_setting_log_out})
+            R.id.linear_my_setting_clear_cache,R.id.ll_share,R.id.ll_picture_quality, R.id.linear_my_setting_privacy,
+            R.id.linear_my_setting_update, R.id.text_my_setting_log_out})
     public void onClickView(View view){
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.ll_account_security:
                 MyApplication.openActivity(context,AccountSecurityActivity.class);
@@ -97,7 +101,7 @@ public class MySettingActivity extends BaseActivity {
                 MyApplication.openActivity(context,BindingPhoneActivity.class);
                 break;
             case R.id.ll_common_question:
-                Bundle bundle = new Bundle();
+
                 bundle.putString("title","常见问题");
                 bundle.putString("type","1");
                 MyApplication.openActivity(context,ProtocolActivity.class,bundle);
@@ -111,6 +115,11 @@ public class MySettingActivity extends BaseActivity {
                 break;
             case R.id.ll_picture_quality:
                 MyApplication.openActivity(context,PictureQualityActivity.class);
+                break;
+            case R.id.linear_my_setting_privacy:
+                bundle.putString("title","隐私条款");
+                bundle.putString("type","1");
+                MyApplication.openActivity(context,SettingPrivacyActivity.class,bundle);
                 break;
             case R.id.ll_share:
                 ToastUtils.makeText(context,"开发中...");

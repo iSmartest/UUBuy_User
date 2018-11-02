@@ -114,8 +114,8 @@ public class DataManager {
         return mRetrofitService.getSearchCompareInfo(commodityId, page);
     }
 
-    public Observable<SecondActivitiesEntity> getSearchSecondListInfo(String fristActivitiesId, int page, String uid, String fristActivitiesType, String classify) {
-        return mRetrofitService.getSearchSecondListInfo(fristActivitiesId, page, uid, fristActivitiesType, classify);
+    public Observable<SecondActivitiesEntity> getSearchSecondListInfo(String floor,String fristActivitiesId, int page, String uid, String fristActivitiesType, String classify) {
+        return mRetrofitService.getSearchSecondListInfo(floor,fristActivitiesId, page, uid, fristActivitiesType, classify);
     }
 
     public Observable<AroundEntity> getSearchArounds(String longitude, String latitude, String townAdCode, int page, String uid) {
@@ -126,6 +126,15 @@ public class DataManager {
         return mRetrofitService.getSearchActivities(longitude, latitude, townAdCode, page, uid, activitiesType);
     }
 
+    /**
+     * 商品预订
+     * @param commodityId
+     * @param type
+     * @param count
+     * @param shopId
+     * @param uid
+     * @return
+     */
     public Observable<UserInfoEntity> getSubmitReserveInfo(String commodityId, String type, String count, String shopId, String uid) {
         return mRetrofitService.getSubmitReserveInfo(commodityId, type, count, shopId, uid);
     }

@@ -25,6 +25,7 @@
 
     <color name="frame_search_background">#FFEEEEEE</color>
     <color name="title_color">#030303</color>
+    <color name="color_black">#000000</color>
     <color name="edit_hint_color">#b3b3b3</color>
     <color name="text_fraction_red">#ec373f</color>
     <color name="text_type_red">#FFD0021B</color>

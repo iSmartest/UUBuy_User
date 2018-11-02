@@ -256,9 +256,9 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.text_login_protocol:
                 Bundle bundle = new Bundle();
-                bundle.putString("title","UU购登录协议");
+                bundle.putString("title","UU购注册协议");
                 bundle.putString("type","0");
-                MyApplication.openActivity(context,ProtocolActivity.class,bundle);
+                MyApplication.openActivity(context,SettingPrivacyActivity.class,bundle);
                 break;
             default:
                 break;
@@ -292,7 +292,6 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.makeText(context, result);
         }
     };
-
 
     private void codeLogin(String userPhone, String mCode) {
         mCodeLoginPresenter.onCreate();
@@ -344,7 +343,6 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.makeText(context, result);
         }
     };
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -408,7 +406,6 @@ public class LoginActivity extends BaseActivity {
             getApplicationContext().sendBroadcast(intent);
             finish();
         }
-
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context, result);

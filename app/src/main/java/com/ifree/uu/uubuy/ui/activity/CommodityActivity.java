@@ -67,6 +67,7 @@ public class CommodityActivity extends BaseActivity {
     private CommodityInfoAdapter mAdapter;
     private String isCollection = "0";
     private SeePictureDialog seePictureDialog;
+    private int position = -1;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_commodity;
@@ -93,10 +94,11 @@ public class CommodityActivity extends BaseActivity {
         mRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(mRecyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
-                int position = vh.getAdapterPosition();
+                position = vh.getAdapterPosition();
                 if (position < 0 | position >= mList.size()){
                     return;
                 }
+
                 mAdapter.setDefSelect(position);
                 GlideImageLoader.imageLoader(context,mList.get(position),mCommodityPicture);
             }
@@ -104,7 +106,7 @@ public class CommodityActivity extends BaseActivity {
         mCommodityPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                seePictureDialog = new SeePictureDialog(context,mList);
+                seePictureDialog = new SeePictureDialog(context,mList,position);
                 seePictureDialog.show();
             }
         });
@@ -207,8 +209,10 @@ public class CommodityActivity extends BaseActivity {
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
             if (isCollection.equals("0")){
                 setRightText("取消收藏");
+                isCollection = "1";
             }else {
                 setRightText("收藏");
+                isCollection = "0";
             }
         }
 

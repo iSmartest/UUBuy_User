@@ -199,8 +199,10 @@ public class BrandActivity extends BaseActivity implements View.OnClickListener 
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
             if (isCollection.equals("0")){
                 setRightText("取消收藏");
+                isCollection = "1";
             }else {
                 setRightText("收藏");
+                isCollection = "0";
             }
         }
 

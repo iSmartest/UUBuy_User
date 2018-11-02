@@ -41,7 +41,7 @@ import butterknife.BindView;
  * Author: 小火
  * Email:1403241630@qq.com
  * Created by 2018/8/17.
- * Description:
+ * Description: 我的
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
     private MineInfoPresenter mineInfoPresenter;
@@ -153,6 +153,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             SPUtil.putString(context, "userIdCard", mMineEntity.getData().getUserIdcard());
             SPUtil.putString(context, "userPhone", mMineEntity.getData().getUserPhone());
             SPUtil.putString(context, "userSex", mMineEntity.getData().getUserSex());
+            mMedalType.setText("银牌");
             mConpouNum.setText(mMineEntity.getData().getUserCoupon() + "张");
             mGrownValue.setText(mMineEntity.getData().getUserGrowthValue() + "/" + mMineEntity.getData().getMedalTotalValue());
             if (mMineEntity.getData().getMedalTotalValue().isEmpty()) {
@@ -167,11 +168,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             }
             GlideImageLoader.headerImageLoader(context, mMineEntity.getData().getUserIcon(), mIcon);
             mIntegralNum.setText(mMineEntity.getData().getUserIntegral() + "分");
-            List<MineEntity.DataBean.RecommendactivitiesList> recommendactivitiesLists = mMineEntity.getData().getRecommendactivitiesList();
-            if (recommendactivitiesLists != null && !recommendactivitiesLists.isEmpty()) {
-                mList.addAll(recommendactivitiesLists);
+            List<MineEntity.DataBean.RecommendactivitiesList> recommendActivitiesLists = mMineEntity.getData().getRecommendactivitiesList();
+            if (recommendActivitiesLists != null && !recommendActivitiesLists.isEmpty()) {
+                mList.addAll(recommendActivitiesLists);
                 mAdapter.notifyDataSetChanged();
-                if (recommendactivitiesLists.size() < 10) {
+                if (recommendActivitiesLists.size() < 10) {
                     xRecyclerView.setNoMore(true);
                 }
             } else {
@@ -193,42 +194,42 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_mine_user_info:
+            case R.id.ll_mine_user_info://个人信息，用户登录可进入否则进入登录页面
                 if (TextUtils.isEmpty(SPUtil.getUid(context))) {
                     MyApplication.openActivity(context, LoginActivity.class);
                 } else {
                     MyApplication.openActivity(context, MyPersonalInformationActivity.class);
                 }
                 break;
-            case R.id.linear_mine_coupon:
+            case R.id.linear_mine_coupon://我的优惠券，用户登录可进入否则进入登录页面
                 if (TextUtils.isEmpty(SPUtil.getUid(context))) {
                     ToastUtils.makeText(context, "请先登录！");
                 } else {
                     MyApplication.openActivity(context, MyCouponActivity.class);
                 }
                 break;
-            case R.id.linear_mine_integral:
+            case R.id.linear_mine_integral://积分，用户登录可进入否则进入登录页面(暂未开通)
                 if (TextUtils.isEmpty(SPUtil.getUid(context))) {
                     ToastUtils.makeText(context, "请先登录！");
                 } else {
                     ToastUtils.makeText(context, "即将开通，敬请期待");
                 }
                 break;
-            case R.id.tv_mine_play_vip:
+            case R.id.tv_mine_play_vip://玩转会员，用户登录后可进入否则就进入登录页面
                 if (TextUtils.isEmpty(SPUtil.getUid(context))) {
                     ToastUtils.makeText(context, "请先登录！");
                 } else {
                     MyApplication.openActivity(context, PlayVIPActivity.class);
                 }
                 break;
-            case R.id.tv_mine_footprint:
+            case R.id.tv_mine_footprint://我的足迹，用户登录后可进入否则就进入登录页面
                 if (TextUtils.isEmpty(SPUtil.getUid(context))) {
                     ToastUtils.makeText(context, "请先登录！");
                 } else {
                     MyApplication.openActivity(context, MyFootprintActivity.class);
                 }
                 break;
-            case R.id.tv_mine_get_coupon_center:
+            case R.id.tv_mine_get_coupon_center://领券中心，用户登录可进入否则进入登录页面
                 if (TextUtils.isEmpty(SPUtil.getUid(context))) {
                     ToastUtils.makeText(context, "请先登录！");
                 } else {

@@ -22,7 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/footprint_background"/>
+            android:src="@drawable/footprint_background"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 </LinearLayout>

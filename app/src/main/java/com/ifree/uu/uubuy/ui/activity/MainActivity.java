@@ -106,7 +106,7 @@ public class MainActivity extends BaseActivity {
             case R.id.iv_main_activities:
                 changeFragment(CollectionFragment.class, R.id.linear_main_layout_content, true, null, false);
                 hideBack(3);
-                setTitleText("活动圈");
+                setTitleText("收藏");
                 break;
             case R.id.iv_main_order:
                 changeFragment(OrderFragment.class, R.id.linear_main_layout_content, true, null, false);

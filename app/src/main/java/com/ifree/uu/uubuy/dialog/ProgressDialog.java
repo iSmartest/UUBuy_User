@@ -47,6 +47,7 @@ public class ProgressDialog {
         tipTextView.setText(msg);// 设置加载信息
         Dialog loadingDialog = new Dialog(context, R.style.loading_dialog);// 创建自定义样式dialog
         loadingDialog.setCancelable(true);// 可以用“返回键”
+        loadingDialog.setCanceledOnTouchOutside(false);
         loadingDialog.setContentView(layout, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));// 设置布局

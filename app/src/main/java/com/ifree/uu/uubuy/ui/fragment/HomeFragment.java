@@ -110,22 +110,20 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
             @Override
             public void onRefresh() {
                 page = 1;
-                loadData();
+                initData();
             }
 
             @Override
             public void onLoadMore() {
                 page++;
-                loadData();
+                initData();
             }
         });
 
         mAdapter = new HomeAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.setRefreshing(true);
         adTypeAdapter = new AdTypeAdapter(context, mAdTypeList);
         rc_type.setAdapter(adTypeAdapter);
-
         cityADAdapter = new CityADAdapter(context, mCityADList);
         rc_city_ad.setAdapter(cityADAdapter);
         rc_type.addOnItemTouchListener(new RecyclerItemTouchListener(rc_type) {
@@ -218,15 +216,11 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
 
     @Override
     protected void initData() {
-
-    }
-
-    private void loadData(){
         mHomePresenter.onCreate();
         mHomePresenter.attachView(mHomeView);
         mHomePresenter.getSearchHomes(SPUtil.getLongitude(context), SPUtil.getLatitude(context), SPUtil.getTownAdCode(context),SPUtil.getCity(context), page, "加载中...");
-
     }
+
 
     private ProjectView<HomeEntity> mHomeView = new ProjectView<HomeEntity>() {
         @Override

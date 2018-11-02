@@ -3,12 +3,12 @@ package com.ifree.uu.uubuy.ui.adapter;
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
@@ -73,7 +73,6 @@ public class FootPrintAdapter extends BaseAdapter {
         viewHolder.mOldPrice.setText("￥"+mList.getActivitiesOriginalPrice());
         viewHolder.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         viewHolder.mSurplus.setText(mList.getActivitiesSurplusNum());
-        viewHolder.mAddress.setText(mList.getActivitiesAdAddress());
         if (mList.getIsOver().equals("0")){
             viewHolder.mIsOver.setVisibility(View.VISIBLE);
         }else {
@@ -85,6 +84,7 @@ public class FootPrintAdapter extends BaseAdapter {
                     bundle.putString("commodityId",mList.getActivitiesId());
                     bundle.putString("type",mList.getType());
                     bundle.putString("fristActivitiesName",mList.getActivitiesName());
+                    bundle.putString("commodityIcon",mList.getActivitiesPic());
                     switch (mList.getType()){
                         case "1":
                             MyApplication.openActivity(context,CommodityActivity.class,bundle);
@@ -112,9 +112,8 @@ public class FootPrintAdapter extends BaseAdapter {
     }
 
     public class FootPrintViewHolder{
-
         @BindView(R.id.rl_foot_print_commodity)
-        LinearLayout mCommodity;
+        CardView mCommodity;
         @BindView(R.id.iv_foot_print_commodity_picture)
         ImageView mCommodityPicture;
         @BindView(R.id.tv_foot_print_commodity_name)
@@ -127,8 +126,6 @@ public class FootPrintAdapter extends BaseAdapter {
         TextView mOldPrice;
         @BindView(R.id.tv_foot_print_commodity_surplus)
         TextView mSurplus;
-        @BindView(R.id.tv_foot_print_commodity_store_address)
-        TextView mAddress;
         @BindView(R.id.tv_foot_print_is_over)
         TextView mIsOver;
         public FootPrintViewHolder(View itemView) {

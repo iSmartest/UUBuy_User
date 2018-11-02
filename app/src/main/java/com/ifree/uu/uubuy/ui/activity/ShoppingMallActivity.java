@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,9 +52,12 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private String fristActivitiesType;
     private String fristActivitiesName;
     private String isCollection = "0";
-    private TextView mName,mTime;
+    private String floor = "1";
+    private TextView mName, mTime;
     private ImageView mPicture;
+    private TabLayout tabLayout;
     private String isOver = "0";
+    private boolean isFirst = true;
 
     @Override
     protected int getLayoutId() {
@@ -69,7 +73,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         fristActivitiesId = getIntent().getStringExtra("fristActivitiesId");
         fristActivitiesType = getIntent().getStringExtra("fristActivitiesType");
         mSecondListPresenter = new SecondListPresenter(context);
-        GridLayoutManager layoutManager = new GridLayoutManager(context,2);
+        GridLayoutManager layoutManager = new GridLayoutManager(context, 2);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);
         xRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
@@ -80,6 +84,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         mName = headView.findViewById(R.id.tv_market_name);
         mPicture = headView.findViewById(R.id.tv_market_picture);
         mTime = headView.findViewById(R.id.tv_market_time);
+        tabLayout = headView.findViewById(R.id.tl_top_indicator);
         headView.findViewById(R.id.tv_market_share).setOnClickListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
@@ -102,62 +107,72 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
                 int position = vh.getAdapterPosition() - 2;
-                if (position < 0 | position >= mList.size()){
+                if (position < 0 | position >= mList.size()) {
                     return;
                 }
                 Bundle bundle = new Bundle();
-                bundle.putString("fristActivitiesId",mList.get(position).getSecondActivitiesId());
-                bundle.putString("fristActivitiesType",mList.get(position).getSecondActivitiesType());
-                bundle.putString("fristActivitiesName",mList.get(position).getSecondActivitiesName());
-                MyApplication.openActivity(context,StoreActivity.class,bundle);
+                bundle.putString("fristActivitiesId", mList.get(position).getSecondActivitiesId());
+                bundle.putString("fristActivitiesType", mList.get(position).getSecondActivitiesType());
+                bundle.putString("fristActivitiesName", mList.get(position).getSecondActivitiesName());
+                MyApplication.openActivity(context, StoreActivity.class, bundle);
             }
         });
     }
 
     @Override
     protected void loadData() {
+
         mSecondListPresenter.onCreate();
         mSecondListPresenter.attachView(mSecondListView);
-        mSecondListPresenter.getSearchSecondListInfo(fristActivitiesId,page,uid,fristActivitiesType,"","加载中...");
+        mSecondListPresenter.getSearchSecondListInfo(floor, fristActivitiesId, page, uid, fristActivitiesType, "", "加载中...");
     }
 
     private ProjectView<SecondActivitiesEntity> mSecondListView = new ProjectView<SecondActivitiesEntity>() {
         @Override
         public void onSuccess(SecondActivitiesEntity mSecondListEntity) {
-            if (page == 1){
+            if (page == 1) {
                 xRecyclerView.refreshComplete();
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
-            }else {
+            } else {
                 xRecyclerView.loadMoreComplete();
             }
-            if (mSecondListEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mSecondListEntity.getMsg());
+            if (mSecondListEntity.getResultCode().equals("1")) {
+                ToastUtils.makeText(context, mSecondListEntity.getMsg());
                 return;
             }
             List<SecondActivitiesEntity.DataBean.BandCommodityList> secondActivitiesList = mSecondListEntity.getData().getBandCommodityList();
-            if (secondActivitiesList != null && !secondActivitiesList.isEmpty()){
+            if (secondActivitiesList != null && !secondActivitiesList.isEmpty()) {
                 mList.addAll(secondActivitiesList);
                 mAdapter.notifyDataSetChanged();
-                if (secondActivitiesList.size() < 10){
+                if (secondActivitiesList.size() < 10) {
                     xRecyclerView.setNoMore(true);
                 }
-            }else {
+            } else {
                 xRecyclerView.setNoMore(true);
             }
+            if (!mSecondListEntity.getData().getMarketInfo().getStartFloor().isEmpty() && mSecondListEntity.getData().getMarketInfo().getStartFloor() != null
+                    && !mSecondListEntity.getData().getMarketInfo().getEndFloor().isEmpty() && mSecondListEntity.getData().getMarketInfo().getEndFloor() != null) {
+                int startFloor = Integer.valueOf(mSecondListEntity.getData().getMarketInfo().getStartFloor());
+                int endFloor = Integer.valueOf(mSecondListEntity.getData().getMarketInfo().getEndFloor());
+                tabLayout.setVisibility(View.VISIBLE);
+                initTabLayoutTitle(startFloor, endFloor);
+            } else {
+                tabLayout.setVisibility(View.GONE);
+            }
+
             fristActivitiesName = mSecondListEntity.getData().getMarketInfo().getMarketName();
             mName.setText(fristActivitiesName);
             mTime.setText(mSecondListEntity.getData().getMarketInfo().getActivitiesTime());
-            GlideImageLoader.imageLoader(context,mSecondListEntity.getData().getMarketInfo().getActivitiesPic(),mPicture);
+            GlideImageLoader.imageLoader(context, mSecondListEntity.getData().getMarketInfo().getActivitiesPic(), mPicture);
             isCollection = mSecondListEntity.getData().getMarketInfo().getIsCollection();
             isOver = mSecondListEntity.getData().getMarketInfo().getIsOver();
-
-            if (isCollection.equals("0")){
+            if (isCollection.equals("0")) {
                 setRightText("收藏");
-            }else {
+            } else {
                 setRightText("取消收藏");
             }
-            switch (isOver){
+            switch (isOver) {
                 case "0":
                     mTime.setText("活动已结束");
                     break;
@@ -169,70 +184,110 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                     mTime.setText("暂无活动");
                     break;
             }
+
         }
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
-            if (page == 1){
+            ToastUtils.makeText(context, result);
+            if (page == 1) {
                 xRecyclerView.refreshComplete();
-            }else {
+            } else {
                 xRecyclerView.loadMoreComplete();
             }
         }
     };
 
+    private void initTabLayoutTitle(int start, int end) {
+        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        if (isFirst) {//第一次加入值
+            final List<String> list = new ArrayList<>();
+            for (int i = start; i <= end; i++) {
+                if (i == 0) {
+                    continue;
+                }
+                list.add(i + "");
+            }
+
+            for (int i = 0; i < list.size(); i++) {
+                tabLayout.addTab(tabLayout.newTab().setText("第" + list.get(i).replace('-', 'B') + "层"), i);
+            }
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    page = 1;
+                    mList.clear();
+                    floor = list.get(tab.getPosition());
+                    loadData();
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+            isFirst = false;
+        }
+    }
+
 
     @OnClick({R.id.tv_base_rightText})
     public void onViewClicked() {
-        if (TextUtils.isEmpty(uid)){
-            ToastUtils.makeText(context,"用户未登录，请登录");
+        if (TextUtils.isEmpty(uid)) {
+            ToastUtils.makeText(context, "用户未登录，请登录");
             return;
         }
         mCollectionPresenter.onCreate();
         mCollectionPresenter.attachView(mCollectionView);
-        if (isCollection.equals("0")){
-            mCollectionPresenter.getSubmitIsCollection(uid,fristActivitiesId,"0","1","处理中...");
-        }else {
-            mCollectionPresenter.getSubmitIsCollection(uid,fristActivitiesId,"0","0","处理中...");
+        if (isCollection.equals("0")) {
+            mCollectionPresenter.getSubmitIsCollection(uid, fristActivitiesId, "0", "1", "处理中...");
+        } else {
+            mCollectionPresenter.getSubmitIsCollection(uid, fristActivitiesId, "0", "0", "处理中...");
         }
     }
 
     private ProjectView<UserInfoEntity> mCollectionView = new ProjectView<UserInfoEntity>() {
         @Override
         public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            if (mUserInfoEntity.getResultCode().equals("1")) {
+                ToastUtils.makeText(context, mUserInfoEntity.getMsg());
                 return;
             }
-            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
-            if (isCollection.equals("0")){
+            ToastUtils.makeText(context, mUserInfoEntity.getMsg());
+            if (isCollection.equals("0")) {
                 setRightText("取消收藏");
-            }else {
+                isCollection = "1";
+            } else {
                 setRightText("收藏");
+                isCollection = "0";
             }
         }
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
+            ToastUtils.makeText(context, result);
         }
     };
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_market_activities:
-                if (isOver.equals("1") || isOver.equals("2")){
+                if (isOver.equals("1") || isOver.equals("2")) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("marketId",fristActivitiesId);
-                    bundle.putString("marketName",fristActivitiesName);
-                    bundle.putString("type",fristActivitiesType);
-                    MyApplication.openActivity(context,ActivitiesDetailsActivity.class,bundle);
+                    bundle.putString("marketId", fristActivitiesId);
+                    bundle.putString("marketName", fristActivitiesName);
+                    bundle.putString("type", fristActivitiesType);
+                    MyApplication.openActivity(context, ActivitiesDetailsActivity.class, bundle);
                 }
                 break;
             case R.id.tv_market_share:
-                ToastUtils.makeText(context,"你点击分享");
+                ToastUtils.makeText(context, "你点击分享");
                 break;
         }
     }

@@ -68,10 +68,10 @@ public class SecondListPresenter implements Presenter {
 
     }
 
-    public void getSearchSecondListInfo(String fristActivitiesId, int page, String uid, String fristActivitiesType,String classify, String mContent) {
+    public void getSearchSecondListInfo(String floor,String fristActivitiesId, int page, String uid, String fristActivitiesType,String classify, String mContent) {
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext, mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchSecondListInfo(fristActivitiesId, page, uid,fristActivitiesType,classify)
+        mCompositeSubscription.add(manager.getSearchSecondListInfo(floor,fristActivitiesId, page, uid,fristActivitiesType,classify)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SecondActivitiesEntity>() {

@@ -21,7 +21,8 @@
            android:layout_width="wrap_content"
            android:layout_height="13dp"
            android:text="综合商场"
-           android:textColor="#ff9b9b9b"
+           android:gravity="center"
+           android:textColor="#222222"
            android:layout_marginTop="6dp"
            android:textSize="10dp"/>
    </LinearLayout>

@@ -1,87 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
-    android:orientation="vertical">
-    <com.ifree.uu.uubuy.custom.RCRelativeLayout
+    app:cardCornerRadius="5dp"
+    app:cardElevation="1dp"
+    app:cardMaxElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:round_corner="6dp"
-        app:stroke_color="@color/stroke_color"
-        app:stroke_width="0.5dp">
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_activities"
-        android:layout_width="match_parent"
-        android:layout_height="164dp">
-
-        <ImageView
-            android:id="@+id/iv_home_main_icon"
+        <RelativeLayout
+            android:id="@+id/rl_activities"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/loading_error" />
+            android:layout_height="164dp">
 
-        <TextView
-            android:id="@+id/tv_home_main_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="3dp"
-            android:paddingLeft="6dp"
-            android:textColor="@color/app_main_default"
-            android:textSize="19dp" />
+            <ImageView
+                android:id="@+id/iv_home_main_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/loading_error" />
+
+            <TextView
+                android:id="@+id/tv_home_main_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="6dp"
+                android:paddingTop="3dp"
+                android:textColor="@color/app_main_default"
+                android:textSize="19dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/colorBanTransparent"
+                android:orientation="vertical"
+                android:padding="6dp">
+
+                <TextView
+                    android:id="@+id/tv_home_main_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/app_main_default"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/tv_home_main_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/app_main_default"
+                    android:textSize="13dp" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorBanTransparent"
-            android:orientation="vertical"
-            android:padding="6dp">
+            android:layout_below="@+id/rl_activities"
+            android:background="@color/app_main_default"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
             <TextView
-                android:id="@+id/tv_home_main_time"
+                android:id="@+id/tv_home_main_sign_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/app_main_default"
-                android:textSize="13dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:textColor="@color/text_main_color"
+                android:textSize="13dp" />
+
             <TextView
-                android:id="@+id/tv_home_main_address"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_home_main_browsing_volume"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/app_main_default"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:textColor="@color/text_main_color"
                 android:textSize="13dp" />
         </LinearLayout>
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:layout_below="@+id/rl_activities"
-        android:background="@color/app_main_default">
-        <TextView
-            android:id="@+id/tv_home_main_sign_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_main_color"
-            android:textSize="13dp"
-            android:layout_weight="1"
-            android:gravity="center|left"/>
-        <TextView
-            android:id="@+id/tv_home_main_browsing_volume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_main_color"
-            android:textSize="13dp"
-            android:layout_weight="1"
-            android:gravity="center|left"/>
     </LinearLayout>
-    </com.ifree.uu.uubuy.custom.RCRelativeLayout>
+</android.support.v7.widget.CardView>
 
-</LinearLayout>
+
 

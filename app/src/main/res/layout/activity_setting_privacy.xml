@@ -7,15 +7,10 @@
 
     <include layout="@layout/activity_base"/>
 
-    <include layout="@layout/v_horizontal_line"/>
-
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/xr_market_store"
+    <WebView
+        android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp">
-
-    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+        android:layout_height="wrap_content">
+    </WebView>
 
 </LinearLayout>

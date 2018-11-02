@@ -13,7 +13,7 @@ import com.ifree.uu.uubuy.R;
  * Author：小火
  * Email：1403241630@qq.com
  * Created by 2018/10/23 0023
- * Description:
+ * Description:更新弹框
  */
 public class ConfirmDialog extends Dialog {
 

@@ -33,11 +33,12 @@ import butterknife.ButterKnife;
  * Created by 2018/8/20.
  * Description:
  */
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder>{
+public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private List<OrderEntity.DataBean.OrderInfoList> mList;
     private String orderState;
     private OperationOrderPresenter mOperationOrderPresenter;
+
     public OrderAdapter(Context context, List<OrderEntity.DataBean.OrderInfoList> mList, String orderState) {
         this.context = context;
         this.mList = mList;
@@ -52,94 +53,94 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
     @NonNull
     @Override
-    public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_order,parent,false);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_order, parent, false);
         OrderViewHolder viewHolder = new OrderViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final OrderEntity.DataBean.OrderInfoList orderInfoList = mList.get(position);
-        switch (orderInfoList.getIsOver()){
+        switch (orderInfoList.getIsOver()) {
             case "0":
-                holder.isOver.setVisibility(View.VISIBLE);
-                holder.commodityAgain.setVisibility(View.GONE);
+                ((OrderViewHolder) holder).isOver.setVisibility(View.VISIBLE);
+                ((OrderViewHolder) holder).commodityAgain.setVisibility(View.GONE);
                 break;
             case "1":
-                holder.isOver.setVisibility(View.GONE);
-                holder.commodityAgain.setVisibility(View.VISIBLE);
+                ((OrderViewHolder) holder).isOver.setVisibility(View.GONE);
+                ((OrderViewHolder) holder).commodityAgain.setVisibility(View.VISIBLE);
                 break;
         }
-        switch (orderState){
+        switch (orderState) {
             case "0":
-                holder.commodityAgain.setText("取消预定");
-                holder.orderDelete.setVisibility(View.GONE);
-                holder.commodityAgain.setOnClickListener(new View.OnClickListener() {
+                ((OrderViewHolder) holder).commodityAgain.setText("取消预定");
+                ((OrderViewHolder) holder).orderDelete.setVisibility(View.GONE);
+                ((OrderViewHolder) holder).commodityAgain.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        submitOperationOrder(orderInfoList.getOrderId(),"0");
+                        submitOperationOrder(orderInfoList.getOrderId(), "0");
                     }
                 });
                 break;
             case "1":
-                holder.orderDelete.setVisibility(View.VISIBLE);
-                holder.commodityAgain.setText("再次下单");
-                holder.commodityAgain.setOnClickListener(new View.OnClickListener() {
+                ((OrderViewHolder) holder).orderDelete.setVisibility(View.VISIBLE);
+                ((OrderViewHolder) holder).commodityAgain.setText("再次下单");
+                ((OrderViewHolder) holder).commodityAgain.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
-                        bundle.putString("commodityIcon",orderInfoList.getCommodityIcon());
-                        bundle.putString("commodityName",orderInfoList.getCommodityDec());
-                        bundle.putString("commodityBrandName",orderInfoList.getCommodityTitle());
-                        bundle.putString("commodityPrice",orderInfoList.getCommodityPresentPrice());
-                        bundle.putString("commodityAddress",orderInfoList.getStoreAddress());
-                        bundle.putString("commodityId",orderInfoList.getCommodityid());
-                        bundle.putString("commodityType",orderInfoList.getType());
-                        bundle.putString("shopId",orderInfoList.getShopId());
-                        MyApplication.openActivity(context,CommodityReserveActivity.class,bundle);
+                        bundle.putString("commodityIcon", orderInfoList.getCommodityIcon());
+                        bundle.putString("commodityName", orderInfoList.getCommodityDec());
+                        bundle.putString("commodityBrandName", orderInfoList.getCommodityTitle());
+                        bundle.putString("commodityPrice", orderInfoList.getCommodityPresentPrice());
+                        bundle.putString("commodityAddress", orderInfoList.getStoreAddress());
+                        bundle.putString("commodityId", orderInfoList.getCommodityid());
+                        bundle.putString("commodityType", orderInfoList.getType());
+                        bundle.putString("shopId", orderInfoList.getShopId());
+                        MyApplication.openActivity(context, CommodityReserveActivity.class, bundle);
                     }
                 });
                 break;
             case "2":
-                holder.orderDelete.setVisibility(View.VISIBLE);
-                holder.commodityAgain.setText("恢复预订");
-                holder.commodityAgain.setOnClickListener(new View.OnClickListener() {
+                ((OrderViewHolder) holder).orderDelete.setVisibility(View.VISIBLE);
+                ((OrderViewHolder) holder).commodityAgain.setText("恢复预订");
+                ((OrderViewHolder) holder).commodityAgain.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        submitOperationOrder(orderInfoList.getOrderId(),"2");
+                        submitOperationOrder(orderInfoList.getOrderId(), "2");
                     }
                 });
                 break;
         }
-        holder.orderId.setText("订单号" + orderInfoList.getOrderId());
-        holder.commodityName.setText(orderInfoList.getCommodityTitle());
-        GlideImageLoader.imageLoader(context,orderInfoList.getCommodityIcon(),holder.commodityIcon);
-        holder.commodityDec.setText(orderInfoList.getCommodityDec());
-        holder.commodityNum.setText("x" + orderInfoList.getCommodityNum());
-        holder.commodityPrice.setText("￥" + orderInfoList.getCommodityPresentPrice());
-        holder.commodityAddress.setText(orderInfoList.getStoreAddress());
-        holder.orderTime.setText("下单时间：" + orderInfoList.getOrderTime());
-        holder.orderDelete.setOnClickListener(new View.OnClickListener() {
+        ((OrderViewHolder) holder).orderId.setText("订单号" + orderInfoList.getOrderId());
+        ((OrderViewHolder) holder).commodityName.setText(orderInfoList.getCommodityTitle());
+        GlideImageLoader.imageLoader(context, orderInfoList.getCommodityIcon(), ((OrderViewHolder) holder).commodityIcon);
+        ((OrderViewHolder) holder).commodityDec.setText(orderInfoList.getCommodityDec());
+        ((OrderViewHolder) holder).commodityNum.setText("x" + orderInfoList.getCommodityNum());
+        ((OrderViewHolder) holder).commodityPrice.setText("￥" + orderInfoList.getCommodityPresentPrice());
+        ((OrderViewHolder) holder).commodityAddress.setText(orderInfoList.getStoreAddress());
+        ((OrderViewHolder) holder).orderTime.setText("下单时间：" + orderInfoList.getOrderTime());
+        ((OrderViewHolder) holder).orderDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitOperationOrder(orderInfoList.getOrderId(),"1");
+                submitOperationOrder(orderInfoList.getOrderId(), "1");
             }
         });
     }
 
     private void submitOperationOrder(String orderId, String type) {
         mOperationOrderPresenter.onCreate();
-        mOperationOrderPresenter.getSubmitOperationOrder(orderId,type,SPUtil.getUid(context),"提交中...");
+        mOperationOrderPresenter.getSubmitOperationOrder(orderId, type, SPUtil.getUid(context), "提交中...");
         mOperationOrderPresenter.attachView(new ProjectView<UserInfoEntity>() {
             @Override
             public void onSuccess(UserInfoEntity mUserInfoEntity) {
-                if (mUserInfoEntity.getResultCode().equals("1")){
-                    ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                if (mUserInfoEntity.getResultCode().equals("1")) {
+                    ToastUtils.makeText(context, mUserInfoEntity.getMsg());
                     return;
                 }
 
-                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+                ToastUtils.makeText(context, mUserInfoEntity.getMsg());
                 Intent intent = new Intent();
                 intent.setAction("com.ifree.uu.order.changed");
                 context.sendBroadcast(intent);
@@ -147,19 +148,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
             @Override
             public void onError(String result) {
-                ToastUtils.makeText(context,result);
+                ToastUtils.makeText(context, result);
             }
         });
     }
-
 
     @Override
     public int getItemCount() {
         return mList == null ? 0 : mList.size();
     }
 
-
-    public class OrderViewHolder extends RecyclerView.ViewHolder{
+    public class OrderViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_order_orderId)
         TextView orderId;
         @BindView(R.id.tv_order_delete)
@@ -182,9 +181,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         TextView commodityAddress;
         @BindView(R.id.tv_order_again)
         TextView commodityAgain;
+
         public OrderViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
+
 }

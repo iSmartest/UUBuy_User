@@ -10,9 +10,9 @@ public class BaseUrl {
 
 //    public static String HTTP = "http://www.uugood.cn:8080/uugo-user/app/";//正式服务器
 
-//      public static String HTTP = "http://192.168.1.100:8080/uugo-user/app/";//局域网测试地址
+//    public static String HTTP = "http://192.168.1.100:8080/uugo-user/app/";//局域网测试地址
 
-    public static String HTTP = "http://192.168.1.8:8080/uugo-user/app/";//本地测试地址
+    public static final String HTTP = "http://192.168.1.8:8080/uugo-user/app/";//本地测试地址
 
     //获取验证码
     public static final String SEND_CODE = "sendCode";
@@ -42,7 +42,7 @@ public class BaseUrl {
     public static final String HOME_INFO = "getHomeInfo?";
     //商场（第一级）
     public static final String CLASSIFY_LIST_INFO = "getClassifyListInfo?";
-    //商场（第一级）
+    //活动详情
     public static final String ACTIVITIES_INFO = "activityDetail?";
     //店铺（第二级）
     public static final String SECOND_LIST_INFO = "getSecondActivitiesListInfo?";
@@ -53,7 +53,7 @@ public class BaseUrl {
     //商品详情（）
     public static final String COMMODITY_INFO = "getReserveCommodityInfo?";
     //同类竞品
-    public static final String COPARE_INFO = "tongLeiCompare ?";
+    public static final String COMPARE_INFO = "tongLeiCompare ?";
     //周围
     public static final String AROUND_INFO = "getAroundInfo?";
     //生活圈
@@ -63,7 +63,7 @@ public class BaseUrl {
     //订单
     public static final String ORDER_INFO = "getOrderInfo?";
     //订单取消、删除、重新下单
-    public static final String SUBNIT_OPERATION_ORDER = "getOperationOrder?";
+    public static final String SUBMIT_OPERATION_ORDER = "getOperationOrder?";
     //我的
     public static final String MINE_INFO = "getMineInfo?";
     //编辑个人资料
@@ -86,7 +86,7 @@ public class BaseUrl {
     public static final String FOOT_PRINT = "getMyFootprint?";
     //活动报名
     public static final String SIGN_UP = "marketSignUp?";
-    //活动报名
+    //活动取消报名
     public static final String CANCEL_SIGN_UP = "cancelMarketSignUp?";
     //收藏、取消收藏
     public static final String SUBMIT_IS_COLLECTION = "submitIsCollection?";

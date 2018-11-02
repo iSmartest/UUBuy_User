@@ -7,11 +7,29 @@
 
     <include layout="@layout/activity_base"/>
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/xr_search"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/xr_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+        </com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+        <TextView
+            android:id="@+id/tv_search_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/empty_search"
+            android:layout_centerInParent="true"
+            android:text="搜索不到您想要的！！"
+            android:gravity="center"
+            android:textColor="@color/text_green"
+            android:textSize="14dp"
+            android:drawablePadding="5dp"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
 </LinearLayout>

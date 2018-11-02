@@ -62,7 +62,7 @@
                         android:id="@+id/tv_mine_medal_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@drawable/shape_silver_medal_background"
                         android:textColor="@color/app_main_default"
                         android:textSize="9dp" />
@@ -125,7 +125,7 @@
                 android:gravity="center"
                 android:text="0张"
                 android:textColor="@color/text_main_color"
-                android:textSize="13sp" />
+                android:textSize="13dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -134,7 +134,7 @@
                 android:gravity="center"
                 android:text="优惠券"
                 android:textColor="@color/text_main_color"
-                android:textSize="13sp" />
+                android:textSize="14dp" />
         </LinearLayout>
 
         <include layout="@layout/v_vertical_line" />
@@ -154,7 +154,7 @@
                 android:gravity="center"
                 android:text="0分"
                 android:textColor="@color/text_main_color"
-                android:textSize="13sp" />
+                android:textSize="13dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -163,7 +163,7 @@
                 android:gravity="center"
                 android:text="积分"
                 android:textColor="@color/text_main_color"
-                android:textSize="13sp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 
@@ -178,7 +178,7 @@
         android:paddingLeft="15dp"
         android:text="我的订单"
         android:textColor="@color/text_main_color"
-        android:textSize="17dp" />
+        android:textSize="16dp" />
 
     <include layout="@layout/v_horizontal_line"/>
 
@@ -199,7 +199,7 @@
             android:gravity="center"
             android:text="玩转会员"
             android:textColor="@color/text_main_color"
-            android:textSize="12dp"/>
+            android:textSize="14dp"/>
         <TextView
             android:id="@+id/tv_mine_footprint"
             android:layout_width="match_parent"
@@ -210,7 +210,7 @@
             android:gravity="center"
             android:text="我的足迹"
             android:textColor="@color/text_main_color"
-            android:textSize="12dp"/>
+            android:textSize="14dp"/>
         <TextView
             android:id="@+id/tv_mine_get_coupon_center"
             android:layout_width="match_parent"
@@ -221,7 +221,7 @@
             android:gravity="center"
             android:text="领券中心"
             android:textColor="@color/text_main_color"
-            android:textSize="12dp"/>
+            android:textSize="14dp"/>
     </LinearLayout>
 
     <TextView
@@ -233,5 +233,5 @@
         android:paddingLeft="15dp"
         android:text="已报名活动"
         android:textColor="@color/text_main_color"
-        android:textSize="17dp" />
+        android:textSize="16dp" />
 </LinearLayout>
