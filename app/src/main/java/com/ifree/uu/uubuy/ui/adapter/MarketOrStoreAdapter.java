@@ -47,6 +47,7 @@ public class MarketOrStoreAdapter extends RecyclerView.Adapter<MarketOrStoreAdap
         SecondActivitiesEntity.DataBean.BandCommodityList sList = mList.get(position);
         holder.mName.setText(sList.getSecondActivitiesName());
         holder.mContent.setText(TimeFormatUtils.modifyDataFormat2(sList.getSecondActivitiesTime()));
+        holder.mContent.setVisibility(View.GONE);
         GlideImageLoader.imageLoader(context,sList.getSecondActivitiesPic(),holder.mPicture);
     }
 

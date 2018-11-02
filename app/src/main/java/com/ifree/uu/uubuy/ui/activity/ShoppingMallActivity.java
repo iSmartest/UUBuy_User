@@ -52,7 +52,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private String fristActivitiesType;
     private String fristActivitiesName;
     private String isCollection = "0";
-    private String floor = "1";
+    private String floor = " ";
     private TextView mName, mTime;
     private ImageView mPicture;
     private TabLayout tabLayout;
@@ -121,7 +121,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void loadData() {
-
         mSecondListPresenter.onCreate();
         mSecondListPresenter.attachView(mSecondListView);
         mSecondListPresenter.getSearchSecondListInfo(floor, fristActivitiesId, page, uid, fristActivitiesType, "", "加载中...");
@@ -151,8 +150,9 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             } else {
                 xRecyclerView.setNoMore(true);
             }
-            if (!mSecondListEntity.getData().getMarketInfo().getStartFloor().isEmpty() && mSecondListEntity.getData().getMarketInfo().getStartFloor() != null
-                    && !mSecondListEntity.getData().getMarketInfo().getEndFloor().isEmpty() && mSecondListEntity.getData().getMarketInfo().getEndFloor() != null) {
+
+            if (!(mSecondListEntity.getData().getMarketInfo().getStartFloor()+"").equals("null")&&!mSecondListEntity.getData().getMarketInfo().getStartFloor().isEmpty() && mSecondListEntity.getData().getMarketInfo().getStartFloor() != null
+                &&!(mSecondListEntity.getData().getMarketInfo().getEndFloor() + "").equals("null")&& !mSecondListEntity.getData().getMarketInfo().getEndFloor().isEmpty() && mSecondListEntity.getData().getMarketInfo().getEndFloor() != null) {
                 int startFloor = Integer.valueOf(mSecondListEntity.getData().getMarketInfo().getStartFloor());
                 int endFloor = Integer.valueOf(mSecondListEntity.getData().getMarketInfo().getEndFloor());
                 tabLayout.setVisibility(View.VISIBLE);
