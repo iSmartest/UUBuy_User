@@ -1,10 +1,12 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
@@ -137,6 +139,9 @@ public class CommodityReserveActivity extends BaseActivity {
                 return;
             }
             ToastUtils.makeText(context,"预订成功");
+            Intent intent = new Intent();
+            intent.setAction("com.ifree.uu.order.changed");
+            context.sendBroadcast(intent);
             finish();
         }
 

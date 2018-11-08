@@ -17,6 +17,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.custom.ImageSlideshow;
 import com.ifree.uu.uubuy.custom.MarqueeTextView;
+import com.ifree.uu.uubuy.custom.floatingActionButton.FloatingActionButton;
 import com.ifree.uu.uubuy.listener.MarqueeTextViewClickListener;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.mvp.entity.HomeEntity;
@@ -58,6 +59,8 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
     private HomePresenter mHomePresenter;
     @BindView(R.id.xr_home)
     XRecyclerView xRecyclerView;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     private ImageSlideshow imageSlideshow;
     private RecyclerView rc_type, rc_city_ad;
     private MarqueeTextView marqueeTv;
@@ -90,6 +93,14 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
     @Override
     protected void initView() {
         mHomePresenter = new HomePresenter(context);
+        fab.hide();
+        fab.attachToRecyclerView(xRecyclerView);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                xRecyclerView.scrollToPosition(0);
+            }
+        });
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);

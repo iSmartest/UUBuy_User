@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
     android:background="@color/app_main_background"
     android:descendantFocusability="blocksDescendants">
 
@@ -11,5 +13,23 @@
         android:layout_height="wrap_content">
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
+    <com.ifree.uu.uubuy.custom.floatingActionButton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/text_blue"
+        app:backgroundTintMode="multiply"
+        app:elevation="10dp"
+        app:borderWidth="0dp"
+        app:fabSize="auto"
+        app:pressedTranslationZ="@dimen/activity_horizontal_margin"
+        app:rippleColor="@color/text_green"
+        app:useCompatPadding="true"
+        android:src="@drawable/back_top"
+        fab:fab_colorNormal="@color/text_blue"
+        fab:fab_colorPressed="@color/text_blue"
+        fab:fab_colorRipple="@color/text_blue" />
 
-</LinearLayout>
+</RelativeLayout>

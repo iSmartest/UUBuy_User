@@ -38,7 +38,9 @@
                     android:id="@+id/tv_foot_print_commodity_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:layout_weight="1"
                     android:textColor="@color/text_main_color"
                     android:textSize="14dp" />
 
@@ -48,15 +50,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
                     android:ellipsize="end"
-                    android:singleLine="true"
+                    android:maxLines="2"
+                    android:layout_weight="1"
                     android:textColor="@color/text_subtitle_color"
                     android:textSize="14dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="5dp"
                     android:gravity="bottom"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <TextView
@@ -80,6 +84,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginTop="3dp"
                     android:orientation="horizontal">
 
                     <TextView

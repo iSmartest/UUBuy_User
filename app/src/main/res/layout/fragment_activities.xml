@@ -18,8 +18,8 @@
         <TextView
             android:id="@+id/tv_activities_market"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textSize="17dp"
+            android:layout_height="35dp"
+            android:textSize="15dp"
             android:gravity="center"
             android:focusable="true"
             android:layout_weight="1"
@@ -29,8 +29,8 @@
         <TextView
             android:id="@+id/tv_activities_store"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textSize="17dp"
+            android:layout_height="35dp"
+            android:textSize="15dp"
             android:gravity="center"
             android:focusable="true"
             android:layout_weight="1"
@@ -40,8 +40,8 @@
         <TextView
             android:id="@+id/tv_activities_commodity"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textSize="17dp"
+            android:layout_height="35dp"
+            android:textSize="15dp"
             android:gravity="center"
             android:layout_weight="1"
             android:textColor="@color/text_main_color"
