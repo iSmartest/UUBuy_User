@@ -35,13 +35,13 @@
                     android:id="@+id/rc_picture"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
                     android:layout_centerInParent="true"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/image_item_conner_style"
+                    android:background="@drawable/image_item_style"
                     android:layout_marginBottom="5dp">
                 </android.support.v7.widget.RecyclerView>
             </RelativeLayout>
@@ -55,31 +55,37 @@
                 android:background="@drawable/image_item_conner_style"
                 android:orientation="vertical"
                 android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/tv_commodity_brand_name"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/ll_item0"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_main_color"
-                    android:textSize="15dp"
-                    android:textStyle="bold"/>
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_commodity_brand_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/title_color"
+                        android:textSize="15dp"
+                        android:layout_weight="1"
+                        android:textStyle="bold"/>
 
-                <TextView
-                    android:id="@+id/tv_commodity_surplus_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
-                    android:layout_toRightOf="@+id/tv_commodity_brand_name"
-                    android:background="@drawable/shape_red_surplus_background"
-                    android:gravity="center"
-                    android:textColor="@color/app_main_default"
-                    android:textSize="15dp" />
+                    <TextView
+                        android:id="@+id/tv_commodity_surplus_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13dp"
+                        android:background="@drawable/shape_red_surplus_background"
+                        android:gravity="center"
+                        android:textColor="@color/app_main_default"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/tv_commodity_name"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_below="@+id/tv_commodity_brand_name"
+                    android:layout_below="@+id/ll_item0"
                     android:textColor="@color/text_main_color"
                     android:textSize="14dp"
                     android:layout_marginTop="6dp"/>

@@ -303,11 +303,11 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST(BaseUrl.SECOND_LIST_INFO)
     Observable<SecondActivitiesEntity> getSearchSecondListInfo(@Field("floor") String floor,
-                                                               @Query("fristActivitiesId") String firstActivitiesId,
-                                                               @Query("page") int page,
-                                                               @Query("uid") String uid,
-                                                               @Query("fristActivitiesType") String firstActivitiesType,
-                                                               @Query("classfy") String classify);
+                                                               @Field("fristActivitiesId") String firstActivitiesId,
+                                                               @Field("page") int page,
+                                                               @Field("uid") String uid,
+                                                               @Field("fristActivitiesType") String firstActivitiesType,
+                                                               @Field("classfy") String classify);
 
     /**
      * 周围

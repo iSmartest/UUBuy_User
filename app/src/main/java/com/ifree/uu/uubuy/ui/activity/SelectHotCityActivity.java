@@ -1,5 +1,6 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +20,7 @@ import com.ifree.uu.uubuy.mvp.presenter.CityInfoPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.SelectHotCityAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -60,6 +62,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
         xRecyclerView.setLoadingMoreEnabled(false);
         headView = LayoutInflater.from(context).inflate(R.layout.header_hot_city, null);
         tvCurrentCity = headView.findViewById(R.id.tv_current_city);
+        tvCurrentCity.setOnClickListener(this);
         headView.findViewById(R.id.ly_again_location).setOnClickListener(this);
         headView.findViewById(R.id.tv_more_hot_city).setOnClickListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);
@@ -137,10 +140,11 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
 
     private void initLocation() {
         GaoDeLocationListener gaoDeLocationListener = new GaoDeLocationListener(context, new GaoDeLocationListener.OnQuestResultListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void success(String result) {
-                tvCurrentCity.setText(result);
-                Log.i("TAG", "success: " + result);
+                tvCurrentCity.setText(SPUtil.getString(context,"city") + "-" + SPUtil.getString(context,"district"));
+                Log.i("UUGO", "success: " + SPUtil.getString(context,"city") + "-" + SPUtil.getString(context,"district"));
             }
             @Override
             public void error(String result) {

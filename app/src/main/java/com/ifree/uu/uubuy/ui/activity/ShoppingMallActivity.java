@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
-import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.mvp.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.mvp.presenter.CollectionPresenter;
@@ -103,20 +101,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
 
         mAdapter = new MarketOrStoreAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
-            @Override
-            public void onItemClick(RecyclerView.ViewHolder vh) {
-                int position = vh.getAdapterPosition() - 2;
-                if (position < 0 | position >= mList.size()) {
-                    return;
-                }
-                Bundle bundle = new Bundle();
-                bundle.putString("fristActivitiesId", mList.get(position).getSecondActivitiesId());
-                bundle.putString("fristActivitiesType", mList.get(position).getSecondActivitiesType());
-                bundle.putString("fristActivitiesName", mList.get(position).getSecondActivitiesName());
-                MyApplication.openActivity(context, StoreActivity.class, bundle);
-            }
-        });
     }
 
     @Override
@@ -217,6 +201,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 public void onTabSelected(TabLayout.Tab tab) {
                     page = 1;
                     mList.clear();
+                    mAdapter.notifyDataSetChanged();
                     floor = list.get(tab.getPosition());
                     loadData();
                 }

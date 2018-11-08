@@ -32,11 +32,19 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             signingConfig signingConfigs.release
             zipAlignEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
         }
+
+        debug {
+            applicationIdSuffix '.debug'
+            manifestPlaceholders = [GAODE_MAP_KEY: "5ebbd627aaa715cc1f3cbc15e1c7dafe"]
+        }
+
     }
 
     allprojects {

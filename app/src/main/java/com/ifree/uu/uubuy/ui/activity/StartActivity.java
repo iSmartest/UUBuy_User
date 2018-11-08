@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.config.Constant;
+import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
 import com.ifree.uu.uubuy.mvp.presenter.OnclickCountPresenter;
 import com.ifree.uu.uubuy.service.UURunService;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -81,6 +82,7 @@ public class StartActivity extends AppCompatActivity {
         Intent startIntent = new Intent(StartActivity.this, UURunService.class);
         startService(startIntent);
         checkPermission();
+        initLocation();
     }
 
     private void saveTag() {
@@ -139,5 +141,20 @@ public class StartActivity extends AppCompatActivity {
                 mHandler.sendEmptyMessage(1);
                 break;
         }
+    }
+
+    private void initLocation() {
+        GaoDeLocationListener gaoDeLocationListener = new GaoDeLocationListener(StartActivity.this, new GaoDeLocationListener.OnQuestResultListener() {
+            @Override
+            public void success(String result) {
+
+            }
+
+            @Override
+            public void error(String result) {
+
+            }
+        });
+        gaoDeLocationListener.startLocation();
     }
 }

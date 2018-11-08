@@ -6,6 +6,7 @@
     android:layout_height="wrap_content">
 
     <com.ifree.uu.uubuy.custom.RCRelativeLayout
+        android:id="@+id/rc_store"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         app:round_corner="6dp"
@@ -33,6 +34,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_main_color"
                 android:textSize="14dp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:layout_marginTop="2dp"
                 android:layout_marginLeft="5dp"/>
             <TextView

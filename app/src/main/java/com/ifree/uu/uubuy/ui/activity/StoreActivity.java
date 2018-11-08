@@ -2,7 +2,6 @@ package com.ifree.uu.uubuy.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
-import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.mvp.entity.CommodityListEntity;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.mvp.presenter.CollectionPresenter;
@@ -100,20 +98,6 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
 
         mAdapter = new StoreAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
-        xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
-            @Override
-            public void onItemClick(RecyclerView.ViewHolder vh) {
-                int position = vh.getAdapterPosition() - 2;
-                if (position < 0 | position >= mList.size()) {
-                    return;
-                }
-                Bundle bundle = new Bundle();
-                bundle.putString("commodityId",mList.get(position).getCommodityId());
-                bundle.putString("type", mList.get(position).getType());
-                bundle.putString("commodityIcon", mList.get(position).getCommodityPic());
-                MyApplication.openActivity(context, CommodityActivity.class, bundle);
-            }
-        });
     }
 
     @Override

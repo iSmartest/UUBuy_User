@@ -14,12 +14,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.ui.fragment.CollectionFragment;
 import com.ifree.uu.uubuy.ui.fragment.AroundFragment;
+import com.ifree.uu.uubuy.ui.fragment.CollectionFragment;
 import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
 import com.ifree.uu.uubuy.ui.fragment.MineFragment;
 import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
@@ -82,9 +83,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, true);
-        initLocation();
+        setLocation(SPUtil.getString(context,"district"));
         hideBack(1);
+        changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, true);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.ifree.uu.location.changed");
         registerReceiver(mAllBroad, intentFilter);

@@ -47,7 +47,7 @@ public class CommodityInfoAdapter extends RecyclerView.Adapter<CommodityInfoAdap
     public void onBindViewHolder(@NonNull CommodityInfoViewHolder holder, int position) {
         GlideImageLoader.imageLoader(context,mList.get(position),holder.mIcon);
         if (position == defItem){
-            holder.mll.setBackgroundResource(R.color.text_green);
+            holder.mll.setBackgroundResource(R.drawable.image_item_select_style);
         }else {
             holder.mll.setBackgroundResource(R.color.app_main_default);
         }

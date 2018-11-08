@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.custom.RCRelativeLayout;
 import com.ifree.uu.uubuy.mvp.entity.SecondActivitiesEntity;
+import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
@@ -43,12 +47,22 @@ public class MarketOrStoreAdapter extends RecyclerView.Adapter<MarketOrStoreAdap
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MarketOrStoreViewHolder holder, int position) {
-        SecondActivitiesEntity.DataBean.BandCommodityList sList = mList.get(position);
+    public void onBindViewHolder(@NonNull MarketOrStoreViewHolder holder, final int position) {
+        final SecondActivitiesEntity.DataBean.BandCommodityList sList = mList.get(position);
         holder.mName.setText(sList.getSecondActivitiesName());
         holder.mContent.setText(TimeFormatUtils.modifyDataFormat2(sList.getSecondActivitiesTime()));
         holder.mContent.setVisibility(View.GONE);
         GlideImageLoader.imageLoader(context,sList.getSecondActivitiesPic(),holder.mPicture);
+        holder.mStore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("fristActivitiesId", sList.getSecondActivitiesId());
+                bundle.putString("fristActivitiesType", sList.getSecondActivitiesType());
+                bundle.putString("fristActivitiesName", sList.getSecondActivitiesName());
+                MyApplication.openActivity(context, StoreActivity.class, bundle);
+            }
+        });
     }
 
     @Override
@@ -58,6 +72,8 @@ public class MarketOrStoreAdapter extends RecyclerView.Adapter<MarketOrStoreAdap
     }
 
     static class MarketOrStoreViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.rc_store)
+        RCRelativeLayout mStore;
         @BindView(R.id.iv_picture)
         ImageView mPicture;
         @BindView(R.id.tv_name)

@@ -2,16 +2,20 @@ package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.CommodityListEntity;
+import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
@@ -43,14 +47,24 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
-        CommodityListEntity.DataBean.CommodityList commodityList = mList.get(position);
+    public void onBindViewHolder(@NonNull StoreViewHolder holder, final int position) {
+        final CommodityListEntity.DataBean.CommodityList commodityList = mList.get(position);
         holder.mName.setText(commodityList.getCommodityName());
         GlideImageLoader.imageLoader(context,commodityList.getCommodityPic(),holder.mPicture);
         holder.mPrice.setText("￥"+commodityList.getCommodityNowPrice());
         holder.mOldPrice.setText("￥"+commodityList.getCommodityOriginalPrice());
         holder.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         holder.mSurplus.setText(commodityList.getCommodityStock());
+        holder.mStoreCommodity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("commodityId",commodityList.getCommodityId());
+                bundle.putString("type", commodityList.getType());
+                bundle.putString("commodityIcon", commodityList.getCommodityPic());
+                MyApplication.openActivity(context, CommodityActivity.class, bundle);
+            }
+        });
     }
 
     @Override
@@ -59,7 +73,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
     }
 
     class StoreViewHolder extends RecyclerView.ViewHolder{
-
+        @BindView(R.id.rl_store_commodity)
+        RelativeLayout mStoreCommodity;
         @BindView(R.id.iv_store_commodity_picture)
         ImageView mPicture;
         @BindView(R.id.tv_store_commodity_name)

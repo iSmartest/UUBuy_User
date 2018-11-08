@@ -35,6 +35,7 @@ public class MyFootprintActivity extends BaseActivity {
     private int page = 1;
     private List<MyFootPrintEntity.DataBean.FootprintList> mList = new ArrayList<>();
     private MyFootprintAdapter mAdapter;
+    private int totalPage;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_my_footprint;
@@ -57,11 +58,14 @@ public class MyFootprintActivity extends BaseActivity {
                 page = 1;
                 loadData();
             }
-
             @Override
             public void onLoadMore() {
                 page ++ ;
-                loadData();
+                if (page > totalPage){
+                    xRecyclerView.setNoMore(true);
+                }else {
+                    loadData();
+                }
             }
         });
 
@@ -92,14 +96,12 @@ public class MyFootprintActivity extends BaseActivity {
                 ToastUtils.makeText(context,mMyFootPrintEntity.getMsg());
                 return;
             }
+            totalPage = mMyFootPrintEntity.getData().getTotalPage();
             List<MyFootPrintEntity.DataBean.FootprintList> footprintLists = mMyFootPrintEntity.getData().getFootprintList();
             if (footprintLists != null && !footprintLists.isEmpty()){
                 iv_foot.setVisibility(View.GONE);
                 mList.addAll(footprintLists);
                 mAdapter.notifyDataSetChanged();
-                if (footprintLists.size() < 10){
-                    xRecyclerView.setNoMore(true);
-                }
             }else {
                 iv_foot.setVisibility(View.VISIBLE);
             }

@@ -243,6 +243,8 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Ac
         ImageView commodityIcon;
         @BindView(R.id.iv_activities_circle_commodity_name)
         TextView commodityName;
+        @BindView(R.id.iv_activities_circle_commodity_dec)
+        TextView commodityDec;
         @BindView(R.id.tv_activities_commodity_surplus)
         TextView commoditySurplus;
         @BindView(R.id.iv_activities_circle_commodity_now_price)

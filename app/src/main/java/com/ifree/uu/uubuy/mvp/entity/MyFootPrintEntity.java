@@ -13,6 +13,7 @@ public class MyFootPrintEntity {
     private String resultCode;
     private DataBean data;
     public static class DataBean{
+        private int totalPage;
         private List<FootprintList> footprintList;
         public static class FootprintList{
             private String recordTime;
@@ -82,6 +83,10 @@ public class MyFootPrintEntity {
             public List<FootprintInfoList> getFootprintInfoList() {
                 return footprintInfoList;
             }
+        }
+
+        public int getTotalPage() {
+            return totalPage;
         }
 
         public List<FootprintList> getFootprintList() {

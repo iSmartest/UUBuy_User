@@ -292,7 +292,7 @@
 
         <!-- 设置key -->
         <meta-data android:name="com.amap.api.v2.apikey"
-            android:value="56e3207aaf3e6e583178b1170f9e2f4c"/>
+            android:value="${GAODE_MAP_KEY}"/>
         <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService"> </service>
         <!--友盟-->
