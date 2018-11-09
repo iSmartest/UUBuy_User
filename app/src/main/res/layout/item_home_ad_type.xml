@@ -3,9 +3,10 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
+    android:layout_marginTop="12dp"
     android:padding="6dp">
    <LinearLayout
+       android:id="@+id/ll_ad_type"
        android:layout_width="wrap_content"
        android:layout_height="match_parent"
        android:gravity="center"

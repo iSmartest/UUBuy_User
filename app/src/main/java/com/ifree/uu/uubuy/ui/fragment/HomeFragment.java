@@ -9,7 +9,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -29,7 +28,6 @@ import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
 import com.ifree.uu.uubuy.ui.activity.MarketActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
 import com.ifree.uu.uubuy.ui.activity.StoreActivity;
-import com.ifree.uu.uubuy.ui.activity.TestActivity;
 import com.ifree.uu.uubuy.ui.adapter.AdTypeAdapter;
 import com.ifree.uu.uubuy.ui.adapter.CityADAdapter;
 import com.ifree.uu.uubuy.ui.adapter.HomeAdapter;
@@ -109,6 +107,16 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
         xRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
         headView = LayoutInflater.from(context).inflate(R.layout.header_home, null);
         imageSlideshow = headView.findViewById(R.id.img_home_gallery);
+        headView.findViewById(R.id.iv_home_mall).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("adTypeId", "1");
+                bundle.putString("type", "1");
+                bundle.putString("title", "综合商场");
+                MyApplication.openActivity(context, FirstClassifyActivity.class, bundle);
+            }
+        });
         marqueeTv = headView.findViewById(R.id.marqueeTv);
         rc_type = headView.findViewById(R.id.rc_type);
         rc_city_ad = headView.findViewById(R.id.rc_city_ad);
@@ -137,27 +145,6 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
         rc_type.setAdapter(adTypeAdapter);
         cityADAdapter = new CityADAdapter(context, mCityADList);
         rc_city_ad.setAdapter(cityADAdapter);
-        rc_type.addOnItemTouchListener(new RecyclerItemTouchListener(rc_type) {
-            @Override
-            public void onItemClick(RecyclerView.ViewHolder vh) {
-                int position = vh.getAdapterPosition();
-                if (position < 0 | position >= mAdTypeList.size()) {
-                    return;
-                }
-                Bundle bundle = new Bundle();
-                if (position == 0){
-                    Log.i("TAG", "onItemClick: " + position);
-                    bundle.putString("adTypeId", mAdTypeList.get(position).getAdTypeId());
-                    bundle.putString("type", mAdTypeList.get(position).getType());
-                    bundle.putString("title", mAdTypeList.get(position).getAdTypeTitle());
-                    MyApplication.openActivity(context, FirstClassifyActivity.class, bundle);
-                }else {
-                    bundle.putString("title", mAdTypeList.get(position).getAdTypeTitle());
-                    MyApplication.openActivity(context, TestActivity.class, bundle);
-                }
-            }
-        });
-
         xRecyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(xRecyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {

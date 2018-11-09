@@ -1,16 +1,21 @@
 package com.ifree.uu.uubuy.ui.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.HomeEntity;
+import com.ifree.uu.uubuy.ui.activity.FirstClassifyActivity;
+import com.ifree.uu.uubuy.ui.activity.TestActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
@@ -42,8 +47,8 @@ public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdTypeViewHolder holder, int position) {
-        HomeEntity.DataBean.AdTypeList mList = mAdTypeList.get(position);
+    public void onBindViewHolder(@NonNull AdTypeViewHolder holder, final int position) {
+        final HomeEntity.DataBean.AdTypeList mList = mAdTypeList.get(position);
         holder.mName.setText(mList.getAdTypeTitle());
         switch (mList.getType()) {
             case "1":
@@ -65,6 +70,21 @@ public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeView
                 GlideImageLoader.adTypeImageLoader(context, mList.getAdTypeIcon(), holder.icon, "6");
                 break;
         }
+        holder.mAdType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                if (position == 0){
+                    bundle.putString("adTypeId", mList.getAdTypeId());
+                    bundle.putString("type", mList.getType());
+                    bundle.putString("title", mList.getAdTypeTitle());
+                    MyApplication.openActivity(context, FirstClassifyActivity.class, bundle);
+                }else {
+                    bundle.putString("title", mList.getAdTypeTitle());
+                    MyApplication.openActivity(context, TestActivity.class, bundle);
+                }
+            }
+        });
 
 
 //        GlideImageLoader.imageLoader(context,mList.getAdTypeIcon(),holder.icon);
@@ -76,6 +96,8 @@ public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeView
     }
 
     public class AdTypeViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.ll_ad_type)
+        LinearLayout mAdType;
         @BindView(R.id.iv_ad_type)
         ImageView icon;
         @BindView(R.id.tv_ad_type)

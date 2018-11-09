@@ -19,6 +19,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -513,11 +514,19 @@ public class FloatingActionButton extends ImageButton {
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int firstCompletelyVisibleItemPosition = layoutManager.findFirstCompletelyVisibleItemPosition();
+            if(firstCompletelyVisibleItemPosition==0){//滑动到顶部
+                hide();
+            }
+            int lastCompletelyVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
+            if(lastCompletelyVisibleItemPosition==layoutManager.getItemCount()-1){
+                show();
+            }
             if (mOnScrollListener != null) {
                 mOnScrollListener.onScrolled(recyclerView, dx, dy);
             }
-
-            super.onScrolled(recyclerView, dx, dy);
         }
 
         @Override
