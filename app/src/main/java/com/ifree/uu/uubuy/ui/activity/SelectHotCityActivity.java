@@ -143,7 +143,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
             @SuppressLint("SetTextI18n")
             @Override
             public void success(String result) {
-                tvCurrentCity.setText(SPUtil.getString(context,"city") + "-" + SPUtil.getString(context,"district"));
+                tvCurrentCity.setText(result);
                 Log.i("UUGO", "success: " + SPUtil.getString(context,"city") + "-" + SPUtil.getString(context,"district"));
             }
             @Override

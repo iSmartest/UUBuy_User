@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.dialog.ErrorDialog;
 import com.ifree.uu.uubuy.mvp.entity.UpdateEntity;
-import com.ifree.uu.uubuy.mvp.presenter.UpdatePreaenter;
+import com.ifree.uu.uubuy.mvp.presenter.UpdatePresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlobalMethod;
@@ -28,7 +28,7 @@ import butterknife.OnClick;
  * Description:
  */
 public class UpdateActivity extends BaseActivity {
-    private UpdatePreaenter mUpdatePreaenter;
+    private UpdatePresenter mUpdatePresenter;
     @BindView(R.id.a_about_lay_rate)
     TextView mRate;
     @BindView(R.id.a_about_check_version)
@@ -53,7 +53,7 @@ public class UpdateActivity extends BaseActivity {
     protected void initView() {
         hideBack(5);
         setTitleText("版本更新");
-        mUpdatePreaenter = new UpdatePreaenter(context);
+        mUpdatePresenter = new UpdatePresenter(context);
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         tvRight.setText(String.format(getString(R.string.company_copyright), year));
@@ -62,9 +62,9 @@ public class UpdateActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        mUpdatePreaenter.onCreate();
-        mUpdatePreaenter.attachView(mUpdateView);
-        mUpdatePreaenter.getUpdate("查询中...");
+        mUpdatePresenter.onCreate();
+        mUpdatePresenter.attachView(mUpdateView);
+        mUpdatePresenter.getUpdate("查询中...");
     }
 
     ProjectView<UpdateEntity> mUpdateView = new ProjectView<UpdateEntity>() {
@@ -74,9 +74,9 @@ public class UpdateActivity extends BaseActivity {
                 ToastUtils.makeText(context,updateEntity.getMsg());
                 return;
             }
-            versionCode = Integer.parseInt(updateEntity.getData().getNumber());
+            versionCode = Integer.parseInt(updateEntity.getData().getVersionCode());
             updataAddress = updateEntity.getData().getAddress();
-            versionName = updateEntity.getData().getName();
+            versionName = updateEntity.getData().getVersionName();
             descc = updateEntity.getData().getDesc();
             mIntroduce.setText(descc);
             if (versionCode > GlobalMethod.getVersionCode(context)) {

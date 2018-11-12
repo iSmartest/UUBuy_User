@@ -47,7 +47,7 @@
                 android:id="@+id/tv_current_city"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="15dp"
                 android:text=""
                 android:gravity="center"
                 android:background="@drawable/shape_hot_city_background"

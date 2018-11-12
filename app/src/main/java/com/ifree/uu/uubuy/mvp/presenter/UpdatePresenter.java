@@ -22,14 +22,14 @@ import rx.subscriptions.CompositeSubscription;
  * Created by 2018/10/8 0008
  * Description:
  */
-public class UpdatePreaenter implements Presenter {
+public class UpdatePresenter implements Presenter {
     private DataManager manager;
     private CompositeSubscription mCompositeSubscription;
     private Context mContext;
     private ProjectView mUserInfoView;
     private UpdateEntity mUpdateEntity;
 
-    public UpdatePreaenter(Context mContext){
+    public UpdatePresenter(Context mContext){
         this.mContext = mContext;
     }
 

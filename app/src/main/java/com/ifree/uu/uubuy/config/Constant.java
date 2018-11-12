@@ -7,6 +7,7 @@ package com.ifree.uu.uubuy.config;
  */
 
 public class Constant {
+    public static Boolean FIRST_LOCATION = false;
     /**联网类型*/
     public static final class NetState {
         public static final int WIFI = 10030;

@@ -11,25 +11,34 @@ public class UpdateEntity {
     private String resultCode;
     private DataBean data;
     public static class DataBean{
-        private String number;
-        private String name;
+        private String versionCode;
+        private String versionName;
         private String desc;
         private String address;
+        private String force;
 
-        public String getNumber() {
-            return number;
+        public String getVersionCode() {
+            return versionCode;
         }
 
-        public void setNumber(String number) {
-            this.number = number;
+        public void setVersionCode(String versionCode) {
+            this.versionCode = versionCode;
         }
 
-        public String getName() {
-            return name;
+        public String getVersionName() {
+            return versionName;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setVersionName(String versionName) {
+            this.versionName = versionName;
+        }
+
+        public String getForce() {
+            return force;
+        }
+
+        public void setForce(String force) {
+            this.force = force;
         }
 
         public String getDesc() {
@@ -47,6 +56,8 @@ public class UpdateEntity {
         public void setAddress(String address) {
             this.address = address;
         }
+
+
     }
 
     public String getMsg() {

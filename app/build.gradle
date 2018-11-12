@@ -22,29 +22,53 @@ android {
         flavorDimensions "versionCode"
     }
     signingConfigs {
-        release {
+        release {//发布版本的签名配置
             storeFile file(project.KEY_PATH)   //文件位置
             storePassword project.KEY_PASS  //指定密码
             keyAlias project.ALIAS_NAME  //指定别名
             keyPassword project.ALIAS_PASS  //指定别名密码
         }
+        debug {//调试版本的签名配置
+            storeFile file(project.DEBUG_KEYSTORE)
+            keyAlias project.DEBUG_ALIAS
+            storePassword project.DEBUG_KEYSTORE_PWD
+            keyPassword project.DEBUG_KEY_PWD
+        }
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            buildConfigField "boolean", "LOG_DEBUG", "false"// 不显示Log
+            minifyEnabled true // 混淆
+            zipAlignEnabled true// ZipAlign优化
+            shrinkResources true// 移除无用的resource文件，前提minifyEnabled必须打开
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'//加载默认混淆配置涵
             signingConfig signingConfigs.release
-            zipAlignEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
         }
-
         debug {
+            minifyEnabled false // 混淆
+            zipAlignEnabled true // Zipalign优化
+            shrinkResources false // 移除无用的resource文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'  // 加载默认混淆配置文件
+            signingConfig signingConfigs.debug // 签名
             applicationIdSuffix '.debug'
-            manifestPlaceholders = [GAODE_MAP_KEY: "5ebbd627aaa715cc1f3cbc15e1c7dafe"]
+            manifestPlaceholders = [GAODE_MAP_KEY: "d3c2a6773abc50be4c160a606e7aa4e3"]
         }
+    }
+    flavorDimensions "default"//这个名字便取，也可以有多个，总之一定要有
+    //多渠道打包
+    productFlavors {
+        kuan {}     //酷安
+        tencent {}  //应用宝
+        baidu {}    //百度
+        xiaomi {}   //小米
+        huawei {}   //华为
+        wandoujia {} //豌豆荚
 
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
     }
 
     allprojects {

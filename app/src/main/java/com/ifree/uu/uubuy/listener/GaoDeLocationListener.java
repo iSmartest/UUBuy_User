@@ -9,6 +9,8 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 
+import static com.ifree.uu.uubuy.config.Constant.FIRST_LOCATION;
+
 /**
  * Author: 小火
  * Email:1403241630@qq.com
@@ -68,14 +70,24 @@ public class GaoDeLocationListener {
                 StringBuffer sb = new StringBuffer();
                 //errCode等于0代表定位成功，其他的为定位失败，具体的可以参照官网定位错误码说明
                 if(location.getErrorCode() == 0){
+                    if (FIRST_LOCATION == false){
+                        SPUtil.putString(context, "townAdCode", location.getCityCode());
+                        onQuestResultListener.success(location.getCity());
+                        SPUtil.putString(context, "district", location.getCity());
+                    }else {
+                        SPUtil.putString(context, "townAdCode", location.getAdCode());
+                        onQuestResultListener.success(location.getDistrict());
+                        SPUtil.putString(context, "district", location.getDistrict());
+                    }
+                    //第一版
+//                    SPUtil.putString(context, "townAdCode", location.getAdCode());
+//                    onQuestResultListener.success(location.getDistrict());
+//                    SPUtil.putString(context, "district", location.getDistrict());
                     SPUtil.putString(context, "city", location.getCity());
-                    SPUtil.putString(context, "district", location.getDistrict());
-                    SPUtil.putString(context, "townAdCode", location.getAdCode());
                     SPUtil.putString(context, "cityCode", location.getCityCode());
                     SPUtil.putString(context, "latitude", location.getLatitude() + "");
                     SPUtil.putString(context, "longitude", location.getLongitude() + "");
                     SPUtil.putString(context, "address", location.getAddress() + "");
-                    onQuestResultListener.success(location.getDistrict());
                     Log.i("TAG", "定位成功" + "\n" +"定位类型: " + location.getLocationType() + "\n"
                     +"经    度    : " + location.getLongitude() + "\n"+"纬    度    : " + location.getLatitude() + "\n"
                     +"精    度    : " + location.getAccuracy() + "米" + "\n"+"提供者    : " + location.getProvider() + "\n"
@@ -85,8 +97,15 @@ public class GaoDeLocationListener {
                     +"城市编码 : " + location.getCityCode() + "\n"+"区            : " + location.getDistrict() + "\n"
                             +"区域 码   : " + location.getAdCode() + "\n"+"地    址    : " + location.getAddress() + "\n"
                     +"兴趣点    : " + location.getPoiName() + "\n");
+                    FIRST_LOCATION = true;
                 } else {
-                    onQuestResultListener.error("海淀区");
+                    if (FIRST_LOCATION == false){
+                        SPUtil.putString(context, "townAdCode", "北京市");
+                        onQuestResultListener.error("北京市");
+                    }else {
+                        SPUtil.putString(context, "townAdCode", "海淀区");
+                        onQuestResultListener.error("海淀区");
+                    }
                     SPUtil.putString(context, "city", "北京市");
                     SPUtil.putString(context, "district", "海淀区");
                     SPUtil.putString(context, "townAdCode", "110108");
@@ -95,8 +114,15 @@ public class GaoDeLocationListener {
                     SPUtil.putString(context, "longitude", "116.311733");
                     SPUtil.putString(context, "address", "北京市海淀区信息路甲28号靠近华夏银行(上地支行)");
                 }
+                FIRST_LOCATION = true;
             } else {
-                onQuestResultListener.error("海淀区");
+                if (FIRST_LOCATION == false){
+                    SPUtil.putString(context, "townAdCode", "北京市");
+                    onQuestResultListener.error("北京市");
+                }else {
+                    SPUtil.putString(context, "townAdCode", "海淀区");
+                    onQuestResultListener.error("海淀区");
+                }
                 SPUtil.putString(context, "city", "北京市");
                 SPUtil.putString(context, "district", "海淀区");
                 SPUtil.putString(context, "townAdCode", "110108");
@@ -104,6 +130,7 @@ public class GaoDeLocationListener {
                 SPUtil.putString(context, "latitude", "40.034838");
                 SPUtil.putString(context, "longitude", "116.311733");
                 SPUtil.putString(context, "address", "北京市海淀区信息路甲28号靠近华夏银行(上地支行)");
+                FIRST_LOCATION = true;
             }
         }
     };

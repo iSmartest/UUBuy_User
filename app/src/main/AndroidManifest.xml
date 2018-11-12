@@ -295,11 +295,17 @@
             android:value="${GAODE_MAP_KEY}"/>
         <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService"> </service>
+
         <!--友盟-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5b7e4f29f29d987782000064" >
-        </meta-data>
+            android:value="5b7e4f29f29d987782000064" />
+
+        <!-- 友盟多渠道打包 -->
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+
         <!--微信 QQ登录、分享-->
         <activity
             android:name=".wxapi.WXEntryActivity"
