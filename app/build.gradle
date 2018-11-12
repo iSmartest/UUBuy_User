@@ -5,7 +5,7 @@ buildscript {
         google()
     }
     dependencies {
-        //noinspection GradlePluginVersion
+        //noinspection GradleDynamicVersion,GradlePluginVersion
         classpath 'com.android.tools.build:gradle:0.12.+'//修改此处版本号为 0.5.0
     }
 }
@@ -47,7 +47,7 @@ android {
             manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
         }
         debug {
-            minifyEnabled false // 混淆
+            minifyEnabled true // 混淆
             zipAlignEnabled true // Zipalign优化
             shrinkResources false // 移除无用的resource文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'  // 加载默认混淆配置文件
@@ -65,7 +65,6 @@ android {
         xiaomi {}   //小米
         huawei {}   //华为
         wandoujia {} //豌豆荚
-
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
@@ -81,7 +80,6 @@ android {
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //noinspection GradleCompatible
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'

@@ -11,7 +11,7 @@
 # 混淆时不记录日志
 -verbose
 # 忽略警告
--ignorewarning
+-ignorewarnings
 # 代码优化
 -dontshrink
 # 不优化输入的类文件
@@ -78,6 +78,11 @@
     public <init>(android.content.Context, android.util.AttributeSet, int);
 }
 
+# 避免实体类混淆，** 换成具体的类名则表示不混淆某个具体的类
+-dontwarn com.ifree.uu.uubuy.mvp.entity.**
+-keep class com.ifree.uu.uubuy.mvp.entity.** { *; }
+
+-keep class com.jcodecraeer.xrecyclerview.**{*;}
 #关闭 Log日志
 -assumenosideeffects class android.util.Log {
     public static *** d(...);
@@ -95,6 +100,12 @@
     public void *(android.view.View);
 }
 
+-keepclassmembers class * {
+    void *(android.view.View);
+        *** *Click*(...);
+        *** *Event(...);
+}
+
 #避免回调函数 onXXEvent 混淆
 -keepclassmembers class * {
     void *(*Event);
@@ -106,10 +117,10 @@
     public static ** valueOf(java.lang.String);
 }
 
-#Natvie 方法不混淆
--keepclasseswithmembernames class * {
-    native <methods>;
-}
+##Natvie 方法不混淆
+#-keepclasseswithmembernames class * {
+#    native <methods>;
+#}
 
 #避免Parcelable混淆
 -keep class * implements android.os.Parcelable {
@@ -161,17 +172,33 @@
 -keepattributes Signature
 -keepattributes Exceptions
 
-#RxJava、RxAndroid混淆配置
--dontwarn sun.misc.**
+
+#RxJava
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-   long producerIndex;
-   long consumerIndex;
+    long producerIndex;
+    long consumerIndex;
 }
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode producerNode;
 }
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    long producerNode;
+    long consumerNode;
+}
+-keep class rx.schedulers.Schedulers {
+    public static <methods>;
+}
+-keep class rx.schedulers.Schedulers {
+    public static ** test();
+}
+-keep class rx.schedulers.ImmediateScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.TestScheduler {
+    public <methods>;
 }
 
 #Glide混淆配置
@@ -184,9 +211,9 @@
 #Gson混淆配置
 -keep class com.google.gson.** {*;}
 -keep class com.google.**{*;}
--keep class sun.misc.Unsafe { *; }
--keep class com.google.gson.stream.** { *; }
--keep class com.google.gson.examples.android.model.** { *; }
+-keep class sun.misc.Unsafe { *;}
+-keep class com.google.gson.stream.** { *;}
+-keep class com.google.gson.examples.android.model.** { *;}
 
 #Banner混淆配置
 -keep class com.youth.banner.** {*;}
@@ -199,13 +226,40 @@
 -keep class com.autonavi.**  {*;}
 -keep class com.a.a.**  {*;}
 
-#EventBus混淆配置
--keep class org.greenrobot.** {*;}
--keep class de.greenrobot.** {*;}
--keepclassmembers class ** {
-    public void onEvent*(**);
-    void onEvent*(**);
+##EventBus混淆配置
+#-keep class org.greenrobot.** {*;}
+#-keep class de.greenrobot.** {*;}
+#-keepclassmembers class ** {
+#    public void onEvent*(**);
+#    void onEvent*(**);
+#}
+
+
+
+# ------------------------------- 保护指定的类和类的成员，但条件是所有指定的类和类成员是要存在------------
+-keepclasseswithmembers class * {
+    protected void init(android.content.Context, android.util.AttributeSet);
+    protected abstract void init(android.content.Context, android.util.AttributeSet);
 }
+
+
+# 保留所有的本地native方法不被混淆
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #友盟分享混淆配置
 -dontshrink
