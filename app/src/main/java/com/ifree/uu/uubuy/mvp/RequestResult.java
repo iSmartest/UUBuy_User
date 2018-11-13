@@ -21,9 +21,9 @@ public class RequestResult {
         String mErrorMessage = null;
         try {
             if (throwable instanceof SocketTimeoutException) {//请求超时
-                mErrorMessage =  "网络连接超时";
+                mErrorMessage = "网络连接超时";
             } else if (throwable instanceof ConnectException) {//网络连接超时
-                mErrorMessage =  "网络连接失败";
+                mErrorMessage = "网络连接失败";
             } else if (throwable instanceof SSLHandshakeException) {//安全证书异常
                 mErrorMessage = "安全证书异常";
             } else if (throwable instanceof HttpException) {//请求的地址不存在

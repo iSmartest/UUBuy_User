@@ -1,5 +1,8 @@
 package com.ifree.uu.uubuy.config;
 
+
+import com.ifree.uu.uubuy.BuildConfig;
+
 /**
  * Author: 小火
  * Email:1403241630@qq.com
@@ -8,12 +11,7 @@ package com.ifree.uu.uubuy.config;
  */
 public class BaseUrl {
 
-    public static String HTTP = "http://www.uugood.cn:8080/uugo-user/app/";//正式服务器
-
-//    public static String HTTP = "http://192.168.1.100:8080/uugo-user/app/";//局域网测试地址
-
-//    public static final String HTTP = "http://192.168.1.8:8080/uugo-user/app/";//本地测试地址
-
+    public static final String HTTP = BuildConfig.API_HOST;
     //获取验证码
     public static final String SEND_CODE = "sendCode";
     //注册

@@ -11,8 +11,19 @@ buildscript {
 }
 android {
     compileSdkVersion 27
+    buildToolsVersion '28.0.2'
+
+    //默认版本号和版本名
+    def DEF_VERSION_CODE = 1
+    def DEF_VERSION_NAME = "1.0"
+    //正式环境
+    def API_RELEASE_HOST = "\"http://www.uugood.cn:8080/uugo-user/app/\""
+    //开发环境
+    def API_DEV_HOST = "\"http://192.168.1.100:8080/uugo-user/app/\""
+    //测试环境
+    def API_TEST_HOST = "\"http://192.168.1.8:8080/uugo-user/app/\""
+
     defaultConfig {
-        applicationId "com.ifree.uu.uubuy"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
@@ -20,6 +31,12 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "versionCode"
+        //动态指定版本号版本名
+        versionCode project.hasProperty('VERSION_CODE') ? Integer.parseInt(VERSION_CODE) : DEF_VERSION_CODE
+        versionName project.hasProperty('VERSION_NAME') ? VERSION_NAME : "${DEF_VERSION_NAME}"
+        println("versionCode = " + versionCode + " versionName = " + versionName)
+        buildConfigField("String", "API_HOST", "${API_RELEASE_HOST}")
+
     }
     signingConfigs {
         release {//发布版本的签名配置
@@ -28,6 +45,7 @@ android {
             keyAlias project.ALIAS_NAME  //指定别名
             keyPassword project.ALIAS_PASS  //指定别名密码
         }
+
         debug {//调试版本的签名配置
             storeFile file(project.DEBUG_KEYSTORE)
             keyAlias project.DEBUG_ALIAS
@@ -37,47 +55,143 @@ android {
     }
 
     buildTypes {
-        release {
-            buildConfigField "boolean", "LOG_DEBUG", "false"// 不显示Log
-            minifyEnabled true // 混淆
-            zipAlignEnabled true// ZipAlign优化
-            shrinkResources true// 移除无用的resource文件，前提minifyEnabled必须打开
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'//加载默认混淆配置涵
-            signingConfig signingConfigs.release
-            manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
-        }
         debug {
-            minifyEnabled true // 混淆
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "String", "API_HOST", "${API_TEST_HOST}"
             zipAlignEnabled true // Zipalign优化
-            shrinkResources false // 移除无用的resource文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'  // 加载默认混淆配置文件
+            // 加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug // 签名
             applicationIdSuffix '.debug'
             manifestPlaceholders = [GAODE_MAP_KEY: "d3c2a6773abc50be4c160a606e7aa4e3"]
         }
-    }
-    flavorDimensions "default"//这个名字便取，也可以有多个，总之一定要有
-    //多渠道打包
-    productFlavors {
-        kuan {}     //酷安
-        tencent {}  //应用宝
-        baidu {}    //百度
-        xiaomi {}   //小米
-        huawei {}   //华为
-        wandoujia {} //豌豆荚
-        productFlavors.all { flavor ->
-            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"// 不显示Log
+            buildConfigField "String", "API_HOST", "${API_RELEASE_HOST}"
+            minifyEnabled true // 混淆
+            zipAlignEnabled true// ZipAlign优化
+            shrinkResources true// 移除无用的resource文件，前提minifyEnabled必须打开
+            //加载默认混淆配置涵
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
+        }
+
+        releaselog { // 正式环境显示log
+            buildConfigField "boolean", "LOG_DEBUG", "true"// 显示Log
+            buildConfigField "String", "API_HOST", "${API_RELEASE_HOST}"
+            minifyEnabled true //是否混淆
+            zipAlignEnabled true//是否设置zip对齐优化
+            shrinkResources true// 移除无用的resource文件
+            //加载默认混淆配置涵
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
+        }
+
+        dev { // 开发环境
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "String", "API_HOST", "${API_DEV_HOST}"
+            minifyEnabled false
+            //加载默认混淆配置涵
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
+        }
+
+        check { //测试环境
+            buildConfigField "boolean", "LOG_DEBUG", "true" // 显示Log
+            buildConfigField "String", "API_HOST", "${API_TEST_HOST}"
+            minifyEnabled true //是否混淆
+            zipAlignEnabled true//是否设置zip对齐优化
+            shrinkResources true// 移除无用的resource文件
+            //加载默认混淆配置涵
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
         }
     }
 
-    allprojects {
-        gradle.projectsEvaluated {
-            tasks.withType(JavaCompile) {
-                options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    flavorDimensions "default"//这个名字便取，也可以有多个，总之一定要有
+    //多渠道打包
+    //修改生成的最终文件名
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName
+                if (!project.hasProperty('FILE_NAME')) {
+                    if (variant.buildType.name == "release") {
+                        // 输出apk名称为app_v1.0.0_2015-06-15_playStore.apk  _${variant.productFlavors[0].name}
+                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}_${variant.productFlavors[0].name}.apk"
+                    } else if (variant.buildType.name == "releaselog") {
+                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}_${variant.productFlavors[0].name}.apk"
+                    } else if (variant.buildType.name == "check") {
+                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}_${variant.productFlavors[0].name}.apk"
+                    } else if (variant.buildType.name == "debug") {
+                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}_${variant.productFlavors[0].name}.apk"
+                    } else if (variant.buildType.name == "dev") {
+//                        fileName = outputFile.name
+                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}_${variant.productFlavors[0].name}.apk"
+                    }
+                } else {
+                    fileName = FILE_NAME
+                }
+                outputFileName = fileName
             }
         }
     }
+
+    //配置多版本的apk
+    productFlavors {
+        appdebug{
+            applicationId 'com.ifree.uu.uubuy'
+            dimension "default"}
+        baidu {
+            applicationId 'com.ifree.uu.uubuy.baidu'
+            dimension "default"}   //百度
+        yingyongbao {
+            applicationId 'com.ifree.uu.uubuy.yingyongbao'
+            dimension "default" }  //应用宝
+        huawei {
+            applicationId 'com.ifree.uu.uubuy.huawei'
+            dimension "default" }  //华为
+        qihu360 {
+            applicationId 'com.ifree.uu.uubuy.qihu360'
+            dimension "default" }  //360
+        oppo {
+            applicationId 'com.ifree.uu.uubuy.oppo'
+            dimension "default" }  //oppo
+        vivo {
+            applicationId 'com.ifree.uu.uubuy.vivo'
+            dimension "default" }  //vivo
+        xiaomi {
+            applicationId 'com.ifree.uu.uubuy.xiaomi'
+            dimension "default" }  //小米
+        wandoujia {
+            applicationId 'com.ifree.uu.uubuy.wandoujia'
+            dimension "default" }  //豌豆荚
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
 }
+
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:design:27.1.1'
@@ -92,7 +206,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.4.0'
     implementation 'io.reactivex:rxandroid:1.2.1'
-    implementation'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.jakewharton:butterknife:8.8.1'
     implementation 'com.jakewharton:butterknife-compiler:8.8.1'

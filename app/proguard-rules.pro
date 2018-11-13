@@ -172,7 +172,6 @@
 -keepattributes Signature
 -keepattributes Exceptions
 
-
 #RxJava
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
     long producerIndex;
@@ -234,8 +233,6 @@
 #    void onEvent*(**);
 #}
 
-
-
 # ------------------------------- 保护指定的类和类的成员，但条件是所有指定的类和类成员是要存在------------
 -keepclasseswithmembers class * {
     protected void init(android.content.Context, android.util.AttributeSet);
@@ -247,19 +244,6 @@
 -keepclasseswithmembernames class * {
     native <methods>;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #友盟分享混淆配置
 -dontshrink
