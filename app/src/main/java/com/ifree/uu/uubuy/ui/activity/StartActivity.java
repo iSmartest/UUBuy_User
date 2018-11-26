@@ -16,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.config.Constant;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
-import com.ifree.uu.uubuy.mvp.presenter.OnclickCountPresenter;
 import com.ifree.uu.uubuy.service.UURunService;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StatusBarUtil;
@@ -31,7 +30,6 @@ import java.util.List;
  * Description:
  */
 public class StartActivity extends AppCompatActivity {
-    private OnclickCountPresenter mOnclickCountPresenter;
     private static final int SHOW_TIME_MIN = 1000;// 最小显示时间
     private long mStartTime;// 开始时间
     private boolean IsFirst;//第一次进入应用

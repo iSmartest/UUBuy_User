@@ -168,7 +168,7 @@ public class PlayVIPActivity extends BaseActivity {
                             .withTitle("您的好友"+userName+"邀请您加入【UU购】")
                             .withText("赶快下载体验【UU购】APP！")
                             .withMedia(new UMImage(context, R.mipmap.app_icon))
-                            .withTargetUrl("http://www.ifreee.cn/")
+                            .withTargetUrl("http://m.uugood.cn:8081/download.html")
                             .setCallback(umShareListener)
                             .open(config);
                 }else {

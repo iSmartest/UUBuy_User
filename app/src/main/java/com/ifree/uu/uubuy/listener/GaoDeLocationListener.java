@@ -87,7 +87,7 @@ public class GaoDeLocationListener {
                     SPUtil.putString(context, "cityCode", location.getCityCode());
                     SPUtil.putString(context, "latitude", location.getLatitude() + "");
                     SPUtil.putString(context, "longitude", location.getLongitude() + "");
-                    SPUtil.putString(context, "address", location.getAddress() + "");
+                    SPUtil.putString(context, "address", location.getAddress() + "" );
                     Log.i("TAG", "定位成功" + "\n" +"定位类型: " + location.getLocationType() + "\n"
                     +"经    度    : " + location.getLongitude() + "\n"+"纬    度    : " + location.getLatitude() + "\n"
                     +"精    度    : " + location.getAccuracy() + "米" + "\n"+"提供者    : " + location.getProvider() + "\n"

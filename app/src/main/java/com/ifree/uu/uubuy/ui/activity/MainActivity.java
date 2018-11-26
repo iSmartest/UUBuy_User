@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity {
                 return;
             }
             versionCode = Integer.parseInt(updateEntity.getData().getVersionCode());
-            updataAddress = updateEntity.getData().getAddress();
+            updataAddress = "http://gyxz.ukdj3d.cn/a31/rj_xgd1/youku.apk";
             versionName = updateEntity.getData().getVersionName();
             desc = updateEntity.getData().getDesc();
             if (updateEntity.getData().getForce().equals("0")) {
@@ -111,6 +111,7 @@ public class MainActivity extends BaseActivity {
                     .serverVersionCode(versionCode)//获取版本号
                     .apkPath(updataAddress)//下载地址
                     .downloadBy(UpdateAppUtils.DOWNLOAD_BY_APP)//下载方式，app或浏览器
+                    .showNotification(true)
                     .isForce(force)//是否强制更新
                     .update();
         }

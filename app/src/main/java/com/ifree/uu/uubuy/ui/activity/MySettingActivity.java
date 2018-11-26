@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,6 +22,11 @@ import com.ifree.uu.uubuy.uitls.DataCleanManager;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.shareboard.ShareBoardConfig;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -122,7 +128,19 @@ public class MySettingActivity extends BaseActivity {
                 MyApplication.openActivity(context,SettingPrivacyActivity.class,bundle);
                 break;
             case R.id.ll_share:
-                ToastUtils.makeText(context,"开发中...");
+                ShareBoardConfig config = new ShareBoardConfig();
+                ShareAction mShareAction = new ShareAction(this);
+                config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR);// 圆角背景
+                config.setCancelButtonVisibility(false);
+                config.setTitleVisibility(true);
+                config.setTitleText("— 分享到 —");
+                mShareAction.setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .withTitle("您的好友"+SPUtil.getString(context,"nickName") +"邀请您加入【UU购】")
+                        .withText("赶快下载体验【UU购】APP！")
+                        .withMedia(new UMImage(context, R.mipmap.app_icon))
+                        .withTargetUrl("http://m.uugood.cn:8081/download.html")
+                        .setCallback(umShareListener)
+                        .open(config);
                 break;
             case R.id.linear_my_setting_update:
                 MyApplication.openActivity(context, UpdateActivity.class);
@@ -182,4 +200,27 @@ public class MySettingActivity extends BaseActivity {
             }
         }
     };
+
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Log.d("plat", "platform" + platform);
+            ToastUtils.makeText(context, "分享成功啦");
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            ToastUtils.makeText(context, "分享失败啦！");
+            if (t != null) {
+                Log.d("throw", "throw:" + t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            ToastUtils.makeText(context, "分享已取消了");
+        }
+    };
+
 }

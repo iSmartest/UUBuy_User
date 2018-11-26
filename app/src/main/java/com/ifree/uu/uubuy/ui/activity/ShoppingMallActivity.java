@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,10 +21,16 @@ import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.MarketOrStoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.shareboard.ShareBoardConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -272,8 +279,42 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.tv_market_share:
-                ToastUtils.makeText(context, "你点击分享");
+                ShareBoardConfig config = new ShareBoardConfig();
+                ShareAction mShareAction = new ShareAction(this);
+                config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR);// 圆角背景
+                config.setCancelButtonVisibility(false);
+                config.setTitleVisibility(true);
+                config.setTitleText("— 分享到 —");
+                mShareAction.setDisplayList(SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE)
+                        .withTitle("您的好友"+SPUtil.getString(context,"nickName") +"邀请您加入【UU购】")
+                        .withText("赶快下载体验【UU购】APP！")
+                        .withMedia(new UMImage(context, R.mipmap.app_icon))
+                        .withTargetUrl("http://m.uugood.cn:8081/download.html")
+                        .setCallback(umShareListener)
+                        .open(config);
                 break;
         }
     }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Log.d("plat", "platform" + platform);
+            ToastUtils.makeText(context, "分享成功啦");
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            ToastUtils.makeText(context, "分享失败啦！");
+            if (t != null) {
+                Log.d("throw", "throw:" + t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            ToastUtils.makeText(context, "分享已取消了");
+        }
+    };
+
 }

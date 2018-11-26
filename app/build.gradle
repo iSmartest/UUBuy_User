@@ -15,7 +15,7 @@ android {
 
     //默认版本号和版本名
     def DEF_VERSION_CODE = 1
-    def DEF_VERSION_NAME = "1.0"
+    def DEF_VERSION_NAME = "1.0.0"
     //正式环境
     def API_RELEASE_HOST = "\"http://www.uugood.cn:8080/uugo-user/app/\""
     //开发环境
@@ -26,8 +26,6 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "versionCode"
@@ -145,7 +143,7 @@ android {
 
     //配置多版本的apk
     productFlavors {
-        appdebug{
+        uuBuy{
             applicationId 'com.ifree.uu.uubuy'
             dimension "default"}
         baidu {

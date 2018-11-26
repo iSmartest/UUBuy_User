@@ -314,6 +314,9 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
     private void initRotateViewData(List<HomeEntity.DataBean.RotateADList> rotateADLists) {
         List<String> imag = new ArrayList<>();
         for (int i = 0; i < rotateADLists.size(); i++) {
+            if (rotateADLists.get(i).getRotateADIcon().equals("") && rotateADLists.get(i).getRotateADIcon() == null){
+                continue;
+            }
             imag.add(GlideImageLoader.getImagePath(context,rotateADLists.get(i).getRotateADIcon()));
         }
         mSlideshow.setImages(imag)
