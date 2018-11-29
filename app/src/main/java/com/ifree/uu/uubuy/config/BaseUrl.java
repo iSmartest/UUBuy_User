@@ -94,4 +94,6 @@ public class BaseUrl {
     public static final String UPDATE = "version?";
     //浏览量
     public static final String CLICK_COUNT= "clickCount?";
+    //上传UUID
+    public static final String UPLOAD_UUID = "statistics";
 }

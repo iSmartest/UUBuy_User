@@ -63,7 +63,7 @@ public class CouponCenterActivity extends BaseActivity {
     @Override
     protected void initView() {
         hideBack(5);
-        setTitleText("我的优惠券");
+        setTitleText("领券中心");
         selectedColor = context.getResources().getColorStateList(R.color.text_green);
         unSelectedColor = context.getResources().getColorStateList(R.color.text_main_color);
     }

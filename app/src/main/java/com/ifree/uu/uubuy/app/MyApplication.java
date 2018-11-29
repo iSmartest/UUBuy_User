@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 
-import com.ifree.uu.uubuy.uitls.CrashHandler;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -36,8 +35,8 @@ public class MyApplication extends Application {
         PlatformConfig.setWeixin("wx70539901dcad8e3d","e97ee6fac5e3d9e9da31b02450273f55");
         PlatformConfig.setQQZone("1107863232","GLfhGhsWkLDSGpC2");
         //崩溃错误日志写入本地文档
-        CrashHandler catchException = new CrashHandler(this);
-        Thread.setDefaultUncaughtExceptionHandler(catchException);
+//        CrashHandler catchException = new CrashHandler(this);
+//        Thread.setDefaultUncaughtExceptionHandler(catchException);
     }
 
     public static  void initJPush(){

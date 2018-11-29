@@ -117,10 +117,10 @@
     public static ** valueOf(java.lang.String);
 }
 
-##Natvie 方法不混淆
-#-keepclasseswithmembernames class * {
-#    native <methods>;
-#}
+#Natvie 方法不混淆
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
 
 #避免Parcelable混淆
 -keep class * implements android.os.Parcelable {
@@ -225,19 +225,15 @@
 -keep class com.autonavi.**  {*;}
 -keep class com.a.a.**  {*;}
 
-##EventBus混淆配置
-#-keep class org.greenrobot.** {*;}
-#-keep class de.greenrobot.** {*;}
-#-keepclassmembers class ** {
-#    public void onEvent*(**);
-#    void onEvent*(**);
-#}
-
 # ------------------------------- 保护指定的类和类的成员，但条件是所有指定的类和类成员是要存在------------
 -keepclasseswithmembers class * {
     protected void init(android.content.Context, android.util.AttributeSet);
     protected abstract void init(android.content.Context, android.util.AttributeSet);
 }
+
+#极光
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
 
 
 # 保留所有的本地native方法不被混淆
@@ -261,7 +257,6 @@
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
 
--keep public interface com.facebook.**
 -keep public interface com.tencent.**
 -keep public interface com.umeng.socialize.**
 -keep public interface com.umeng.socialize.sensor.**
@@ -283,8 +278,7 @@
 -keep class UMMoreHandler{*;}
 -keep class com.tencent.mm.sdk.modelmsg.WXMediaMessage {*;}
 -keep class com.tencent.mm.sdk.modelmsg.** implements com.tencent.mm.sdk.modelmsg.WXMediaMessage$IMediaObject {*;}
--keep class im.yixin.sdk.api.YXMessage {*;}
--keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
+
 -keep class com.tencent.mm.sdk.** {
    *;
 }

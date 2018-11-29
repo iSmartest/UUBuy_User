@@ -14,12 +14,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
+
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
 import com.ifree.uu.uubuy.mvp.entity.UpdateEntity;
+import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.mvp.presenter.UpLoadUUIdPresenter;
 import com.ifree.uu.uubuy.mvp.presenter.UpdatePresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
+import com.ifree.uu.uubuy.service.UURunService;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.ui.fragment.AroundFragment;
 import com.ifree.uu.uubuy.ui.fragment.CollectionFragment;
@@ -27,14 +31,17 @@ import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
 import com.ifree.uu.uubuy.ui.fragment.MineFragment;
 import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
 import com.ifree.uu.uubuy.uitls.AppManager;
+import com.ifree.uu.uubuy.uitls.DeviceInfoUtils;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.ifree.uu.uubuy.uitls.UpdateAppUtils;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
     private UpdatePresenter mUpdatePresenter;
+    private UpLoadUUIdPresenter mUpLoadUUIdPresenter;
     @BindView(R.id.ly_base_search)
     LinearLayout mBaseSearch;
     @BindView(R.id.edt_a_key_search)
@@ -71,14 +78,37 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         mUpdatePresenter = new UpdatePresenter(context);
+        mUpLoadUUIdPresenter = new UpLoadUUIdPresenter(context);
         setLocation(SPUtil.getString(context, "district"));
         hideBack(1);
         changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, true);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.ifree.uu.location.changed");
         registerReceiver(mAllBroad, intentFilter);
+        Intent startIntent = new Intent(getApplicationContext(), UURunService.class);
+        startService(startIntent);
+        initLoad();
+    }
+    private void initLoad() {
+        mUpLoadUUIdPresenter.onCreate();
+        mUpLoadUUIdPresenter.attachView(mUpLoadUUIdView);
+        mUpLoadUUIdPresenter.upLoadUUId("Android",DeviceInfoUtils.getMyUUID(context),uid);
     }
 
+    private ProjectView<UserInfoEntity> mUpLoadUUIdView = new ProjectView<UserInfoEntity>() {
+        @Override
+        public void onSuccess(UserInfoEntity userInfoEntity) {
+            if (userInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,userInfoEntity.getMsg());
+                return;
+            }
+        }
+
+        @Override
+        public void onError(String result) {
+
+        }
+    };
     @Override
     protected void loadData() {
         mUpdatePresenter.onCreate();

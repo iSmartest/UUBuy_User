@@ -139,7 +139,9 @@ public interface RetrofitService {
     @GET(BaseUrl.SEND_CODE_LOGIN)
     Observable<UserInfoEntity> getSearchPhoneCodeLogin(@Query("userPhone") String userPhone,
                                                        @Query("code") String code,
-                                                       @Query("sessionId") String sessionId);
+                                                       @Query("sessionId") String sessionId,
+                                                       @Query("index") String systemName,
+                                                       @Query("uuid") String uuid);
 
     /**
      * 密码登录
@@ -149,7 +151,9 @@ public interface RetrofitService {
      */
     @GET(BaseUrl.USER_PASSWORD_LOGIN)
     Observable<UserInfoEntity> getSearchPassWordLogin(@Query("userPhone") String userPhone,
-                                                      @Query("password") String password);
+                                                      @Query("password") String password,
+                                                      @Query("index") String systemName,
+                                                      @Query("uuid") String uuid);
 
     /**
      * 第三方登录
@@ -164,7 +168,9 @@ public interface RetrofitService {
     Observable<UserInfoEntity> getSearchThirdLogin(@Query("thirdUid") String thirdUid,
                                                    @Field("nickName") String nickName,
                                                    @Query("userIcon") String userIcon,
-                                                   @Query("type") String type);
+                                                   @Query("type") String type,
+                                                   @Query("index") String systemName,
+                                                   @Query("uuid") String uuid);
 
     /**
      * 获取开通城市
@@ -592,4 +598,9 @@ public interface RetrofitService {
      */
     @GET(BaseUrl.CLICK_COUNT)
     Observable<UserInfoEntity> getClickCount(@Query("json") String json);
+
+    @POST(BaseUrl.UPLOAD_UUID)
+    Observable<UserInfoEntity> upLoadUUId(@Query("index") String systemName,
+                                          @Query("uuid") String uuid,
+                                          @Query("uid") String uid);
 }

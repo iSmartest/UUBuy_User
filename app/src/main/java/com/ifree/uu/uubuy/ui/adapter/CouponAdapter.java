@@ -57,7 +57,7 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.CouponView
         }
         holder.mCoupon.setVisibility(View.GONE);
         holder.mReducePrice.setText(couponList.getCouponReducePrice() + "");
-        holder.mAllPrice.setText("单笔" + couponList.getCondition());
+        holder.mAllPrice.setText(couponList.getCondition());
         holder.mTime.setText("有效时间:" + couponList.getSecuritiesTimeZone());
         holder.mStore.setText(couponList.getMsName());
         holder.mType.setText(couponList.getType());

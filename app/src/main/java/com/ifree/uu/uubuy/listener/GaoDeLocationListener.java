@@ -79,10 +79,6 @@ public class GaoDeLocationListener {
                         onQuestResultListener.success(location.getDistrict());
                         SPUtil.putString(context, "district", location.getDistrict());
                     }
-                    //第一版
-//                    SPUtil.putString(context, "townAdCode", location.getAdCode());
-//                    onQuestResultListener.success(location.getDistrict());
-//                    SPUtil.putString(context, "district", location.getDistrict());
                     SPUtil.putString(context, "city", location.getCity());
                     SPUtil.putString(context, "cityCode", location.getCityCode());
                     SPUtil.putString(context, "latitude", location.getLatitude() + "");
@@ -100,10 +96,10 @@ public class GaoDeLocationListener {
                     FIRST_LOCATION = true;
                 } else {
                     if (FIRST_LOCATION == false){
-                        SPUtil.putString(context, "townAdCode", "北京市");
+                        SPUtil.putString(context, "townAdCode", "010");
                         onQuestResultListener.error("北京市");
                     }else {
-                        SPUtil.putString(context, "townAdCode", "海淀区");
+                        SPUtil.putString(context, "townAdCode", "010");
                         onQuestResultListener.error("海淀区");
                     }
                     SPUtil.putString(context, "city", "北京市");
@@ -117,10 +113,10 @@ public class GaoDeLocationListener {
                 FIRST_LOCATION = true;
             } else {
                 if (FIRST_LOCATION == false){
-                    SPUtil.putString(context, "townAdCode", "北京市");
+                    SPUtil.putString(context, "townAdCode", "010");
                     onQuestResultListener.error("北京市");
                 }else {
-                    SPUtil.putString(context, "townAdCode", "海淀区");
+                    SPUtil.putString(context, "townAdCode", "110108");
                     onQuestResultListener.error("海淀区");
                 }
                 SPUtil.putString(context, "city", "北京市");
@@ -134,7 +130,6 @@ public class GaoDeLocationListener {
             }
         }
     };
-
 
     /**
      * 开始定位

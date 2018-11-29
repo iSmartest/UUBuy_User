@@ -15,7 +15,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.HomeEntity;
 import com.ifree.uu.uubuy.ui.activity.FirstClassifyActivity;
-import com.ifree.uu.uubuy.ui.activity.TestActivity;
+import com.ifree.uu.uubuy.ui.activity.WaitSettledActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
@@ -81,7 +81,7 @@ public class AdTypeAdapter extends RecyclerView.Adapter<AdTypeAdapter.AdTypeView
                     MyApplication.openActivity(context, FirstClassifyActivity.class, bundle);
                 }else {
                     bundle.putString("title", mList.getAdTypeTitle());
-                    MyApplication.openActivity(context, TestActivity.class, bundle);
+                    MyApplication.openActivity(context, WaitSettledActivity.class, bundle);
                 }
             }
         });

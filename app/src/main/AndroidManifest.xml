@@ -282,7 +282,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
         <!--测试-->
-        <activity android:name=".ui.activity.TestActivity"
+        <activity android:name=".ui.activity.WaitSettledActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
@@ -422,7 +422,7 @@
 
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="8c6ffdd08c64e50cc055b302"/> <!--  </>值来自开发者平台取得的AppKey-->
+            android:value="6f4c8a1e82d7be1d8197241e"/> <!--  </>值来自开发者平台取得的AppKey-->
 
         <!--Android 7.0相机调用-->
         <provider

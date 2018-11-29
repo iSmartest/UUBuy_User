@@ -2,6 +2,7 @@ package com.ifree.uu.uubuy.mvp.manager;
 
 import android.content.Context;
 
+import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.UpdateEntity;
 import com.ifree.uu.uubuy.mvp.view.RetrofitHelper;
 import com.ifree.uu.uubuy.mvp.view.RetrofitService;
@@ -25,6 +26,7 @@ import com.ifree.uu.uubuy.mvp.entity.OrderEntity;
 import com.ifree.uu.uubuy.mvp.entity.SearchEntity;
 import com.ifree.uu.uubuy.mvp.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.uitls.DeviceInfoUtils;
 
 import okhttp3.MultipartBody;
 import rx.Observable;
@@ -67,15 +69,15 @@ public class DataManager {
     }
 
     public Observable<UserInfoEntity> getSearchPhoneCodeLogin(String userPhone, String code, String sessionId) {
-        return mRetrofitService.getSearchPhoneCodeLogin(userPhone, code, sessionId);
+        return mRetrofitService.getSearchPhoneCodeLogin(userPhone, code, sessionId,"Android",DeviceInfoUtils.getMyUUID(MyApplication.getApplication()));
     }
 
     public Observable<UserInfoEntity> getSearchPassWordLogin(String userPhone, String password) {
-        return mRetrofitService.getSearchPassWordLogin(userPhone, password);
+        return mRetrofitService.getSearchPassWordLogin(userPhone, password,"Android",DeviceInfoUtils.getMyUUID(MyApplication.getApplication()));
     }
 
     public Observable<UserInfoEntity> getSearchThirdLogin(String thirdUid, String nickName, String userIcon, String type) {
-        return mRetrofitService.getSearchThirdLogin(thirdUid, nickName, userIcon, type);
+        return mRetrofitService.getSearchThirdLogin(thirdUid, nickName, userIcon, type,"Android",DeviceInfoUtils.getMyUUID(MyApplication.getApplication()));
     }
 
     public Observable<CityInfoEntity> getSearchCityInfo() {
@@ -216,5 +218,7 @@ public class DataManager {
         return mRetrofitService.getClickCount(json);
     }
 
-
+    public Observable<UserInfoEntity> upLoadUUId(String systemName,String uuid,String uid) {
+        return mRetrofitService.upLoadUUId(systemName,uuid,uid);
+    }
 }

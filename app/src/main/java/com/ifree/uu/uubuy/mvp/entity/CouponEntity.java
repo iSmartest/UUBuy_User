@@ -20,7 +20,7 @@ public class CouponEntity {
             private String msName;
             private String condition;
             private String couponAllPrice;
-            private int couponReducePrice;
+            private float couponReducePrice;
             private String couponDiscount;
             private String securitiesTimeZone;
 
@@ -65,7 +65,7 @@ public class CouponEntity {
                 this.couponAllPrice = couponAllPrice;
             }
 
-            public int getCouponReducePrice() {
+            public float getCouponReducePrice() {
                 return couponReducePrice;
             }
 

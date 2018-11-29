@@ -95,21 +95,26 @@ public class RegisterActivity extends BaseActivity {
                     ToastUtils.makeText(context, "验证码不能为空");
                     return;
                 }
-//                //验证验证码是否正确
-//                if (!inviteCode.equals(mCode)) {
-//                    ToastUtils.makeText(context, "验证码不正确");
-//                    return;
-//                }
                 //验证密码不能为空
                 String password = mRegisterPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(password)) {
                     ToastUtils.makeText(context, "密码不能为空");
                     return;
                 }
+                //验证密码格式是否正确
+                if (!StringUtils.isPwd(password)) {
+                    ToastUtils.makeText(context, "密码格式不正确，请核对后重新输入");
+                    return;
+                }
                 //验证确认密码不能为空
                 String confirmPassword= mSurePassword.getText().toString().trim();
                 if (TextUtils.isEmpty(confirmPassword)) {
                     ToastUtils.makeText(context, "确认密码不能为空");
+                    return;
+                }
+                //验证密码格式是否正确
+                if (!StringUtils.isPwd(confirmPassword)) {
+                    ToastUtils.makeText(context, "确认密码格式不正确，请核对后重新输入");
                     return;
                 }
                 //验证密码和确认密码是否相同

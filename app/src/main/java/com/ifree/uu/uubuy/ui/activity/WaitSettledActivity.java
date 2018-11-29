@@ -1,14 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
-import android.content.res.ColorStateList;
-import android.content.res.XmlResourceParser;
-
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
-
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 
 /**
  * Author：小火
@@ -16,11 +9,11 @@ import java.io.IOException;
  * Created by 2018/9/29 0029
  * Description:
  */
-public class TestActivity extends BaseActivity {
+public class WaitSettledActivity extends BaseActivity {
     private String title;
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_test;
+        return R.layout.activity_wait_settled;
     }
 
     @Override

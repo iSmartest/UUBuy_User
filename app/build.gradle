@@ -76,34 +76,10 @@ android {
             manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
         }
 
-        releaselog { // 正式环境显示log
-            buildConfigField "boolean", "LOG_DEBUG", "true"// 显示Log
-            buildConfigField "String", "API_HOST", "${API_RELEASE_HOST}"
-            minifyEnabled true //是否混淆
-            zipAlignEnabled true//是否设置zip对齐优化
-            shrinkResources true// 移除无用的resource文件
-            //加载默认混淆配置涵
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
-        }
-
         dev { // 开发环境
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "String", "API_HOST", "${API_DEV_HOST}"
             minifyEnabled false
-            //加载默认混淆配置涵
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            manifestPlaceholders = [GAODE_MAP_KEY: "56e3207aaf3e6e583178b1170f9e2f4c"]
-        }
-
-        check { //测试环境
-            buildConfigField "boolean", "LOG_DEBUG", "true" // 显示Log
-            buildConfigField "String", "API_HOST", "${API_TEST_HOST}"
-            minifyEnabled true //是否混淆
-            zipAlignEnabled true//是否设置zip对齐优化
-            shrinkResources true// 移除无用的resource文件
             //加载默认混淆配置涵
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -143,32 +119,29 @@ android {
 
     //配置多版本的apk
     productFlavors {
-        uuBuy{
-            applicationId 'com.ifree.uu.uubuy'
-            dimension "default"}
         baidu {
-            applicationId 'com.ifree.uu.uubuy.baidu'
+            applicationId 'com.ifree.uu.uubuy'
             dimension "default"}   //百度
         yingyongbao {
-            applicationId 'com.ifree.uu.uubuy.yingyongbao'
+            applicationId 'com.ifree.uu.uubuy'
             dimension "default" }  //应用宝
         huawei {
-            applicationId 'com.ifree.uu.uubuy.huawei'
+            applicationId 'com.ifree.uu.uubuy'
             dimension "default" }  //华为
         qihu360 {
-            applicationId 'com.ifree.uu.uubuy.qihu360'
+            applicationId 'com.ifree.uu.uubuy'
             dimension "default" }  //360
         oppo {
-            applicationId 'com.ifree.uu.uubuy.oppo'
+            applicationId 'com.ifree.uu.uubuy'
             dimension "default" }  //oppo
         vivo {
-            applicationId 'com.ifree.uu.uubuy.vivo'
+            applicationId 'com.ifree.uu.uubuy'
             dimension "default" }  //vivo
         xiaomi {
-            applicationId 'com.ifree.uu.uubuy.xiaomi'
+            applicationId 'com.ifree.uu.uubuy'
             dimension "default" }  //小米
         wandoujia {
-            applicationId 'com.ifree.uu.uubuy.wandoujia'
+            applicationId 'com.ifree.uu.uubuy'
             dimension "default" }  //豌豆荚
     }
 
