@@ -29,7 +29,7 @@ public class DeviceInfoUtils {
             if (TextUtils.isEmpty(uniqueId)){
                 uniqueId = getUUID(context);
             }
-            SPUtil.putString(context,"uuid","");
+            SPUtil.putString(context,"uuid",uniqueId);
         }else {
             uniqueId = uuid;
         }

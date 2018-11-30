@@ -63,8 +63,7 @@ public class CouponCenterAdapter extends RecyclerView.Adapter<CouponCenterAdapte
                 holder.linearLayout.setBackgroundResource(R.drawable.coupon_store);
                 break;
         }
-        int couponReducePrice = (int)couponList.getCouponReducePrice();
-        holder.mReducePrice.setText(couponReducePrice + "");
+        holder.mReducePrice.setText(couponList.getCouponReducePrice() + "");
         holder.mAllPrice.setText(couponList.getCondition());
         holder.mTime.setText("有效时间" + couponList.getSecuritiesTimeZone());
         holder.mStore.setText(couponList.getMsName());

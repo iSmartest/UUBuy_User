@@ -49,6 +49,7 @@ public class PictureQualityActivity extends BaseActivity {
             ivModelIntelligence.setVisibility(View.VISIBLE);
             ivModelHighQuality.setVisibility(View.GONE);
             ivModelCommon.setVisibility(View.GONE);
+            SPUtil.putString(context,"pictureModel","1");
         }
     }
 

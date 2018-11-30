@@ -70,8 +70,10 @@ public class GlideImageLoader extends ImageLoader {
         }else if (SPUtil.getString(context,"pictureModel").equals("3")) {
             switch (NetUtil.getNetWorkStatus(context)) {
                 case Constant.NETWORK_WIFI:
-                case Constant.NETWORK_CLASS_3_G:
                 case Constant.NETWORK_CLASS_4_G:
+                    imagePath = image + "?w=1200";
+                    break;
+                case Constant.NETWORK_CLASS_3_G:
                     imagePath = image + "?w=1000";
                     break;
                 case Constant.NETWORK_CLASS_2_G:
@@ -84,16 +86,14 @@ public class GlideImageLoader extends ImageLoader {
         }else {
             switch (NetUtil.getNetWorkStatus(context)) {
                 case Constant.NETWORK_WIFI:
-                    imagePath = image;
+                case Constant.NETWORK_CLASS_4_G:
+                    imagePath = image + "?w=1200";
                     break;
                 case Constant.NETWORK_CLASS_2_G:
                     imagePath = image + "?w=500";
                     break;
                 case Constant.NETWORK_CLASS_3_G:
-                    imagePath = image + "?w=800";
-                    break;
-                case Constant.NETWORK_CLASS_4_G:
-                    imagePath = image + "?w=1200";
+                    imagePath = image + "?w=1000";
                     break;
                 case Constant.NETWORK_CLASS_UNKNOWN:
                     imagePath = image;

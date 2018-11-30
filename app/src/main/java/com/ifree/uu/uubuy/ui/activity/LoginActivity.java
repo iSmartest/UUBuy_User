@@ -87,7 +87,7 @@ public class LoginActivity extends BaseActivity {
     private SHARE_MEDIA platform;
     private String mCode = "";
     private String sessionId = "";
-    private int isCodeOrPassword = 1;//默认验证码登录
+    private int isCodeOrPassword = 0;//默认密码登录
     private boolean isChoose = true;
 
     @Override

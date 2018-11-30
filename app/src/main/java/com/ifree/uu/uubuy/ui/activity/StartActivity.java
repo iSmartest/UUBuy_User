@@ -17,7 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.config.Constant;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
-import com.ifree.uu.uubuy.mvp.presenter.UpLoadUUIdPresenter;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StatusBarUtil;
 
@@ -35,22 +34,19 @@ public class StartActivity extends AppCompatActivity {
     private long mStartTime;// 开始时间
     private boolean IsFirst;//第一次进入应用
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
-    private UpLoadUUIdPresenter mUpLoadUUIdPresenter;
-    private String uid = "";
     protected Context context;
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case 1:
-//                    long loadingTime = System.currentTimeMillis() - mStartTime;// 计算一下总共花费的时间
-//                    if (loadingTime < SHOW_TIME_MIN) {
-//                        // 如果比最小显示时间还短，就延时进入MainActivity，否则直接进入
-//                        mHandler.postDelayed(goToMainActivity, SHOW_TIME_MIN - loadingTime);
-//                    } else {
-//                        mHandler.post(goToMainActivity);
-//                    }
-                    mHandler.post(goToMainActivity);
+                    long loadingTime = System.currentTimeMillis() - mStartTime;// 计算一下总共花费的时间
+                    if (loadingTime < SHOW_TIME_MIN) {
+                        // 如果比最小显示时间还短，就延时进入MainActivity，否则直接进入
+                        mHandler.postDelayed(goToMainActivity, SHOW_TIME_MIN - loadingTime);
+                    } else {
+                        mHandler.post(goToMainActivity);
+                    }
                     break;
                 default:
                     break;
@@ -83,7 +79,6 @@ public class StartActivity extends AppCompatActivity {
         StatusBarUtil.fullScreen(StartActivity.this);
         mStartTime = System.currentTimeMillis();//记录开始时间1
         context = this;
-        uid = SPUtil.getString(context,"uid");
         checkPermission();
     }
 

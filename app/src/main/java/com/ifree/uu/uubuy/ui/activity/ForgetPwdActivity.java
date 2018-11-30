@@ -66,7 +66,7 @@ public class ForgetPwdActivity extends BaseActivity{
     public void onClickView(View v) {
         String userPhone = mForgetPhone.getText().toString().trim();//电话号码
         switch (v.getId()){
-            case R.id.tv_register_code:
+            case R.id.tv_forget_code:
                 if (TextUtils.isEmpty(userPhone)) {
                     ToastUtils.makeText(context, "电话号码不能为空");
                     return;

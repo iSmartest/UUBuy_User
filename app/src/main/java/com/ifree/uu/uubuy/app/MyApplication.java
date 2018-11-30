@@ -34,9 +34,6 @@ public class MyApplication extends Application {
         initJPush();
         PlatformConfig.setWeixin("wx70539901dcad8e3d","e97ee6fac5e3d9e9da31b02450273f55");
         PlatformConfig.setQQZone("1107863232","GLfhGhsWkLDSGpC2");
-        //崩溃错误日志写入本地文档
-//        CrashHandler catchException = new CrashHandler(this);
-//        Thread.setDefaultUncaughtExceptionHandler(catchException);
     }
 
     public static  void initJPush(){

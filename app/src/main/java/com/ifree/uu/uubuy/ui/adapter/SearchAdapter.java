@@ -65,6 +65,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     public void onBindViewHolder(@NonNull final SearchViewHolder holder, int position) {
         final SearchEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
         Map<String,String> spMap = SPUtil.getMap(context,"key");
+        holder.tvIsOver.setVisibility(View.GONE);
         switch (activitiesList.getActivitiesType()){
             case "0":
                 holder.mMarket.setVisibility(View.VISIBLE);
@@ -252,6 +253,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         TextView mOldPrice;
         @BindView(R.id.tv_search_commodity_surplus)
         TextView mSurplus;
+        @BindView(R.id.tv_is_over)
+        TextView tvIsOver;
         public SearchViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

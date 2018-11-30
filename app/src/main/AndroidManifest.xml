@@ -301,11 +301,6 @@
             android:name="UMENG_APPKEY"
             android:value="5b7e4f29f29d987782000064" />
 
-        <!-- 友盟多渠道打包 -->
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" />
-
         <!--微信 QQ登录、分享-->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -442,6 +437,26 @@
                 <action android:name="teprinciple.update"/>
             </intent-filter>
         </receiver>
+
+        <!-- bugly配置start-->
+        <!-- 配置APP ID -->
+        <meta-data
+            android:name="BUGLY_APPID"
+            android:value="b7ca1dc253" />
+        <!-- 配置APP版本号 -->
+        <meta-data
+            android:name="BUGLY_APP_VERSION"
+            android:value="1.0.0" />
+        <!-- 配置APP渠道号 -->
+        <meta-data
+            android:name="BUGLY_APP_CHANNEL"
+            android:value="${BUGLY_CHANNEL_VALUE}" />
+        <!-- 配置Bugly调试模式（true或者false）-->
+        <meta-data
+            android:name="BUGLY_ENABLE_DEBUG"
+            android:value="false" />
+        <!--bugly配置end-->
+
         <meta-data
             android:name="design_width_in_dp"
             android:value="360"/>

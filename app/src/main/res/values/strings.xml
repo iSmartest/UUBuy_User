@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">UU购</string>
-
     <string name="loading_icon" translatable="false">加载中图</string>
     <string name="loading" translatable="false">加载中</string>
     <string name="notifyTitle" translatable="false">提示</string>
@@ -28,7 +27,6 @@
     <string name="cancel_enter" translatable="false">确定取消报名吗？</string>
     <string name="cancel_collection" translatable="false">确定取消收藏吗？</string>
     <string name="sure_to_do_sth" translatable="false">您确定要%s吗？</string>
-
     <string name="want_good_praise" translatable="false">我要好评</string>
     <string name="version_update" translatable="false">版本更新</string>
     <string name="version_introduction" translatable="false">版本介绍</string>

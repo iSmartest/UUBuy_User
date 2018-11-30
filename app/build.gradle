@@ -24,6 +24,7 @@ android {
     def API_TEST_HOST = "\"http://192.168.1.8:8080/uugo-user/app/\""
 
     defaultConfig {
+        applicationId 'com.ifree.uu.uubuy'
         minSdkVersion 16
         targetSdkVersion 27
         multiDexEnabled true
@@ -35,6 +36,10 @@ android {
         println("versionCode = " + versionCode + " versionName = " + versionName)
         buildConfigField("String", "API_HOST", "${API_RELEASE_HOST}")
 
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
     }
     signingConfigs {
         release {//发布版本的签名配置
@@ -98,16 +103,11 @@ android {
                 if (!project.hasProperty('FILE_NAME')) {
                     if (variant.buildType.name == "release") {
                         // 输出apk名称为app_v1.0.0_2015-06-15_playStore.apk  _${variant.productFlavors[0].name}
-                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}_${variant.productFlavors[0].name}.apk"
-                    } else if (variant.buildType.name == "releaselog") {
-                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}_${variant.productFlavors[0].name}.apk"
-                    } else if (variant.buildType.name == "check") {
-                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}_${variant.productFlavors[0].name}.apk"
-                    } else if (variant.buildType.name == "debug") {
-                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}_${variant.productFlavors[0].name}.apk"
+                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
+                    }  else if (variant.buildType.name == "debug") {
+                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
                     } else if (variant.buildType.name == "dev") {
-//                        fileName = outputFile.name
-                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}_${variant.productFlavors[0].name}.apk"
+                        fileName = "uubuy_v${defaultConfig.versionName}_${releaseTime()}_${variant.buildType.name}.apk"
                     }
                 } else {
                     fileName = FILE_NAME
@@ -120,40 +120,48 @@ android {
     //配置多版本的apk
     productFlavors {
         baidu {
-            applicationId 'com.ifree.uu.uubuy'
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "BaiDu"]
             dimension "default"}   //百度
         yingyongbao {
-            applicationId 'com.ifree.uu.uubuy'
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "YingYongBao"]
             dimension "default" }  //应用宝
         huawei {
-            applicationId 'com.ifree.uu.uubuy'
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "HuaWei"]
             dimension "default" }  //华为
         qihu360 {
-            applicationId 'com.ifree.uu.uubuy'
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "Qihu360"]
             dimension "default" }  //360
         oppo {
-            applicationId 'com.ifree.uu.uubuy'
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "Oppo"]
             dimension "default" }  //oppo
         vivo {
-            applicationId 'com.ifree.uu.uubuy'
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "Vivo"]
             dimension "default" }  //vivo
         xiaomi {
-            applicationId 'com.ifree.uu.uubuy'
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "XiaoMi"]
             dimension "default" }  //小米
         wandoujia {
-            applicationId 'com.ifree.uu.uubuy'
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "WanDouJia"]
             dimension "default" }  //豌豆荚
+        B91 {
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "91"]
+            dimension "default" }  //91助手
+        AnZhuo {
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "AnZhuo"]
+            dimension "default" }  //安卓市场
+        AnZhi {
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE: "AnZhi"]
+            dimension "default" }  //安智市场
     }
 
     productFlavors.all {
-        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        flavor -> flavor.manifestPlaceholders = [BUGLY_CHANNEL_VALUE: name]
     }
 }
 
 def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
-
 
 allprojects {
     gradle.projectsEvaluated {
@@ -208,4 +216,6 @@ dependencies {
     implementation files('libs/jcore-android_v1.0.0.jar')
     implementation files('libs/libammsdk.jar')
 
+    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
 }

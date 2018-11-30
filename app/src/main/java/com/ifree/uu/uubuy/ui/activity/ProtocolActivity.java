@@ -25,11 +25,7 @@ public class ProtocolActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        if (type.equals("0")){
-            text.setText(readStream(getResources().openRawResource(R.raw.loginknowledge)));
-        }else {
-            text.setText(readStream(getResources().openRawResource(R.raw.questionknowledge)));
-        }
+        text.setText(readStream(getResources().openRawResource(R.raw.questionknowledge)));
     }
 
     @Override

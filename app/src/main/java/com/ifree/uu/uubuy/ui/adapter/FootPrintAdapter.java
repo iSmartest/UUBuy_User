@@ -72,7 +72,7 @@ public class FootPrintAdapter extends BaseAdapter {
         viewHolder.mPrice.setText("￥"+mList.getActivitiesPresentPrice());
         viewHolder.mOldPrice.setText("￥"+mList.getActivitiesOriginalPrice());
         viewHolder.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-        viewHolder.mSurplus.setText(mList.getActivitiesSurplusNum());
+        viewHolder.mSurplus.setText(mList.getActivitiesSurplusNum() + "%");
         if (mList.getIsOver().equals("0")){
             viewHolder.mIsOver.setVisibility(View.VISIBLE);
         }else {

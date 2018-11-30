@@ -1,7 +1,11 @@
 package com.ifree.uu.uubuy.uitls;
 
 import android.content.Context;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
+
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.config.BaseConfig;
 import com.ifree.uu.uubuy.config.CommonLog;
@@ -187,5 +191,18 @@ public class StringUtils {
         String result;
         result = str.substring(0,4) + "."+ str.substring(5,7) + "."+ str.substring(8,10);
         return result;
+    }
+
+
+    public static SpannableString priceFormat (String str){
+        if (str.substring(str.indexOf(".")).equals("00")){
+            SpannableString spanString = new SpannableString(str);
+            return spanString;
+        }else {
+            SpannableString spanString = new SpannableString(str);
+            AbsoluteSizeSpan span = new AbsoluteSizeSpan(12);
+            spanString.setSpan(span, str.indexOf("."), str.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            return spanString;
+        }
     }
 }
