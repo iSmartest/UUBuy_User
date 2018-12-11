@@ -29,6 +29,8 @@ public class CommodityListEntity {
             private String commodityType;
             private String commodityName;
             private String commodityDes;
+            private String commodityCondition;
+            private String activityContion;
 
             public String getCommodityOriginalPrice() {
                 return commodityOriginalPrice;
@@ -60,6 +62,18 @@ public class CommodityListEntity {
 
             public String getCommodityName() {
                 return commodityName;
+            }
+
+            public String getCommodityDes() {
+                return commodityDes;
+            }
+
+            public String getCommodityCondition() {
+                return commodityCondition;
+            }
+
+            public String getActivityContion() {
+                return activityContion;
             }
         }
 

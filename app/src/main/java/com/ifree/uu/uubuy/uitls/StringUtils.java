@@ -62,12 +62,29 @@ public class StringUtils {
      * @return
      */
     public static boolean isPwd(String pwd) {
-        String check = "^[0-9a-zA-Z]{6,16}$";//'/^[a-zA-Z0-9]{6,10}$/'
+        String check = "^(?![\\d]+$)(?![a-zA-Z]+$)(?![^\\da-zA-Z]+$).{6,20}$";
         Pattern regex = Pattern.compile(check);
         Matcher matcher = regex.matcher(pwd);
         boolean isMatched = matcher.matches();
         return isMatched;
     }
+
+    /**
+     * 判断密码格式是否正确
+     * @param pwd
+     * @return
+     */
+    public static boolean isPwdFirstWord(String pwd) {
+        char firstWord = pwd.charAt(0);
+        if(((firstWord>='a'&&firstWord<='z') || (firstWord>='A'&&firstWord<='Z')))
+        {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
     /**
      * 判断字符串是否符合手机号码的正则表达式规则
      */

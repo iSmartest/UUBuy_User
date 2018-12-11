@@ -12,6 +12,8 @@ import com.ifree.uu.uubuy.BuildConfig;
 public class BaseUrl {
 
     public static final String HTTP = BuildConfig.API_HOST;
+
+    public static final String ShARE_URL = "http://a.app.qq.com/o/simple.jsp?pkgname=com.ifree.uu.uubuy";
     //获取验证码
     public static final String SEND_CODE = "sendCode";
     //注册

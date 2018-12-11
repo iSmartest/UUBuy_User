@@ -97,8 +97,15 @@ public class ModifyPasswordActivity extends BaseActivity {
                     ToastUtils.makeText(context, "请输入原密码！");
                     return;
                 }
+
                 if (TextUtils.isEmpty(newPassword)) {
                     ToastUtils.makeText(context, "请输入新密码！");
+                    return;
+                }
+
+                //验证密码格式是否正确
+                if (newPassword.length()<6 || newPassword.length()>16) {
+                    ToastUtils.makeText(context, "密码为6-16位组成");
                     return;
                 }
                 modifyPassword(userPhone,inviteCode,oldPassword,newPassword);

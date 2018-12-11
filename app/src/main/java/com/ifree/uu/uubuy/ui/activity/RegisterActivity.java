@@ -102,19 +102,21 @@ public class RegisterActivity extends BaseActivity {
                     return;
                 }
                 //验证密码格式是否正确
-                if (!StringUtils.isPwd(password)) {
-                    ToastUtils.makeText(context, "密码格式不正确，请核对后重新输入");
+                if (password.length()<6 || password.length()>16) {
+                    ToastUtils.makeText(context, "密码为6-16位组成");
                     return;
                 }
+
                 //验证确认密码不能为空
                 String confirmPassword= mSurePassword.getText().toString().trim();
+
                 if (TextUtils.isEmpty(confirmPassword)) {
                     ToastUtils.makeText(context, "确认密码不能为空");
                     return;
                 }
                 //验证密码格式是否正确
-                if (!StringUtils.isPwd(confirmPassword)) {
-                    ToastUtils.makeText(context, "确认密码格式不正确，请核对后重新输入");
+                if (confirmPassword.length()<6 || confirmPassword.length()>16) {
+                    ToastUtils.makeText(context, "密码为6-16位组成");
                     return;
                 }
                 //验证密码和确认密码是否相同

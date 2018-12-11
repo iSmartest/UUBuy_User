@@ -170,11 +170,7 @@ public class LoginActivity extends BaseActivity {
                         ToastUtils.makeText(context, "密码不能为空");
                         return;
                     }
-                    //验证密码格式是否正确
-                    if (!StringUtils.isPwd(password)) {
-                        ToastUtils.makeText(context, "密码格式不正确，请核对后重新输入");
-                        return;
-                    }
+
                     if (!isChoose) {
                         ToastUtils.makeText(context, "请阅读并同意《UU购登录协议》");
                         return;

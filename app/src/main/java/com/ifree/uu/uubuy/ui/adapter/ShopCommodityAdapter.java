@@ -51,7 +51,7 @@ public class ShopCommodityAdapter extends RecyclerView.Adapter<ShopCommodityAdap
         final CommodityListEntity.DataBean.CommodityList commodityList = mList.get(position);
         holder.mCommodityName.setText(commodityList.getCommodityName());
         GlideImageLoader.imageLoader(context,commodityList.getCommodityPic(),holder.mCommodityPicture);
-//        holder.mCommodityDec.setText(commodityList.get);
+        holder.mCommodityDec.setText(commodityList.getActivityContion());
         holder.mPrice.setText("￥"+commodityList.getCommodityNowPrice());
         holder.mOldPrice.setText("￥"+commodityList.getCommodityOriginalPrice());
         holder.mOldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);

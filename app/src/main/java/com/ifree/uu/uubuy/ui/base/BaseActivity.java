@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
  * Created by 2018/8/15.
  * Description:
  */
-public abstract class BaseActivity extends FragmentActivity{
+public abstract class BaseActivity extends FragmentActivity {
     protected Context context;
     private BaseFragment lastFragment;
     public static boolean anInt = true;
@@ -74,6 +74,7 @@ public abstract class BaseActivity extends FragmentActivity{
     ImageView mSetting;
     @BindView(R.id.ly_restart_location)
     LinearLayout mRestartLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,11 +84,11 @@ public abstract class BaseActivity extends FragmentActivity{
         StatusBarUtil.transparencyBar(this); //设置状态栏全透明
         StatusBarUtil.StatusBarLightMode(this); //设置白底黑字
         AppManager.addActivity(this);
-        latitude = SPUtil.getString(context,"latitude");
-        longitude = SPUtil.getString(context,"longitude");
-        townAdCode = SPUtil.getString(context,"townAdCode");
-        address = SPUtil.getString(context,"address");
-        uid = SPUtil.getString(context,"uid");
+        latitude = SPUtil.getString(context, "latitude");
+        longitude = SPUtil.getString(context, "longitude");
+        townAdCode = SPUtil.getString(context, "townAdCode");
+        address = SPUtil.getString(context, "address");
+        uid = SPUtil.getString(context, "uid");
         initView();//实例化
         loadData();//加载数据
     }
@@ -99,6 +100,7 @@ public abstract class BaseActivity extends FragmentActivity{
         super.onPause();
         anInt = false;
     }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -111,6 +113,7 @@ public abstract class BaseActivity extends FragmentActivity{
         anInt = false;
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -189,16 +192,20 @@ public abstract class BaseActivity extends FragmentActivity{
         Resources resource = context.getResources();
         ColorStateList csl1 = resource.getColorStateList(R.color.app_main_default);
         ColorStateList csl2 = resource.getColorStateList(R.color.title_color);
-        if (position==4){
-            lay_bg.setBackgroundColor(ContextCompat.getColor(context,R.color.text_green));
+        if (position == 4) {
+            lay_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.text_green));
             mTitleText.setTextColor(csl1);
             mMessage.setImageResource(R.drawable.message_write);
-        }else if (position==7){
-            lay_bg.setBackgroundColor(ContextCompat.getColor(context,R.color.text_green));
+        } else if (position == 7) {
+            lay_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.text_green));
             mTitleText.setTextColor(csl1);
             mMessage.setImageResource(R.drawable.base_message);
-        }else {
-            lay_bg.setBackgroundColor(ContextCompat.getColor(context,R.color.app_main_default));
+        } else if (position == 9){
+            lay_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent));
+            mTitleText.setTextColor(csl1);
+            ivBack.setImageResource(R.drawable.back_write);
+        } else {
+            lay_bg.setBackgroundColor(ContextCompat.getColor(context, R.color.app_main_default));
             mTitleText.setTextColor(csl2);
             mMessage.setImageResource(R.drawable.base_message);
         }
@@ -208,7 +215,7 @@ public abstract class BaseActivity extends FragmentActivity{
                 finish();
             }
         });
-        switch (position){
+        switch (position) {
             case 1://定位、搜索、消息
                 mLeft.setVisibility(View.VISIBLE);
                 ivBack.setVisibility(View.GONE);
@@ -282,7 +289,7 @@ public abstract class BaseActivity extends FragmentActivity{
                 mRightText.setVisibility(View.VISIBLE);
                 mQuestion.setVisibility(View.VISIBLE);
                 break;
-             case 7://返回键、标题、问题，标题颜色改变
+            case 7://返回键、标题、问题，标题颜色改变
                 mLeft.setVisibility(View.VISIBLE);
                 ivBack.setVisibility(View.VISIBLE);
                 mLocation.setVisibility(View.GONE);
@@ -296,7 +303,7 @@ public abstract class BaseActivity extends FragmentActivity{
                 mRightText.setVisibility(View.GONE);
                 mQuestion.setVisibility(View.VISIBLE);
                 break;
-                case 8://返回键、搜索
+            case 8://返回键、搜索
                 mLeft.setVisibility(View.VISIBLE);
                 ivBack.setVisibility(View.VISIBLE);
                 mLocation.setVisibility(View.GONE);
@@ -304,7 +311,15 @@ public abstract class BaseActivity extends FragmentActivity{
                 mTitleText.setVisibility(View.GONE);
                 mBaseSearch.setVisibility(View.VISIBLE);
                 mRight.setVisibility(View.GONE);
-
+                break;
+            case 9://返回键、标题、标题颜色改变
+                mLeft.setVisibility(View.VISIBLE);
+                ivBack.setVisibility(View.VISIBLE);
+                mLocation.setVisibility(View.GONE);
+                mCenter.setVisibility(View.VISIBLE);
+                mTitleText.setVisibility(View.VISIBLE);
+                mBaseSearch.setVisibility(View.GONE);
+                mRight.setVisibility(View.GONE);
                 break;
         }
     }
@@ -313,6 +328,7 @@ public abstract class BaseActivity extends FragmentActivity{
         TextView titleTv = findViewById(R.id.tv_base_titleText);
         titleTv.setText(string);
     }
+
     public void setLocation(String string) {
         TextView tvLocation = findViewById(R.id.tv_city_location);
         tvLocation.setText(string);

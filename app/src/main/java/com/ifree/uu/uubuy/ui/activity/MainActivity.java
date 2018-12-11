@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.dialog.OpenActivitiesDialog;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
 import com.ifree.uu.uubuy.mvp.entity.UpdateEntity;
 import com.ifree.uu.uubuy.mvp.presenter.UpdatePresenter;
@@ -57,6 +58,7 @@ public class MainActivity extends BaseActivity {
     private String updataAddress, versionName, updataLog;
     private int versionCode;
     private boolean force = false;
+    private OpenActivitiesDialog openActivitiesDialog;
     @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
         @Override
@@ -93,6 +95,14 @@ public class MainActivity extends BaseActivity {
         keyWord.setCursorVisible(false);
         keyWord.setFocusable(false);
         keyWord.setFocusableInTouchMode(false);
+        openActivitiesDialog = new OpenActivitiesDialog(context, new OpenActivitiesDialog.Callback() {
+            @Override
+            public void sure() {
+                MyApplication.openActivity(context,UUActivitiesActivity.class);
+            }
+        });
+
+        openActivitiesDialog.show();
     }
 
     ProjectView<UpdateEntity> mUpdateView = new ProjectView<UpdateEntity>() {

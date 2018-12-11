@@ -97,14 +97,19 @@ public class ForgetPwdActivity extends BaseActivity{
                     return;
                 }
                 //验证验证码是否正确
-//                if (!passPin.equals(mCode)) {
-//                    ToastUtils.makeText(context, "验证码不正确");
-//                    return;
-//                }
+                if (!passPin.equals(mCode)) {
+                    ToastUtils.makeText(context, "验证码不正确");
+                    return;
+                }
                 //验证密码不能为空
                 String password = mForgetPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(password)) {
                     ToastUtils.makeText(context, "密码不能为空");
+                    return;
+                }
+                //验证密码格式是否正确
+                if (password.length()<6 || password.length()>16) {
+                    ToastUtils.makeText(context, "密码为6-16位组成");
                     return;
                 }
                 //验证确认密码不能为空
@@ -113,16 +118,19 @@ public class ForgetPwdActivity extends BaseActivity{
                     ToastUtils.makeText(context, "确认密码不能为空");
                     return;
                 }
+
+                //验证密码格式是否正确
+                if (confirmPassword.length()<6 || confirmPassword.length()>16) {
+                    ToastUtils.makeText(context, "密码为6-16位组成");
+                    return;
+                }
+
                 //验证密码和确认密码是否相同
                 if (!password.equals(confirmPassword)) {
                     ToastUtils.makeText(context, "两次输入密码不一致");
                     return;
                 }
-                //验证密码格式是否正确
-                if (!StringUtils.isPwd(password)) {
-                    ToastUtils.makeText(context, "密码格式不正确，请核对后重新输入");
-                    return;
-                }
+
                 findPassword(userPhone, password,passPin);
                 break;
         }

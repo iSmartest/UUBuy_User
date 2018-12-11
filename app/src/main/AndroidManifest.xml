@@ -101,6 +101,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
+        <!--UU活动-->
+        <activity android:name=".ui.activity.UUActivitiesActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
         <!--选择热门城市-->
         <activity android:name=".ui.activity.SelectHotCityActivity"
             android:screenOrientation="portrait"

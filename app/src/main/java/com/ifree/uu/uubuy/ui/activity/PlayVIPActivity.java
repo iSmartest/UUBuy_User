@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
 import com.ifree.uu.uubuy.mvp.entity.GroupEntity;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
@@ -168,7 +169,7 @@ public class PlayVIPActivity extends BaseActivity {
                             .withTitle("您的好友"+userName+"邀请您加入【UU购】")
                             .withText("赶快下载体验【UU购】APP！")
                             .withMedia(new UMImage(context, R.mipmap.app_icon))
-                            .withTargetUrl("http://m.uugood.cn:8081/download.html")
+                            .withTargetUrl(BaseUrl.ShARE_URL)
                             .setCallback(umShareListener)
                             .open(config);
                 }else {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.config.BaseUrl;
 import com.ifree.uu.uubuy.mvp.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.mvp.presenter.CollectionPresenter;
@@ -289,7 +290,7 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
                         .withTitle("您的好友"+SPUtil.getString(context,"nickName") +"邀请您加入【UU购】")
                         .withText("赶快下载体验【UU购】APP！")
                         .withMedia(new UMImage(context, R.mipmap.app_icon))
-                        .withTargetUrl("http://m.uugood.cn:8081/download.html")
+                        .withTargetUrl(BaseUrl.ShARE_URL)
                         .setCallback(umShareListener)
                         .open(config);
                 break;
