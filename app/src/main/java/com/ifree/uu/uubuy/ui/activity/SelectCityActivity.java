@@ -1,18 +1,24 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.mvp.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.ui.adapter.SelectCityAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+
+import static com.ifree.uu.uubuy.config.Constant.SELECT_AREA_REQUEST;
 
 /**
  * Created by 小火
@@ -43,7 +49,7 @@ public class SelectCityActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("area",(Serializable) mList.get(position).getTownList());
                 bundle.putString("city",mList.get(position).getCity());
-                MyApplication.openActivity(context,SelectAreaActivity.class,bundle);
+                MyApplication.openActivityForResult(SelectCityActivity.this, SelectAreaActivity.class, bundle,SELECT_AREA_REQUEST);
             }
         });
     }
@@ -52,12 +58,20 @@ public class SelectCityActivity extends BaseActivity {
     protected void initView() {
         hideBack(5);
         setTitleText("选择城市");
-        MyApplication.addActivity(SelectCityActivity.this);
         mList = getIntent().getParcelableArrayListExtra("city");
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new SelectCityAdapter(context,mList);
         recyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SELECT_AREA_REQUEST && resultCode == Activity.RESULT_OK){
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
     }
 }

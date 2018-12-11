@@ -1,5 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +15,10 @@ import com.ifree.uu.uubuy.ui.base.BaseActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
 import butterknife.BindView;
+
+import static com.ifree.uu.uubuy.config.Constant.SELECT_CITY_REQUEST;
 
 /**
  * Author: 小火
@@ -42,7 +47,7 @@ public class SelectProvinceActivity extends BaseActivity {
                 }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("city",(Serializable) mList.get(position).getCityList());
-                MyApplication.openActivity(context,SelectCityActivity.class,bundle);
+                MyApplication.openActivityForResult(SelectProvinceActivity.this, SelectCityActivity.class, bundle,SELECT_CITY_REQUEST);
             }
         });
     }
@@ -51,12 +56,20 @@ public class SelectProvinceActivity extends BaseActivity {
     protected void initView() {
         hideBack(5);
         setTitleText("选择城市");
-        MyApplication.addActivity(SelectProvinceActivity.this);
         mList = getIntent().getParcelableArrayListExtra("province");
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         mAdapter = new SelectProvinceAdapter(context,mList);
         recyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SELECT_CITY_REQUEST && resultCode == Activity.RESULT_OK){
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
     }
 }

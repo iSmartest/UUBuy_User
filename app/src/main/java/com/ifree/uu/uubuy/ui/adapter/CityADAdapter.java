@@ -19,8 +19,8 @@ import com.ifree.uu.uubuy.mvp.entity.HomeEntity;
 import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
 import com.ifree.uu.uubuy.ui.activity.MarketActivity;
+import com.ifree.uu.uubuy.ui.activity.ShopActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
-import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
@@ -100,21 +100,21 @@ public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADVi
                     switch (cityADList.getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
                         case "1":
                             if (cityADList.getCityADType().equals("1")) {
-                                MyApplication.openActivity(context, StoreActivity.class, bundle);
+                                MyApplication.openActivity(context, ShopActivity.class, bundle);
                             } else {
                                 MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
                             }
                             break;
                         case "2"://超市
                             if (cityADList.getCityADType().equals("1")) {
-                                MyApplication.openActivity(context, StoreActivity.class, bundle);
+                                MyApplication.openActivity(context, ShopActivity.class, bundle);
                             } else {
                                 MyApplication.openActivity(context, MarketActivity.class, bundle);
                             }
                             break;
                         case "3":
                             if (cityADList.getCityADType().equals("1")) {
-                                MyApplication.openActivity(context, StoreActivity.class, bundle);
+                                MyApplication.openActivity(context, ShopActivity.class, bundle);
                             } else {
                                 MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
                             }

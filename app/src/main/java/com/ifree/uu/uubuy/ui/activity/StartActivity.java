@@ -17,8 +17,13 @@ import android.support.v7.app.AppCompatActivity;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.config.Constant;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
+import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.mvp.presenter.UpLoadUUIdPresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
+import com.ifree.uu.uubuy.uitls.DeviceInfoUtils;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.StatusBarUtil;
+import com.ifree.uu.uubuy.uitls.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +35,7 @@ import java.util.List;
  * Description:
  */
 public class StartActivity extends AppCompatActivity {
+    private UpLoadUUIdPresenter mUpLoadUUIdPresenter;
     private static final int SHOW_TIME_MIN = 1000;// 最小显示时间
     private long mStartTime;// 开始时间
     private boolean IsFirst;//第一次进入应用
@@ -60,13 +66,12 @@ public class StartActivity extends AppCompatActivity {
         public void run() {
             IsFirst = SPUtil.getBoolean(StartActivity.this, Constant.FIRST_COME, true);
             if (IsFirst) {
-                startActivity(new Intent(StartActivity.this,
-                        GuideActivity.class));
+                startActivity(new Intent(StartActivity.this,GuideActivity.class));
                 SPUtil.putBoolean(StartActivity.this, Constant.FIRST_COME, false);
                 finish();
             } else {
-                startActivity(new Intent(StartActivity.this,
-                        MainActivity.class));
+                startActivity(new Intent(StartActivity.this, MainActivity.class));
+                initLoad();
                 finish();
             }
         }
@@ -79,9 +84,30 @@ public class StartActivity extends AppCompatActivity {
         StatusBarUtil.fullScreen(StartActivity.this);
         mStartTime = System.currentTimeMillis();//记录开始时间1
         context = this;
+        mUpLoadUUIdPresenter = new UpLoadUUIdPresenter(context);
         checkPermission();
     }
 
+    private void initLoad() {
+        mUpLoadUUIdPresenter.onCreate();
+        mUpLoadUUIdPresenter.attachView(mUpLoadUUIdView);
+        mUpLoadUUIdPresenter.upLoadUUId("Android",DeviceInfoUtils.getMyUUID(context),SPUtil.getString(context,"uid"));
+    }
+
+    private ProjectView<UserInfoEntity> mUpLoadUUIdView = new ProjectView<UserInfoEntity>() {
+        @Override
+        public void onSuccess(UserInfoEntity userInfoEntity) {
+            if (userInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,userInfoEntity.getMsg());
+                return;
+            }
+        }
+
+        @Override
+        public void onError(String result) {
+
+        }
+    };
 
     private void saveTag() {
         SPUtil.putBoolean(StartActivity.this, Constant.FIRST_COME, false);

@@ -1,11 +1,11 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.mvp.entity.CityInfoEntity;
 import com.ifree.uu.uubuy.ui.adapter.SelectHotAreaAdapter;
@@ -47,10 +47,11 @@ public class SelectHotAreaActivity extends BaseActivity {
                 SPUtil.putString(context, "townAdCode", mList.get(position).getTownAdCode());
                 SPUtil.putString(context, "latitude", mList.get(position).getLatitude());
                 SPUtil.putString(context, "longitude", mList.get(position).getLongitude());
-                MyApplication.clearActivity();
                 Intent intent = new Intent();
                 intent.setAction("com.ifree.uu.location.changed");
                 getApplicationContext().sendBroadcast(intent);
+                setResult(Activity.RESULT_OK);
+                finish();
             }
         });
     }
@@ -59,7 +60,6 @@ public class SelectHotAreaActivity extends BaseActivity {
     protected void initView() {
         hideBack(5);
         setTitleText("选择城市");
-        MyApplication.addActivity(SelectHotAreaActivity.this);
         mList = getIntent().getParcelableArrayListExtra("area");
         city = getIntent().getStringExtra("city");
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);

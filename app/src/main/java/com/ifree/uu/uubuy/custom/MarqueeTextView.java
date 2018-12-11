@@ -61,9 +61,9 @@ public class MarqueeTextView extends LinearLayout {
 
     public void initMarqueeTextView(List<String> textArrays, final MarqueeTextViewClickListener marqueeTextViewClickListener) {
         if (textArrays.size() == 0) {
+            viewFlipper.removeAllViews();
             return;
         }
-
         int i = 0;
         viewFlipper.removeAllViews();
         while (i < textArrays.size()) {

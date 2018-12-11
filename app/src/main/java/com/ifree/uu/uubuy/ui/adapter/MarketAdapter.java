@@ -67,7 +67,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.MarketView
 //                        bundle.putString("fristActivitiesId",marketCommodityList.getCommodityList().get(i).getCommodityId());
 //                        bundle.putString("fristActivitiesType",marketCommodityList.getCommodityList().get(i).getCommodityType());
 //                        bundle.putString("fristActivitiesName",marketCommodityList.getCommodityList().get(i).getCommodityName());
-//                        MyApplication.openActivity(context,StoreActivity.class,bundle);
+//                        MyApplication.openActivity(context,ShopActivity.class,bundle);
 //                        break;
 //                    case "1":
 //                        bundle.putString("commodityId",marketCommodityList.getCommodityList().get(i).getCommodityId());

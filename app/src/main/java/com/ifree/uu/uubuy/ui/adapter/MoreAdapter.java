@@ -15,7 +15,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.MoreEntity;
 import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
-import com.ifree.uu.uubuy.ui.activity.StoreActivity;
+import com.ifree.uu.uubuy.ui.activity.ShopActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
@@ -69,7 +69,7 @@ public class MoreAdapter extends RecyclerView.Adapter<MoreAdapter.MoreViewHolder
                         bundle.putString("fristActivitiesId",commodityList.getCommodityId());
                         bundle.putString("fristActivitiesType",commodityList.getCommodityType());
                         bundle.putString("fristActivitiesName",commodityList.getCommodityName());
-                        MyApplication.openActivity(context,StoreActivity.class,bundle);
+                        MyApplication.openActivity(context,ShopActivity.class,bundle);
                     }
                 });
                 break;

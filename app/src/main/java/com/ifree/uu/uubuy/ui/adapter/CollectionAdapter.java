@@ -24,7 +24,7 @@ import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.CarCommodityActivity;
 import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
-import com.ifree.uu.uubuy.ui.activity.StoreActivity;
+import com.ifree.uu.uubuy.ui.activity.ShopActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
@@ -162,7 +162,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Ac
                     case "1":
                     case "2":
                     case "3":
-                        MyApplication.openActivity(context, StoreActivity.class,bundle);
+                        MyApplication.openActivity(context, ShopActivity.class,bundle);
                         break;
                     case "4":
                     case "5":

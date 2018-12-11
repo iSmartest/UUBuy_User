@@ -201,7 +201,8 @@ public class StringUtils {
         }else {
             SpannableString spanString = new SpannableString(str);
             AbsoluteSizeSpan span = new AbsoluteSizeSpan(12);
-            spanString.setSpan(span, str.indexOf("."), str.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            spanString.setSpan(span, str.indexOf("."), str.
+                    length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             return spanString;
         }
     }

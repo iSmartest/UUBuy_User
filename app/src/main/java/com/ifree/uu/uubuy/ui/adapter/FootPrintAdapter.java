@@ -61,7 +61,7 @@ public class FootPrintAdapter extends BaseAdapter {
         if (convertView != null) {
             viewHolder = (FootPrintViewHolder) convertView.getTag();
         } else {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_foot_print,parent,false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_shop_commodity_list,parent,false);
             viewHolder = new FootPrintViewHolder(convertView);
             convertView.setTag(viewHolder);
         }

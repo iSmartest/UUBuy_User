@@ -110,7 +110,6 @@ public class CommodityActivity extends BaseActivity {
                 seePictureDialog.show();
             }
         });
-
     }
 
 

@@ -15,7 +15,7 @@ import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.mvp.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.mvp.presenter.CommodityPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.ui.adapter.StoreAdapter;
+import com.ifree.uu.uubuy.ui.adapter.ShopCommodityAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
@@ -36,14 +36,14 @@ import butterknife.OnClick;
  * Created by 2018/8/30.
  * Description:
  */
-public class StoreActivity extends BaseActivity implements View.OnClickListener {
+public class ShopActivity extends BaseActivity implements View.OnClickListener {
     private CommodityPresenter mCommodityPresenter;
     private CollectionPresenter mCollectionPresenter;
     @BindView(R.id.xr_store)
     XRecyclerView xRecyclerView;
     private View headView;
     private int page = 1;
-    private StoreAdapter mAdapter;
+    private ShopCommodityAdapter mAdapter;
     private List<CommodityListEntity.DataBean.CommodityList> mList = new ArrayList<>();
     private String fristActivitiesName;
     private String storeId;
@@ -96,7 +96,7 @@ public class StoreActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
-        mAdapter = new StoreAdapter(context, mList);
+        mAdapter = new ShopCommodityAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
     }
 

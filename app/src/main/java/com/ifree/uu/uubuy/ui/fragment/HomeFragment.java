@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -26,8 +28,8 @@ import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.FirstClassifyActivity;
 import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
 import com.ifree.uu.uubuy.ui.activity.MarketActivity;
+import com.ifree.uu.uubuy.ui.activity.ShopActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
-import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.ui.adapter.AdTypeAdapter;
 import com.ifree.uu.uubuy.ui.adapter.CityADAdapter;
 import com.ifree.uu.uubuy.ui.adapter.HomeAdapter;
@@ -171,21 +173,21 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
                 switch (mList.get(position).getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
                     case "1":
                         if (mList.get(position).getActivitiesType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
+                            MyApplication.openActivity(context, ShopActivity.class, bundle);
                         } else {
                             MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
                         }
                         break;
                     case "2"://超市
                         if (mList.get(position).getActivitiesType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
+                            MyApplication.openActivity(context, ShopActivity.class, bundle);
                         } else {
                             MyApplication.openActivity(context, MarketActivity.class, bundle);
                         }
                         break;
                     case "3":
                         if (mList.get(position).getActivitiesType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
+                            MyApplication.openActivity(context, ShopActivity.class, bundle);
                         } else {
                             MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
                         }
@@ -221,6 +223,7 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
 
 
     private ProjectView<HomeEntity> mHomeView = new ProjectView<HomeEntity>() {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         public void onSuccess(HomeEntity mHomeEntity) {
             if (page == 1) {
@@ -248,15 +251,6 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
                 mAdTypeList.clear();
                 mAdTypeList.addAll(adTypeLists);
                 adTypeAdapter.notifyDataSetChanged();
-
-            }
-
-            List<HomeEntity.DataBean.UURecommendNotice> uuRecommendNotices = mHomeEntity.getData().getUuRecommendNotice();
-            if (uuRecommendNotices != null && !uuRecommendNotices.isEmpty()) {
-                mNotice.clear();
-                mNotice.addAll(uuRecommendNotices);
-                initSetNotice(mNotice);
-
             }
 
             List<HomeEntity.DataBean.CityADList> cityADLists = mHomeEntity.getData().getCityADList();
@@ -271,13 +265,23 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
                 mRotateADList.addAll(rotateADLists);
                 initRotateViewData(mRotateADList);
             }
+
             List<HomeEntity.DataBean.ActivitiesList> activitiesLists = mHomeEntity.getData().getActivitiesList();
-            if (activitiesLists != null && !activitiesLists.isEmpty()) {
+            if (activitiesLists != null && !activitiesLists.isEmpty()){
                 mList.addAll(activitiesLists);
                 mAdapter.notifyDataSetChanged();
-            }
-            if (activitiesLists.size() < 10) {
+                if (activitiesLists.size() < 10){
+                    xRecyclerView.setNoMore(true);
+                }
+            }else {
                 xRecyclerView.setNoMore(true);
+            }
+
+            List<HomeEntity.DataBean.UURecommendNotice> uuRecommendNotices = mHomeEntity.getData().getUuRecommendNotice();
+            if (uuRecommendNotices != null && !uuRecommendNotices.isEmpty()) {
+                mNotice.clear();
+                mNotice.addAll(uuRecommendNotices);
+                initSetNotice(mNotice);
             }
         }
 
@@ -312,14 +316,14 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
 
 
     private void initRotateViewData(List<HomeEntity.DataBean.RotateADList> rotateADLists) {
-        List<String> imag = new ArrayList<>();
+        List<String> image = new ArrayList<>();
         for (int i = 0; i < rotateADLists.size(); i++) {
             if (rotateADLists.get(i).getRotateADIcon().equals("") && rotateADLists.get(i).getRotateADIcon() == null){
                 continue;
             }
-            imag.add(GlideImageLoader.getImagePath(context,rotateADLists.get(i).getRotateADIcon()));
+            image.add(GlideImageLoader.getImagePath(context,rotateADLists.get(i).getRotateADIcon()));
         }
-        mSlideshow.setImages(imag)
+        mSlideshow.setImages(image)
                 .setBannerStyle(BannerConfig.NOT_INDICATOR)
                 .setImageLoader(new GlideImageLoader())
                 .start();
@@ -341,21 +345,21 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
                 switch (messageLists.get(position).getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
                     case "1":
                         if (messageLists.get(position).getUuRecommentType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
+                            MyApplication.openActivity(context, ShopActivity.class, bundle);
                         } else {
                             MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
                         }
                         break;
                     case "2"://超市
                         if (messageLists.get(position).getUuRecommentType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
+                            MyApplication.openActivity(context, ShopActivity.class, bundle);
                         } else {
                             MyApplication.openActivity(context, MarketActivity.class, bundle);
                         }
                         break;
                     case "3":
                         if (messageLists.get(position).getUuRecommentType().equals("1")) {
-                            MyApplication.openActivity(context, StoreActivity.class, bundle);
+                            MyApplication.openActivity(context, ShopActivity.class, bundle);
                         } else {
                             MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
                         }
@@ -392,21 +396,21 @@ public class HomeFragment extends BaseFragment implements OnBannerListener {
         switch (mRotateADList.get(position).getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
             case "1":
                 if (mRotateADList.get(position).getRotateADType().equals("1")) {
-                    MyApplication.openActivity(context, StoreActivity.class, bundle);
+                    MyApplication.openActivity(context, ShopActivity.class, bundle);
                 } else {
                     MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
                 }
                 break;
             case "2"://超市
                 if (mRotateADList.get(position).getRotateADType().equals("1")) {
-                    MyApplication.openActivity(context, StoreActivity.class, bundle);
+                    MyApplication.openActivity(context, ShopActivity.class, bundle);
                 } else {
                     MyApplication.openActivity(context, MarketActivity.class, bundle);
                 }
                 break;
             case "3":
                 if (mRotateADList.get(position).getRotateADType().equals("1")) {
-                    MyApplication.openActivity(context, StoreActivity.class, bundle);
+                    MyApplication.openActivity(context, ShopActivity.class, bundle);
                 } else {
                     MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
                 }

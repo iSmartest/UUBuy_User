@@ -42,4 +42,16 @@ public class Constant {
      */
     public static final int NETWORK_CLASS_4_G = 4;
 
+    public static final int FIRST_CLASSIFY_REQUEST = 1001;
+
+    public static final int HOT_CITY_REQUEST = 1002;
+
+    public static final int SELECT_PROVINCE_REQUEST = 1003;
+
+    public static final int SELECT_CITY_REQUEST = 1004;
+
+    public static final int SELECT_AREA_REQUEST = 1005;
+
+
+
 }

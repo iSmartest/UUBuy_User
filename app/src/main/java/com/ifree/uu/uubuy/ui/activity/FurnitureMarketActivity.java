@@ -120,7 +120,7 @@ public class FurnitureMarketActivity extends BaseActivity implements View.OnClic
                 bundle.putString("fristActivitiesId",mList.get(position).getSecondActivitiesId());
                 bundle.putString("fristActivitiesType",mList.get(position).getSecondActivitiesType());
                 bundle.putString("fristActivitiesName",mList.get(position).getSecondActivitiesName());
-                MyApplication.openActivity(context,StoreActivity.class,bundle);
+                MyApplication.openActivity(context,ShopActivity.class,bundle);
             }
         });
     }

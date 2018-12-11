@@ -14,7 +14,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.custom.RCRelativeLayout;
 import com.ifree.uu.uubuy.mvp.entity.SecondActivitiesEntity;
-import com.ifree.uu.uubuy.ui.activity.StoreActivity;
+import com.ifree.uu.uubuy.ui.activity.ShopActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
 
@@ -60,7 +60,7 @@ public class MarketOrStoreAdapter extends RecyclerView.Adapter<MarketOrStoreAdap
                 bundle.putString("fristActivitiesId", sList.getSecondActivitiesId());
                 bundle.putString("fristActivitiesType", sList.getSecondActivitiesType());
                 bundle.putString("fristActivitiesName", sList.getSecondActivitiesName());
-                MyApplication.openActivity(context, StoreActivity.class, bundle);
+                MyApplication.openActivity(context, ShopActivity.class, bundle);
             }
         });
     }

@@ -21,8 +21,8 @@ import com.ifree.uu.uubuy.ui.activity.CarCommodityActivity;
 import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
 import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
 import com.ifree.uu.uubuy.ui.activity.MarketActivity;
+import com.ifree.uu.uubuy.ui.activity.ShopActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
-import com.ifree.uu.uubuy.ui.activity.StoreActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
@@ -159,13 +159,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 bundle.putString("fristActivitiesName",activitiesList.getActivitiesName());
                 switch (activitiesList.getType()){
                     case "1":
-                        MyApplication.openActivity(context,StoreActivity.class,bundle);
+                        MyApplication.openActivity(context,ShopActivity.class,bundle);
                         break;
                     case "2"://超市
-                        MyApplication.openActivity(context,StoreActivity.class,bundle);
+                        MyApplication.openActivity(context,ShopActivity.class,bundle);
                         break;
                     case "3":
-                        MyApplication.openActivity(context,StoreActivity.class,bundle);
+                        MyApplication.openActivity(context,ShopActivity.class,bundle);
                         break;
                     case "4":
                         MyApplication.openActivity(context,BrandActivity.class,bundle);

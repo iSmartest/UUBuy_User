@@ -16,6 +16,7 @@ public class UpdateEntity {
         private String desc;
         private String address;
         private String force;
+        private String targetSize;
 
         public String getVersionCode() {
             return versionCode;
@@ -57,6 +58,9 @@ public class UpdateEntity {
             this.address = address;
         }
 
+        public String getTargetSize() {
+            return targetSize;
+        }
 
     }
 

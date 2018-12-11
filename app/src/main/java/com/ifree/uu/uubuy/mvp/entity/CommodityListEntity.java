@@ -28,6 +28,7 @@ public class CommodityListEntity {
             private String type;
             private String commodityType;
             private String commodityName;
+            private String commodityDes;
 
             public String getCommodityOriginalPrice() {
                 return commodityOriginalPrice;

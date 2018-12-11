@@ -35,14 +35,11 @@ public class LogOutDialog extends Dialog implements
         this.mSureListener = sureListener;
         init(tips,cancel,sure);
     }
-    public LogOutDialog(Context context, int tips,
-                        OnSureBtnClickListener sureListener) {
+    public LogOutDialog(Context context, int tips, OnSureBtnClickListener sureListener) {
         super(context);
         this.mContext = context;
         this.mSureListener = sureListener;
-
         setContentView(R.layout.log_out_tips);
-
         tv_tips = findViewById(R.id.log_out_tips_tv);
         cancelButton = findViewById(R.id.log_out_tips_btn_cancel);
         cancelButton.setOnClickListener(this);

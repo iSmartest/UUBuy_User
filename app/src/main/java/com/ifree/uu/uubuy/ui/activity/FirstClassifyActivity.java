@@ -1,5 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.config.Constant;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
 import com.ifree.uu.uubuy.mvp.entity.FirstClassifyEntity;
 import com.ifree.uu.uubuy.mvp.presenter.FirstClassifyPresenter;
@@ -19,6 +22,7 @@ import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.FirstClassifyAdapter;
 import com.ifree.uu.uubuy.ui.adapter.FirstMenuAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -27,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Author: 小火
@@ -59,7 +64,7 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
 
     @Override
     protected void initView() {
-        hideBack(5);
+        hideBack(6);
         mMenuList = new ArrayList<>();
         mList = new ArrayList<>();
         csl1 = context.getResources().getColorStateList(R.color.text_subtitle_color);
@@ -68,6 +73,7 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
         type = getIntent().getStringExtra("type");
         title = getIntent().getStringExtra("title");
         setTitleText(title);
+        setRightText(SPUtil.getString(context, "district"));
         headerView = LayoutInflater.from(context).inflate(R.layout.header_menu,null);
         mheadItem = headerView.findViewById(R.id.tv_first_item_menu_name);
         mheadItem.setText(title);
@@ -115,6 +121,9 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
         rc_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0 && mMenuList.size() ==0){
+                    return;
+                }
                 mheadItem.setTextColor(csl1);
                 menuId = mMenuList.get(position-1).getMenuId();
                 xRecyclerView.setRefreshing(true);
@@ -206,5 +215,27 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
     public void onFirstMenu(int position,int i) {
         menuId = mMenuList.get(position).getSecondList().get(i).getMenuId();
         xRecyclerView.setRefreshing(true);
+    }
+    @OnClick({R.id.tv_base_rightText})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_base_rightText:
+                MyApplication.openActivityForResult(FirstClassifyActivity.this, SelectHotCityActivity.class,1001);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.FIRST_CLASSIFY_REQUEST && resultCode == Activity.RESULT_OK){
+            setRightText(SPUtil.getString(context,"district"));
+            latitude = SPUtil.getString(context,"latitude");
+            longitude = SPUtil.getString(context,"longitude");
+            townAdCode = SPUtil.getString(context,"townAdCode");
+            mMenuList.clear();
+            mFirstMenuAdapter.notifyDataSetChanged();
+            xRecyclerView.setRefreshing(true);
+        }
     }
 }

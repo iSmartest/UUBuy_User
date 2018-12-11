@@ -17,7 +17,7 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
-import com.ifree.uu.uubuy.ui.activity.StoreActivity;
+import com.ifree.uu.uubuy.ui.activity.ShopActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
 
 import java.util.List;
@@ -82,7 +82,7 @@ public class MyGridAdapter extends RecyclerView.Adapter<MyGridAdapter.MyGridView
                         bundle.putString("fristActivitiesId",mList.getCommodityId());
                         bundle.putString("fristActivitiesType",mList.getCommodityType());
                         bundle.putString("fristActivitiesName",mList.getCommodityName());
-                        MyApplication.openActivity(context,StoreActivity.class,bundle);
+                        MyApplication.openActivity(context,ShopActivity.class,bundle);
                         break;
                     case "1":
                         bundle.putString("commodityId", mList.getCommodityId());

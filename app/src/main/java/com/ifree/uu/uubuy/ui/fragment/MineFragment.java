@@ -95,7 +95,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         headView.findViewById(R.id.tv_mine_get_coupon_center).setOnClickListener(this);
         mGoLogin = headView.findViewById(R.id.tv_go_login);
         headView.findViewById(R.id.ll_mine_user_info).setOnClickListener(this);
-
         if (headView != null) xRecyclerView.addHeaderView(headView);
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -209,11 +208,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.linear_mine_integral://积分，用户登录可进入否则进入登录页面(暂未开通)
-                if (TextUtils.isEmpty(SPUtil.getUid(context))) {
-                    ToastUtils.makeText(context, "请先登录！");
-                } else {
-                    ToastUtils.makeText(context, "即将开通，敬请期待");
-                }
+//                if (TextUtils.isEmpty(SPUtil.getUid(context))) {
+//                    ToastUtils.makeText(context, "请先登录！");
+//                } else {
+//                    ToastUtils.makeText(context, "即将开通，敬请期待");
+//                }
                 break;
             case R.id.tv_mine_play_vip://玩转会员，用户登录后可进入否则就进入登录页面
                 if (TextUtils.isEmpty(SPUtil.getUid(context))) {

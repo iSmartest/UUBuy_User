@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.dialog.ErrorDialog;
 import com.ifree.uu.uubuy.mvp.entity.UpdateEntity;
@@ -17,7 +16,6 @@ import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.ifree.uu.uubuy.uitls.UpdateManager;
 
 import java.util.Calendar;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 

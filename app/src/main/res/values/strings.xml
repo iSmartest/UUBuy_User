@@ -30,7 +30,7 @@
     <string name="want_good_praise" translatable="false">我要好评</string>
     <string name="version_update" translatable="false">版本更新</string>
     <string name="version_introduction" translatable="false">版本介绍</string>
-    <string name="version_format" translatable="false">车小宝:%s</string>
+    <string name="version_format" translatable="false">UU购:%s</string>
     <string name="tip_rate_err" translatable="false">您手机上没有可以评价的应用市场哦,\n下次再好评吧</string>
     <string name="company_copyright" translatable="false">北京赋睿智能科技有限公司&#160;&#160;&#160;&#160;版权所有\nCopyright©2018&#8211;%d IFree.All Rights Reserved</string>
 </resources>

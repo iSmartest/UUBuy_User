@@ -19,8 +19,6 @@ import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
 import com.ifree.uu.uubuy.mvp.entity.UpdateEntity;
-import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.mvp.presenter.UpLoadUUIdPresenter;
 import com.ifree.uu.uubuy.mvp.presenter.UpdatePresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.service.UURunService;
@@ -31,7 +29,6 @@ import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
 import com.ifree.uu.uubuy.ui.fragment.MineFragment;
 import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
 import com.ifree.uu.uubuy.uitls.AppManager;
-import com.ifree.uu.uubuy.uitls.DeviceInfoUtils;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.ifree.uu.uubuy.uitls.UpdateAppUtils;
@@ -41,7 +38,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
     private UpdatePresenter mUpdatePresenter;
-    private UpLoadUUIdPresenter mUpLoadUUIdPresenter;
     @BindView(R.id.ly_base_search)
     LinearLayout mBaseSearch;
     @BindView(R.id.edt_a_key_search)
@@ -58,7 +54,7 @@ public class MainActivity extends BaseActivity {
     RadioButton mMine;
     // 定义一个变量，来标识是否退出
     private static boolean isExit = false;
-    private String updataAddress, versionName, desc;
+    private String updataAddress, versionName, updataLog;
     private int versionCode;
     private boolean force = false;
     @SuppressLint("HandlerLeak")
@@ -78,7 +74,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         mUpdatePresenter = new UpdatePresenter(context);
-        mUpLoadUUIdPresenter = new UpLoadUUIdPresenter(context);
         setLocation(SPUtil.getString(context, "district"));
         hideBack(1);
         changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, true);
@@ -87,28 +82,9 @@ public class MainActivity extends BaseActivity {
         registerReceiver(mAllBroad, intentFilter);
         Intent startIntent = new Intent(getApplicationContext(), UURunService.class);
         startService(startIntent);
-        initLoad();
-    }
-    private void initLoad() {
-        mUpLoadUUIdPresenter.onCreate();
-        mUpLoadUUIdPresenter.attachView(mUpLoadUUIdView);
-        mUpLoadUUIdPresenter.upLoadUUId("Android",DeviceInfoUtils.getMyUUID(context),uid);
+
     }
 
-    private ProjectView<UserInfoEntity> mUpLoadUUIdView = new ProjectView<UserInfoEntity>() {
-        @Override
-        public void onSuccess(UserInfoEntity userInfoEntity) {
-            if (userInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,userInfoEntity.getMsg());
-                return;
-            }
-        }
-
-        @Override
-        public void onError(String result) {
-
-        }
-    };
     @Override
     protected void loadData() {
         mUpdatePresenter.onCreate();
@@ -127,9 +103,9 @@ public class MainActivity extends BaseActivity {
                 return;
             }
             versionCode = Integer.parseInt(updateEntity.getData().getVersionCode());
-            updataAddress = "http://gyxz.ukdj3d.cn/a31/rj_xgd1/youku.apk";
+            updataAddress = updateEntity.getData().getAddress();
             versionName = updateEntity.getData().getVersionName();
-            desc = updateEntity.getData().getDesc();
+            updataLog = updateEntity.getData().getDesc();
             if (updateEntity.getData().getForce().equals("0")) {
                 force = false;
             } else {
@@ -140,6 +116,7 @@ public class MainActivity extends BaseActivity {
                     .serverVersionName(versionName)//获取版本名
                     .serverVersionCode(versionCode)//获取版本号
                     .apkPath(updataAddress)//下载地址
+                    .updateInfo(updataLog)
                     .downloadBy(UpdateAppUtils.DOWNLOAD_BY_APP)//下载方式，app或浏览器
                     .showNotification(true)
                     .isForce(force)//是否强制更新
@@ -245,4 +222,5 @@ public class MainActivity extends BaseActivity {
             setLocation(SPUtil.getDistrict(context));
         }
     };
+
 }

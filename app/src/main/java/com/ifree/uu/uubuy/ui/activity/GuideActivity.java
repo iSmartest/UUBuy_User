@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -15,8 +16,13 @@ import android.widget.LinearLayout;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.Constant;
+import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.mvp.presenter.UpLoadUUIdPresenter;
+import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.GuideViewPagerAdapter;
+import com.ifree.uu.uubuy.uitls.DeviceInfoUtils;
 import com.ifree.uu.uubuy.uitls.SPUtil;
+import com.ifree.uu.uubuy.uitls.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +34,7 @@ import java.util.List;
  * Description:
  */
 public class GuideActivity extends Activity implements View.OnClickListener {
-
+    private UpLoadUUIdPresenter mUpLoadUUIdPresenter;
     private ViewPager vp;
     private GuideViewPagerAdapter adapter;
     private List<View> views;
@@ -39,9 +45,12 @@ public class GuideActivity extends Activity implements View.OnClickListener {
     private ImageView[] dots;
     // 记录当前选中位置
     private int currentIndex;
+    private Context context;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
+        mUpLoadUUIdPresenter = new UpLoadUUIdPresenter(GuideActivity.this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_spalash);
@@ -54,25 +63,47 @@ public class GuideActivity extends Activity implements View.OnClickListener {
                 view = LayoutInflater.from(this).inflate(R.layout.view_guide_process, null);
             }else {
                 view = LayoutInflater.from(this).inflate(R.layout.view_guide_end, null);
-                iv_process = (ImageView) view.findViewById(R.id.iv_process);
+                iv_process = view.findViewById(R.id.iv_process);
 
                 Button fl_enter = view.findViewById(R.id.btn_enter_main);
                 fl_enter.setOnClickListener(this);
             }
-            iv_process = (ImageView) view.findViewById(R.id.iv_process);
+            iv_process = view.findViewById(R.id.iv_process);
             iv_process.setBackgroundResource(pics[i]);
             views.add(view);
 
         }
 
-        vp = (ViewPager) findViewById(R.id.vp_guide);
+        vp =  findViewById(R.id.vp_guide);
         // 初始化adapter
         adapter = new GuideViewPagerAdapter(views);
         vp.setAdapter(adapter);
         vp.setOnPageChangeListener(new PageChangeListener());
-
         initDots();
+        initLoad();
     }
+
+    private void initLoad() {
+        mUpLoadUUIdPresenter.onCreate();
+        mUpLoadUUIdPresenter.attachView(mUpLoadUUIdView);
+        mUpLoadUUIdPresenter.upLoadUUId("Android",DeviceInfoUtils.getMyUUID(context),SPUtil.getString(context,"uid"));
+    }
+
+    private ProjectView<UserInfoEntity> mUpLoadUUIdView = new ProjectView<UserInfoEntity>() {
+        @Override
+        public void onSuccess(UserInfoEntity userInfoEntity) {
+            if (userInfoEntity.getResultCode().equals("1")){
+                ToastUtils.makeText(context,userInfoEntity.getMsg());
+                return;
+            }
+        }
+
+        @Override
+        public void onError(String result) {
+
+        }
+    };
+
 
     @Override
     protected void onPause() {
@@ -133,9 +164,6 @@ public class GuideActivity extends Activity implements View.OnClickListener {
                 break;
         }
     }
-//    int position = (Integer) v.getTag();
-//    setCurView(position);
-//    setCurDot(position);
 
     private void enterMainActivity() {
         MyApplication.openActivity(GuideActivity.this,MainActivity.class);

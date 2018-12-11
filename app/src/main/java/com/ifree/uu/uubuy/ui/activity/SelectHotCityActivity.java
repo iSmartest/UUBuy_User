@@ -1,6 +1,7 @@
 package com.ifree.uu.uubuy.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,6 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.ifree.uu.uubuy.config.Constant.HOT_CITY_REQUEST;
+import static com.ifree.uu.uubuy.config.Constant.SELECT_PROVINCE_REQUEST;
 
 /**
  * Author: 小火
@@ -78,7 +82,7 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("area", (Serializable) mList.get(position).getTownList());
                 bundle.putString("city", mList.get(position).getCity());
-                MyApplication.openActivity(context, SelectHotAreaActivity.class, bundle);
+                MyApplication.openActivityForResult(SelectHotCityActivity.this, SelectHotAreaActivity.class, bundle,HOT_CITY_REQUEST);
             }
         });
         initLocation();
@@ -117,7 +121,6 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
         }
     };
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -125,15 +128,16 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
                 initLocation();
                 break;
             case R.id.tv_current_city:
-                MyApplication.clearActivity();
                 Intent intent = new Intent();
                 intent.setAction("com.ifree.uu.location.changed");
                 getApplicationContext().sendBroadcast(intent);
+                setResult(Activity.RESULT_OK);
+                finish();
                 break;
             case R.id.tv_more_hot_city:
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("province", (Serializable) provinceList);
-                MyApplication.openActivity(context, SelectProvinceActivity.class, bundle);
+                MyApplication.openActivityForResult(SelectHotCityActivity.this, SelectProvinceActivity.class, bundle,SELECT_PROVINCE_REQUEST);
                 break;
         }
     }
@@ -152,5 +156,22 @@ public class SelectHotCityActivity extends BaseActivity implements View.OnClickL
             }
         });
         gaoDeLocationListener.startLocation();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK){
+            switch (requestCode){
+                case HOT_CITY_REQUEST:
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                    break;
+                case SELECT_PROVINCE_REQUEST:
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                    break;
+            }
+        }
     }
 }

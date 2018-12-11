@@ -38,12 +38,12 @@ public class UpdateAppReceiver extends BroadcastReceiver {
             builder.setContentTitle("正在下载 "+title);
             builder.setSmallIcon(R.mipmap.app_icon);
             builder.setProgress(100,progress,false);
-
+            builder.setContentText(progress + "%");
+            builder.setWhen(System.currentTimeMillis());
             Notification notification = builder.build();
             nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             nm.notify(notifyId,notification);
         }
-
 
         if (progress == 100){
             if (nm!=null)nm.cancel(notifyId);

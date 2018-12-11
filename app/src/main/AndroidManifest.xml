@@ -162,7 +162,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
         <!--店铺-->
-        <activity android:name=".ui.activity.StoreActivity"
+        <activity android:name=".ui.activity.ShopActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>

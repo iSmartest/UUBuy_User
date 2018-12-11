@@ -35,6 +35,7 @@ public class UpdateAppUtils {
     public static boolean needFitAndroidN = true; //提供给 整个工程不需要适配到7.0的项目 置为false
     public static boolean showNotification = true;
     private String updateInfo = "";
+    private String updateLog = "1.修复已知Bug;\n2.提升用户体验。";
     public UpdateAppUtils needFitAndroidN(boolean needFitAndroidN) {
         UpdateAppUtils.needFitAndroidN = needFitAndroidN;
         return this;
@@ -129,13 +130,12 @@ public class UpdateAppUtils {
             @Override
             public void callback(int position) {
                 switch (position){
-                    case 0:  //cancle
+                    case 0:
                         if (isForce)System.exit(0);
                         break;
-                    case 1:  //sure
+                    case 1:
                         if (downloadBy == DOWNLOAD_BY_APP) {
                             if (isWifiConnected(activity)){
-//                                DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
                                 DownloadAppUtils.download(activity, apkPath, serverVersionName);
                             }else {
                                 new ConfirmDialog(activity, new ConfirmDialog.Callback() {
@@ -143,12 +143,11 @@ public class UpdateAppUtils {
                                     public void callback(int position) {
                                         if (position==1){
                                             DownloadAppUtils.download(activity, apkPath, serverVersionName);
-                                            //DownloadAppUtils.downloadForAutoInstall(activity, apkPath, "demo.apk", serverVersionName);
                                         }else {
                                             if (isForce)activity.finish();
                                         }
                                     }
-                                }).setContent("目前手机不是WiFi状态\n确认是否继续下载更新？").show();
+                                }).setContent("提示","目前手机不是WiFi状态\n确认是否继续下载更新？").show();
                             }
 
                         }else if (downloadBy == DOWNLOAD_BY_BROWSER){
@@ -159,15 +158,14 @@ public class UpdateAppUtils {
             }
         });
 
-        String content = "发现新版本:"+serverVersionName+"\n是否下载更新?";
+        String content = String.format("是否升级到%s版本？", serverVersionName);
         if (!TextUtils.isEmpty(updateInfo)){
-            content = "发现新版本:"+serverVersionName+"是否下载更新?\n\n"+updateInfo;
+            updateLog = updateInfo;
         }
-        dialog .setContent(content);
+        dialog .setContent(content,updateLog);
         dialog.setCancelable(false);
         dialog.show();
     }
-
 
     /**
      * 检测wifi是否连接
