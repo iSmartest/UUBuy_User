@@ -20,6 +20,8 @@ import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.dialog.OpenActivitiesDialog;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
 import com.ifree.uu.uubuy.mvp.entity.UpdateEntity;
+import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
+import com.ifree.uu.uubuy.mvp.presenter.ElasticFramePresenter;
 import com.ifree.uu.uubuy.mvp.presenter.UpdatePresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.service.UURunService;
@@ -30,6 +32,7 @@ import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
 import com.ifree.uu.uubuy.ui.fragment.MineFragment;
 import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
 import com.ifree.uu.uubuy.uitls.AppManager;
+import com.ifree.uu.uubuy.uitls.GlobalMethod;
 import com.ifree.uu.uubuy.uitls.SPUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
 import com.ifree.uu.uubuy.uitls.UpdateAppUtils;
@@ -39,6 +42,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
     private UpdatePresenter mUpdatePresenter;
+    private ElasticFramePresenter mElasticFramePresenter;
     @BindView(R.id.ly_base_search)
     LinearLayout mBaseSearch;
     @BindView(R.id.edt_a_key_search)
@@ -76,6 +80,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         mUpdatePresenter = new UpdatePresenter(context);
+        mElasticFramePresenter = new ElasticFramePresenter(context);
         setLocation(SPUtil.getString(context, "district"));
         hideBack(1);
         changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, true);
@@ -121,22 +126,59 @@ public class MainActivity extends BaseActivity {
             } else {
                 force = true;
             }
-            UpdateAppUtils.from(MainActivity.this)
-                    .checkBy(UpdateAppUtils.CHECK_BY_VERSION_CODE)//版本检查方式
-                    .serverVersionName(versionName)//获取版本名
-                    .serverVersionCode(versionCode)//获取版本号
-                    .apkPath(updataAddress)//下载地址
-                    .updateInfo(updataLog)
-                    .downloadBy(UpdateAppUtils.DOWNLOAD_BY_APP)//下载方式，app或浏览器
-                    .showNotification(true)
-                    .isForce(force)//是否强制更新
-                    .update();
+            if (versionCode > GlobalMethod.getVersionCode(context)) {
+                UpdateAppUtils.from(MainActivity.this)
+                        .checkBy(UpdateAppUtils.CHECK_BY_VERSION_CODE)//版本检查方式
+                        .serverVersionName(versionName)//获取版本名
+                        .serverVersionCode(versionCode)//获取版本号
+                        .apkPath(updataAddress)//下载地址
+                        .updateInfo(updataLog)
+                        .downloadBy(UpdateAppUtils.DOWNLOAD_BY_APP)//下载方式，app或浏览器
+                        .showNotification(true)
+                        .isForce(force)//是否强制更新
+                        .update();
+            } else {
+                searchElasticFrame();
+            }
         }
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context, result);
+            searchElasticFrame();
         }
     };
+
+
+    private void searchElasticFrame() {
+        mElasticFramePresenter.onCreate();
+        mElasticFramePresenter.attachView(new ProjectView<UserInfoEntity>(){
+            @Override
+            public void onSuccess(final UserInfoEntity userInfoEntity) {
+                if (userInfoEntity.getResultCode().equals("1")){
+                    return;
+                }
+                if (userInfoEntity.getData().getPop().equals("1")){
+                    openActivitiesDialog = new OpenActivitiesDialog(context, new OpenActivitiesDialog.Callback() {
+                        @Override
+                        public void sure() {
+                            if (userInfoEntity.getData().getIsEnroll().equals("0")){
+                                MyApplication.openActivity(context,UUActivitiesActivity.class);
+                            }else {
+                                MyApplication.openActivity(context, ReceivePrizeCenterActivity.class);//已报名
+                            }
+                        }
+                    });
+                    openActivitiesDialog.show();
+                    SPUtil.putString(context,"pop",userInfoEntity.getData().getPop());
+                }
+            }
+
+            @Override
+            public void onError(String result) {
+
+            }
+        });
+        mElasticFramePresenter.searchElasticFrame(uid);
+    }
 
 
     @OnClick({R.id.iv_main_home, R.id.iv_main_around, R.id.iv_main_activities, R.id.iv_main_order, R.id.iv_main_mine

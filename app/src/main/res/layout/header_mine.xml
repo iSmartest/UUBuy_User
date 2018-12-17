@@ -222,6 +222,19 @@
             android:text="领券中心"
             android:textColor="@color/text_main_color"
             android:textSize="14dp"/>
+
+        <TextView
+            android:id="@+id/tv_mine_receive_prize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="5dp"
+            android:drawableTop="@drawable/receive_prize"
+            android:gravity="center"
+            android:text="我要领奖"
+            android:visibility="gone"
+            android:textColor="@color/text_main_color"
+            android:textSize="14dp"/>
     </LinearLayout>
 
     <TextView

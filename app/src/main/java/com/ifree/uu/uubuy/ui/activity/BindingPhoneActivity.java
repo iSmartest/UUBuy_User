@@ -1,5 +1,6 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.app.Activity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -41,6 +42,7 @@ public class BindingPhoneActivity extends BaseActivity {
     TextView mBindSure;
     private String mCode ="";
     private String sessionId = "";
+    private String thirdType = "",uid = "";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_binding_phone;
@@ -48,7 +50,8 @@ public class BindingPhoneActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-
+        thirdType = getIntent().getStringExtra("thirdType");
+        uid = getIntent().getStringExtra("uid");
     }
 
     @Override
@@ -59,7 +62,7 @@ public class BindingPhoneActivity extends BaseActivity {
         mBindPhonePresenter = new BindPhonePresenter(context);
     }
 
-    @OnClick({R.id.tv_bind_code,R.id.tv_bind_sure})
+    @OnClick({R.id.tv_bind_code,R.id.tv_bind_sure,R.id.iv_base_back})
     public void onClickView(View view) {
         String userPhone = mBindPhone.getText().toString().trim();//电话号码
         switch (view.getId()) {
@@ -105,14 +108,14 @@ public class BindingPhoneActivity extends BaseActivity {
                 }
                 sure(userPhone, password, inviteCode);
                 break;
+
         }
     }
 
     private void sure(String userPhone, String password, String inviteCode) {
-        String type = SPUtil.getString(context,"thirdType");
         mBindPhonePresenter.onCreate();
         mBindPhonePresenter.attachView(mBindPhoneView);
-        mBindPhonePresenter.getSearchBindPhone(userPhone,password,inviteCode,sessionId,uid,type,"绑定中...");
+        mBindPhonePresenter.getSearchBindPhone(userPhone,password,inviteCode,sessionId,uid,thirdType,"绑定中...");
     }
 
     private ProjectView<UserInfoEntity> mBindPhoneView = new ProjectView<UserInfoEntity>() {
@@ -124,9 +127,10 @@ public class BindingPhoneActivity extends BaseActivity {
             }
             ToastUtils.makeText(context,mUserInfoEntity.getMsg());
             SPUtil.putString(context, "isPhone", "1");
-            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getUid());
+            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getId());
+            SPUtil.putString(context, "userPhone", mUserInfoEntity.getData().getUserPhone());
+            setResult(Activity.RESULT_OK);
             finish();
-            Log.i("TAG", "onSuccess: " + mCode);
         }
 
         @Override

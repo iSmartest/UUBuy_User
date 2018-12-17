@@ -52,6 +52,6 @@ public class Constant {
 
     public static final int SELECT_AREA_REQUEST = 1005;
 
-
+    public static final int LOGIN_BINDING_PHONE = 1006;
 
 }

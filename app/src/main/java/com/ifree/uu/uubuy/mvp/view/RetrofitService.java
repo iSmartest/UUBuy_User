@@ -603,4 +603,15 @@ public interface RetrofitService {
     Observable<UserInfoEntity> upLoadUUId(@Query("index") String systemName,
                                           @Query("uuid") String uuid,
                                           @Query("uid") String uid);
+
+
+    @POST(BaseUrl.ELASTIC_FRAME)
+    Observable<UserInfoEntity> searchElasticFrame(@Query("uid") String uid);
+
+    @POST(BaseUrl.ENROLL)
+    Observable<UserInfoEntity> searchEnroll(@Query("uid") String uid,
+                                            @Query("phone") String userPhone);
+
+    @POST(BaseUrl.PRIZE_CODE)
+    Observable<UserInfoEntity> searchPrizeCode(@Query("uid") String uid);
 }

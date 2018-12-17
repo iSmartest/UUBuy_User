@@ -24,6 +24,7 @@ import com.ifree.uu.uubuy.ui.activity.MyCouponActivity;
 import com.ifree.uu.uubuy.ui.activity.MyFootprintActivity;
 import com.ifree.uu.uubuy.ui.activity.MyPersonalInformationActivity;
 import com.ifree.uu.uubuy.ui.activity.PlayVIPActivity;
+import com.ifree.uu.uubuy.ui.activity.ReceivePrizeCenterActivity;
 import com.ifree.uu.uubuy.ui.adapter.MineAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseFragment;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -55,7 +56,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     int page = 1;
     private MineAdapter mAdapter;
     private List<MineEntity.DataBean.RecommendactivitiesList> mList = new ArrayList<>();
-
+    private String pop;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -73,6 +74,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initView() {
         mineInfoPresenter = new MineInfoPresenter(context);
+        pop = SPUtil.getString(context,"pop");
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xRecyclerView.setLayoutManager(layoutManager);
@@ -93,6 +95,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         headView.findViewById(R.id.tv_mine_play_vip).setOnClickListener(this);
         headView.findViewById(R.id.tv_mine_footprint).setOnClickListener(this);
         headView.findViewById(R.id.tv_mine_get_coupon_center).setOnClickListener(this);
+        headView.findViewById(R.id.tv_mine_receive_prize).setOnClickListener(this);
+        if (pop.equals("1")){
+            headView.findViewById(R.id.tv_mine_receive_prize).setVisibility(View.VISIBLE);
+        }
         mGoLogin = headView.findViewById(R.id.tv_go_login);
         headView.findViewById(R.id.ll_mine_user_info).setOnClickListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);
@@ -109,10 +115,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 initData();
             }
         });
-
         mAdapter = new MineAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
-        
+
     }
 
     @Override
@@ -233,6 +238,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     ToastUtils.makeText(context, "请先登录！");
                 } else {
                     MyApplication.openActivity(context, CouponCenterActivity.class);
+                }
+                break;
+            case R.id.tv_mine_receive_prize:
+                if (TextUtils.isEmpty(SPUtil.getUid(context))) {
+                    ToastUtils.makeText(context, "请先登录！");
+                } else {
+                    MyApplication.openActivity(context, ReceivePrizeCenterActivity.class);
                 }
                 break;
         }

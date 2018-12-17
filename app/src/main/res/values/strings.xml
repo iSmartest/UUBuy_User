@@ -33,4 +33,6 @@
     <string name="version_format" translatable="false">UU购:%s</string>
     <string name="tip_rate_err" translatable="false">您手机上没有可以评价的应用市场哦,\n下次再好评吧</string>
     <string name="company_copyright" translatable="false">北京赋睿智能科技有限公司&#160;&#160;&#160;&#160;版权所有\nCopyright©2018&#8211;%d IFree.All Rights Reserved</string>
+    <string name="friendly_reminder" translatable="false">1.所有奖项现场确认、现场抽奖、超时作废。\n2.领奖时本人需手机拥有者、奖券抽奖码。\n3.本人未到的，不执行任何抽奖活动，过时重新抽取获奖者。\n4.本活动最终解释权归北京赋睿智能科技有限公司所有。</string>
+
 </resources>

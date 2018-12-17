@@ -116,7 +116,6 @@ public class CommodityReserveActivity extends BaseActivity {
                 }
                 if (SPUtil.getString(context,"isPhone").equals("0")){
                     ToastUtils.makeText(context,"请绑定手机号");
-                    MyApplication.openActivity(context,BindingPhoneActivity.class);
                     return;
                 }
                 submitReserve();

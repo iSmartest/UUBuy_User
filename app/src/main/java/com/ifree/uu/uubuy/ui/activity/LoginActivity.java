@@ -1,5 +1,6 @@
 package com.ifree.uu.uubuy.ui.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.CommonLog;
+import com.ifree.uu.uubuy.config.Constant;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.mvp.presenter.CodeLoginPresenter;
@@ -40,6 +42,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * Author: 小火
@@ -133,7 +136,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick({R.id.tv_go_register, R.id.tv_password_login, R.id.tv_code_login, R.id.tv_login,
             R.id.tv_send_verification_code, R.id.tv_password_forget_password, R.id.iv_wx_login
-            , R.id.iv_qq_login,R.id.text_login_protocol})
+            , R.id.iv_qq_login, R.id.text_login_protocol})
     public void onViewClicked(View view) {
         String userPhone = mUserPhone.getText().toString().trim();//电话号码
         switch (view.getId()) {
@@ -252,9 +255,9 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.text_login_protocol:
                 Bundle bundle = new Bundle();
-                bundle.putString("title","UU购注册协议");
-                bundle.putString("type","0");
-                MyApplication.openActivity(context,SettingPrivacyActivity.class,bundle);
+                bundle.putString("title", "UU购注册协议");
+                bundle.putString("type", "0");
+                MyApplication.openActivity(context, SettingPrivacyActivity.class, bundle);
                 break;
             default:
                 break;
@@ -275,8 +278,10 @@ public class LoginActivity extends BaseActivity {
                 ToastUtils.makeText(context, mUserInfoEntity.getMsg());
                 return;
             }
-            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getUid());
-            SPUtil.putString(context, "isPhone", mUserInfoEntity.getData().getIsPhone());
+            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getId());
+            SPUtil.putString(context, "isPhone", mUserInfoEntity.getData().getUserBindPhone());
+            SPUtil.putString(context, "userPhone", mUserInfoEntity.getData().getUserPhone());
+            JPushInterface.setAlias(context, 1, mUserInfoEntity.getData().getId());
             Intent intent = new Intent();
             intent.setAction("com.ifree.uu.mine.changed");
             getApplicationContext().sendBroadcast(intent);
@@ -302,8 +307,10 @@ public class LoginActivity extends BaseActivity {
                 ToastUtils.makeText(context, mUserInfoEntity.getMsg());
                 return;
             }
-            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getUid());
-            SPUtil.putString(context, "isPhone", mUserInfoEntity.getData().getIsPhone());
+            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getId());
+            SPUtil.putString(context, "isPhone", mUserInfoEntity.getData().getUserBindPhone());
+            JPushInterface.setAlias(context, 1, mUserInfoEntity.getData().getId());
+            SPUtil.putString(context, "userPhone", mUserInfoEntity.getData().getUserPhone());
             Intent intent = new Intent();
             intent.setAction("com.ifree.uu.mine.changed");
             getApplicationContext().sendBroadcast(intent);
@@ -343,10 +350,18 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mShareAPI.onActivityResult(requestCode, resultCode, data);
-        if (progressDlg != null && progressDlg.isShowing()) {
-            progressDlg.dismiss();
+        if (requestCode == Constant.LOGIN_BINDING_PHONE && resultCode == Activity.RESULT_OK){
+            Intent intent = new Intent();
+            intent.setAction("com.ifree.uu.mine.changed");
+            getApplicationContext().sendBroadcast(intent);
+            finish();
+        }else {
+            mShareAPI.onActivityResult(requestCode, resultCode, data);
+            if (progressDlg != null && progressDlg.isShowing()) {
+                progressDlg.dismiss();
+            }
         }
+
     }
 
     private UMAuthListener umAuthListener = new UMAuthListener() {
@@ -392,16 +407,25 @@ public class LoginActivity extends BaseActivity {
                 ToastUtils.makeText(context, mUserInfoEntity.getMsg());
                 return;
             }
-            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getUid());
-            SPUtil.putString(context, "isPhone", mUserInfoEntity.getData().getIsPhone());
-            SPUtil.putString(context, "nickName", mUserInfoEntity.getData().getNickName());
-            SPUtil.putString(context, "userIcon", mUserInfoEntity.getData().getUserIcon());
-            SPUtil.putString(context, "thirdType", type);
-            Intent intent = new Intent();
-            intent.setAction("com.ifree.uu.mine.changed");
-            getApplicationContext().sendBroadcast(intent);
-            finish();
+            if (mUserInfoEntity.getData().getUserBindPhone().equals("1")) {
+                SPUtil.putString(context, "uid", mUserInfoEntity.getData().getId());
+                SPUtil.putString(context, "isPhone", mUserInfoEntity.getData().getUserBindPhone());
+                SPUtil.putString(context, "nickName", mUserInfoEntity.getData().getUserName());
+                SPUtil.putString(context, "userIcon", mUserInfoEntity.getData().getUserIcon());
+                SPUtil.putString(context, "userPhone", mUserInfoEntity.getData().getUserPhone());
+                JPushInterface.setAlias(context, 1, mUserInfoEntity.getData().getId());
+                Intent intent = new Intent();
+                intent.setAction("com.ifree.uu.mine.changed");
+                getApplicationContext().sendBroadcast(intent);
+                finish();
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putString("thirdType",type);
+                bundle.putString("uid",mUserInfoEntity.getData().getId());
+                MyApplication.openActivityForResult(LoginActivity.this, BindingPhoneActivity.class,bundle,Constant.LOGIN_BINDING_PHONE);
+            }
         }
+
         @Override
         public void onError(String result) {
             ToastUtils.makeText(context, result);

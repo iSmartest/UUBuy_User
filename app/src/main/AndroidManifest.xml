@@ -226,6 +226,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
+        <!--我要领奖-->
+        <activity android:name=".ui.activity.ReceivePrizeCenterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
         <!--设置-->
         <activity android:name=".ui.activity.MySettingActivity"
             android:screenOrientation="portrait"

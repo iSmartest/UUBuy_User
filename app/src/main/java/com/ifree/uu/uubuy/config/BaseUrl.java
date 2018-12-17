@@ -13,6 +13,8 @@ public class BaseUrl {
 
     public static final String HTTP = BuildConfig.API_HOST;
 
+    public static final String HTTP2 = "http://192.168.1.33:8084/uugo-operation/app/";
+
     public static final String ShARE_URL = "http://a.app.qq.com/o/simple.jsp?pkgname=com.ifree.uu.uubuy";
     //获取验证码
     public static final String SEND_CODE = "sendCode";
@@ -98,4 +100,12 @@ public class BaseUrl {
     public static final String CLICK_COUNT= "clickCount?";
     //上传UUID
     public static final String UPLOAD_UUID = "statistics";
+
+
+    //推广活动是否开启
+    public static final String ELASTIC_FRAME = "elasticFrame";
+    //UU推广活动报名
+    public static final String ENROLL = "enroll";
+    //获取中奖码
+    public static final String PRIZE_CODE = "prizeCode";
 }

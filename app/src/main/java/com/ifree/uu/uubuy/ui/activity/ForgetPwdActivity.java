@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.mvp.presenter.ForgetPasswordPresenter;
@@ -15,10 +14,8 @@ import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.StringUtils;
 import com.ifree.uu.uubuy.uitls.TimerUtil;
 import com.ifree.uu.uubuy.uitls.ToastUtils;
-
 import butterknife.BindView;
 import butterknife.OnClick;
-
 
 /**
  * Author: 小火

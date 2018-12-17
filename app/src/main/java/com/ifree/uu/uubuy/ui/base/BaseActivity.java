@@ -41,6 +41,7 @@ public abstract class BaseActivity extends FragmentActivity {
     protected String longitude;
     protected String townAdCode;
     protected String uid;
+    protected String userPhone;
     protected String address;
     @BindView(R.id.lay_bg)
     RelativeLayout lay_bg;
@@ -89,6 +90,7 @@ public abstract class BaseActivity extends FragmentActivity {
         townAdCode = SPUtil.getString(context, "townAdCode");
         address = SPUtil.getString(context, "address");
         uid = SPUtil.getString(context, "uid");
+        userPhone = SPUtil.getString(context,"userPhone");
         initView();//实例化
         loadData();//加载数据
     }

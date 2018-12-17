@@ -8,6 +8,7 @@
     <include layout="@layout/activity_base"/>
 
     <ImageView
+        android:id="@+id/iv_sign_in_activities"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:src="@drawable/uu_sign"
