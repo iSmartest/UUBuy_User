@@ -38,6 +38,7 @@ public class MineEntity {
             private String activitiesType;
             private String type;
             private String isOver;
+            private String aId;
             public String getActivitiesId() {
                 return activitiesId;
             }
@@ -100,6 +101,10 @@ public class MineEntity {
 
             public void setIsOver(String isOver) {
                 this.isOver = isOver;
+            }
+
+            public String getaId() {
+                return aId;
             }
         }
         public String getUserIcon() {

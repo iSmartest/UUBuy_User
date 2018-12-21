@@ -12,9 +12,7 @@
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/xr_market_store"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp">
+        android:layout_height="match_parent">
 
     </com.jcodecraeer.xrecyclerview.XRecyclerView>
 

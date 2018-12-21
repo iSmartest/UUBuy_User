@@ -78,6 +78,7 @@ public class MineAdapter extends RecyclerView.Adapter<MineAdapter.MineViewHolder
                 bundle.putString("marketId", reList.getActivitiesId());
                 bundle.putString("marketName", reList.getActivitiesName());
                 bundle.putString("type", reList.getType());
+                bundle.putString("advId", reList.getaId());
                 MyApplication.openActivity(context, ActivitiesDetailsActivity.class, bundle);
             }
         });

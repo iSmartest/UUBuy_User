@@ -2,6 +2,7 @@ package com.ifree.uu.uubuy.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -14,11 +15,13 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.BaseUrl;
+import com.ifree.uu.uubuy.custom.ZoomOutPageTransformer;
 import com.ifree.uu.uubuy.mvp.entity.SecondActivitiesEntity;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.mvp.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.mvp.presenter.SecondListPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
+import com.ifree.uu.uubuy.ui.adapter.BannerAdapter;
 import com.ifree.uu.uubuy.ui.adapter.MarketOrStoreAdapter;
 import com.ifree.uu.uubuy.ui.base.BaseActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -59,11 +62,14 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private String fristActivitiesName;
     private String isCollection = "0";
     private String floor = " ";
-    private TextView mName, mTime;
+    private TextView mName;
     private ImageView mPicture;
     private TabLayout tabLayout;
     private String isOver = "0";
     private boolean isFirst = true;
+    private ViewPager viewPager;
+    private BannerAdapter mBannerAdapter;
+    private List<SecondActivitiesEntity.DataBean.MarketListInfo> mMarketList = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -73,7 +79,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void initView() {
         hideBack(6);
-        setTitleText("综合商场");
         setRightText("收藏");
         mCollectionPresenter = new CollectionPresenter(context);
         fristActivitiesId = getIntent().getStringExtra("fristActivitiesId");
@@ -86,27 +91,35 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
         xRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallPulse);
         xRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
         headView = LayoutInflater.from(context).inflate(R.layout.header_market, null);
-        headView.findViewById(R.id.ll_market_activities).setOnClickListener(this);
         mName = headView.findViewById(R.id.tv_market_name);
         mPicture = headView.findViewById(R.id.tv_market_picture);
-        mTime = headView.findViewById(R.id.tv_market_time);
+        viewPager = headView.findViewById(R.id.viewpager);
         tabLayout = headView.findViewById(R.id.tl_top_indicator);
         headView.findViewById(R.id.tv_market_share).setOnClickListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);
         xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
+                mList.clear();
+                mAdapter.notifyDataSetChanged();
+                mMarketList.clear();
+                mBannerAdapter.notifyDataSetChanged();
                 page = 1;
                 loadData();
+                xRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
                 page++;
                 loadData();
+                xRecyclerView.loadMoreComplete();
             }
         });
-
+        mBannerAdapter = new BannerAdapter(context,mMarketList);
+        viewPager.setAdapter(mBannerAdapter);
+        viewPager.setOffscreenPageLimit(8);
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mAdapter = new MarketOrStoreAdapter(context, mList);
         xRecyclerView.setAdapter(mAdapter);
     }
@@ -121,13 +134,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     private ProjectView<SecondActivitiesEntity> mSecondListView = new ProjectView<SecondActivitiesEntity>() {
         @Override
         public void onSuccess(SecondActivitiesEntity mSecondListEntity) {
-            if (page == 1) {
-                xRecyclerView.refreshComplete();
-                mList.clear();
-                mAdapter.notifyDataSetChanged();
-            } else {
-                xRecyclerView.loadMoreComplete();
-            }
             if (mSecondListEntity.getResultCode().equals("1")) {
                 ToastUtils.makeText(context, mSecondListEntity.getMsg());
                 return;
@@ -154,29 +160,19 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
             }
 
             fristActivitiesName = mSecondListEntity.getData().getMarketInfo().getMarketName();
-            mName.setText(fristActivitiesName);
-            mTime.setText(mSecondListEntity.getData().getMarketInfo().getActivitiesTime());
-            GlideImageLoader.imageLoader(context, mSecondListEntity.getData().getMarketInfo().getActivitiesPic(), mPicture);
+            setTitleText(fristActivitiesName);
             isCollection = mSecondListEntity.getData().getMarketInfo().getIsCollection();
-            isOver = mSecondListEntity.getData().getMarketInfo().getIsOver();
             if (isCollection.equals("0")) {
                 setRightText("收藏");
             } else {
                 setRightText("取消收藏");
             }
-            switch (isOver) {
-                case "0":
-                    mTime.setText("活动已结束");
-                    break;
-                case "1":
-                case "2":
-                    mTime.setText("活动时间 " + TimeFormatUtils.modifyDataFormat2(mSecondListEntity.getData().getMarketInfo().getActivitiesTime()));
-                    break;
-                case "3":
-                    mTime.setText("暂无活动");
-                    break;
-            }
 
+            List<SecondActivitiesEntity.DataBean.MarketListInfo> marketListInfo = mSecondListEntity.getData().getMarketListInfo();
+            if (marketListInfo != null && !marketListInfo.isEmpty()){
+                mMarketList.addAll(marketListInfo);
+                mBannerAdapter.notifyDataSetChanged();
+            }
         }
 
         @Override
@@ -270,15 +266,6 @@ public class ShoppingMallActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_market_activities:
-                if (isOver.equals("1") || isOver.equals("2")) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("marketId", fristActivitiesId);
-                    bundle.putString("marketName", fristActivitiesName);
-                    bundle.putString("type", fristActivitiesType);
-                    MyApplication.openActivity(context, ActivitiesDetailsActivity.class, bundle);
-                }
-                break;
             case R.id.tv_market_share:
                 ShareBoardConfig config = new ShareBoardConfig();
                 ShareAction mShareAction = new ShareAction(this);

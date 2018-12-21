@@ -96,9 +96,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         headView.findViewById(R.id.tv_mine_footprint).setOnClickListener(this);
         headView.findViewById(R.id.tv_mine_get_coupon_center).setOnClickListener(this);
         headView.findViewById(R.id.tv_mine_receive_prize).setOnClickListener(this);
-        if (pop.equals("1")){
-            headView.findViewById(R.id.tv_mine_receive_prize).setVisibility(View.VISIBLE);
-        }
+//        if (pop.equals("1")){
+//            headView.findViewById(R.id.tv_mine_receive_prize).setVisibility(View.VISIBLE);
+//        }
         mGoLogin = headView.findViewById(R.id.tv_go_login);
         headView.findViewById(R.id.ll_mine_user_info).setOnClickListener(this);
         if (headView != null) xRecyclerView.addHeaderView(headView);

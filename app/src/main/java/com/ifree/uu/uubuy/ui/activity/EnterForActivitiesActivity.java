@@ -31,7 +31,7 @@ public class EnterForActivitiesActivity extends BaseActivity {
     EditText mPhone;
     @BindView(R.id.edit_real_id_cart)
     EditText mIdCart;
-    private String marketId,type;
+    private String marketId,type,advId;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_enter_for_activities;
@@ -47,6 +47,7 @@ public class EnterForActivitiesActivity extends BaseActivity {
         mName.setText(SPUtil.getString(context,"userName"));
         marketId = getIntent().getStringExtra("marketId");
         type = getIntent().getStringExtra("type");
+        advId = getIntent().getStringExtra("advId");
         mActivitiesSignUpPresenter = new ActivitiesSignUpPresenter(context);
     }
 
@@ -73,7 +74,7 @@ public class EnterForActivitiesActivity extends BaseActivity {
     private void submit(String name, String phone, String idCard) {
         mActivitiesSignUpPresenter.onCreate();
         mActivitiesSignUpPresenter.attachView(mActivitiesSignUpView);
-        mActivitiesSignUpPresenter.getSearchActivitiesSignUp(uid,marketId,name,phone,idCard,type,"提交中...");
+        mActivitiesSignUpPresenter.getSearchActivitiesSignUp(uid,marketId,advId,name,phone,idCard,type,"提交中...");
     }
 
     private ProjectView<UserInfoEntity> mActivitiesSignUpView = new ProjectView<UserInfoEntity>() {

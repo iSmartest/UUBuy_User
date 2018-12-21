@@ -68,10 +68,10 @@ public class ActivitiesSignUpPresenter implements Presenter {
 
     }
 
-    public void getSearchActivitiesSignUp(String uid, String marketId, String name, String phone, String idCard, String type, String mContent) {
+    public void getSearchActivitiesSignUp(String uid, String marketId, String advId,String name, String phone, String idCard, String type, String mContent) {
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext, mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchActivitiesSignUp(uid, marketId, name, phone, idCard, type)
+        mCompositeSubscription.add(manager.getSearchActivitiesSignUp(uid, marketId, advId,name, phone, idCard, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserInfoEntity>() {

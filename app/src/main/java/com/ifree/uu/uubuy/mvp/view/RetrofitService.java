@@ -537,12 +537,14 @@ public interface RetrofitService {
      */
     @GET(BaseUrl.ACTIVITIES_INFO)
     Observable<ActivitiesDetailsEntity> getSearchActivitiesInfo(@Query("uid") String uid,
-                                                                @Query("marketId") String marketId);
+                                                                @Query("marketId") String marketId,
+                                                                @Query("advId") String advId);
 
     /**
      * 活动报名
      * @param uid 用户ID
      * @param marketId 商城ID
+     * @param advId 活动ID
      * @param name 姓名
      * @param phone 电话
      * @param idCard 省份证号（选填）
@@ -553,6 +555,7 @@ public interface RetrofitService {
     @POST(BaseUrl.SIGN_UP)
     Observable<UserInfoEntity> getSearchActivitiesSignUp(@Query("uid") String uid,
                                                          @Query("marketId") String marketId,
+                                                         @Query("advId") String advId,
                                                          @Field("name") String name,
                                                          @Query("phone") String phone,
                                                          @Query("idCard") String idCard,
@@ -568,6 +571,7 @@ public interface RetrofitService {
     @GET(BaseUrl.CANCEL_SIGN_UP)
     Observable<UserInfoEntity> getSearchCancelSignUp(@Query("uid") String uid,
                                                      @Query("marketId") String marketId,
+                                                     @Query("advId") String advId,
                                                      @Query("type") String type);
 
     /**

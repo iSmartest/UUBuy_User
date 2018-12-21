@@ -14,6 +14,7 @@ public class SecondActivitiesEntity {
     private DataBean data;
     public static class DataBean{
         private MarketInfo marketInfo;
+        private List<MarketListInfo> marketListInfo;
         private List<BandCommodityList> bandCommodityList;
         private List<MarketCommodityList> marketCommodityList;
         public static class MarketInfo{
@@ -61,6 +62,44 @@ public class SecondActivitiesEntity {
                 return marketName;
             }
         }
+        public static class MarketListInfo{
+            private String marketName;
+            private String activitiesTime;
+            private String advId;
+            private String isOver;
+            private String type;
+            private String activitiesPic;
+            private String marketId;
+
+            public String getMarketName() {
+                return marketName;
+            }
+
+            public String getActivitiesTime() {
+                return activitiesTime;
+            }
+
+            public String getAdvId() {
+                return advId;
+            }
+
+            public String getIsOver() {
+                return isOver;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public String getActivitiesPic() {
+                return activitiesPic;
+            }
+
+            public String getMarketId() {
+                return marketId;
+            }
+        }
+
         public static class BandCommodityList{
             private String secondActivitiesId;
             private String secondActivitiesName;
@@ -169,9 +208,12 @@ public class SecondActivitiesEntity {
         }
 
 
-
         public MarketInfo getMarketInfo() {
             return marketInfo;
+        }
+
+        public List<MarketListInfo> getMarketListInfo() {
+            return marketListInfo;
         }
 
         public List<BandCommodityList> getBandCommodityList() {

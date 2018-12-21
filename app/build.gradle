@@ -21,7 +21,7 @@ android {
     //开发环境
     def API_DEV_HOST = "\"http://192.168.1.100:8080/uugo-user/app/\""
     //测试环境
-    def API_TEST_HOST = "\"http://192.168.1.33:8080/uugo-user/app/\""
+    def API_TEST_HOST = "\"http://192.168.1.19:8080/uugo-user/app/\""
 
     defaultConfig {
         applicationId 'com.ifree.uu.uubuy'
@@ -220,4 +220,8 @@ dependencies {
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     implementation files('libs/jcore-android-1.2.6.jar')
     implementation files('libs/jpush-android-3.1.7.jar')
+
+    implementation ('com.alibaba.android:ultraviewpager:1.0.7.7@aar') {
+        transitive = true
+    }
 }

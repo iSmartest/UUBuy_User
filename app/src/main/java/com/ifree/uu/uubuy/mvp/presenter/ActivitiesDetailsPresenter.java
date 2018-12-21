@@ -68,10 +68,10 @@ public class ActivitiesDetailsPresenter implements Presenter {
 
     }
 
-    public void getSearchActivitiesInfo(String uid, String marketId, String mContent) {
+    public void getSearchActivitiesInfo(String uid, String marketId, String advId, String mContent) {
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext, mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchActivitiesInfo(uid,marketId)
+        mCompositeSubscription.add(manager.getSearchActivitiesInfo(uid,marketId,advId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ActivitiesDetailsEntity>() {

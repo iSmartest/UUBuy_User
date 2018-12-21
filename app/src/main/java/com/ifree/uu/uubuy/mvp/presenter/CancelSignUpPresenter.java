@@ -67,10 +67,10 @@ public class CancelSignUpPresenter implements Presenter {
 
     }
 
-    public void getSearchCancelSignUp(String uid, String marketId,String type, String mContent) {
+    public void getSearchCancelSignUp(String uid, String marketId,String advId,String type, String mContent) {
         final Dialog dialog = ProgressDialog.createLoadingDialog(mContext, mContent);
         dialog.show();
-        mCompositeSubscription.add(manager.getSearchCancelSignUp(uid,marketId,type)
+        mCompositeSubscription.add(manager.getSearchCancelSignUp(uid,marketId,advId,type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<UserInfoEntity>() {

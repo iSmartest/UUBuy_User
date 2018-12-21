@@ -100,14 +100,6 @@ public class MainActivity extends BaseActivity {
         keyWord.setCursorVisible(false);
         keyWord.setFocusable(false);
         keyWord.setFocusableInTouchMode(false);
-        openActivitiesDialog = new OpenActivitiesDialog(context, new OpenActivitiesDialog.Callback() {
-            @Override
-            public void sure() {
-                MyApplication.openActivity(context,UUActivitiesActivity.class);
-            }
-        });
-
-        openActivitiesDialog.show();
     }
 
     ProjectView<UpdateEntity> mUpdateView = new ProjectView<UpdateEntity>() {
@@ -138,12 +130,12 @@ public class MainActivity extends BaseActivity {
                         .isForce(force)//是否强制更新
                         .update();
             } else {
-                searchElasticFrame();
+//                searchElasticFrame();
             }
         }
         @Override
         public void onError(String result) {
-            searchElasticFrame();
+//            searchElasticFrame();
         }
     };
 

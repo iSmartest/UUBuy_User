@@ -46,7 +46,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
     TextView tvDec;
     @BindView(R.id.tv_enter_for_activities)
     TextView tvEnter;
-    private String marketId,marketName,type,isSingUp = "0";
+    private String marketId,marketName,type,advId,isSingUp = "0";
     private List<ActivitiesDetailsEntity.DataBean.CouponList> mList = new ArrayList<>();
     private ActivitiesDetailsAdapter mAdapter;
     @Override
@@ -60,6 +60,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
         marketId = getIntent().getStringExtra("marketId");
         marketName = getIntent().getStringExtra("marketName");
         type = getIntent().getStringExtra("type");
+        advId = getIntent().getStringExtra("advId");
         setTitleText(marketName);
         mActivitiesDetailsPresenter = new ActivitiesDetailsPresenter(context);
         mCancelSignUpPresenter = new CancelSignUpPresenter(context);
@@ -84,6 +85,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("marketId",marketId);
                     bundle.putString("type",type);
+                    bundle.putString("advId",advId);
                     MyApplication.openActivityForResult(ActivitiesDetailsActivity.this,EnterForActivitiesActivity.class,bundle,1001);
                 }else {
                     //取消报名
@@ -102,7 +104,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
     private void cancelSingUp() {
         mCancelSignUpPresenter.onCreate();
         mCancelSignUpPresenter.attachView(mCancelSingUpView);
-        mCancelSignUpPresenter.getSearchCancelSignUp(uid,marketId,type,"取消中...");
+        mCancelSignUpPresenter.getSearchCancelSignUp(uid,marketId,advId,type,"取消中...");
     }
 
     private ProjectView<UserInfoEntity> mCancelSingUpView = new ProjectView<UserInfoEntity>() {
@@ -128,7 +130,7 @@ public class ActivitiesDetailsActivity extends BaseActivity {
     protected void loadData() {
         mActivitiesDetailsPresenter.onCreate();
         mActivitiesDetailsPresenter.attachView(mActivitiesDetailsView);
-        mActivitiesDetailsPresenter.getSearchActivitiesInfo(uid,marketId,"加载中...");
+        mActivitiesDetailsPresenter.getSearchActivitiesInfo(uid,marketId,advId,"加载中...");
     }
 
     private ProjectView<ActivitiesDetailsEntity> mActivitiesDetailsView = new ProjectView<ActivitiesDetailsEntity>() {

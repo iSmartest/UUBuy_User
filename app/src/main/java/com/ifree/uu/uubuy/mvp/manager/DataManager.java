@@ -193,16 +193,16 @@ public class DataManager {
         return mRetrofitService.getSearchMyFootPrint(uid, page);
     }
 
-    public Observable<ActivitiesDetailsEntity> getSearchActivitiesInfo(String uid, String marketId) {
-        return mRetrofitService.getSearchActivitiesInfo(uid, marketId);
+    public Observable<ActivitiesDetailsEntity> getSearchActivitiesInfo(String uid, String marketId,String advId) {
+        return mRetrofitService.getSearchActivitiesInfo(uid, marketId,advId);
     }
 
-    public Observable<UserInfoEntity> getSearchActivitiesSignUp(String uid, String marketId, String name, String phone, String idCard, String type) {
-        return mRetrofitService.getSearchActivitiesSignUp(uid, marketId, name, phone, idCard, type);
+    public Observable<UserInfoEntity> getSearchActivitiesSignUp(String uid, String marketId,String advId, String name, String phone, String idCard, String type) {
+        return mRetrofitService.getSearchActivitiesSignUp(uid, marketId,advId, name, phone, idCard, type);
     }
 
-    public Observable<UserInfoEntity> getSearchCancelSignUp(String uid, String marketId, String type) {
-        return mRetrofitService.getSearchCancelSignUp(uid, marketId, type);
+    public Observable<UserInfoEntity> getSearchCancelSignUp(String uid, String marketId, String advId,String type) {
+        return mRetrofitService.getSearchCancelSignUp(uid, marketId, advId, type);
     }
 
     public Observable<UserInfoEntity> getSubmitIsCollection(String uid, String activitiesId, String type, String isCollection) {
