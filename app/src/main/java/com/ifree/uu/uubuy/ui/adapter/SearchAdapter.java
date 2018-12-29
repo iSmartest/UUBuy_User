@@ -16,11 +16,8 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.SearchEntity;
-import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.CarCommodityActivity;
 import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
-import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
-import com.ifree.uu.uubuy.ui.activity.MarketActivity;
 import com.ifree.uu.uubuy.ui.activity.ShopActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -119,20 +116,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                     case "1":
                         MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
                         break;
-                    case "2"://超市
-                        MyApplication.openActivity(context,MarketActivity.class,bundle);
-                        break;
-                    case "3":
-                        MyApplication.openActivity(context,FurnitureMarketActivity.class,bundle);
-                        break;
                     case "4":
                         MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
                         break;
                     case "5":
                         MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
-                        break;
-                    case "6":
-                        MyApplication.openActivity(context,BrandActivity.class,bundle);
                         break;
                 }
                 Map<String,String> currentMap = SPUtil.getMap(context,"key");
@@ -166,15 +154,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                         break;
                     case "3":
                         MyApplication.openActivity(context,ShopActivity.class,bundle);
-                        break;
-                    case "4":
-                        MyApplication.openActivity(context,BrandActivity.class,bundle);
-                        break;
-                    case "5":
-                        MyApplication.openActivity(context,BrandActivity.class,bundle);
-                        break;
-                    case "6":
-                        MyApplication.openActivity(context,BrandActivity.class,bundle);
                         break;
                 }
             }

@@ -145,17 +145,6 @@ public class FirstClassifyActivity extends BaseActivity implements FirstMenuAdap
                     case "1":
                         MyApplication.openActivity(context,ShoppingMallActivity.class,bundle);
                         break;
-                    case "2"://超市，类型：专柜、商品
-                        MyApplication.openActivity(context,MarketActivity.class,bundle);
-                        break;
-                    case "3":
-                        MyApplication.openActivity(context,FurnitureMarketActivity.class,bundle);
-                        break;
-                    case "4":
-                    case "5":
-                    case "6":
-                        MyApplication.openActivity(context,BrandActivity.class,bundle);
-                        break;
                 }
             }
         });

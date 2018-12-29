@@ -20,7 +20,6 @@ import com.ifree.uu.uubuy.mvp.entity.ActivitiesEntity;
 import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
 import com.ifree.uu.uubuy.mvp.presenter.CollectionPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.ui.activity.BrandActivity;
 import com.ifree.uu.uubuy.ui.activity.CarCommodityActivity;
 import com.ifree.uu.uubuy.ui.activity.CommodityActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
@@ -163,11 +162,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Ac
                     case "2":
                     case "3":
                         MyApplication.openActivity(context, ShopActivity.class,bundle);
-                        break;
-                    case "4":
-                    case "5":
-                    case "6":
-                        MyApplication.openActivity(context, BrandActivity.class,bundle);
                         break;
                 }
             }

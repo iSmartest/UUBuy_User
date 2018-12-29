@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -60,7 +61,7 @@ public class MainActivity extends BaseActivity {
     // 定义一个变量，来标识是否退出
     private static boolean isExit = false;
     private String updataAddress, versionName, updataLog;
-    private int versionCode;
+    private int versionCode = 0;
     private boolean force = false;
     private OpenActivitiesDialog openActivitiesDialog;
     @SuppressLint("HandlerLeak")
@@ -109,7 +110,9 @@ public class MainActivity extends BaseActivity {
                 ToastUtils.makeText(context, updateEntity.getMsg());
                 return;
             }
-            versionCode = Integer.parseInt(updateEntity.getData().getVersionCode());
+            if (!TextUtils.isEmpty(updateEntity.getData().getVersionCode())){
+                versionCode = Integer.parseInt(updateEntity.getData().getVersionCode());
+            }
             updataAddress = updateEntity.getData().getAddress();
             versionName = updateEntity.getData().getVersionName();
             updataLog = updateEntity.getData().getDesc();

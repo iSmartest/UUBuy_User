@@ -16,9 +16,6 @@ import android.widget.TextView;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.mvp.entity.HomeEntity;
-import com.ifree.uu.uubuy.ui.activity.BrandActivity;
-import com.ifree.uu.uubuy.ui.activity.FurnitureMarketActivity;
-import com.ifree.uu.uubuy.ui.activity.MarketActivity;
 import com.ifree.uu.uubuy.ui.activity.ShopActivity;
 import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
 import com.ifree.uu.uubuy.uitls.GlideImageLoader;
@@ -105,37 +102,7 @@ public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADVi
                                 MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
                             }
                             break;
-                        case "2"://超市
-                            if (cityADList.getCityADType().equals("1")) {
-                                MyApplication.openActivity(context, ShopActivity.class, bundle);
-                            } else {
-                                MyApplication.openActivity(context, MarketActivity.class, bundle);
-                            }
-                            break;
-                        case "3":
-                            if (cityADList.getCityADType().equals("1")) {
-                                MyApplication.openActivity(context, ShopActivity.class, bundle);
-                            } else {
-                                MyApplication.openActivity(context, FurnitureMarketActivity.class, bundle);
-                            }
-                            break;
-                        case "4":
-                            if (cityADList.getCityADType().equals("1")) {
-                                MyApplication.openActivity(context, BrandActivity.class, bundle);
-                            } else {
-                                MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
-                            }
-                            break;
-                        case "5":
-                            if (cityADList.getCityADType().equals("1")) {
-                                MyApplication.openActivity(context, BrandActivity.class, bundle);
-                            } else {
-                                MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
-                            }
-                            break;
-                        case "6":
-                            MyApplication.openActivity(context, BrandActivity.class, bundle);
-                            break;
+
                     }
                 }
             });

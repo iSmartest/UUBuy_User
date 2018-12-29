@@ -142,15 +142,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
         <!--超市-->
-        <activity android:name=".ui.activity.MarketActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
         <!--家具建材-->
-        <activity android:name=".ui.activity.FurnitureMarketActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
         <!--超市对应的更多-->
         <activity android:name=".ui.activity.MoreActivity"
             android:screenOrientation="portrait"
@@ -162,10 +154,6 @@
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
         <!--品牌-->
-        <activity android:name=".ui.activity.BrandActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
         <!--店铺-->
         <activity android:name=".ui.activity.ShopActivity"
             android:screenOrientation="portrait"
