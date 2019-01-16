@@ -17,26 +17,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hjq.baselibrary.base.BaseActivity;
+import com.hjq.toast.ToastUtils;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
+import com.ifree.uu.uubuy.common.CommonActivity;
 import com.ifree.uu.uubuy.config.CommonLog;
 import com.ifree.uu.uubuy.config.Constant;
 import com.ifree.uu.uubuy.dialog.ProgressDialog;
-import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.mvp.presenter.CodeLoginPresenter;
-import com.ifree.uu.uubuy.mvp.presenter.PasswordLoginPresenter;
-import com.ifree.uu.uubuy.mvp.presenter.SendCodePresenter;
-import com.ifree.uu.uubuy.mvp.presenter.ThirdLoginPresenter;
+import com.ifree.uu.uubuy.mvp.modle.UserInfoBean;
+import com.ifree.uu.uubuy.mvp.persenter.CodeLoginPresenter;
+import com.ifree.uu.uubuy.mvp.persenter.PasswordLoginPresenter;
+import com.ifree.uu.uubuy.mvp.persenter.SendCodePresenter;
+import com.ifree.uu.uubuy.mvp.persenter.ThirdLoginPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.SPUtil;
-import com.ifree.uu.uubuy.uitls.StringUtils;
-import com.ifree.uu.uubuy.uitls.TimerUtil;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
+import com.ifree.uu.uubuy.utils.SPUtil;
+import com.ifree.uu.uubuy.utils.StringUtils;
+import com.ifree.uu.uubuy.utils.TimerUtil;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +50,7 @@ import cn.jpush.android.api.JPushInterface;
  * Created by 2018/8/23.
  * Description:
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends CommonActivity {
     private PasswordLoginPresenter mPasswordLoginPresenter;
     private SendCodePresenter mSendCodePresenter;
     private CodeLoginPresenter mCodeLoginPresenter;
@@ -99,24 +99,12 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
-        if (isCodeOrPassword == 1) {//验证码
-            mUserPassword.setVisibility(View.GONE);
-            llCodeLogin.setVisibility(View.VISIBLE);
-            tvCodeLogin.setVisibility(View.GONE);
-            tvPasswordLogin.setVisibility(View.VISIBLE);
-        } else {//密码登录
-            mUserPassword.setVisibility(View.VISIBLE);
-            llCodeLogin.setVisibility(View.GONE);
-            tvPasswordLogin.setVisibility(View.GONE);
-            tvCodeLogin.setVisibility(View.VISIBLE);
-        }
+    protected int getTitleBarId() {
+        return R.id.tb_login_title;
     }
 
     @Override
     protected void initView() {
-        hideBack(5);
-        setTitleText("登录");
         mPasswordLoginPresenter = new PasswordLoginPresenter(context);
         mSendCodePresenter = new SendCodePresenter(context);
         mCodeLoginPresenter = new CodeLoginPresenter(context);
@@ -132,6 +120,21 @@ public class LoginActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+        if (isCodeOrPassword == 1) {//验证码
+            mUserPassword.setVisibility(View.GONE);
+            llCodeLogin.setVisibility(View.VISIBLE);
+            tvCodeLogin.setVisibility(View.GONE);
+            tvPasswordLogin.setVisibility(View.VISIBLE);
+        } else {//密码登录
+            mUserPassword.setVisibility(View.VISIBLE);
+            llCodeLogin.setVisibility(View.GONE);
+            tvPasswordLogin.setVisibility(View.GONE);
+            tvCodeLogin.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.tv_go_register, R.id.tv_password_login, R.id.tv_code_login, R.id.tv_login,
@@ -160,22 +163,22 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_login:
                 if (isCodeOrPassword == 0) {//密码登录判断
                     if (TextUtils.isEmpty(userPhone)) {
-                        ToastUtils.makeText(context, "电话号码不能为空");
+                        ToastUtils.show("电话号码不能为空");
                         return;
                     }
                     if (!StringUtils.isMatchesPhone(userPhone)) {
-                        ToastUtils.makeText(context, "电话号码不正确，请核对后重新输入");
+                        ToastUtils.show("电话号码不正确，请核对后重新输入");
                         return;
                     }
                     //验证密码是否为空
                     String password = mUserPassword.getText().toString().trim();//密码
                     if (TextUtils.isEmpty(password)) {
-                        ToastUtils.makeText(context, "密码不能为空");
+                        ToastUtils.show("密码不能为空");
                         return;
                     }
 
                     if (!isChoose) {
-                        ToastUtils.makeText(context, "请阅读并同意《UU购登录协议》");
+                        ToastUtils.show("请阅读并同意《UU购登录协议》");
                         return;
                     }
                     passWordLogin(userPhone, password);
@@ -183,16 +186,16 @@ public class LoginActivity extends BaseActivity {
                     String inviteCode = tvEditCode.getText().toString().trim();
                     //验证电话号码不能为空
                     if (TextUtils.isEmpty(userPhone)) {
-                        ToastUtils.makeText(context, "请输入手机号！");
+                        ToastUtils.show("请输入手机号！");
                         return;
                     }
                     //验证手机号是否正确
                     if (!StringUtils.isMatchesPhone(userPhone)) {
-                        ToastUtils.makeText(context, "你输入的手机号格式不正确");
+                        ToastUtils.show("你输入的手机号格式不正确！");
                         return;
                     }
                     if (TextUtils.isEmpty(inviteCode)) {
-                        ToastUtils.makeText(context, "验证码不能为空");
+                        ToastUtils.show("验证码不能为空！");
                         return;
                     }
 //                //验证验证码是否正确
@@ -201,7 +204,7 @@ public class LoginActivity extends BaseActivity {
 //                    return;
 //                }
                     if (!isChoose) {
-                        ToastUtils.makeText(context, "请阅读并同意《UU购登录协议》");
+                        ToastUtils.show("请阅读并同意《UU购登录协议》");
                         return;
                     }
                     codeLogin(userPhone, inviteCode);
@@ -210,12 +213,12 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_send_verification_code:
                 // 验证电话号码不能为空
                 if (TextUtils.isEmpty(userPhone)) {
-                    ToastUtils.makeText(context, "请输入手机号！");
+                    ToastUtils.show("请输入手机号！");
                     return;
                 }
                 //验证手机号是否正确
                 if (!StringUtils.isMatchesPhone(userPhone)) {
-                    ToastUtils.makeText(context, "你输入的手机号格式不正确");
+                    ToastUtils.show("你输入的手机号格式不正确");
                     return;
                 }
                 TimerUtil mTimerUtil = new TimerUtil(tvSendCode);
@@ -228,28 +231,28 @@ public class LoginActivity extends BaseActivity {
             case R.id.iv_wx_login:
                 type = "0";
                 if (!isChoose) {
-                    ToastUtils.makeText(context, "请阅读并同意《UU购登录协议》");
+                    ToastUtils.show("请阅读并同意《UU购登录协议》");
                     return;
                 }
                 if (!isWeixinAvilible(context)) {
-                    ToastUtils.makeText(context, "请安装微信客户端");
+                    ToastUtils.show("请安装微信客户端");
                     return;
                 }
                 progressDlg = ProgressDialog.createLoadingDialog(context, "登录跳转中...");
                 progressDlg.show();
-                ToastUtils.makeText(context, "正在跳转微信登录,请稍后...");
+                ToastUtils.show("正在跳转微信登录,请稍后...");
                 mShareAPI.isInstall(LoginActivity.this, SHARE_MEDIA.WEIXIN);
                 mShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
                 break;
             case R.id.iv_qq_login:
                 type = "1";
                 if (!isChoose) {
-                    ToastUtils.makeText(context, "请阅读并同意《UU购登录协议》");
+                    ToastUtils.show("请阅读并同意《UU购登录协议》");
                     return;
                 }
                 progressDlg = ProgressDialog.createLoadingDialog(context, "登录跳转中...");
                 progressDlg.show();
-                ToastUtils.makeText(context, "正在跳转QQ登录,请稍后...");
+                ToastUtils.show("正在跳转QQ登录,请稍后...");
                 mShareAPI.isInstall(LoginActivity.this, SHARE_MEDIA.QQ);
                 mShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.QQ, umAuthListener);
                 break;
@@ -271,11 +274,11 @@ public class LoginActivity extends BaseActivity {
         mPasswordLoginPresenter.getSearchPassWordLogin(userPhone, password, "登录中...");
     }
 
-    private ProjectView<UserInfoEntity> mPasswordLoginView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mPasswordLoginView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
+        public void onSuccess(UserInfoBean mUserInfoEntity) {
             if (mUserInfoEntity.getResultCode().equals("1")) {
-                ToastUtils.makeText(context, mUserInfoEntity.getMsg());
+                ToastUtils.show(mUserInfoEntity.getMsg());
                 return;
             }
             SPUtil.putString(context, "uid", mUserInfoEntity.getData().getId());
@@ -290,7 +293,7 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context, result);
+            ToastUtils.show(result);
         }
     };
 
@@ -300,17 +303,17 @@ public class LoginActivity extends BaseActivity {
         mCodeLoginPresenter.getSearchPhoneCodeLogin(userPhone, mCode, sessionId, "登录中...");
     }
 
-    private ProjectView<UserInfoEntity> mCodeLoginView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mCodeLoginView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")) {
-                ToastUtils.makeText(context, mUserInfoEntity.getMsg());
+        public void onSuccess(UserInfoBean mUserInfoBean) {
+            if (mUserInfoBean.getResultCode().equals("1")) {
+                ToastUtils.show(mUserInfoBean.getMsg());
                 return;
             }
-            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getId());
-            SPUtil.putString(context, "isPhone", mUserInfoEntity.getData().getUserBindPhone());
-            JPushInterface.setAlias(context, 1, mUserInfoEntity.getData().getId());
-            SPUtil.putString(context, "userPhone", mUserInfoEntity.getData().getUserPhone());
+            SPUtil.putString(context, "uid", mUserInfoBean.getData().getId());
+            SPUtil.putString(context, "isPhone", mUserInfoBean.getData().getUserBindPhone());
+            JPushInterface.setAlias(context, 1, mUserInfoBean.getData().getId());
+            SPUtil.putString(context, "userPhone", mUserInfoBean.getData().getUserPhone());
             Intent intent = new Intent();
             intent.setAction("com.ifree.uu.mine.changed");
             getApplicationContext().sendBroadcast(intent);
@@ -319,7 +322,7 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context, result);
+            ToastUtils.show(result);
         }
     };
 
@@ -330,20 +333,20 @@ public class LoginActivity extends BaseActivity {
         mSendCodePresenter.getSearchSendCode(userPhone, "3", "获取中...");
     }
 
-    private ProjectView<UserInfoEntity> mSendCodeView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mSendCodeView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")) {
-                ToastUtils.makeText(context, mUserInfoEntity.getMsg());
+        public void onSuccess(UserInfoBean mUserInfoBean) {
+            if (mUserInfoBean.getResultCode().equals("1")) {
+                ToastUtils.show(mUserInfoBean.getMsg());
                 return;
             }
-            mCode = mUserInfoEntity.getData().getCode();
-            sessionId = mUserInfoEntity.getData().getSessionId();
+            mCode = mUserInfoBean.getData().getCode();
+            sessionId = mUserInfoBean.getData().getSessionId();
         }
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context, result);
+            ToastUtils.show(result);
         }
     };
 
@@ -400,20 +403,20 @@ public class LoginActivity extends BaseActivity {
         mThirdLoginPresenter.getSearchThirdLogin(thirdUid, nickName, userIcon, type, "登录中...");
     }
 
-    private ProjectView<UserInfoEntity> mThirdLoginView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mThirdLoginView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")) {
-                ToastUtils.makeText(context, mUserInfoEntity.getMsg());
+        public void onSuccess(UserInfoBean mUserInfoBean) {
+            if (mUserInfoBean.getResultCode().equals("1")) {
+                ToastUtils.show(mUserInfoBean.getMsg());
                 return;
             }
-            if (mUserInfoEntity.getData().getUserBindPhone().equals("1")) {
-                SPUtil.putString(context, "uid", mUserInfoEntity.getData().getId());
-                SPUtil.putString(context, "isPhone", mUserInfoEntity.getData().getUserBindPhone());
-                SPUtil.putString(context, "nickName", mUserInfoEntity.getData().getUserName());
-                SPUtil.putString(context, "userIcon", mUserInfoEntity.getData().getUserIcon());
-                SPUtil.putString(context, "userPhone", mUserInfoEntity.getData().getUserPhone());
-                JPushInterface.setAlias(context, 1, mUserInfoEntity.getData().getId());
+            if (mUserInfoBean.getData().getUserBindPhone().equals("1")) {
+                SPUtil.putString(context, "uid", mUserInfoBean.getData().getId());
+                SPUtil.putString(context, "isPhone", mUserInfoBean.getData().getUserBindPhone());
+                SPUtil.putString(context, "nickName", mUserInfoBean.getData().getUserName());
+                SPUtil.putString(context, "userIcon", mUserInfoBean.getData().getUserIcon());
+                SPUtil.putString(context, "userPhone", mUserInfoBean.getData().getUserPhone());
+                JPushInterface.setAlias(context, 1, mUserInfoBean.getData().getId());
                 Intent intent = new Intent();
                 intent.setAction("com.ifree.uu.mine.changed");
                 getApplicationContext().sendBroadcast(intent);
@@ -421,14 +424,14 @@ public class LoginActivity extends BaseActivity {
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putString("thirdType",type);
-                bundle.putString("uid",mUserInfoEntity.getData().getId());
+                bundle.putString("uid",mUserInfoBean.getData().getId());
                 MyApplication.openActivityForResult(LoginActivity.this, BindingPhoneActivity.class,bundle,Constant.LOGIN_BINDING_PHONE);
             }
         }
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context, result);
+            ToastUtils.show(result);
         }
     };
 

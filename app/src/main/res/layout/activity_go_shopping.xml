@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_main_background"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_go_shopping_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/go_shopping_text" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_main_default"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_40"
+        android:paddingTop="@dimen/space_8"
+        android:paddingRight="@dimen/space_50"
+        android:paddingBottom="@dimen/space_8">
+
+        <EditText
+            android:id="@+id/tv_test_search"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_70"
+            android:layout_marginRight="@dimen/space_40"
+            android:layout_weight="1"
+            android:background="@drawable/bg_home_search_bar_transparent"
+            android:drawableLeft="@drawable/base_search"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/space_8"
+            android:text="请输入搜索关键字"
+            android:textColor="@color/text_main_color"
+            android:textSize="@dimen/font_size_28px" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:textColor="@color/text_main_color"
+            android:textSize="@dimen/font_size_28px" />
+    </LinearLayout>
+
+    <include layout="@layout/v_horizontal_line" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/white"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlPrimaryColor="#444" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:overScrollMode="never"
+            tools:listitem="@android:layout/simple_list_item_2" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

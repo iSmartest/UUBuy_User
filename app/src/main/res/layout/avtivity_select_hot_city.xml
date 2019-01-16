@@ -1,17 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_main_background">
 
-    <include layout="@layout/activity_base"/>
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_select_city_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/select_city_text" />
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/app_main_default"
+        android:layout_marginTop="8dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="18dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center">
+            <View android:layout_width="3dp"
+                android:layout_height="25dp"
+                android:background="@color/text_green"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="当前定位城市"
+                android:textSize="18dp"
+                android:paddingLeft="8dp"
+                android:textColor="@color/text_main_color"/>
+
+        </LinearLayout>
+        <include layout="@layout/v_horizontal_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="25dp"
+            android:gravity="center"
+            android:paddingBottom="25dp"
+            android:background="@color/app_main_default">
+            <TextView
+                android:id="@+id/tv_current_city"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:text=""
+                android:gravity="center"
+                android:background="@drawable/shape_hot_city_background"
+                android:textColor="@color/text_main_color"/>
+            <LinearLayout
+                android:id="@+id/ly_again_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|right"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_restart_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13dp"
+                    android:text="重新定位"
+                    android:textColor="@color/text_blue"
+                    android:drawablePadding="6dp"
+                    android:drawableTop="@drawable/location"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@color/app_main_default"
+        android:gravity="center">
+        <View android:layout_width="3dp"
+            android:layout_height="25dp"
+            android:background="@color/text_green"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="热门城市"
+            android:textSize="18dp"
+            android:paddingLeft="8dp"
+            android:textColor="@color/text_main_color"/>
+
+        <TextView
+            android:id="@+id/tv_more_hot_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|right"
+            android:text="更多城市>>"
+            android:textSize="14dp"
+            android:paddingLeft="8dp"
+            android:textColor="@color/text_main_color"/>
+    </LinearLayout>
+    <include layout="@layout/v_horizontal_line"/>
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/hot_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/app_main_default"
         android:paddingBottom="18dp">
-    </com.jcodecraeer.xrecyclerview.XRecyclerView>
+    </android.support.v7.widget.RecyclerView>
+
 </LinearLayout>

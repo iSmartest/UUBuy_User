@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_main_background"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_play_vip_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/mine_play_vip_text" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_240"
+                android:background="@mipmap/mine_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/space_80"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ri_vip_icon_img"
+                        android:layout_width="@dimen/space_120"
+                        android:layout_height="@dimen/space_120"
+                        android:src="@mipmap/bg_launcher"
+                        app:civ_border_color="@android:color/white"
+                        app:civ_border_width="@dimen/space_4" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_30"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_play_vip_user_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/app_main_default"
+                                android:textSize="@dimen/font_size_34px" />
+
+                            <TextView
+                                android:id="@+id/tv_vip_medal_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/space_20"
+                                android:text="银牌"
+                                android:background="@drawable/shape_silver_medal_background"
+                                android:textColor="@color/app_main_default"
+                                android:textSize="@dimen/font_size_20px" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_vip_grown_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_8"
+                            android:textColor="@color/app_main_default"
+                            android:textSize="@dimen/font_size_22px" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main_default"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/space_30"
+                android:paddingRight="@dimen/space_30">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="积分"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/font_size_30px" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="每天签到领20积分"
+                    android:layout_marginTop="@dimen/space_10"
+                    android:textColor="@color/text_main_color"
+                    android:textSize="@dimen/font_size_28px" />
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_sign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main_default"
+                android:paddingLeft="@dimen/space_80"
+                android:paddingRight="@dimen/space_80"
+                android:paddingTop="@dimen/space_40"
+                android:paddingBottom="@dimen/space_40">
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_100"
+                android:background="@color/app_main_default"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/space_30"
+                android:text="做任务"
+                android:layout_marginTop="@dimen/space_12"
+                android:textColor="@color/text_main_color"
+                android:textSize="@dimen/font_size_34px" />
+
+            <include layout="@layout/v_horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main_default"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_30">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="完善个人资料"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/font_size_34px" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:gravity="center_vertical"
+                        android:text="获得30点积分"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/space_20" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_go_perfect_information"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="去做任务"
+                    android:textColor="@color/text_type_red"
+                    android:textSize="@dimen/font_size_28px" />
+            </LinearLayout>
+
+            <include layout="@layout/v_horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main_default"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_30">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="分享商城"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/font_size_34px" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:gravity="center_vertical"
+                        android:text="获得30点积分"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/font_size_20px" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_go_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_red_background"
+                    android:text="去做任务"
+                    android:textColor="@color/app_main_default"
+                    android:textSize="@dimen/font_size_28px" />
+            </LinearLayout>
+
+            <include layout="@layout/v_horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main_default"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_30">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="实名认证"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/font_size_34px" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:gravity="center_vertical"
+                        android:text="获得30点积分"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/font_size_20px" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_real_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="去做任务"
+                    android:textColor="@color/text_type_red"
+                    android:textSize="@dimen/font_size_28px" />
+            </LinearLayout>
+
+            <include layout="@layout/v_horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main_default"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_30">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="意见反馈"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/font_size_34px" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8"
+                        android:gravity="center_vertical"
+                        android:text="获得30点积分"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/font_size_20px" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_go_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="去做任务"
+                    android:textColor="@color/text_type_red"
+                    android:textSize="@dimen/font_size_28px" />
+            </LinearLayout>
+
+            <include layout="@layout/v_horizontal_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main_default"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_30">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="关注商城"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/font_size_34px" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical"
+                        android:text="获得30点积分"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/space_20" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_go_foucs_mall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="去做任务"
+                    android:textColor="@color/text_type_red"
+                    android:textSize="@dimen/font_size_28px" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

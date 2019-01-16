@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_help_center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_90"
+        android:background="@color/app_main_default"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_30"
+        android:paddingRight="@dimen/space_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:text="不同等级的会员能享受什么样的权益？"
+            android:textColor="@color/text_main_color"
+            android:textSize="@dimen/font_size_30px" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/space_30"
+            android:src="@drawable/right_in" />
+    </LinearLayout>
+
+
+</LinearLayout>

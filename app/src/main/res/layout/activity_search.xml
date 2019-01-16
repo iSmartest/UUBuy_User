@@ -1,35 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_main_background">
 
-    <include layout="@layout/activity_base"/>
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_search_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/search_text" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_main_default"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_40"
+        android:paddingTop="@dimen/space_8"
+        android:paddingRight="@dimen/space_50"
+        android:paddingBottom="@dimen/space_8">
 
-    <RelativeLayout
+        <EditText
+            android:id="@+id/edt_a_key_search"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_70"
+            android:layout_marginRight="@dimen/space_40"
+            android:layout_weight="1"
+            android:background="@drawable/bg_home_search_bar_transparent"
+            android:drawableLeft="@drawable/base_search"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/space_8"
+            android:text="请输入搜索关键字"
+            android:textColor="@color/text_main_color"
+            android:textSize="@dimen/font_size_28px" />
+
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:textColor="@color/text_main_color"
+            android:textSize="@dimen/font_size_28px" />
+    </LinearLayout>
+
+    <include layout="@layout/v_horizontal_line" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
-            android:id="@+id/xr_search"
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/white"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlPrimaryColor="#444" />
+
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </com.jcodecraeer.xrecyclerview.XRecyclerView>
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main_default"
+                app:elevation="0dp">
 
-        <TextView
-            android:id="@+id/tv_search_empty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/empty_search"
-            android:layout_centerInParent="true"
-            android:text="搜索不到您想要的！！"
-            android:gravity="center"
-            android:textColor="@color/text_green"
-            android:textSize="14dp"
-            android:drawablePadding="5dp"
-            android:visibility="gone"/>
-    </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/ll_hot_word"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_main_default"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="18dp"
+                        android:paddingTop="10dp">
+
+                        <View
+                            android:layout_width="3dp"
+                            android:layout_height="25dp"
+                            android:background="@color/text_green" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="8dp"
+                            android:text="热门搜索"
+                            android:textColor="@color/text_main_color"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <com.ifree.uu.uubuy.widget.flowTagLayout.FlowTagLayout
+                        android:id="@+id/tf_flavor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"/>
+
+                    <include layout="@layout/v_horizontal_line" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_main_default"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="exitUntilCollapsed|enterAlways|enterAlwaysCollapsed">
+
+                    <View
+                        style="@style/AppTheme.Divison"
+                        android:layout_width="wrap_content" />
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tl_hot_top_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/app_main_default"
+                        app:tabIndicatorColor="@color/text_fraction_red"
+                        app:tabIndicatorHeight="2dp"
+                        android:visibility="gone"
+                        app:tabSelectedTextColor="@color/text_fraction_red"
+                        app:tabTextColor="@color/text_main_color"
+                        app:tabTextAppearance="@style/TabLayoutTextStyle">
+                    </android.support.design.widget.TabLayout>
+
+                    <View style="@style/AppTheme.Divison" />
+                </LinearLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/app_main_background"
+                android:overScrollMode="never"
+                android:visibility="gone"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@android:layout/simple_list_item_2" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
 </LinearLayout>

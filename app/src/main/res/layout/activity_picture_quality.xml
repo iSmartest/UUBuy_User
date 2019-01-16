@@ -2,10 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/app_main_background"
     android:orientation="vertical">
 
-    <include layout="@layout/activity_base" />
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_picture_quality_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/picture_quality_text" />
 
     <LinearLayout
         android:id="@+id/ll_model_intelligence"

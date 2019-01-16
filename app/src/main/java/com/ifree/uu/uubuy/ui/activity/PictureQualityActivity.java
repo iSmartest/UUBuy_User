@@ -5,9 +5,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.SPUtil;
-
+import com.ifree.uu.uubuy.common.CommonActivity;
+import com.ifree.uu.uubuy.utils.SPUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -17,7 +16,7 @@ import butterknife.OnClick;
  * Created by 2018/10/24 0024
  * Description:图片质量
  */
-public class PictureQualityActivity extends BaseActivity {
+public class PictureQualityActivity extends CommonActivity {
     @BindView(R.id.ll_model_intelligence)
     LinearLayout mModelIntelligence;
     @BindView(R.id.iv_select_intelligence)
@@ -36,7 +35,13 @@ public class PictureQualityActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
+    protected int getTitleBarId() {
+        return R.id.tb_picture_quality_title;
+    }
+
+
+    @Override
+    protected void initView() {
         if (SPUtil.getString(context,"pictureModel").equals("2")){
             ivModelIntelligence.setVisibility(View.GONE);
             ivModelHighQuality.setVisibility(View.VISIBLE);
@@ -54,10 +59,7 @@ public class PictureQualityActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
-        hideBack(5);
-        setTitleText("图片质量");
-    }
+    protected void initData() {}
 
     @OnClick({R.id.ll_model_intelligence,R.id.ll_model_high_quality,R.id.ll_model_common})
     public void onClickView(View view){

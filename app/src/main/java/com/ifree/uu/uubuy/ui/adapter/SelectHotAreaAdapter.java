@@ -7,9 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.mvp.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.mvp.modle.CityInfoBean;
 
 import java.util.ArrayList;
 
@@ -25,9 +24,9 @@ import butterknife.ButterKnife;
 public class SelectHotAreaAdapter extends RecyclerView.Adapter<SelectHotAreaAdapter.SelectHotAreaViewHolder>{
 
     private Context context;
-    private ArrayList<? extends CityInfoEntity.DataBean.HotCity.TownList> mList;
+    private ArrayList<? extends CityInfoBean.DataBean.HotCity.TownList> mList;
 
-    public SelectHotAreaAdapter(Context context, ArrayList<? extends CityInfoEntity.DataBean.HotCity.TownList> mList) {
+    public SelectHotAreaAdapter(Context context, ArrayList<? extends CityInfoBean.DataBean.HotCity.TownList> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -42,8 +41,8 @@ public class SelectHotAreaAdapter extends RecyclerView.Adapter<SelectHotAreaAdap
 
     @Override
     public void onBindViewHolder(@NonNull SelectHotAreaViewHolder holder, int position) {
-        CityInfoEntity.DataBean.HotCity.TownList townList = mList.get(position);
-        holder.mArea.setText(townList.getTown());
+//        CityInfoBean.DataBean.HotCity.TownList townList = mList.get(position);
+//        holder.mArea.setText(townList.getTown());
     }
 
     @Override

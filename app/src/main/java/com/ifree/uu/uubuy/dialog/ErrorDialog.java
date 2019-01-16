@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.uitls.GlobalMethod;
+import com.ifree.uu.uubuy.utils.GlobalMethod;
 
 /**
  * 错误提醒对话框

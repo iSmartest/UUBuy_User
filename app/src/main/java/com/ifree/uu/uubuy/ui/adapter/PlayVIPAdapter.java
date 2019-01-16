@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.mvp.entity.GroupEntity;
+import com.ifree.uu.uubuy.mvp.modle.GroupBean;
 
 import java.util.List;
 
@@ -25,9 +25,9 @@ import butterknife.ButterKnife;
  */
 public class PlayVIPAdapter extends RecyclerView.Adapter<PlayVIPAdapter.PlayVIPViewHolder>{
     private Context context;
-    private List<GroupEntity.DataBean.SignInList> mList;
+    private List<GroupBean.DataBean.SignInList> mList;
 
-    public PlayVIPAdapter(Context context, List<GroupEntity.DataBean.SignInList> mList) {
+    public PlayVIPAdapter(Context context, List<GroupBean.DataBean.SignInList> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -42,7 +42,7 @@ public class PlayVIPAdapter extends RecyclerView.Adapter<PlayVIPAdapter.PlayVIPV
 
     @Override
     public void onBindViewHolder(@NonNull PlayVIPViewHolder holder, int position) {
-        GroupEntity.DataBean.SignInList signInList = mList.get(position);
+        GroupBean.DataBean.SignInList signInList = mList.get(position);
         if (position == 0){
             holder.vLeft.setVisibility(View.GONE);
         }else if (position == 6){

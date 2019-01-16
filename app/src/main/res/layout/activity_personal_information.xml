@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/app_main_background"
     android:orientation="vertical">
-
-    <include layout="@layout/activity_base"/>
-    <include layout="@layout/v_horizontal_line"/>
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_mine_personal_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/mine_personal_text" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -27,16 +28,14 @@
             android:layout_weight="1"
             android:textColor="@color/text_main_color"
             android:textSize="17dp" />
-
-        <com.ifree.uu.uubuy.custom.rounded.RoundedImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ri_my_icon_img"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/my_head_portrait"
-            app:is_oval="true"
-            tools:ignore="ContentDescription" />
+            android:layout_width="@dimen/space_110"
+            android:layout_height="@dimen/space_110"
+            android:src="@mipmap/bg_launcher"
+            app:civ_border_color="@android:color/white"
+            app:civ_border_width="@dimen/space_4" />
+
 
         <ImageView
             android:layout_width="wrap_content"

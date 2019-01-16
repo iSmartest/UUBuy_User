@@ -5,10 +5,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hjq.toast.ToastUtils;
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
-
+import com.ifree.uu.uubuy.common.CommonActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -18,7 +17,7 @@ import butterknife.OnClick;
  * Created by 2018/9/20 0020
  * Description:意见反馈
  */
-public class FeedbackActivity extends BaseActivity {
+public class FeedbackActivity extends CommonActivity {
     @BindView(R.id.edit_feedback_dec)
     EditText mFeedback;
     @BindView(R.id.tv_sure_feedback)
@@ -29,15 +28,15 @@ public class FeedbackActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
-
+    protected int getTitleBarId() {
+        return R.id.tb_feedback_title;
     }
 
     @Override
-    protected void initView() {
-        hideBack(5);
-        setTitleText("意见反馈");
-    }
+    protected void initView() {}
+
+    @Override
+    protected void initData() {}
 
     @OnClick({R.id.edit_feedback_dec})
     public void onClickView(View view){
@@ -45,7 +44,7 @@ public class FeedbackActivity extends BaseActivity {
             case R.id.edit_feedback_dec:
                 String mContent = mFeedback.getText().toString().trim();
                 if (TextUtils.isEmpty(mContent)){
-                    ToastUtils.makeText(context,"内容不能为空");
+                    ToastUtils.show("内容不能为空");
                     return;
                 }
                 submitFeedback(mContent);

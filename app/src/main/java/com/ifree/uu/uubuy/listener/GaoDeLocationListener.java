@@ -7,7 +7,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.ifree.uu.uubuy.uitls.SPUtil;
+import com.ifree.uu.uubuy.utils.SPUtil;
 
 import static com.ifree.uu.uubuy.config.Constant.FIRST_LOCATION;
 
@@ -24,7 +24,7 @@ public class GaoDeLocationListener {
     private Context context;
     private OnQuestResultListener onQuestResultListener;
     //初始化client
-    public GaoDeLocationListener(Context context,OnQuestResultListener onQuestResultListener){
+    public GaoDeLocationListener(Context context, OnQuestResultListener onQuestResultListener){
         this.context = context;
         this.onQuestResultListener = onQuestResultListener;
         locationClient = new AMapLocationClient(context.getApplicationContext());

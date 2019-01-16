@@ -1,29 +1,25 @@
 package com.ifree.uu.uubuy.ui.activity;
 
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 
+import com.gyf.barlibrary.BarHide;
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.common.CommonActivity;
 import com.ifree.uu.uubuy.config.Constant;
 import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
-import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.mvp.presenter.UpLoadUUIdPresenter;
+import com.hjq.toast.ToastUtils;
+import com.ifree.uu.uubuy.mvp.modle.UserInfoBean;
+import com.ifree.uu.uubuy.mvp.persenter.UpLoadUUIdPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.uitls.DeviceInfoUtils;
-import com.ifree.uu.uubuy.uitls.SPUtil;
-import com.ifree.uu.uubuy.uitls.StatusBarUtil;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
+import com.ifree.uu.uubuy.utils.SPUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +30,7 @@ import java.util.List;
  * Created by 2018/8/17.
  * Description:
  */
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends CommonActivity {
     private UpLoadUUIdPresenter mUpLoadUUIdPresenter;
     private static final int SHOW_TIME_MIN = 1000;// 最小显示时间
     private long mStartTime;// 开始时间
@@ -66,63 +62,42 @@ public class StartActivity extends AppCompatActivity {
         public void run() {
             IsFirst = SPUtil.getBoolean(StartActivity.this, Constant.FIRST_COME, true);
             if (IsFirst) {
-                startActivity(new Intent(StartActivity.this,GuideActivity.class));
+                startActivity(new Intent(StartActivity.this, GuideActivity.class));
                 SPUtil.putBoolean(StartActivity.this, Constant.FIRST_COME, false);
                 finish();
             } else {
                 startActivity(new Intent(StartActivity.this, MainActivity.class));
-                initLoad();
                 finish();
             }
         }
     };
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        getWindow().getDecorView().setBackgroundResource(R.mipmap.splash);
-        super.onCreate(savedInstanceState);
-        StatusBarUtil.fullScreen(StartActivity.this);
+    protected int getLayoutId() {
+        return R.layout.activity_start;
+    }
+
+    @Override
+    protected int getTitleBarId() {
+        return 0;
+    }
+
+    @Override
+    protected void initView() {
         mStartTime = System.currentTimeMillis();//记录开始时间1
         context = this;
         mUpLoadUUIdPresenter = new UpLoadUUIdPresenter(context);
+        //设置状态栏和导航栏参数
+        getStatusBarConfig()
+                .fullScreen(true)//有导航栏的情况下，activity全屏显示，也就是activity最下面被导航栏覆盖，不写默认非全屏
+                .hideBar(BarHide.FLAG_HIDE_STATUS_BAR)//隐藏状态栏
+                .transparentNavigationBar()//透明导航栏，不写默认黑色(设置此方法，fullScreen()方法自动为true)
+                .init();
+    }
+
+    @Override
+    protected void initData() {
         checkPermission();
-    }
-
-    private void initLoad() {
-        mUpLoadUUIdPresenter.onCreate();
-        mUpLoadUUIdPresenter.attachView(mUpLoadUUIdView);
-        mUpLoadUUIdPresenter.upLoadUUId("Android",DeviceInfoUtils.getMyUUID(context),SPUtil.getString(context,"uid"));
-    }
-
-    private ProjectView<UserInfoEntity> mUpLoadUUIdView = new ProjectView<UserInfoEntity>() {
-        @Override
-        public void onSuccess(UserInfoEntity userInfoEntity) {
-            if (userInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,userInfoEntity.getMsg());
-                return;
-            }
-        }
-
-        @Override
-        public void onError(String result) {
-
-        }
-    };
-
-    private void saveTag() {
-        SPUtil.putBoolean(StartActivity.this, Constant.FIRST_COME, false);
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        saveTag();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        mHandler.removeCallbacks(goToMainActivity);//移除回调
     }
 
     private void checkPermission() {
@@ -148,7 +123,7 @@ public class StartActivity extends AppCompatActivity {
                 return;
             }
             mHandler.sendEmptyMessage(1);
-        }else {
+        } else {
             mHandler.sendEmptyMessage(1);
             initLocation();
         }
@@ -157,13 +132,30 @@ public class StartActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_CODE_ASK_PERMISSIONS:
                 mHandler.sendEmptyMessage(1);
                 initLocation();
                 break;
         }
     }
+
+
+
+    private ProjectView<UserInfoBean> mUpLoadUUIdView = new ProjectView<UserInfoBean>() {
+        @Override
+        public void onSuccess(UserInfoBean userInfoBean) {
+            if (userInfoBean.getResultCode().equals("1")) {
+                ToastUtils.show(userInfoBean.getMsg());
+                return;
+            }
+        }
+
+        @Override
+        public void onError(String result) {
+
+        }
+    };
 
     private void initLocation() {
         GaoDeLocationListener gaoDeLocationListener = new GaoDeLocationListener(StartActivity.this, new GaoDeLocationListener.OnQuestResultListener() {
@@ -179,4 +171,22 @@ public class StartActivity extends AppCompatActivity {
         });
         gaoDeLocationListener.startLocation();
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        saveTag();
+    }
+
+    private void saveTag() {
+        SPUtil.putBoolean(StartActivity.this, Constant.FIRST_COME, false);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mHandler.removeCallbacks(goToMainActivity);//移除回调
+    }
+
 }

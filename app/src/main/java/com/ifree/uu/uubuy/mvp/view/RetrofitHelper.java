@@ -6,12 +6,10 @@ import android.util.Log;
 import com.google.gson.GsonBuilder;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.BaseUrl;
-import com.ifree.uu.uubuy.uitls.NetUtil;
-
+import com.ifree.uu.uubuy.utils.NetUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;

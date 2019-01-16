@@ -7,17 +7,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.hjq.baselibrary.base.BaseActivity;
+import com.hjq.toast.ToastUtils;
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.mvp.presenter.BindPhonePresenter;
-import com.ifree.uu.uubuy.mvp.presenter.SendCodePresenter;
+import com.ifree.uu.uubuy.common.CommonActivity;
+import com.ifree.uu.uubuy.mvp.modle.UserInfoBean;
+import com.ifree.uu.uubuy.mvp.persenter.BindPhonePresenter;
+import com.ifree.uu.uubuy.mvp.persenter.SendCodePresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.SPUtil;
-import com.ifree.uu.uubuy.uitls.StringUtils;
-import com.ifree.uu.uubuy.uitls.TimerUtil;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
-
+import com.ifree.uu.uubuy.utils.SPUtil;
+import com.ifree.uu.uubuy.utils.StringUtils;
+import com.ifree.uu.uubuy.utils.TimerUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -27,7 +27,7 @@ import butterknife.OnClick;
  * Created by 2018/9/19 0019
  * Description:
  */
-public class BindingPhoneActivity extends BaseActivity {
+public class BindingPhoneActivity extends CommonActivity {
     private SendCodePresenter mSendCodePresenter;
     private BindPhonePresenter mBindPhonePresenter;
     @BindView(R.id.edit_bind_phone)
@@ -49,32 +49,35 @@ public class BindingPhoneActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
-        thirdType = getIntent().getStringExtra("thirdType");
-        uid = getIntent().getStringExtra("uid");
+    protected int getTitleBarId() {
+        return R.id.tb_bind_phone_title;
     }
 
     @Override
     protected void initView() {
-        hideBack(5);
-        setTitleText("绑定手机号");
         mSendCodePresenter = new SendCodePresenter(context);
         mBindPhonePresenter = new BindPhonePresenter(context);
     }
 
-    @OnClick({R.id.tv_bind_code,R.id.tv_bind_sure,R.id.iv_base_back})
+    @Override
+    protected void initData() {
+        thirdType = getIntent().getStringExtra("thirdType");
+        uid = getIntent().getStringExtra("uid");
+    }
+
+    @OnClick({R.id.tv_bind_code,R.id.tv_bind_sure})
     public void onClickView(View view) {
         String userPhone = mBindPhone.getText().toString().trim();//电话号码
         switch (view.getId()) {
             case R.id.tv_bind_code:
                 //验证电话号码不能为空
                 if (TextUtils.isEmpty(userPhone)) {
-                    ToastUtils.makeText(context, "请输入手机号！");
+                    ToastUtils.show("请输入手机号！");
                     return;
                 }
                 //验证手机号是否正确
                 if (!StringUtils.isMatchesPhone(userPhone)) {
-                    ToastUtils.makeText(context, "你输入的手机号格式不正确");
+                    ToastUtils.show("你输入的手机号格式不正确！");
                     return;
                 }
                 TimerUtil mTimerUtil = new TimerUtil(mSendCode);
@@ -83,16 +86,16 @@ public class BindingPhoneActivity extends BaseActivity {
                 break;
             case R.id.tv_bind_sure:
                 if (TextUtils.isEmpty(userPhone)) {
-                    ToastUtils.makeText(context, "电话号码不能为空");
+                    ToastUtils.show("电话号码不能为空！");
                     return;
                 }
                 if (!StringUtils.isMatchesPhone(userPhone)) {
-                    ToastUtils.makeText(context, "电话号码不正确，请核对后重新输入");
+                    ToastUtils.show("电话号码不正确，请核对后重新输入！");
                     return;
                 }
                 String inviteCode = mBindCode.getText().toString().trim();
                 if (TextUtils.isEmpty(inviteCode)) {
-                    ToastUtils.makeText(context, "验证码不能为空");
+                    ToastUtils.show("验证码不能为空");
                     return;
                 }
 //                //验证验证码是否正确
@@ -103,7 +106,7 @@ public class BindingPhoneActivity extends BaseActivity {
                 //验证密码不能为空
                 String password = mBindPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(password)) {
-                    ToastUtils.makeText(context, "密码不能为空");
+                    ToastUtils.show("密码不能为空");
                     return;
                 }
                 sure(userPhone, password, inviteCode);
@@ -118,24 +121,24 @@ public class BindingPhoneActivity extends BaseActivity {
         mBindPhonePresenter.getSearchBindPhone(userPhone,password,inviteCode,sessionId,uid,thirdType,"绑定中...");
     }
 
-    private ProjectView<UserInfoEntity> mBindPhoneView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mBindPhoneView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+        public void onSuccess(UserInfoBean mUserInfoBean) {
+            if (mUserInfoBean.getResultCode().equals("1")){
+                ToastUtils.show(mUserInfoBean.getMsg());
                 return;
             }
-            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            ToastUtils.show(mUserInfoBean.getMsg());
             SPUtil.putString(context, "isPhone", "1");
-            SPUtil.putString(context, "uid", mUserInfoEntity.getData().getId());
-            SPUtil.putString(context, "userPhone", mUserInfoEntity.getData().getUserPhone());
+            SPUtil.putString(context, "uid", mUserInfoBean.getData().getId());
+            SPUtil.putString(context, "userPhone", mUserInfoBean.getData().getUserPhone());
             setResult(Activity.RESULT_OK);
             finish();
         }
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
+            ToastUtils.show(result);
         }
     };
 
@@ -146,21 +149,21 @@ public class BindingPhoneActivity extends BaseActivity {
         mSendCodePresenter.getSearchSendCode(userPhone,"5","获取中...");
     }
 
-    private ProjectView<UserInfoEntity> mSendCodeView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mSendCodeView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+        public void onSuccess(UserInfoBean mUserInfoBean) {
+            if (mUserInfoBean.getResultCode().equals("1")){
+                ToastUtils.show(mUserInfoBean.getMsg());
                 return;
             }
-            mCode = mUserInfoEntity.getData().getCode();
-            sessionId = mUserInfoEntity.getData().getSessionId();
+            mCode = mUserInfoBean.getData().getCode();
+            sessionId = mUserInfoBean.getData().getSessionId();
             Log.i("TAG", "onSuccess: " + mCode);
         }
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
-        }
+            ToastUtils.show(result);
+            }
     };
 }

@@ -5,15 +5,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.hjq.toast.ToastUtils;
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.mvp.presenter.ForgetPasswordPresenter;
-import com.ifree.uu.uubuy.mvp.presenter.SendCodePresenter;
+import com.ifree.uu.uubuy.common.CommonActivity;
+import com.ifree.uu.uubuy.mvp.modle.UserInfoBean;
+import com.ifree.uu.uubuy.mvp.persenter.ForgetPasswordPresenter;
+import com.ifree.uu.uubuy.mvp.persenter.SendCodePresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.StringUtils;
-import com.ifree.uu.uubuy.uitls.TimerUtil;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
+import com.ifree.uu.uubuy.utils.StringUtils;
+import com.ifree.uu.uubuy.utils.TimerUtil;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -24,7 +26,7 @@ import butterknife.OnClick;
  * Description:
  */
 
-public class ForgetPwdActivity extends BaseActivity{
+public class ForgetPwdActivity extends CommonActivity {
     private SendCodePresenter mSendCodePresenter;
     private ForgetPasswordPresenter mForgetPasswordPresenter;
     @BindView(R.id.edit_forget_phone)
@@ -48,15 +50,20 @@ public class ForgetPwdActivity extends BaseActivity{
     }
 
     @Override
-    protected void loadData() {
-
+    protected int getTitleBarId() {
+        return R.id.tb_forget_password_title;
     }
+
+
     @Override
     protected void initView() {
-        hideBack(5);
-        setTitleText("找回密码");
         mSendCodePresenter = new SendCodePresenter(context);
         mForgetPasswordPresenter = new ForgetPasswordPresenter(context);
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     @OnClick({R.id.tv_forget_code,R.id.tv_forget_sure})
@@ -65,12 +72,12 @@ public class ForgetPwdActivity extends BaseActivity{
         switch (v.getId()){
             case R.id.tv_forget_code:
                 if (TextUtils.isEmpty(userPhone)) {
-                    ToastUtils.makeText(context, "电话号码不能为空");
+                    ToastUtils.show("电话号码不能为空");
                     return;
                 }
                 //验证电话号码是否正确
                 if (!StringUtils.isMatchesPhone(userPhone)) {
-                    ToastUtils.makeText(context, "电话号码不正确，请核对后重新输入");
+                    ToastUtils.show("电话号码不正确，请核对后重新输入");
                     return;
                 }
                 TimerUtil mTimerUtil = new TimerUtil(mSendCode);
@@ -79,52 +86,52 @@ public class ForgetPwdActivity extends BaseActivity{
                 break;
             case R.id.tv_forget_sure:
                 if (TextUtils.isEmpty(userPhone)) {
-                    ToastUtils.makeText(context, "电话号码不能为空");
+                    ToastUtils.show("电话号码不能为空");
                     return;
                 }
                 //验证电话号码是否正确
                 if (!StringUtils.isMatchesPhone(userPhone)) {
-                    ToastUtils.makeText(context, "电话号码不正确，请核对后重新输入");
+                    ToastUtils.show("电话号码不正确，请核对后重新输入");
                     return;
                 }
                 //验证验证码不能为空
                 String passPin = mForgetCode.getText().toString().trim();
                 if (TextUtils.isEmpty(passPin)) {
-                    ToastUtils.makeText(context, "验证码不能为空");
+                    ToastUtils.show("验证码不能为空");
                     return;
                 }
                 //验证验证码是否正确
                 if (!passPin.equals(mCode)) {
-                    ToastUtils.makeText(context, "验证码不正确");
+                    ToastUtils.show("验证码不正确");
                     return;
                 }
                 //验证密码不能为空
                 String password = mForgetPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(password)) {
-                    ToastUtils.makeText(context, "密码不能为空");
+                    ToastUtils.show("密码不能为空");
                     return;
                 }
                 //验证密码格式是否正确
                 if (password.length()<6 || password.length()>16) {
-                    ToastUtils.makeText(context, "密码为6-16位组成");
+                    ToastUtils.show("密码为6-16位组成");
                     return;
                 }
                 //验证确认密码不能为空
                 String confirmPassword = mSurePassword.getText().toString().trim();
                 if (TextUtils.isEmpty(confirmPassword)) {
-                    ToastUtils.makeText(context, "确认密码不能为空");
+                    ToastUtils.show("确认密码不能为空");
                     return;
                 }
 
                 //验证密码格式是否正确
                 if (confirmPassword.length()<6 || confirmPassword.length()>16) {
-                    ToastUtils.makeText(context, "密码为6-16位组成");
+                    ToastUtils.show("密码为6-16位组成");
                     return;
                 }
 
                 //验证密码和确认密码是否相同
                 if (!password.equals(confirmPassword)) {
-                    ToastUtils.makeText(context, "两次输入密码不一致");
+                    ToastUtils.show("两次输入密码不一致");
                     return;
                 }
 
@@ -133,26 +140,26 @@ public class ForgetPwdActivity extends BaseActivity{
         }
     }
 
-    private void findPassword(String userPhone, String password,String code) {
+    private void findPassword(String userPhone, String password, String code) {
         mForgetPasswordPresenter.onCreate();
         mForgetPasswordPresenter.attachView(mForgetPasswordView);
         mForgetPasswordPresenter.getSearchForgetPassword(userPhone,password,code,sessionId,"提交中...");
     }
 
-    private ProjectView<UserInfoEntity> mForgetPasswordView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mForgetPasswordView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+        public void onSuccess(UserInfoBean mUserInfoBean) {
+            if (mUserInfoBean.getResultCode().equals("1")){
+                ToastUtils.show(mUserInfoBean.getMsg());
                 return;
             }
-            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            ToastUtils.show(mUserInfoBean.getMsg());
             finish();
         }
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
+            ToastUtils.show(result);
         }
     };
 
@@ -162,20 +169,20 @@ public class ForgetPwdActivity extends BaseActivity{
         mSendCodePresenter.getSearchSendCode(userPhone,"4","获取中...");
     }
 
-    private ProjectView<UserInfoEntity> mSendCodeView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mSendCodeView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+        public void onSuccess(UserInfoBean mUserInfoBean) {
+            if (mUserInfoBean.getResultCode().equals("1")){
+                ToastUtils.show(mUserInfoBean.getMsg());
                 return;
             }
-            mCode = mUserInfoEntity.getData().getCode();
-            sessionId = mUserInfoEntity.getData().getSessionId();
+            mCode = mUserInfoBean.getData().getCode();
+            sessionId = mUserInfoBean.getData().getSessionId();
         }
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
+            ToastUtils.show(result);
         }
     };
 }

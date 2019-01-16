@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.mvp.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.mvp.modle.CityInfoBean;
 
 import java.util.ArrayList;
 
@@ -24,9 +24,9 @@ import butterknife.ButterKnife;
  */
 public class SelectProvinceAdapter extends RecyclerView.Adapter<SelectProvinceAdapter.SelectProvinceViewHolder>{
     private Context context;
-    private ArrayList<? extends CityInfoEntity.DataBean.ProvinceList> mList;
+    private ArrayList<? extends CityInfoBean.DataBean.ProvinceList> mList;
 
-    public SelectProvinceAdapter(Context context, ArrayList<? extends CityInfoEntity.DataBean.ProvinceList> mList) {
+    public SelectProvinceAdapter(Context context, ArrayList<? extends CityInfoBean.DataBean.ProvinceList> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -41,7 +41,7 @@ public class SelectProvinceAdapter extends RecyclerView.Adapter<SelectProvinceAd
 
     @Override
     public void onBindViewHolder(@NonNull SelectProvinceViewHolder holder, int position) {
-        CityInfoEntity.DataBean.ProvinceList provinceList = mList.get(position);
+        CityInfoBean.DataBean.ProvinceList provinceList = mList.get(position);
         holder.mProvince.setText(provinceList.getProvince());
     }
 

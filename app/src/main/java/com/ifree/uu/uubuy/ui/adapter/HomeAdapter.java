@@ -9,16 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.mvp.entity.HomeEntity;
-import com.ifree.uu.uubuy.uitls.GlideImageLoader;
-import com.ifree.uu.uubuy.uitls.SPUtil;
-import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
-
+import com.ifree.uu.uubuy.mvp.modle.HomeBean;
 import java.util.List;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,8 +24,8 @@ import butterknife.ButterKnife;
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder>{
 
     private Context context;
-    private List<HomeEntity.DataBean.ActivitiesList> mList;
-    public HomeAdapter(Context context, List<HomeEntity.DataBean.ActivitiesList> mList) {
+    private List<HomeBean.DataBean.ActivitiesList> mList;
+    public HomeAdapter(Context context, List<HomeBean.DataBean.ActivitiesList> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -48,28 +41,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
-        HomeEntity.DataBean.ActivitiesList activitiesList = mList.get(position);
-        Map<String,String> spMap = SPUtil.getMap(context,"key");
-        holder.address.setText(activitiesList.getActivitiesAdAddress());
-        holder.name.setText(activitiesList.getActivitiesName());
-        holder.time.setText("活动时间：" + TimeFormatUtils.modifyDataFormat2(activitiesList.getActivitiesTime()));
-        GlideImageLoader.imageLoader(context,activitiesList.getActivitiesPic(),holder.icon);
-        holder.signUp.setText("报名：" + activitiesList.getSignUp() + "人");
-        if (spMap == null || spMap.size() == 0){
-            holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
-        }else {
-            if (spMap.containsKey(activitiesList.getaId())){
-                int temp = activitiesList.getBrowsing() + Integer.valueOf(spMap.get(activitiesList.getaId()));
-                holder.browsingVolume.setText("浏览：" + temp + "人");
-            }else {
-                holder.browsingVolume.setText("浏览：" + activitiesList.getBrowsing()  + "人");
-            }
-        }
+
     }
 
     @Override
     public int getItemCount() {
-        return mList == null ? 10 : mList.size();
+        return 10;
     }
 
     public class HomeViewHolder extends RecyclerView.ViewHolder{

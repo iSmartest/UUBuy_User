@@ -64,6 +64,6 @@
             android:layout_weight="1"
             android:background="@null"
             android:text="确定"
-            android:textColor="@color/text_green" />
+            android:textColor="@color/text_type_red" />
     </LinearLayout>
 </LinearLayout>

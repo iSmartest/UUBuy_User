@@ -6,12 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.common.CommonActivity;
 import com.ifree.uu.uubuy.listener.RecyclerItemTouchListener;
-import com.ifree.uu.uubuy.mvp.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.mvp.modle.CityInfoBean;
 import com.ifree.uu.uubuy.ui.adapter.SelectAreaAdapter;
-import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.SPUtil;
-
+import com.ifree.uu.uubuy.utils.SPUtil;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -22,10 +21,10 @@ import butterknife.BindView;
  * Created by 2018/9/6.
  * Description:
  */
-public class SelectAreaActivity extends BaseActivity {
+public class SelectAreaActivity extends CommonActivity {
     @BindView(R.id.select_list)
     RecyclerView recyclerView;
-    private ArrayList<? extends CityInfoEntity.DataBean.ProvinceList.CityList.TownList> mList;
+    private ArrayList<? extends CityInfoBean.DataBean.ProvinceList.CityList.TownList> mList;
     private SelectAreaAdapter mAdapter;
     private String city;
     @Override
@@ -34,7 +33,24 @@ public class SelectAreaActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
+    protected int getTitleBarId() {
+        return R.id.tb_select_city_title;
+    }
+
+
+    @Override
+    protected void initView() {
+        mList = getIntent().getParcelableArrayListExtra("area");
+        city = getIntent().getStringExtra("city");
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        mAdapter = new SelectAreaAdapter(context,mList);
+        recyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void initData() {
         recyclerView.addOnItemTouchListener(new RecyclerItemTouchListener(recyclerView) {
             @Override
             public void onItemClick(RecyclerView.ViewHolder vh) {
@@ -54,18 +70,5 @@ public class SelectAreaActivity extends BaseActivity {
                 finish();
             }
         });
-    }
-
-    @Override
-    protected void initView() {
-        hideBack(5);
-        setTitleText("选择城市");
-        mList = getIntent().getParcelableArrayListExtra("area");
-        city = getIntent().getStringExtra("city");
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new SelectAreaAdapter(context,mList);
-        recyclerView.setAdapter(mAdapter);
     }
 }

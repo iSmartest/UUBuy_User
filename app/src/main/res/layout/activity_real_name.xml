@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_real_name_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/real_name_text" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_360"
+        android:scaleType="fitXY"
+        android:src="@mipmap/bg_launcher" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_100"
+        android:gravity="center_vertical"
+        android:text="请填写您的真是信息，通过后将不能修改"
+        android:textColor="@color/text_type_red"
+        android:textSize="@dimen/font_size_28px" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_140"
+        android:background="@color/app_main_default"
+        android:gravity="center_vertical"
+        android:hint="请输入真实姓名"
+        android:maxLength="11"
+        android:paddingLeft="@dimen/space_40"
+        android:textColor="@color/text_main_color"
+        android:textColorHint="@color/text_sign_color"
+        android:textSize="@dimen/font_size_28px" />
+
+    <include layout="@layout/v_horizontal_line" />
+
+    <EditText
+        android:id="@+id/edit_bind_phone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_140"
+        android:background="@color/app_main_default"
+        android:gravity="center_vertical"
+        android:hint="请输入有效证件"
+        android:maxLength="28"
+        android:paddingLeft="@dimen/space_40"
+        android:textColor="@color/text_main_color"
+        android:textColorHint="@color/text_sign_color"
+        android:textSize="@dimen/font_size_28px" />
+
+    <TextView
+        android:id="@+id/tv_bind_sure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_100"
+        android:layout_marginLeft="@dimen/space_30"
+        android:layout_marginTop="@dimen/space_120"
+        android:layout_marginRight="@dimen/space_30"
+        android:background="@color/text_type_red"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/app_main_default"
+        android:textSize="@dimen/font_size_38px" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_30"
+        android:text="以上信息是用于身份验证"
+        android:textColor="@color/color_black"
+        android:textSize="@dimen/font_size_28px" />
+</LinearLayout>

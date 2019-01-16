@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.ifree.uu.uubuy.custom.photoView.PhotoView
+    <com.ifree.uu.uubuy.widget.photoView.PhotoView
         android:id="@+id/iv_see_picture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

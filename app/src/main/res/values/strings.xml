@@ -1,5 +1,73 @@
 <resources>
-    <string name="app_name" translatable="false">UU购</string>
+    <string name="app_name">UU购</string>
+    <!--登录相关-->
+    <string name="login_text">登录</string>
+    <string name="bind_phone_text">绑定手机号</string>
+    <string name="forget_password_text">找回密码</string>
+    <string name="register_text">注册账号</string>
+    <!-- 主页 -->
+    <string name="home_exit_hint">再按一次退出</string>
+    <string name="main_nav_index">首页</string>
+    <string name="main_nav_coupon">我的券</string>
+    <string name="main_nav_me">我的</string>
+    <string name="bomb_shop_text">爆款门店</string>
+    <!--城市-->
+    <string name="select_city_text">选择城市</string>
+    <!--消息-->
+    <string name="message_text">消息</string>
+    <string name="system_message">系统消息</string>
+    <string name="account_message">账户消息</string>
+    <string name="activities_message">活动消息</string>
+    <!--搜索-->
+    <string name="search_text">搜索</string>
+
+    <!--逛商场-->
+    <string name="go_shopping_text">逛逛商场</string>
+    <string name="hot_product_text">热销产品</string>
+    <string name="my_order_text">我的订单</string>
+    <string name="my_order_info_text">订单详情</string>
+    <string name="product_info_text">商品详情</string>
+    <string name="product_fine_food_text">商品详情</string>
+    <string name="shopping_guide_text">购物指南</string>
+    <string name="floor_guide_text">楼层导览</string>
+
+    <!--我的券-->
+    <string name="coupon_not_used">可使用</string>
+    <string name="coupon_used">已使用</string>
+    <string name="expired">已过期</string>
+    <!--领取优惠券-->
+    <string name="get_coupons_text">领取优惠券</string>
+    <string name="check_get_coupons">点击\n领取</string>
+    <string name="check_use_coupons">点击\n使用</string>
+    <!--个人中心-->
+    <string name="mine_focus_text">我的关注</string>
+    <string name="mine_collection_text">我的收藏</string>
+    <string name="mine_sign_up_text">我的报名</string>
+    <string name="mine_browse_record_text">浏览记录</string>
+    <string name="mine_play_vip_text">玩转会员</string>
+    <string name="mine_customer_service_text">客服服务</string>
+    <string name="mine_info_text">个人中心</string>
+    <string name="mine_personal_text">个人中心</string>
+    <string name="mine_setting_text">设置</string>
+    <string name="account_security_text">账户安全</string>
+    <string name="modify_phone_text">更改手机号</string>
+    <string name="modify_password_text">更改密码</string>
+    <string name="want_good_praise">我要好评</string>
+    <string name="version_update">版本更新</string>
+    <string name="version_introduction">版本介绍</string>
+    <string name="version_format">UU购:%s</string>
+    <string name="tip_rate_err">您手机上没有可以评价的应用市场哦,\n下次再好评吧</string>
+    <string name="company_copyright">北京赋睿智能科技有限公司&#160;&#160;&#160;&#160;版权所有\nCopyright©2018&#8211;%d IFree.All Rights Reserved</string>
+    <string name="picture_quality_text">图片质量</string>
+    <string name="account_appeal_text">账号申诉</string>
+    <string name="feedback_text">意见反馈</string>
+    <string name="help_center_text">帮助中心</string>
+    <string name="feedback_phone_text">为更好的与你联系请输入正确有效的手机号</string>
+    <string name="account_appeal_phone_text">请填写能联系的到你的手机号！！！</string>
+    <string name="real_name_text">实名认证</string>
+
+
+
     <string name="loading_icon" translatable="false">加载中图</string>
     <string name="loading" translatable="false">加载中</string>
     <string name="notifyTitle" translatable="false">提示</string>
@@ -27,12 +95,9 @@
     <string name="cancel_enter" translatable="false">确定取消报名吗？</string>
     <string name="cancel_collection" translatable="false">确定取消收藏吗？</string>
     <string name="sure_to_do_sth" translatable="false">您确定要%s吗？</string>
-    <string name="want_good_praise" translatable="false">我要好评</string>
-    <string name="version_update" translatable="false">版本更新</string>
-    <string name="version_introduction" translatable="false">版本介绍</string>
-    <string name="version_format" translatable="false">UU购:%s</string>
-    <string name="tip_rate_err" translatable="false">您手机上没有可以评价的应用市场哦,\n下次再好评吧</string>
-    <string name="company_copyright" translatable="false">北京赋睿智能科技有限公司&#160;&#160;&#160;&#160;版权所有\nCopyright©2018&#8211;%d IFree.All Rights Reserved</string>
     <string name="friendly_reminder" translatable="false">1.所有奖项现场确认、现场抽奖、超时作废。\n2.领奖时本人需手机拥有者、奖券抽奖码。\n3.本人未到的，不执行任何抽奖活动，过时重新抽取获奖者。\n4.本活动最终解释权归北京赋睿智能科技有限公司所有。</string>
+    <string name="mall_activities_details_text">活动详情</string>
+
+
 
 </resources>

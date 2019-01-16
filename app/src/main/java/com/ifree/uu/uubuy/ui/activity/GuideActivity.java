@@ -13,16 +13,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.hjq.toast.ToastUtils;
 import com.ifree.uu.uubuy.R;
 import com.ifree.uu.uubuy.app.MyApplication;
 import com.ifree.uu.uubuy.config.Constant;
-import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.mvp.presenter.UpLoadUUIdPresenter;
+import com.ifree.uu.uubuy.mvp.modle.UserInfoBean;
+import com.ifree.uu.uubuy.mvp.persenter.UpLoadUUIdPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
 import com.ifree.uu.uubuy.ui.adapter.GuideViewPagerAdapter;
-import com.ifree.uu.uubuy.uitls.DeviceInfoUtils;
-import com.ifree.uu.uubuy.uitls.SPUtil;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
+import com.ifree.uu.uubuy.utils.DeviceInfoUtils;
+import com.ifree.uu.uubuy.utils.SPUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,11 +89,11 @@ public class GuideActivity extends Activity implements View.OnClickListener {
         mUpLoadUUIdPresenter.upLoadUUId("Android",DeviceInfoUtils.getMyUUID(context),SPUtil.getString(context,"uid"));
     }
 
-    private ProjectView<UserInfoEntity> mUpLoadUUIdView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mUpLoadUUIdView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity userInfoEntity) {
+        public void onSuccess(UserInfoBean userInfoEntity) {
             if (userInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,userInfoEntity.getMsg());
+                ToastUtils.show(userInfoEntity.getMsg());
                 return;
             }
         }

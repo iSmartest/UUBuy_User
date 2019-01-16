@@ -1,34 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/space_400"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp"
     app:cardElevation="1dp"
     app:cardMaxElevation="2dp"
     app:cardUseCompatPadding="true">
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ll_banner"
         android:layout_width="match_parent"
-        android:layout_height="170dp">
-
-        <ImageView
-            android:id="@+id/tv_market_activities_picture"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/loading_error" />
+            android:layout_height="@dimen/space_200">
 
+            <ImageView
+                android:id="@+id/tv_market_activities_picture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/bg_launcher" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:background="@color/translucent"
+                android:paddingLeft="@dimen/space_20"
+                android:paddingRight="@dimen/space_20"
+                android:paddingTop="@dimen/space_6"
+                android:paddingBottom="@dimen/space_6">
+                <TextView
+                    android:id="@+id/tv_mall_browse_volume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/app_main_default"
+                    android:textSize="@dimen/font_size_24px"
+                    android:layout_weight="1"
+                    android:text="14.5万人浏览" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/app_main_default"
+                    android:textSize="@dimen/font_size_24px"
+                    android:layout_weight="1"
+                    android:text="活动"
+                    android:gravity="center|right"/>
+            </LinearLayout>
+
+        </RelativeLayout>
         <TextView
-            android:id="@+id/tv_market_time"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:paddingLeft="10dp"
-            android:textColor="@color/app_main_default"
-            android:textSize="12dp"
-            android:gravity="center_vertical"
-            android:layout_alignParentBottom="true"
-            android:background="@color/translucent"/>
-    </RelativeLayout>
+            android:id="@+id/tv_mall_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_main_color"
+            android:textSize="@dimen/font_size_24px"
+            android:layout_weight="1"
+            android:text="2018.11.06-2019.11.11"
+            android:padding="@dimen/space_6"
+            android:gravity="center|right"/>
+    </LinearLayout>
+
 
 </android.support.v7.widget.CardView>

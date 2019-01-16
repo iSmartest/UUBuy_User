@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.custom.flowTagLayout.OnInitSelectedPosition;
-import com.ifree.uu.uubuy.mvp.entity.HotKeyWordEntity;
+import com.ifree.uu.uubuy.mvp.modle.HotKeyWordBean;
+import com.ifree.uu.uubuy.widget.flowTagLayout.OnInitSelectedPosition;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ import java.util.List;
 public class FlowTagAdapter extends BaseAdapter implements OnInitSelectedPosition {
 
     private final Context mContext;
-    private final List<HotKeyWordEntity.DataBean.KeywordList> mDataList;
+    private final List<HotKeyWordBean.DataBean.KeywordList> mDataList;
 
-    public FlowTagAdapter(Context context, List<HotKeyWordEntity.DataBean.KeywordList> hotSearch) {
+    public FlowTagAdapter(Context context, List<HotKeyWordBean.DataBean.KeywordList> hotSearch) {
         this.mContext = context;
         this.mDataList = hotSearch;
     }
@@ -48,17 +48,17 @@ public class FlowTagAdapter extends BaseAdapter implements OnInitSelectedPositio
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.sku_item, null);
         TextView textView = view.findViewById(R.id.tv_sku);
-        HotKeyWordEntity.DataBean.KeywordList keywordList = mDataList.get(position);
+        HotKeyWordBean.DataBean.KeywordList keywordList = mDataList.get(position);
         textView.setText(keywordList.getName());
         return view;
     }
 
-    public void onlyAddAll(List<HotKeyWordEntity.DataBean.KeywordList> datas) {
+    public void onlyAddAll(List<HotKeyWordBean.DataBean.KeywordList> datas) {
         mDataList.addAll(datas);
         notifyDataSetChanged();
     }
 
-    public void clearAndAddAll(List<HotKeyWordEntity.DataBean.KeywordList> datas) {
+    public void clearAndAddAll(List<HotKeyWordBean.DataBean.KeywordList> datas) {
         mDataList.clear();
         onlyAddAll(datas);
     }

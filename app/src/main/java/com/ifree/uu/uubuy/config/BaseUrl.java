@@ -11,7 +11,8 @@ import com.ifree.uu.uubuy.BuildConfig;
  */
 public class BaseUrl {
 
-    public static final String HTTP = BuildConfig.API_HOST;
+//    public static final String HTTP = BuildConfig.API_HOST;
+    public static final String HTTP = "http://www.uugood.cn:8080/uugo-user/app/";
 
     public static final String HTTP2 = "http://192.168.1.33:8084/uugo-operation/app/";
 

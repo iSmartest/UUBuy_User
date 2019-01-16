@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.app.MyApplication;
-import com.ifree.uu.uubuy.mvp.entity.HomeEntity;
-import com.ifree.uu.uubuy.ui.activity.ShopActivity;
-import com.ifree.uu.uubuy.ui.activity.ShoppingMallActivity;
-import com.ifree.uu.uubuy.uitls.GlideImageLoader;
-import com.ifree.uu.uubuy.uitls.SPUtil;
-import com.ifree.uu.uubuy.uitls.TimeFormatUtils;
-
+import com.ifree.uu.uubuy.mvp.modle.HomeBean;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,9 +27,9 @@ import butterknife.ButterKnife;
  */
 public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADViewHolder> {
     private Context context;
-    private List<HomeEntity.DataBean.CityADList> mList;
+    private List<HomeBean.DataBean.CityADList> mList;
 
-    public CityADAdapter(Context context, List<HomeEntity.DataBean.CityADList> mCityADList) {
+    public CityADAdapter(Context context, List<HomeBean.DataBean.CityADList> mCityADList) {
         this.context = context;
         this.mList = mCityADList;
     }
@@ -54,64 +45,13 @@ public class CityADAdapter extends RecyclerView.Adapter<CityADAdapter.CityADADVi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final CityADADViewHolder holder, final int position) {
-        final HomeEntity.DataBean.CityADList cityADList = mList.get(position);
-            Map<String, String> spMap = SPUtil.getMap(context, "key");
-            holder.name.setText(cityADList.getCityADName());
-            if (TextUtils.isEmpty(cityADList.getCityADStartTime()) && TextUtils.isEmpty(cityADList.getCityADEndTime())) {
-                holder.time.setText("暂无活动");
-            } else {
-                holder.time.setText(TimeFormatUtils.modifyDataFormat(cityADList.getCityADStartTime()) + "—" + TimeFormatUtils.modifyDataFormat(cityADList.getCityADEndTime()));
-            }
-            GlideImageLoader.imageLoader(context, cityADList.getCityADPic(), holder.icon);
-            holder.signUp.setText("报名：" + cityADList.getSignUp() + "人");
-            if (spMap == null || spMap.size() == 0) {
-                holder.browsing.setText("浏览：" + cityADList.getBrowsing() + "人");
-            } else {
-                if (spMap.containsKey(cityADList.getaId())) {
-                    int temp = cityADList.getBrowsing() + Integer.valueOf(spMap.get(cityADList.getaId()));
-                    holder.browsing.setText("浏览：" + temp + "人");
-                } else {
-                    holder.browsing.setText("浏览：" + cityADList.getBrowsing() + "人");
-                }
-            }
-            holder.llAD.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("fristActivitiesId", cityADList.getCityADId());
-                    bundle.putString("fristActivitiesType", cityADList.getType());
-                    bundle.putString("fristActivitiesName", cityADList.getCityADName());
-                    Map<String, String> currentMap = SPUtil.getMap(context, "key");
-                    if (currentMap == null || currentMap.size() == 0) {
-                        currentMap.put(cityADList.getaId(), 1 + "");
-                    } else {
-                        if (currentMap.containsKey(cityADList.getaId())) {
-                            currentMap.put(cityADList.getaId(), (Integer.valueOf(currentMap.get(cityADList.getaId())) + 1) + "");
-                        } else {
-                            currentMap.put(cityADList.getaId(), 1 + "");
-                        }
-                    }
-                    int temp = cityADList.getBrowsing() + Integer.valueOf(currentMap.get(cityADList.getaId()));
-                    holder.browsing.setText("浏览：" + temp + "人");
-                    SPUtil.putMap(context, "key", currentMap);
-                    switch (cityADList.getType()) {// 1 商城 2 超市 3 建材 4 车 5 品牌 6 教育
-                        case "1":
-                            if (cityADList.getCityADType().equals("1")) {
-                                MyApplication.openActivity(context, ShopActivity.class, bundle);
-                            } else {
-                                MyApplication.openActivity(context, ShoppingMallActivity.class, bundle);
-                            }
-                            break;
 
-                    }
-                }
-            });
     }
 
 
     @Override
     public int getItemCount() {
-        return mList == null ? 4 : mList.size();
+        return 4;
     }
 
     public class CityADADViewHolder extends RecyclerView.ViewHolder {

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.mvp.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.mvp.modle.CityInfoBean;
 
 import java.util.List;
 
@@ -24,9 +24,9 @@ import butterknife.ButterKnife;
  */
 public class SelectHotCityAdapter extends RecyclerView.Adapter<SelectHotCityAdapter.SelectHotCityViewHolder>{
     private Context context;
-    private List<CityInfoEntity.DataBean.HotCity> mList;
+    private List<CityInfoBean.DataBean.HotCity> mList;
 
-    public SelectHotCityAdapter(Context context, List<CityInfoEntity.DataBean.HotCity> mList) {
+    public SelectHotCityAdapter(Context context, List<CityInfoBean.DataBean.HotCity> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -41,7 +41,7 @@ public class SelectHotCityAdapter extends RecyclerView.Adapter<SelectHotCityAdap
 
     @Override
     public void onBindViewHolder(@NonNull SelectHotCityViewHolder holder, int position) {
-        CityInfoEntity.DataBean.HotCity hotCity = mList.get(position);
+        CityInfoBean.DataBean.HotCity hotCity = mList.get(position);
         holder.tvHotCity.setText(hotCity.getCity());
     }
 

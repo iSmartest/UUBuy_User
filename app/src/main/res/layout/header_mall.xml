@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_main_background">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:drawable/divider_horizontal_dark"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/space_20"
+        android:showDividers="beginning|end"
+        app:layout_scrollFlags="scroll"
+        android:background="@color/app_main_default">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_30">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="友谊燕莎"
+                android:textSize="@dimen/font_size_36px"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/space_40"
+                android:text="距我3km" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/space_30"
+            android:paddingRight="@dimen/space_30">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="朝阳区亮马桥52号"
+                android:layout_weight="1"
+                android:textSize="@dimen/font_size_28px"
+                android:textColor="@color/text_main_color"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="13万人浏览"
+                android:gravity="center|right"
+                android:textSize="@dimen/font_size_28px"
+                android:textColor="@color/text_main_color"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/space_30"
+            android:paddingRight="@dimen/space_30"
+            android:layout_marginTop="@dimen/space_16"
+            android:text="近期活动"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/font_size_40px" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_mall_activities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:scrollbars="none"
+            android:layout_marginTop="@dimen/space_16">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+        <LinearLayout
+            android:id="@+id/ll_mall_get_coupons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/space_30"
+            android:paddingRight="@dimen/space_30"
+            android:paddingTop="@dimen/space_16">
+            <TextView
+                android:layout_width="@dimen/space_160"
+                android:layout_height="@dimen/space_50"
+                android:background="@mipmap/coupon_backgound"
+                android:text="100"
+                android:textColor="@color/text_main_color"
+                android:paddingRight="@dimen/space_30"
+                android:gravity="center"
+                android:textSize="@dimen/font_size_30px"/>
+            <TextView
+                android:layout_width="@dimen/space_160"
+                android:layout_height="@dimen/space_50"
+                android:background="@mipmap/coupon_backgound"
+                android:text="100"
+                android:layout_marginLeft="@dimen/space_12"
+                android:textColor="@color/text_main_color"
+                android:paddingRight="@dimen/space_30"
+                android:gravity="center"
+                android:textSize="@dimen/font_size_30px"/>
+            <TextView
+                android:layout_width="@dimen/space_160"
+                android:layout_height="@dimen/space_50"
+                android:background="@mipmap/coupon_backgound"
+                android:text="100"
+                android:layout_marginLeft="@dimen/space_12"
+                android:textColor="@color/text_main_color"
+                android:paddingRight="@dimen/space_30"
+                android:gravity="center"
+                android:textSize="@dimen/font_size_30px"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="更多>>"
+                android:textColor="@color/text_type_red"
+                android:textSize="@dimen/font_size_26px"
+                android:layout_weight="1"
+                android:gravity="center|right"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_30"
+        android:layout_marginTop="@dimen/space_16"
+        android:text="@string/shopping_guide_text"
+        android:background="@color/app_main_default"
+        android:textColor="@color/color_black"
+        android:textSize="@dimen/font_size_40px"/>
+
+    <include layout="@layout/v_horizontal_line"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_200"
+        android:padding="@dimen/space_30"
+        android:orientation="horizontal"
+        android:background="@color/app_main_default">
+
+        <ImageView
+            android:id="@+id/iv_mall_shopping_guide_clothes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/space_4"
+            android:src="@mipmap/clothes_icon"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginRight="@dimen/space_4"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/iv_mall_shopping_guide_play"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@mipmap/play_icon"
+                android:layout_marginBottom="@dimen/space_4"/>
+            <ImageView
+                android:id="@+id/iv_mall_shopping_guide_fine_food"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/space_4"
+                android:src="@mipmap/fine_food_icon"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginRight="@dimen/space_4"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/iv_mall_shopping_guide_makeup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/space_4"
+                android:src="@mipmap/makeup_icon"/>
+            <ImageView
+                android:id="@+id/iv_mall_shopping_guide_parenting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:src="@mipmap/parenting_icon"
+                android:layout_marginTop="@dimen/space_4"/>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_mall_shopping_guide_jewelry"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/space_4"
+            android:src="@mipmap/jewelry_icon"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_30"
+        android:layout_marginTop="@dimen/space_16"
+        android:text="@string/floor_guide_text"
+        android:background="@color/app_main_default"
+        android:textColor="@color/color_black"
+        android:textSize="@dimen/font_size_40px"/>
+
+    <include layout="@layout/v_horizontal_line"/>
+
+</LinearLayout>

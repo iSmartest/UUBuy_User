@@ -1,2 +1,2 @@
-include ':app', ':xrecyclerview'
+include ':app', ':baselibrary'
 

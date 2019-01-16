@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.mvp.entity.CityInfoEntity;
+import com.ifree.uu.uubuy.mvp.modle.CityInfoBean;
 
 import java.util.ArrayList;
 
@@ -25,9 +25,9 @@ import butterknife.ButterKnife;
 public class SelectAreaAdapter extends RecyclerView.Adapter<SelectAreaAdapter.SelectAreaViewHolder>{
 
     private Context context;
-    private ArrayList<? extends CityInfoEntity.DataBean.ProvinceList.CityList.TownList> mList;
+    private ArrayList<? extends CityInfoBean.DataBean.ProvinceList.CityList.TownList> mList;
 
-    public SelectAreaAdapter(Context context, ArrayList<? extends CityInfoEntity.DataBean.ProvinceList.CityList.TownList> mList) {
+    public SelectAreaAdapter(Context context, ArrayList<? extends CityInfoBean.DataBean.ProvinceList.CityList.TownList> mList) {
         this.context = context;
         this.mList = mList;
     }
@@ -42,7 +42,7 @@ public class SelectAreaAdapter extends RecyclerView.Adapter<SelectAreaAdapter.Se
 
     @Override
     public void onBindViewHolder(@NonNull SelectAreaViewHolder holder, int position) {
-        CityInfoEntity.DataBean.ProvinceList.CityList.TownList townList = mList.get(position);
+        CityInfoBean.DataBean.ProvinceList.CityList.TownList townList = mList.get(position);
         holder.mArea.setText(townList.getTown());
     }
 

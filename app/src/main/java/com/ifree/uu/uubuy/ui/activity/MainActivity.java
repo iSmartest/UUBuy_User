@@ -1,77 +1,27 @@
 package com.ifree.uu.uubuy.ui.activity;
-
-import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.EditText;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.Toast;
 
+import com.hjq.baselibrary.utils.OnClickUtils;
+import com.hjq.toast.ToastUtils;
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.app.MyApplication;
-import com.ifree.uu.uubuy.dialog.OpenActivitiesDialog;
-import com.ifree.uu.uubuy.listener.GaoDeLocationListener;
-import com.ifree.uu.uubuy.mvp.entity.UpdateEntity;
-import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.mvp.presenter.ElasticFramePresenter;
-import com.ifree.uu.uubuy.mvp.presenter.UpdatePresenter;
-import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.service.UURunService;
-import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.ui.fragment.AroundFragment;
-import com.ifree.uu.uubuy.ui.fragment.CollectionFragment;
-import com.ifree.uu.uubuy.ui.fragment.HomeFragment;
-import com.ifree.uu.uubuy.ui.fragment.MineFragment;
-import com.ifree.uu.uubuy.ui.fragment.OrderFragment;
-import com.ifree.uu.uubuy.uitls.AppManager;
-import com.ifree.uu.uubuy.uitls.GlobalMethod;
-import com.ifree.uu.uubuy.uitls.SPUtil;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
-import com.ifree.uu.uubuy.uitls.UpdateAppUtils;
+import com.ifree.uu.uubuy.common.CommonActivity;
+import com.ifree.uu.uubuy.ui.adapter.HomeViewPagerAdapter;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity {
-    private UpdatePresenter mUpdatePresenter;
-    private ElasticFramePresenter mElasticFramePresenter;
-    @BindView(R.id.ly_base_search)
-    LinearLayout mBaseSearch;
-    @BindView(R.id.edt_a_key_search)
-    EditText keyWord;
-    @BindView(R.id.iv_main_home)
-    RadioButton mHome;
-    @BindView(R.id.iv_main_around)
-    RadioButton mAround;
-    @BindView(R.id.iv_main_activities)
-    RadioButton mActivities;
-    @BindView(R.id.iv_main_order)
-    RadioButton mOrder;
-    @BindView(R.id.iv_main_mine)
-    RadioButton mMine;
-    // 定义一个变量，来标识是否退出
-    private static boolean isExit = false;
-    private String updataAddress, versionName, updataLog;
-    private int versionCode = 0;
-    private boolean force = false;
-    private OpenActivitiesDialog openActivitiesDialog;
-    @SuppressLint("HandlerLeak")
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            isExit = false;
-        }
-    };
+
+public class MainActivity extends CommonActivity implements ViewPager.OnPageChangeListener, Runnable,
+        BottomNavigationView.OnNavigationItemSelectedListener  {
+    @BindView(R.id.vp_home_pager)
+    ViewPager mViewPager;
+    @BindView(R.id.bv_home_navigation)
+    BottomNavigationView mBottomNavigationView;
+
+    private HomeViewPagerAdapter mAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -79,195 +29,113 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
-        mUpdatePresenter = new UpdatePresenter(context);
-        mElasticFramePresenter = new ElasticFramePresenter(context);
-        setLocation(SPUtil.getString(context, "district"));
-        hideBack(1);
-        changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, true);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.ifree.uu.location.changed");
-        registerReceiver(mAllBroad, intentFilter);
-        Intent startIntent = new Intent(getApplicationContext(), UURunService.class);
-        startService(startIntent);
-
+    protected int getTitleBarId() {
+        return 0;
     }
 
     @Override
-    protected void loadData() {
-        mUpdatePresenter.onCreate();
-        mUpdatePresenter.attachView(mUpdateView);
-        mUpdatePresenter.getUpdate("加载中...");
-        keyWord.setCursorVisible(false);
-        keyWord.setFocusable(false);
-        keyWord.setFocusableInTouchMode(false);
+    protected void initView() {
+        mViewPager.addOnPageChangeListener(this);
+
+        // 不使用图标默认变色
+        mBottomNavigationView.setItemIconTintList(null);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        // 修复在 ViewPager 中点击 EditText 弹出软键盘导致 BottomNavigationView 还显示在 ViewPager 下面的问题
+        postDelayed(this, 1000);
     }
 
-    ProjectView<UpdateEntity> mUpdateView = new ProjectView<UpdateEntity>() {
-        @Override
-        public void onSuccess(UpdateEntity updateEntity) {
-            if (updateEntity.getResultCode().equals("1")) {
-                ToastUtils.makeText(context, updateEntity.getMsg());
-                return;
-            }
-            if (!TextUtils.isEmpty(updateEntity.getData().getVersionCode())){
-                versionCode = Integer.parseInt(updateEntity.getData().getVersionCode());
-            }
-            updataAddress = updateEntity.getData().getAddress();
-            versionName = updateEntity.getData().getVersionName();
-            updataLog = updateEntity.getData().getDesc();
-            if (updateEntity.getData().getForce().equals("0")) {
-                force = false;
-            } else {
-                force = true;
-            }
-            if (versionCode > GlobalMethod.getVersionCode(context)) {
-                UpdateAppUtils.from(MainActivity.this)
-                        .checkBy(UpdateAppUtils.CHECK_BY_VERSION_CODE)//版本检查方式
-                        .serverVersionName(versionName)//获取版本名
-                        .serverVersionCode(versionCode)//获取版本号
-                        .apkPath(updataAddress)//下载地址
-                        .updateInfo(updataLog)
-                        .downloadBy(UpdateAppUtils.DOWNLOAD_BY_APP)//下载方式，app或浏览器
-                        .showNotification(true)
-                        .isForce(force)//是否强制更新
-                        .update();
-            } else {
-//                searchElasticFrame();
-            }
-        }
-        @Override
-        public void onError(String result) {
-//            searchElasticFrame();
-        }
-    };
+    @Override
+    protected void initData() {
+        mAdapter = new HomeViewPagerAdapter(this);
+        mViewPager.setAdapter(mAdapter);
+
+        // 限制页面数量
+        mViewPager.setOffscreenPageLimit(mAdapter.getCount());
+    }
 
 
-    private void searchElasticFrame() {
-        mElasticFramePresenter.onCreate();
-        mElasticFramePresenter.attachView(new ProjectView<UserInfoEntity>(){
-            @Override
-            public void onSuccess(final UserInfoEntity userInfoEntity) {
-                if (userInfoEntity.getResultCode().equals("1")){
-                    return;
+    @Override
+    public void run() {
+ /*
+         父布局为LinearLayout，因为 ViewPager 使用了权重的问题
+         软键盘在弹出的时候会把布局进行收缩，ViewPager 的高度缩小了
+         所以 BottomNavigationView 会显示在ViewPager 下面
+         解决方法是在 ViewPager 初始化高度后手动进行设置 ViewPager 高度并将权重设置为0
+         */
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) mViewPager.getLayoutParams();
+        layoutParams.height = mViewPager.getHeight();
+        layoutParams.weight = 0;
+        mViewPager.setLayoutParams(layoutParams);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0:
+                mBottomNavigationView.setSelectedItemId(R.id.menu_home);
+                break;
+            case 1:
+                mBottomNavigationView.setSelectedItemId(R.id.home_coupon);
+                break;
+            case 2:
+                mBottomNavigationView.setSelectedItemId(R.id.home_me);
+                break;
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {}
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_home:
+                mViewPager.setCurrentItem(0);
+                return true;
+            case R.id.home_coupon:
+                mViewPager.setCurrentItem(1);
+                return true;
+            case R.id.home_me:
+                mViewPager.setCurrentItem(2);
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (OnClickUtils.isOnDoubleClick()) {
+            //移动到上一个任务栈，避免侧滑引起的不良反应
+            moveTaskToBack(false);
+            getWindow().getDecorView().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //销毁掉当前界面
+                    finish();
                 }
-                if (userInfoEntity.getData().getPop().equals("1")){
-                    openActivitiesDialog = new OpenActivitiesDialog(context, new OpenActivitiesDialog.Callback() {
-                        @Override
-                        public void sure() {
-                            if (userInfoEntity.getData().getIsEnroll().equals("0")){
-                                MyApplication.openActivity(context,UUActivitiesActivity.class);
-                            }else {
-                                MyApplication.openActivity(context, ReceivePrizeCenterActivity.class);//已报名
-                            }
-                        }
-                    });
-                    openActivitiesDialog.show();
-                    SPUtil.putString(context,"pop",userInfoEntity.getData().getPop());
-                }
-            }
-
-            @Override
-            public void onError(String result) {
-
-            }
-        });
-        mElasticFramePresenter.searchElasticFrame(uid);
-    }
-
-
-    @OnClick({R.id.iv_main_home, R.id.iv_main_around, R.id.iv_main_activities, R.id.iv_main_order, R.id.iv_main_mine
-            , R.id.ly_base_location, R.id.ly_restart_location, R.id.iv_base_message, R.id.iv_base_setting, R.id.ly_base_search, R.id.edt_a_key_search})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.iv_main_home:
-                changeFragment(HomeFragment.class, R.id.linear_main_layout_content, true, null, false);
-                hideBack(1);
-                break;
-            case R.id.iv_main_around:
-                changeFragment(AroundFragment.class, R.id.linear_main_layout_content, true, null, false);
-                hideBack(2);
-                break;
-            case R.id.iv_main_activities:
-                changeFragment(CollectionFragment.class, R.id.linear_main_layout_content, true, null, false);
-                hideBack(3);
-                setTitleText("收藏");
-                break;
-            case R.id.iv_main_order:
-                changeFragment(OrderFragment.class, R.id.linear_main_layout_content, true, null, false);
-                hideBack(3);
-                setTitleText("订单");
-                break;
-            case R.id.iv_main_mine:
-                changeFragment(MineFragment.class, R.id.linear_main_layout_content, true, null, false);
-                hideBack(4);
-                break;
-            case R.id.ly_base_location:
-                MyApplication.openActivity(context, SelectHotCityActivity.class);
-                break;
-            case R.id.ly_restart_location:
-                initLocation();
-                break;
-            case R.id.iv_base_message:
-                MyApplication.openActivity(context, MessageActivity.class);
-                break;
-            case R.id.iv_base_setting:
-                MyApplication.openActivity(context, MySettingActivity.class);
-                break;
-            case R.id.ly_base_search:
-                MyApplication.openActivity(context, SearchActivity.class);
-                break;
-            case R.id.edt_a_key_search:
-                MyApplication.openActivity(context, SearchActivity.class);
-                break;
-        }
-    }
-
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exit();
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    private void exit() {
-        if (!isExit) {
-            isExit = true;
-            Toast.makeText(getApplicationContext(), "再按一次退出程序",
-                    Toast.LENGTH_SHORT).show();
-            mHandler.sendEmptyMessageDelayed(0, 3000);
+            }, 300);
         } else {
-            AppManager.finishAllActivity();
-            System.exit(0);
+            ToastUtils.show(getResources().getString(R.string.home_exit_hint));
         }
     }
 
-    private void initLocation() {
-        GaoDeLocationListener gaoDeLocationListener = new GaoDeLocationListener(context, new GaoDeLocationListener.OnQuestResultListener() {
-            @Override
-            public void success(String result) {
-                setLocation(SPUtil.getString(context, "district"));
-                Log.i("TAG", "success: " + result);
-                Intent intent = new Intent();
-                intent.setAction("com.ifree.uu.location.changed");
-                getApplicationContext().sendBroadcast(intent);
-            }
-
-            @Override
-            public void error(String result) {
-                setLocation(result);
-            }
-        });
-        gaoDeLocationListener.startLocation();
+    @Override
+    protected void onDestroy() {
+        mViewPager.removeOnPageChangeListener(this);
+        mViewPager.setAdapter(null);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(null);
+        super.onDestroy();
     }
 
-    private BroadcastReceiver mAllBroad = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, final Intent intent) {
-            //接到广播通知后刷新数据源
-            setLocation(SPUtil.getDistrict(context));
-        }
-    };
+    @Override
+    public boolean isSupportSwipeBack() {
+        // 不使用侧滑功能
+        return !super.isSupportSwipeBack();
+    }
+
 
 }

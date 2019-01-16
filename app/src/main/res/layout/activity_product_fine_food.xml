@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_product_fine_food_info_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/product_info_text">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|right"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_20">
+
+            <ImageView
+                android:layout_width="@dimen/space_50"
+                android:layout_height="@dimen/space_50"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/share_icon" />
+
+            <ImageView
+                android:layout_width="@dimen/space_50"
+                android:layout_height="@dimen/space_50"
+                android:layout_marginLeft="@dimen/space_20"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/collection_off_icon" />
+
+        </LinearLayout>
+    </com.hjq.bar.TitleBar>
+
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/white"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlPrimaryColor="#444" />
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main_default"
+                app:elevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@android:drawable/divider_horizontal_dark"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/space_20"
+                    android:showDividers="beginning|end"
+                    app:layout_scrollFlags="scroll">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:padding="@dimen/space_30"
+                        android:text="排骨焖锅"
+                        android:textColor="@color/text_main_color"
+                        android:textSize="@dimen/font_size_28px" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/fine_food"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_16">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/space_30">
+                        <TextView
+                            android:id="@+id/tv_commodity_now_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/space_30"
+                            android:text="￥13000"
+                            android:textColor="@color/text_main_color"
+                            android:textSize="@dimen/font_size_28px" />
+
+                        <TextView
+                            android:id="@+id/tv_commodity_des"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="bottom"
+                            android:text="￥150000"
+                            android:textColor="@color/text_subtitle_color"
+                            android:textSize="@dimen/space_22" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_main_default"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="exitUntilCollapsed|enterAlways|enterAlwaysCollapsed">
+
+                    <View
+                        style="@style/AppTheme.Divison"
+                        android:layout_width="wrap_content" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/space_30">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:text="店铺特色菜"
+                            android:textColor="@color/text_main_color"
+                            android:textSize="@dimen/font_size_28px" />
+                    </LinearLayout>
+
+                    <View style="@style/AppTheme.Divison" />
+                </LinearLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/app_main_background"
+                android:overScrollMode="never"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@android:layout/simple_list_item_2" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

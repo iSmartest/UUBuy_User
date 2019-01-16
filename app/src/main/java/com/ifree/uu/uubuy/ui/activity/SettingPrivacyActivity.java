@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.ui.base.BaseActivity;
+import com.ifree.uu.uubuy.common.CommonActivity;
 
 import butterknife.BindView;
 
@@ -19,7 +18,7 @@ import butterknife.BindView;
  * Created by 2018/10/31 0031
  * Description:
  */
-public class SettingPrivacyActivity extends BaseActivity {
+public class SettingPrivacyActivity extends CommonActivity {
     @BindView(R.id.webView)
     WebView webView;
     private String title;
@@ -30,9 +29,23 @@ public class SettingPrivacyActivity extends BaseActivity {
         return R.layout.activity_setting_privacy;
     }
 
+    @Override
+    protected int getTitleBarId() {
+        return R.id.tb_setting_privacy_title;
+    }
+
+
+    @Override
+    protected void initView() {
+        title = getIntent().getStringExtra("title");
+        type = getIntent().getStringExtra("type");
+        setTitle(title);
+    }
+
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    protected void loadData() {
+    protected void initData() {
         WebSettings mWebSettings = webView.getSettings();
         mWebSettings.setSupportZoom(true);
         mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);//自适应屏幕
@@ -57,15 +70,6 @@ public class SettingPrivacyActivity extends BaseActivity {
         }else {
             webView.loadUrl("file:///android_asset/uugo_privacy.html");
         }
-    }
-
-    @Override
-    protected void initView() {
-        hideBack(5);
-        title = getIntent().getStringExtra("title");
-        type = getIntent().getStringExtra("type");
-        setTitleText(title);
-
     }
 
     /**

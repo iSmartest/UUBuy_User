@@ -68,10 +68,10 @@
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.StartActivity"
-            android:theme="@style/StartTheme">
+        <activity android:name=".ui.activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -101,13 +101,48 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
-        <!--UU活动-->
-        <activity android:name=".ui.activity.UUActivitiesActivity"
+        <!--逛商场-->
+        <activity android:name=".ui.activity.GoShoppingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
-        <!--选择热门城市-->
-        <activity android:name=".ui.activity.SelectHotCityActivity"
+        <!--商场-->
+        <activity android:name=".ui.activity.MallActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--活动详情-->
+        <activity android:name=".ui.activity.MallActivitiesDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--按购物指南门店-->
+        <activity android:name=".ui.activity.MallGuideActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--按楼层筛选门店-->
+        <activity android:name=".ui.activity.MallFloorActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--商场门店-->
+        <activity android:name=".ui.activity.StoreActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--领取优惠券-->
+        <activity android:name=".ui.activity.GetCouponsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--爆款门店-->
+        <activity android:name=".ui.activity.BombShopActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--热销产品-->
+        <activity android:name=".ui.activity.HotProductActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
@@ -136,56 +171,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
-        <!--分类页面-->
-        <activity android:name=".ui.activity.FirstClassifyActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
-        <!--超市-->
-        <!--家具建材-->
-        <!--超市对应的更多-->
-        <activity android:name=".ui.activity.MoreActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
-        <!--商城-->
-        <activity android:name=".ui.activity.ShoppingMallActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
-        <!--品牌-->
-        <!--店铺-->
-        <activity android:name=".ui.activity.ShopActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
         <!--商品-->
-        <activity android:name=".ui.activity.CommodityActivity"
+        <activity android:name=".ui.activity.ProductActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
-        <!--商品竞品-->
-        <activity android:name=".ui.activity.CommodityCompareActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
-        <!--车-->
-        <activity android:name=".ui.activity.CarCommodityActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
-        <!--商品预订-->
-        <activity android:name=".ui.activity.CommodityReserveActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
-        <!--活动详情页-->
-        <activity android:name=".ui.activity.ActivitiesDetailsActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
-        <!--活动报名-->
-        <activity android:name=".ui.activity.EnterForActivitiesActivity"
+        <!--美食商品-->
+        <activity android:name=".ui.activity.ProductFineFoodActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
@@ -194,33 +186,58 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
-        <!--我的优惠券-->
-        <activity android:name=".ui.activity.MyCouponActivity"
+        <!--我的订单-->
+        <activity android:name=".ui.activity.MyOrderActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
-        <!--玩转会员-->
-        <activity android:name=".ui.activity.PlayVIPActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
-        <!--足迹-->
-        <activity android:name=".ui.activity.MyFootprintActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
-        <!--领券中心-->
-        <activity android:name=".ui.activity.CouponCenterActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:configChanges="orientation"/>
-        <!--我要领奖-->
-        <activity android:name=".ui.activity.ReceivePrizeCenterActivity"
+        <!--活动报名-->
+        <activity android:name=".ui.activity.MyOrderInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
         <!--设置-->
         <activity android:name=".ui.activity.MySettingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--我的关注-->
+        <activity android:name=".ui.activity.MyFocusActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--我的收藏-->
+        <activity android:name=".ui.activity.MyCollectionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--浏览记录-->
+        <activity android:name=".ui.activity.MyBrowseRecordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--我的报名-->
+        <activity android:name=".ui.activity.MySignUpActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--玩转会员-->
+        <activity android:name=".ui.activity.MyPlayVIPActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--客服服务-->
+        <activity android:name=".ui.activity.MyCustomerServiceActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--账号申诉-->
+        <activity android:name=".ui.activity.AccountAppealActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:configChanges="orientation"/>
+        <!--帮助中心-->
+        <activity android:name=".ui.activity.HelpCenterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
@@ -254,13 +271,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
-        <!--我要优惠券-->
-        <activity android:name=".ui.activity.StoreCouponActivity"
+        <!--消息详情-->
+        <activity android:name=".ui.activity.MessageInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
-        <!--文本展示（登录协议、常见问题）-->
-        <activity android:name=".ui.activity.ProtocolActivity"
+        <!--选择城市-->
+        <activity android:name=".ui.activity.SelectHotCityActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
@@ -279,20 +296,21 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
-        <!--测试-->
-        <activity android:name=".ui.activity.WaitSettledActivity"
+        <!--实名认证-->
+        <activity android:name=".ui.activity.RealNameActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden"
             android:configChanges="orientation"/>
+
         <!--后台service暂用于更新浏览量-->
         <service android:name=".service.UURunService"
             android:exported="true"/>
 
-        <!-- 设置key -->
-        <meta-data android:name="com.amap.api.v2.apikey"
-            android:value="${GAODE_MAP_KEY}"/>
-        <!-- 定位需要的服务 -->
-        <service android:name="com.amap.api.location.APSService"> </service>
+        <!--&lt;!&ndash; 设置key &ndash;&gt;-->
+        <!--<meta-data android:name="com.amap.api.v2.apikey"-->
+            <!--android:value="${GAODE_MAP_KEY}"/>-->
+        <!--&lt;!&ndash; 定位需要的服务 &ndash;&gt;-->
+        <!--<service android:name="com.amap.api.location.APSService"> </service>-->
 
         <!--友盟-->
         <meta-data
@@ -445,15 +463,15 @@
         <meta-data
             android:name="BUGLY_APP_VERSION"
             android:value="1.0.0" />
-        <!-- 配置APP渠道号 -->
-        <meta-data
-            android:name="BUGLY_APP_CHANNEL"
-            android:value="${BUGLY_CHANNEL_VALUE}" />
-        <!-- 配置Bugly调试模式（true或者false）-->
-        <meta-data
-            android:name="BUGLY_ENABLE_DEBUG"
-            android:value="false" />
-        <!--bugly配置end-->
+        <!--&lt;!&ndash; 配置APP渠道号 &ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="BUGLY_APP_CHANNEL"-->
+            <!--android:value="${BUGLY_CHANNEL_VALUE}" />-->
+        <!--&lt;!&ndash; 配置Bugly调试模式（true或者false）&ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="BUGLY_ENABLE_DEBUG"-->
+            <!--android:value="false" />-->
+        <!--&lt;!&ndash;bugly配置end&ndash;&gt;-->
 
         <meta-data
             android:name="design_width_in_dp"

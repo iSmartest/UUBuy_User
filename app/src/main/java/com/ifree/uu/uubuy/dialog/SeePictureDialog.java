@@ -16,8 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.custom.photoView.PhotoView;
-import com.ifree.uu.uubuy.uitls.GlideImageLoader;
+import com.ifree.uu.uubuy.utils.GlideImageLoader;
+import com.ifree.uu.uubuy.widget.photoView.PhotoView;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class SeePictureDialog extends Dialog {
     private ImageAdapter mImageAdapter;
     private boolean isVISIBLE = true;
     private int defPosition; // 默认显示的图片位置
-    public SeePictureDialog(Context context, List<String> mList,int defPosition) {
+    public SeePictureDialog(Context context, List<String> mList, int defPosition) {
         super(context);
         this.mContext = context;
         this.mList = mList;

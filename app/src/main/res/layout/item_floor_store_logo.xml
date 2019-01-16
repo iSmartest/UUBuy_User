@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/app_main_default"
+        android:orientation="vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_store_logo"
+            android:layout_width="@dimen/space_120"
+            android:layout_height="@dimen/space_120"
+            android:src="@mipmap/bg_launcher" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_size_28px"
+            android:textColor="@color/text_main_color"
+            android:gravity="center"
+            android:text="迪丽热巴"
+            android:layout_marginTop="@dimen/space_12"/>
+    </LinearLayout>
+
+
+</LinearLayout>

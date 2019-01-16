@@ -12,11 +12,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.hjq.toast.ToastUtils;
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
 
 /**
  * Author: 小火
@@ -63,7 +62,7 @@ public class EditContentDialog extends Dialog implements View.OnClickListener {
                 String string = change_name.getText().toString().trim();
                 if (mSureListener != null) {
                     if(TextUtils.isEmpty(string)){
-                        ToastUtils.showMessageShort(mContext,"输入框不能为空");
+                        ToastUtils.show("输入框不能为空");
                         return;
                     }
                     mSureListener.sure(string);

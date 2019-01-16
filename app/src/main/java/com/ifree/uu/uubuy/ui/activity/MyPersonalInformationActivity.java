@@ -25,20 +25,16 @@ import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import com.hjq.toast.ToastUtils;
 import com.ifree.uu.uubuy.R;
-import com.ifree.uu.uubuy.custom.rounded.RoundedImageView;
+import com.ifree.uu.uubuy.common.CommonActivity;
 import com.ifree.uu.uubuy.dialog.EditContentDialog;
-import com.ifree.uu.uubuy.mvp.entity.UserInfoEntity;
-import com.ifree.uu.uubuy.mvp.presenter.ModifyUserInfoPresenter;
+import com.ifree.uu.uubuy.mvp.modle.UserInfoBean;
+import com.ifree.uu.uubuy.mvp.persenter.ModifyUserInfoPresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.GlideImageLoader;
-import com.ifree.uu.uubuy.uitls.PhotoUtil;
-import com.ifree.uu.uubuy.uitls.SPUtil;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
-
-
+import com.ifree.uu.uubuy.utils.GlideImageLoader;
+import com.ifree.uu.uubuy.utils.PhotoUtil;
+import com.ifree.uu.uubuy.utils.SPUtil;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -46,6 +42,7 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -57,10 +54,10 @@ import okhttp3.RequestBody;
  * Description:
  */
 
-public class MyPersonalInformationActivity extends BaseActivity {
+public class MyPersonalInformationActivity extends CommonActivity {
     private ModifyUserInfoPresenter mModifyUserInfoPresenter;
     @BindView(R.id.ri_my_icon_img)
-    RoundedImageView mUserIcon;
+    CircleImageView mUserIcon;
     @BindView(R.id.ll_nick_name)
     LinearLayout llNickName;
     @BindView(R.id.text_personal_information_nick_name)
@@ -97,9 +94,12 @@ public class MyPersonalInformationActivity extends BaseActivity {
     }
 
     @Override
+    protected int getTitleBarId() {
+        return R.id.tb_mine_personal_title;
+    }
+
+    @Override
     protected void initView() {
-        hideBack(5);
-        setTitleText("个人中心");
         mModifyUserInfoPresenter = new ModifyUserInfoPresenter(context);
         uid = SPUtil.getString(context,"uid");
         userName = SPUtil.getString(context,"userName");
@@ -111,7 +111,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
+    protected void initData() {
         mNickName.setText(userName);
         if (userSex.equals("0")){
             mSex.setText("男");
@@ -127,6 +127,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
         mMonth = ca.get(Calendar.MONTH);
         mDay = ca.get(Calendar.DAY_OF_MONTH);
     }
+
     @OnClick({R.id.ri_my_icon_img,R.id.ll_nick_name, R.id.ll_sex, R.id.ll_birthday,R.id.text_personal_information_id_cart,R.id.text_personal_information_address})
     public void onViewClicked(View v) {
         switch (v.getId()) {
@@ -203,14 +204,14 @@ public class MyPersonalInformationActivity extends BaseActivity {
     }
 
 
-    private ProjectView<UserInfoEntity> mModifyUserInfoView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mModifyUserInfoView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+        public void onSuccess(UserInfoBean mUserInfoBean) {
+            if (mUserInfoBean.getResultCode().equals("1")){
+                ToastUtils.show(mUserInfoBean.getMsg());
                 return;
             }
-            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            ToastUtils.show(mUserInfoBean.getMsg());
             Intent intent = new Intent();
             intent.setAction("com.ifree.uu.mine.changed");
             getApplicationContext().sendBroadcast(intent);
@@ -218,7 +219,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
+            ToastUtils.show(result);
         }
     };
 
@@ -267,8 +268,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                ToastUtils.makeText(this, "您已经拒绝过一次");
-
+                ToastUtils.show("您已经拒绝过一次");
             }
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, CAMERA_PERMISSIONS_REQUEST_CODE);
         } else {//有权限直接调用系统相机拍照
@@ -278,7 +278,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
                     imageUri = FileProvider.getUriForFile(MyPersonalInformationActivity.this, "com.ifree.uu.uubuy.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
                 PhotoUtil.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
             } else {
-                ToastUtils.makeText(this, "设备没有SD卡！");
+                ToastUtils.show("设备没有SD卡!");
             }
         }
     }
@@ -308,10 +308,11 @@ public class MyPersonalInformationActivity extends BaseActivity {
                             imageUri = FileProvider.getUriForFile(MyPersonalInformationActivity.this, "com.ifree.uu.uubuy.fileprovider", fileUri);//通过FileProvider创建一个content类型的Uri
                         PhotoUtil.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
                     } else {
-                        ToastUtils.makeText(this, "设备没有SD卡！");
+                        ToastUtils.show("设备没有SD卡!");
                     }
                 } else {
-                    ToastUtils.makeText(this, "请允许打开相机！！");
+                    ToastUtils.show("请允许打开相机！！");
+
                 }
                 break;
             }
@@ -319,7 +320,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     PhotoUtil.openPic(this, CODE_GALLERY_REQUEST);
                 } else {
-                    ToastUtils.makeText(this, "请允许打操作SDCard！！");
+                    ToastUtils.show("请允许打操作SDCard！！");
                 }
                 break;
         }
@@ -345,7 +346,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
                             newUri = FileProvider.getUriForFile(this, "com.ifree.uu.uubuy.fileprovider", new File(newUri.getPath()));
                         PhotoUtil.cropImageUri(this, newUri, cropImageUri, 1, 1, output_X, output_Y, CODE_RESULT_REQUEST);
                     } else {
-                        ToastUtils.makeText(this, "设备没有SD卡！");
+                        ToastUtils.show("设备没有SD卡!");
                     }
                     break;
                 case CODE_RESULT_REQUEST:
@@ -358,7 +359,7 @@ public class MyPersonalInformationActivity extends BaseActivity {
         }
     }
 
-    private void showImages(Bitmap bitmap,Uri cropImageUri) {
+    private void showImages(Bitmap bitmap, Uri cropImageUri) {
         submitModifyUserIconInfo(cropImageUri);
     }
 
@@ -379,15 +380,15 @@ public class MyPersonalInformationActivity extends BaseActivity {
         mModifyUserInfoPresenter.getSearchModifyUserIconInfo(uid,body,"提交中...");
     }
 
-    private ProjectView<UserInfoEntity> mModifyUserIconInfoView = new ProjectView<UserInfoEntity>() {
+    private ProjectView<UserInfoBean> mModifyUserIconInfoView = new ProjectView<UserInfoBean>() {
         @Override
-        public void onSuccess(UserInfoEntity mUserInfoEntity) {
-            if (mUserInfoEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+        public void onSuccess(UserInfoBean mUserInfoBean) {
+            if (mUserInfoBean.getResultCode().equals("1")){
+                ToastUtils.show(mUserInfoBean.getMsg());
                 return;
             }
-            GlideImageLoader.headerImageLoader(context,mUserInfoEntity.getData().getUserIcon(),mUserIcon);
-            ToastUtils.makeText(context,mUserInfoEntity.getMsg());
+            GlideImageLoader.headerImageLoader(context,mUserInfoBean.getData().getUserIcon(),mUserIcon);
+            ToastUtils.show(mUserInfoBean.getMsg());
             Intent intent = new Intent();
             intent.setAction("com.ifree.uu.mine.changed");
             getApplicationContext().sendBroadcast(intent);
@@ -395,7 +396,8 @@ public class MyPersonalInformationActivity extends BaseActivity {
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
+            ToastUtils.show(result);
+
         }
     };
 

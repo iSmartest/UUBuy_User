@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_main_default">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_300"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/ll_account_appeal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/space_30">
+            <ImageView
+                android:layout_width="@dimen/space_90"
+                android:layout_height="@dimen/space_90"
+                android:src="@mipmap/account_appeal"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/account_appeal_text"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/space_20"
+                android:gravity="center"
+                android:textColor="@color/text_main_color"
+                android:textSize="@dimen/font_size_36px"/>
+        </LinearLayout>
+
+        <include layout="@layout/v_vertical_line"/>
+
+        <LinearLayout
+            android:id="@+id/ll_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/space_30">
+            <ImageView
+                android:layout_width="@dimen/space_90"
+                android:layout_height="@dimen/space_90"
+                android:src="@mipmap/feedback"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/feedback_text"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/space_20"
+                android:gravity="center"
+                android:textColor="@color/text_main_color"
+                android:textSize="@dimen/font_size_36px"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/v_horizontal_line"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_30"
+        android:textSize="@dimen/font_size_36px"
+        android:textColor="@color/color_black"
+        android:text="@string/help_center_text"/>
+
+</LinearLayout>

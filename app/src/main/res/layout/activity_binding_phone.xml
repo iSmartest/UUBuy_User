@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_main_background">
 
-    <include layout="@layout/activity_base"/>
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_bind_phone_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/bind_phone_text" />
 
     <EditText
         android:id="@+id/edit_bind_phone"
@@ -88,5 +93,5 @@
         android:layout_marginRight="15dp"
         android:textSize="19dp"
         android:gravity="center"
-        android:background="@color/text_green"/>
+        android:background="@color/text_type_red"/>
 </LinearLayout>

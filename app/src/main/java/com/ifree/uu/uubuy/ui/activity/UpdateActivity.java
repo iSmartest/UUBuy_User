@@ -5,17 +5,19 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.hjq.toast.ToastUtils;
 import com.ifree.uu.uubuy.R;
+import com.ifree.uu.uubuy.common.CommonActivity;
 import com.ifree.uu.uubuy.dialog.ErrorDialog;
-import com.ifree.uu.uubuy.mvp.entity.UpdateEntity;
-import com.ifree.uu.uubuy.mvp.presenter.UpdatePresenter;
+import com.ifree.uu.uubuy.mvp.modle.UpdateBean;
+import com.ifree.uu.uubuy.mvp.persenter.UpdatePresenter;
 import com.ifree.uu.uubuy.mvp.view.ProjectView;
-import com.ifree.uu.uubuy.ui.base.BaseActivity;
-import com.ifree.uu.uubuy.uitls.GlobalMethod;
-import com.ifree.uu.uubuy.uitls.ToastUtils;
-import com.ifree.uu.uubuy.uitls.UpdateManager;
+import com.ifree.uu.uubuy.utils.GlobalMethod;
+import com.ifree.uu.uubuy.utils.UpdateAppUtils;
 
 import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -25,7 +27,7 @@ import butterknife.OnClick;
  * Created by 2018/10/8 0008
  * Description:
  */
-public class UpdateActivity extends BaseActivity {
+public class UpdateActivity extends CommonActivity {
     private UpdatePresenter mUpdatePresenter;
     @BindView(R.id.a_about_lay_rate)
     TextView mRate;
@@ -39,18 +41,22 @@ public class UpdateActivity extends BaseActivity {
     TextView tvVersion;
     @BindView(R.id.a_about_version_name)
     TextView tvVersionName;
-    private String updataAddress,versionName,descc;
-    private int versionCode;
+    private String updataAddress,versionName,updataLog;
+    private int versionCode = 0;
+    private boolean force = false;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_update;
     }
 
+    @Override
+    protected int getTitleBarId() {
+        return R.id.tb_version_update_title;
+    }
+
 
     @Override
     protected void initView() {
-        hideBack(5);
-        setTitleText("版本更新");
         mUpdatePresenter = new UpdatePresenter(context);
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -59,24 +65,29 @@ public class UpdateActivity extends BaseActivity {
     }
 
     @Override
-    protected void loadData() {
+    protected void initData() {
         mUpdatePresenter.onCreate();
         mUpdatePresenter.attachView(mUpdateView);
         mUpdatePresenter.getUpdate("查询中...");
     }
 
-    ProjectView<UpdateEntity> mUpdateView = new ProjectView<UpdateEntity>() {
+    ProjectView<UpdateBean> mUpdateView = new ProjectView<UpdateBean>() {
         @Override
-        public void onSuccess(UpdateEntity updateEntity) {
-            if (updateEntity.getResultCode().equals("1")){
-                ToastUtils.makeText(context,updateEntity.getMsg());
+        public void onSuccess(UpdateBean updateBean) {
+            if (updateBean.getResultCode().equals("1")){
+                ToastUtils.show(updateBean.getMsg());
                 return;
             }
-            versionCode = Integer.parseInt(updateEntity.getData().getVersionCode());
-            updataAddress = updateEntity.getData().getAddress();
-            versionName = updateEntity.getData().getVersionName();
-            descc = updateEntity.getData().getDesc();
-            mIntroduce.setText(descc);
+            versionCode = Integer.parseInt(updateBean.getData().getVersionCode());
+            updataAddress = updateBean.getData().getAddress();
+            versionName = updateBean.getData().getVersionName();
+            updataLog = updateBean.getData().getDesc();
+            mIntroduce.setText(updataLog);
+            if (updateBean.getData().getForce().equals("0")) {
+                force = false;
+            } else {
+                force = true;
+            }
             if (versionCode > GlobalMethod.getVersionCode(context)) {
                 tvVersionName.setText("最新版" + versionName);
             } else {
@@ -86,7 +97,7 @@ public class UpdateActivity extends BaseActivity {
 
         @Override
         public void onError(String result) {
-            ToastUtils.makeText(context,result);
+            ToastUtils.show(result);
         }
     };
 
@@ -99,10 +110,18 @@ public class UpdateActivity extends BaseActivity {
                 break;
             case R.id.a_about_check_version:
                 if (versionCode > GlobalMethod.getVersionCode(context)) {
-                    UpdateManager mUpdateManager = new UpdateManager(context,updataAddress,versionName);
-                    mUpdateManager.checkUpdateInfo();
+                    UpdateAppUtils.from(UpdateActivity.this)
+                            .checkBy(UpdateAppUtils.CHECK_BY_VERSION_CODE)//版本检查方式
+                            .serverVersionName(versionName)//获取版本名
+                            .serverVersionCode(versionCode)//获取版本号
+                            .apkPath(updataAddress)//下载地址
+                            .updateInfo(updataLog)
+                            .downloadBy(UpdateAppUtils.DOWNLOAD_BY_APP)//下载方式，app或浏览器
+                            .showNotification(true)
+                            .isForce(force)//是否强制更新
+                            .update();
                 } else {
-                    ToastUtils.makeText(context, "当前已是最新版本");
+                    ToastUtils.show("当前已是最新版本");
                 }
                 break;
         }

@@ -6,13 +6,13 @@
         android:id="@+id/tv_sku"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_20"
         android:background="@drawable/sku_check_state"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
+        android:paddingBottom="@dimen/space_10"
+        android:paddingLeft="@dimen/space_20"
+        android:paddingRight="@dimen/space_20"
+        android:paddingTop="@dimen/space_10"
         android:textColor="@color/normal_text_color" />
 
 </LinearLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hjq.bar.TitleBar
+        android:id="@+id/tb_shopping_guide_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/shopping_guide_text">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|right"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_20">
+
+            <ImageView
+                android:layout_width="@dimen/space_50"
+                android:layout_height="@dimen/space_50"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/share_icon" />
+
+            <ImageView
+                android:layout_width="@dimen/space_50"
+                android:layout_height="@dimen/space_50"
+                android:layout_marginLeft="@dimen/space_20"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/focus_off_icon" />
+
+        </LinearLayout>
+    </com.hjq.bar.TitleBar>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlAccentColor="@android:color/white"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlPrimaryColor="#444" />
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/app_main_default"
+                app:elevation="0dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_main_default"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="exitUntilCollapsed|enterAlways|enterAlwaysCollapsed">
+
+                    <View
+                        style="@style/AppTheme.Divison"
+                        android:layout_width="wrap_content" />
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tl_top_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:background="@color/app_main_default"
+                        app:tabIndicatorColor="@color/text_fraction_red"
+                        app:tabIndicatorHeight="2dp"
+                        app:tabSelectedTextColor="@color/text_fraction_red"
+                        app:tabTextColor="@color/text_main_color"
+                        app:tabTextAppearance="@style/TabLayoutTextStyle">
+
+                    </android.support.design.widget.TabLayout>
+
+                    <View style="@style/AppTheme.Divison" />
+                </LinearLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/app_main_background"
+                android:overScrollMode="never"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@android:layout/simple_list_item_2" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>
